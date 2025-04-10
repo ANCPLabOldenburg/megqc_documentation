@@ -14,7 +14,7 @@ The report starts with metadata about the original raw file, before filtering an
 
 ## Sensor Positions
 
-<img src="static/01" alt="sensor-distribution" width="600px">
+<img src="../static/01" alt="sensor-distribution" width="600px">
 
 
 Almost every report starts with this visual representation of the spatial distribution of MEG sensors on the subject's head. The sensors are divided into eight color-coded groups representing different lobes. This same color coding will be used frequently throughout the reports for reference.
@@ -22,13 +22,13 @@ Almost every report starts with this visual representation of the spatial distri
 1. **Rotate the figure**
 By clicking and holding the mouse left-button while dragging, you can rotate the sensor positions figure to view it from different angles.
 
-<img src="static/gifs/01_sensor_location/01_rotation.gif" alt="rotation" width="600px">
+<img src="../static/gifs/01_sensor_location/01_rotation.gif" alt="rotation" width="600px">
 
 
 2. **Hide and reveal sensors**
 By clicking on the legend block, you can hide the sensors of a specific lobe. Clicking the block again will make the sensors reappear.
 
-<img src="static/gifs/01_sensor_location/02_hide.gif" alt="hide" width="600px">
+<img src="../static/gifs/01_sensor_location/02_hide.gif" alt="hide" width="600px">
 
 
 There are 2 different types of meters in MEG sensors: **Magnetometers** and **Gradiometers**. Each sensor might contain one type of meter or both. The sensor labels help you distinguish between them:
@@ -37,7 +37,7 @@ There are 2 different types of meters in MEG sensors: **Magnetometers** and **Gr
 
 The sensor labels appear when you hover over a  sensor dot. Alternatively, you can enable _"Always show channels names"_ option, which keeps all labels visible. Enabling this feature might take some time to render, specially if all lobes are visible.
 
-<img src="static/gifs/01_sensor_location/03_labels.gif" alt="labels" width="600px">
+<img src="../static/gifs/01_sensor_location/03_labels.gif" alt="labels" width="600px">
 
 
 ## Metrics
@@ -50,7 +50,7 @@ The Standard Deviation (STD) metric measures the variability of each channel. Ch
 #### 1. Standard Deviation over the entire time series
 In the first figure, each dot represents the standard deviation of a Magnetometer channel over **the entire time series**.
 
-<img src="static/01_std/01" alt="STD over the entire time series" width="800px">
+<img src="../static/01_std/01" alt="STD over the entire time series" width="800px">
 
 
 - The sensors are colored according to the regions of the Sensor Distribution plot.
@@ -62,24 +62,24 @@ Interactive features:
     - The first quartile (Q1) and the third quartile (Q3), which represents the 25th and 75th percentile of the data.
     - The media (50th percentile) value of the dataset.
 
-  <img src="static/gifs/02_std/01_labels.gif" alt="STD labels" width="800px">
+  <img src="../static/gifs/02_std/01_labels.gif" alt="STD labels" width="800px">
 
 
 - Clicking on the legend box allows you to hide or reveal sensors of a specific lobe. 
 
-  <img src="static/gifs/02_std/02_hide.gif" alt="STD hide" width="800px">
+  <img src="../static/gifs/02_std/02_hide.gif" alt="STD hide" width="800px">
 
 
 - Clicking, holding and dragging the left mouse button over a section of the figure allows to you zoom in. The home button restores the default view.
 
-  <img src="static/gifs/02_std/03_zoom.gif" alt="STD zoom" width="800px">
+  <img src="../static/gifs/02_std/03_zoom.gif" alt="STD zoom" width="800px">
 
 
 #### 2. standard Deviation over Sensors
 
 Each box plot corresponds to a sensor, and each point represents the standard deviation for that sensor during an individual epoch.
 
-  <img src="static/01_std/02.png" alt="STD per channel" width="800px">
+  <img src="../static/01_std/02.png" alt="STD per channel" width="800px">
 
 
 Epochs are created by segmenting the continuous MEG recording basend on triggers in the dataset. By hovering over any of the points, users can read the specific epoch represented. Sensors with points outside the whiskers indicate higher variability, potential artifacts, or irregularities in specific epochs. 
@@ -91,33 +91,33 @@ Interactive features:
 - Clicking again reveals the previously hidden sensors.
 - Clicking twice isolates that group.
 
-  <img src="static/gifs/02_std/04_sections.gif" alt="STD hide" width="800px">
+  <img src="../static/gifs/02_std/04_sections.gif" alt="STD hide" width="800px">
 
 
 2. Scrolling through lobes
 - Rich-click and drag on the horizontal bar to scroll though the sensors, enabling a more detailed view. This feature might be a bit slow when many sensors are displayed simultaneously.
 
-  <img src="static/gifs/02_std/05_scroll.gif" alt="STD scroll" width="800px">
+  <img src="../static/gifs/02_std/05_scroll.gif" alt="STD scroll" width="800px">
 
 
 - For example, the following figure shows 6 sensors from the Left Frontal area.
 
-  <img src="static/01_std/03" alt="STD zoom" width="800px">
+  <img src="../static/01_std/03" alt="STD zoom" width="800px">
 
 
 #### 3. Standard Deviation over Epochs
 Each box plot represents a single epoch, and each dot the standard deviation value for every specific sensor during that epoch. The sensors are color coded.  
 This type of figure is most relevant for experiments with relevant time events.  
-![STD over the epochs4](static/01_std/04)
+![STD over the epochs4](../static/01_std/04)
 
 - To zoom in, use the horizontal bar at the bottom to zoom in on a subset of sensors. This visualization helps to visually focus on a subsets of epochs.  
 
-  ![STD over the epochs5](static/01_std/05)
+  ![STD over the epochs5](../static/01_std/05)
 
 
 - Hovering over with the mouse, the value and label of every sensor appears, along with the interquartile range values. 
 
-  <img src="static/gifs/02_std/06_labels.gif" alt="STD zoom" width="700px">
+  <img src="../static/gifs/02_std/06_labels.gif" alt="STD zoom" width="700px">
 
 
 
@@ -126,13 +126,13 @@ This type of figure is most relevant for experiments with relevant time events.
 The Power Spectrum Density describes how the power of a signal is distributed across different frequencies. It provides information on the strength or intensity of different frequency components. PSD calculation helps us to distinguish between brain activity and non-brain-related noise (Gapontseva, 2023).  
 
 
-  <img src="static/02_PSD/01.png" alt="pic1" width="400px">
-  <img src="static/02_PSD/02.png" alt="pic2" width="600px">
+  <img src="../static/02_PSD/01.png" alt="pic1" width="400px">
+  <img src="../static/02_PSD/02.png" alt="pic2" width="600px">
 
 
 This circle chart represents the Signal-to-Noise Ratio (SNR). A high SNR indicates minimal corruption of the signal of interest by background noise. The prominent amplitude of the 11.5 Hz frequency labels it as potential noise.
 
-  <img src="static/02_PSD/03" alt="pic3" width="700px">
+  <img src="../static/02_PSD/03" alt="pic3" width="700px">
 
 The Welch periodrogram is commonly used to estimate the power of a signal at different frequency components.  
 The X-axis represents the frequency range of the signal (from 0 to 140 Hz in this case) and the Y-axis represents the amplitude of the signal. 
@@ -141,39 +141,39 @@ Each colored line represents the PSD for the different magnetometers. As it was 
 Interactive features in the HTML report allow toggling between linear a **linear** view or a **logarithmic** view of both the X-axis and the Y-axis independently. 
 
 
-  <img src="static/gifs/03_psd/01_log.gif" alt="log" width="700px">
-  <img src="static/02_PSD/03-2.png" alt="pics3-2" width="700px">
+  <img src="../static/gifs/03_psd/01_log.gif" alt="log" width="700px">
+  <img src="../static/02_PSD/03-2.png" alt="pics3-2" width="700px">
 
 
 Also you can select from the legend box which sensors to show / hide (one click) or isolate on the figure (2 clicks).
 
-  <img src="static/gifs/03_psd/02_section.gif" alt="log" width="800px">
+  <img src="../static/gifs/03_psd/02_section.gif" alt="log" width="800px">
 
 
 Finally, each segment of the following circle chart represents the proportion of the total signal power that falls within each frequency range. How much does every frequency band contribute to the overall signal. 
 
-  <img src="static/02_PSD/04.png" alt="pic4" width="400px">
+  <img src="../static/02_PSD/04.png" alt="pic4" width="400px">
 
-  <img src="static/02_PSD/05.png" alt="pic5" width="300px">
+  <img src="../static/02_PSD/05.png" alt="pic5" width="300px">
 
 
 
 ### Peak to Peak Amplitude
 Peak-to-Peak (PtP) amplitude refers to the difference between the highest positive peak and the lowest negative peak. It provides a measue of the total range of variation of the data averaged over a time interval (Gapontseva, 2023). 
 
-  <img src="static/03_PtP/01" alt="pic1" width="800px">
+  <img src="../static/03_PtP/01" alt="pic1" width="800px">
 
 
 The PtP amplitude of the data over the entire time series represents how the PtP amplitude of every sensor varies over the entire time series. Every dot represent the PtP amplitude of a single sensor. If a sensor falls outside of the whiskers area, it might indicate that the sensor is malfunctioning or other issues.
 
 The position in the Y Axis is not meaningful but serves visualization purposes.
 
-  <img src="static/03_PtP/02" alt="pic2" width="800px">
+  <img src="../static/03_PtP/02" alt="pic2" width="800px">
 
 
 In this plot, each box plot represents a specific sensor (color-coded by areas) and each point the PtP Amplitude for that sensor during a specific epoch (time window).  
 
-  <img src="static/03_PtP/03" alt="pic3" width="800px">
+  <img src="../static/03_PtP/03" alt="pic3" width="800px">
 
 
 In this plot, each box plot represents an epoch and each point the PtP Ampltiude of the sensors during that specific time window.  
@@ -184,38 +184,38 @@ In this plot, each box plot represents an epoch and each point the PtP Ampltiude
 
 Heartbeat interference is a common source of noise in MEG recordings. This intereference shows up as a rhythmic and periodic fluctuation, and it varies among participants (Gapontseva, 2023). 
 
-  <img src="static/04_ECG/01.png" alt="pic1" width="400px">
+  <img src="../static/04_ECG/01.png" alt="pic1" width="400px">
 
 
 First, we have a short overview with key criteria about the ECG signal recorded. MEGqc evaluates whther the heartbeats were recordnd in a consistently (similar amplitude), without missing beats (no breaks) and without false detections (no bursts). These aspects are relevant for determining if the channel issuitable heartbeat artifact identification. 
 
-  <img src="static/04_ECG/02.png" alt="pic2" width="800px">
+  <img src="../static/04_ECG/02.png" alt="pic2" width="800px">
 
 
 Here, we see the ECG signal (blue line) captured by the ECG channel (_ECG062_), with the red marking the R-peaks of each heartbeat. The R-peaks are components of the electrical activity of the heartbeat, and they can be easily used as reference points to identify heartbeat interference.
 THanks to the interactive features, you can activate or deactivate the ECG signal and the peaks by clicking on the legend. YOu may also  zoom in by selecting a section within the figure.
 
-  <img src="static/gifs/04_ecg/01_selection_zoom.gif" alt="gif1" width="800px">
+  <img src="../static/gifs/04_ecg/01_selection_zoom.gif" alt="gif1" width="800px">
 
 
 
 The mean recorded R wave (from the ECG channel, real heartbeats) was shifted to align the _ECG signal found on MEG channels_. This alignment helps us understand the extend to which the heartbeats influence he MEG channels. Then, a Pearson correlation is performed between the __ECG signal found in each MEG channel__ and the reference mean signal of the ECG.
 
-  <img src="static/04_ECG/03.png" alt="gif1" width="800px">
+  <img src="../static/04_ECG/03.png" alt="gif1" width="800px">
 
 
 The following 3 plots highlights the MEG channels affected by heartbeat interference. Each line representes one MEG sensor, colour-coded by region. The plots are ordered from the most affected to the least affected. 
 
-  <img src="static/04_ECG/04.png" alt="pic4" width="400px">
+  <img src="../static/04_ECG/04.png" alt="pic4" width="400px">
 
-  <img src="static/04_ECG/05.png" alt="pic5" width="400px">
+  <img src="../static/04_ECG/05.png" alt="pic5" width="400px">
 
-  <img src="static/04_ECG/06.png" alt="pic6" width="400px">
+  <img src="../static/04_ECG/06.png" alt="pic6" width="400px">
 
 
 The interactive feature allows you to hide (1 click) and isolate (2 clicks) specific groups of sensors, as well as zoom-in on certai sections of the figure.
 
-  <img src="static/gifs/04_ecg/02_hide.gif" alt="gif2" width="800px">
+  <img src="../static/gifs/04_ecg/02_hide.gif" alt="gif2" width="800px">
 
 
 
@@ -224,20 +224,20 @@ The interactive feature allows you to hide (1 click) and isolate (2 clicks) spec
 The EOG (Electrooculogram) sensor records eye activity and is used to detect eye movements, which are usually separated into saccades and blinks. The MNE algorithms, however, only identify blinks (Gapontseva, 2023).
 
 
-  <img src="static/05_EOG/02" alt="pic2" width="800px">
+  <img src="../static/05_EOG/02" alt="pic2" width="800px">
 
 This plot shows the EOG signal over time (blue line). Each blink produces a peak, marked by a red dot. An averaged eye-blink event is expected to have a wave-like shape with one main crest. If no such shape is detected in most of the data files in a set, the EOG channel is marked as "bad". 
 
-  <img src="static/05_EOG/03" alt="pic3" width="800px">
+  <img src="../static/05_EOG/03" alt="pic3" width="800px">
 
 
 This plot represents the mean event shape, which indicates the typical waveform of a blink as captured by the EOG channel. This allows us to understand how blinks influence MEG sensors. 
 
 Similar to the ECG report, the following three plots show the MEG channels affected by blink artifacts, ranked from the most affected to the least affected. This help us to identify channels that may require artifact correction before analysis.
 
-  <img src="static/05_EOG/04" alt="pic4" width="300px">
-  <img src="static/05_EOG/05" alt="pic5" width="300px">
-  <img src="static/05_EOG/06" alt="pic6" width="300px">
+  <img src="../static/05_EOG/04" alt="pic4" width="300px">
+  <img src="../static/05_EOG/05" alt="pic5" width="300px">
+  <img src="../static/05_EOG/06" alt="pic6" width="300px">
 
 
 ### High frequency (Muscle) artifacts
@@ -246,7 +246,7 @@ Muslce contractions generate electrical activity noticeable in the range of 110-
 This report includes a single plot displaying the z-scores of high frequency (blue line) and events (red-dots) where the z-score exceed the threshold of 5 (default in settings)
 
 
-  <img src="static/06_Muscle/02" alt="pic2" width="800px">
+  <img src="../static/06_Muscle/02" alt="pic2" width="800px">
 
 
 ### Estimation of subjet's head movement
