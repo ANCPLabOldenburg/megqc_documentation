@@ -49,6 +49,12 @@ repository:
 # Advanced and power-user settings
 sphinx:
   config:
+    html_extra_path: ["static"]  # ✅ Ensures static files like images are copied over
+    myst_enable_extensions:
+      - dollarmath
+      - amsmath
+      - deflist
+      - html_image
     nb_custom_formats:
       .Rmd:
         - jupytext.reads
