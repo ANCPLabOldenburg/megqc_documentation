@@ -31,7 +31,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r .github/workflows/requirements.txt
+          pip install -r requirements.txt
 
       - name: Build the book
         run: |
