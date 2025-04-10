@@ -18,6 +18,9 @@ jobs:
     permissions:
       pages: write
       id-token: write
+    environment:
+    - name: megqc_documentation
+       at megqc_documentation/.github/workflows/environment.yml
     steps:
       - uses: actions/checkout@v3
 
