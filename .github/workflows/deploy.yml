@@ -15,7 +15,6 @@ concurrency:
 jobs:
   deploy-book:
     runs-on: ubuntu-latest
-    environment: github-pages
     permissions:
       pages: write
       id-token: write      
