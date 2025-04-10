@@ -9,7 +9,7 @@ The examples in this section are taken from the report of the subject 009 from t
 
 The report starts with metadata about the original raw file, before filtering and resampling. This metadata includes some general information (date, experimenter...), some channels' information (more on that later), and some data information (sampling frequency, applied filters...).
 
-<img src="./static/00" alt="raw-info" width="650px">
+<img src="../static/00" alt="raw-info" width="650px">
 
 
 ## Sensor Positions
