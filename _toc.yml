@@ -1,12 +1,12 @@
 root: index
 format: jb-book
 chapters:
-- file: introduction
-- file: metrics
-- file: guide
+- file: book/introduction
+- file: book/metrics
+- file: book/guide
   sections:
     - file: guide/installation 
     - file: guide/dataset
     - file: guide/run_calculation
     - file: guide/run_plotting
-- file: details
+- file: book/details
