@@ -6,7 +6,7 @@ In case you are curious about some functionalities of MEGqc, this section provid
 
 The following figure (Gaponsetva, 2023) describes the general process of the pipeline. It might look  a bit overwhelming, but we won't go too much into detail:
 
-![Pipeline](static/pipeline.png)
+![Pipeline](../static/pipeline.png)
 
 The time is on the Y axis, from top to bottom: 
 
@@ -35,7 +35,7 @@ We'll briefly introduce them here the main ones and their functiionality:
 
 Neuroimaging experiments result in complex data that can be arranged in many different ways, and for a long time, there was no consensus on how to organize and share data obtained in neuroimaging experiments. **Brain Imaging Data Structure (BIDS)**, describes a simple and easy to adopt way of organizing neuroimaging and behavioral data (Gorgolewski et al., 2016; Niso et al., 2018) facilitating collaboration between researches and saving time and effort.  _(fragment adapted from BIDS official website)._ 
 
-![bids-logo](static/bids.jpg)
+![bids-logo](../static/bids.jpg)
 
 BIDS describes the structure of the data, directories and sub-directories, name-structure, file-naming and file formats. MEGqc uses **ancpBIDS**, a Python library which facilitates working with BIDS, both for identifiying the files and also for writting the results according to BIDS. 
 
