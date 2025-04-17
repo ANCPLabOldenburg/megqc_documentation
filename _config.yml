@@ -7,7 +7,7 @@
 # Book settings
 title                       : "MEGqc tutorial"  # The title of the book. Will be placed in the left navbar.
 author                      : Alexis Olguin Baxman, Aaron Reer  # The author of the book
-copyright                   : "2024"  # Copyright year to be placed in the footer
+copyright                   : "2025"  # Copyright year to be placed in the footer
 logo                        : "static/MEGqc.png"  # A path to the book logo
 exclude_patterns            : []  # Patterns to skip when building the book. Can be glob-style (e.g. "*skip.ipynb")
 
@@ -41,8 +41,8 @@ launch_buttons:
   thebe                     : false  # Add a thebe button to pages (requires the repository to run on Binder)
 
 repository:
-  url                       : https://github.com/AaronReer/docker_workshop_setup  # The URL to your book's repository
-  path_to_book              : "workshop/"  # A path to your book's folder, relative to the repository root.
+  url                       : https://github.com/ANCPLabOldenburg/megqc_documentation  # The URL to your book's repository
+  path_to_book              : "book/"  # A path to your book's folder, relative to the repository root.
   branch                    : main  # Which branch of the repository should be used when creating links
 
 #######################################################################################
