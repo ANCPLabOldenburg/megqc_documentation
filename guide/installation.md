@@ -33,7 +33,7 @@ MEG QC has compatiblity issues with older Python versions (prior to 3.9), theref
 ## Install the MEGqc Package
 Once your environment is activated, you can install Python packages with `pip`, and these installations will only apply to your virtual environment. To install MEGqc core functionality, run the following command in the terminal:
  
-        pip install  meg_qc
+        pip install git+https://github.com/ANCPLabOldenburg/MEGqc.git
 
 <br>
 
