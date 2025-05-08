@@ -1,4 +1,4 @@
-# Easy Instal
+# Easy Installation
 
 We have created a shell script installer that will make the installation process of MEGqc smoother and easier. This installer only works for XFCE-based Linux systems so far, but we're working on a Windows version.
 
@@ -57,6 +57,9 @@ About what is an [environment](./guide/installation.md) or what kind of [depende
 
 ```
 
-Now your installation is complete! In your 
+Now your installation is complete! In your chosen directory, you'll find a folder named ´runMEGqc´ containing the virtual environment, along with a script called ´uninstall_megqc.sh´.
+On your **Desktop** you will also see two terminal launchers:
+*´MEGqc´ — will launch [mini-MEGqc](mini.md), the simplified MEGqc interface
+* Uninstall MEGqc´  — will remove MEGqc from your system, including its environment and related files.
 
 
