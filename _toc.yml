@@ -5,7 +5,8 @@ chapters:
 - file: book/metrics
 - file: book/guide
   sections:
-    - file: guide/installation 
+    - file: guide/installation
+    - file: guide/easytoinstall
     - file: guide/dataset
     - file: guide/run_calculation
     - file: guide/run_plotting
