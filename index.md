@@ -17,11 +17,11 @@ Hello everyone, and welcome to this MEGqc tutorial.
 - How to create an MEGqc HTML report
 
 
-:::{admonition} Easy to install
+```{admonition} Easy to install
 :class: tip
-        Now MEGqc has a new installer for Linux. 🚀
-        Check it out [here!](easytoinstall.md). 
-:::
+Now MEGqc has a new installer for Linux. 🚀
+Check it out [here!](easytoinstall.md). 
+```
 
 
 ## Requirements for this tutorial
