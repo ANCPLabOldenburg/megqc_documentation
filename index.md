@@ -20,7 +20,7 @@ Hello everyone, and welcome to this MEGqc tutorial.
 ```{admonition} Easy to install
 :class: tip
 Now MEGqc has a new installer for Linux. 🚀
-Check it out [here!](easytoinstall.md). 
+Check it out [here!](guide/easytoinstall.md). 
 ```
 
 
