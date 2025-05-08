@@ -10,10 +10,19 @@ Hello everyone, and welcome to this MEGqc tutorial.
 * [Link to authors' documentation](https://meg-qc.readthedocs.io/en/latest/)
 * [Link to ANCP Lab website](https://uol.de/en/applied-neurocognitive-psychology)
 
-## Learning Objectives
-- Learn more about MEGqc and its reports
-- Get to install MEGqc and analyze an MEG dataset
-- Get to produce an MEGqc HTML report
+
+## This guide includes
+- Overview of MEGqc and its reports
+- How to install MEGqc and run it on an MEG dataset
+- How to create an MEGqc HTML report
+
+
+:::{admonition} Easy to install
+:class: tip
+        Now MEGqc has a new installer for Linux. 🚀
+        Check it out [here!](easytoinstall.md). 
+:::
+
 
 ## Requirements for this tutorial
 - Some familiarity with MEG data
