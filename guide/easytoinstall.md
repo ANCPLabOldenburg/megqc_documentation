@@ -4,7 +4,7 @@ We have created a shell script installer that will make the installation process
 
 ## Step-by-step instructions
 1. **Download the installer**
-Download the ´.sh´ file from the following link:
+Download the `.sh` file from the following link:
 
 👉 [MEGqc Installer (Mega.nz)](https://mega.nz/file/UIQ0iJAQ#hvvyVY6RMaSXSqVQwDq-xMtY3JdDFluDxgOOVBayCKc)
   
@@ -39,12 +39,12 @@ Give execute permissions to the installer
 **Or**
 You may make the installer executable by right-clicking the file, selecting Properties, navigating to the Permissions tab, and checking the box ´Allow this file to run as a program´.
 
-<img src="../static/properties.png" alt="properties-window" width="600px" align="center">
+<img src="../static/properties.png" alt="properties-window" width="400px" align="center">
 
    
 3. **Run the installer**
 
-Now your shell script installer is ready to run! You can either double-click the ´.sh´ file or run it from the terminal:
+Now your shell script installer is ready to run! You can either double-click the `sh` file or run it from the terminal:
 
     ./install_megqc.sh
 
@@ -57,9 +57,9 @@ About what is an [environment](./guide/installation.md) or what kind of [depende
 
 ```
 
-Now your installation is complete! In your chosen directory, you'll find a folder named ´runMEGqc´ containing the virtual environment, along with a script called ´uninstall_megqc.sh´.
+Now your installation is complete! In your chosen directory, you'll find a folder named `runMEGqc` containing the virtual environment, along with a script called `uninstall_megqc.sh`.
 On your **Desktop** you will also see two terminal launchers:
-*´MEGqc´ — will launch [mini-MEGqc](mini.md), the simplified MEGqc interface
-* Uninstall MEGqc´  — will remove MEGqc from your system, including its environment and related files.
+* `MEGqc` — will launch [mini-MEGqc](mini.md), the simplified MEGqc interface
+* `Uninstall MEGqc`  — will remove MEGqc from your system, including its environment and related files.
 
 
