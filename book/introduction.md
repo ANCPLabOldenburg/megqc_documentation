@@ -1,4 +1,4 @@
-# Introduction to MEGqc
+# What is MEGqc?
 
 ## MEG data quality control
 Magnetoencephalography (MEG) data is susceptible to  noise and artifacts, which can severely corrupt the data quality. These artifacts may arise from:
