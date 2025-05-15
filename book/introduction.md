@@ -6,21 +6,14 @@ Magnetoencephalography (MEG) data is susceptible to  noise and artifacts, which 
 - Internal noise sources (e.g. eye movements of the subject)
 - Systemic noise sources (e.g. malfunction of a sensor).
 
-For this reason, quality control of MEG data is an essential step for ensuring valid and reproducible science (Niso et al., 2022).  
-However, the visual detection and annotation of artifacts in MEG data requires expertise, and still can be:
-- A tedious and time-consuming task
-- Commonly performed manually
-- Vulnerable to biases
-- Not standardized 
-
-*(fragment adapted from the MEGqc github)* 
+For this reason, quality control of MEG data is an essential step for ensuring valid and reproducible science (Niso et al., 2022). However, the detection and annotation of artifacts in MEG data is commonly performed manually (visual inspection), requires expertise and can be a tedious and time-consuming task. Also, as there's not a standardized procedure, is vulnerable to biases.
 
 <img src="https://media1.tenor.com/m/DCycRQnBpOYAAAAd/math-hmm.gif" alt="maths" width="250px">
 
 
+<img src="../static/MEGqc.png" alt="raw-info" width="600px">
+[comment]: <> ## MEGqc
 
-
-## MEGqc
 To address this issue, the ANCP lab developed the MEGqc, a software tool for automated and standardized quality control of MEG recordings. By providing a standardized workflow, it helps minimize human bias and facilitates comparisosn between datasets.
 
 MEGqc Evaluates the quality of raw data, but is **not** an artifact removal tool. The MEGqc pipeline is designed to be user-friendly, so researches only need to:
