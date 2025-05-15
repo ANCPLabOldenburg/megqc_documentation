@@ -18,7 +18,7 @@ The time is on the Y axis, from top to bottom:
 
 <br>   
 
-# Dependencies
+### Dependencies
 It's not necessary to manually pip install the different dependencies anymore.
 We'll briefly introduce them here the main ones and their functiionality:
 
@@ -31,7 +31,7 @@ We'll briefly introduce them here the main ones and their functiionality:
 - **[plotly](https://plotly.com/python-api-reference/)**: This library is used to create the interactive plots and visualize results. Plotly also supports exporting the figures in HTML format.
 
 
-# What is BIDS?
+## What is BIDS?
 
 Neuroimaging experiments result in complex data that can be arranged in many different ways, and for a long time, there was no consensus on how to organize and share data obtained in neuroimaging experiments. **Brain Imaging Data Structure (BIDS)**, describes a simple and easy to adopt way of organizing neuroimaging and behavioral data (Gorgolewski et al., 2016; Niso et al., 2018) facilitating collaboration between researches and saving time and effort.  _(fragment adapted from BIDS official website)._ 
 
@@ -41,7 +41,7 @@ BIDS describes the structure of the data, directories and sub-directories, name-
 
 Gapontseva (2023) evaluated the MEGqc software thanks to 21  MEG datasets obtained from the OpenNeuro data library. [OpenNeuro](https://openneuro.org/) is a free and open platform with more than 50 thousand participants and more than one thousand public BIDS compliant MRI, PET, MEG, EEG and iEEG datasets. 
 
-## Derivatives Metadata
+### Derivatives Metadata
 BIDS suggest that the Metadata should be stored in .json and .tsv files, because both machine-readable type of file easily accesible by Python, Matlab, Excel or R.
 
 * json file: A JSON (JavaScript Object Notation) file is a lightweight data format that stores structured data in a readable, text-based format using key-value pairs, arrays, and nested objects. 
