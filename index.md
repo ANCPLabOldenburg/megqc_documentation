@@ -7,7 +7,6 @@ Hello everyone, and welcome to this MEGqc tutorial.
 
 
 * [Link to MEGqc GitHub](https://github.com/ANCPLabOldenburg/MEGqc)
-* [Link to authors' documentation](https://meg-qc.readthedocs.io/en/latest/)
 * [Link to ANCP Lab website](https://uol.de/en/applied-neurocognitive-psychology)
 
 
