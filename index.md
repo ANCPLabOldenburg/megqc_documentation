@@ -9,31 +9,22 @@ Hello everyone, and welcome to this MEGqc tutorial.
 * [Link to MEGqc GitHub](https://github.com/ANCPLabOldenburg/MEGqc)
 * [Link to ANCP Lab website](https://uol.de/en/applied-neurocognitive-psychology)
 
-
 ## This guide includes
-- Overview of MEGqc and its reports
-- How to install MEGqc and run it on an MEG dataset
-- How to create an MEGqc HTML report
-
-
-```{admonition} Easy to install
-:class: tip
-Now MEGqc has a new installer for Linux. 🚀
-Check it out [here!](guide/easytoinstall.md). 
-```
-
+- What is MEGqc and why do we need it?
+- Overview of MEGqc reports
+- How to install MEGqc and run it on your MEG dataset
 
 ## Requirements for this tutorial
-- Some familiarity with MEG data
+MEGqc is designed to be as user-friendly as possible. This tutorial will help you to install it without deep technical knowledge. Still, you might benefit from having some familiarity with the following:
+
+- MEG data basics and BIDS structure
 - Access to a Linux terminal/shell
-- A working version of Python3
-- Basic understanding of BASH commands (such as ls and cd). 
+- Basic BASH commands (like ls and cd)
 - Some familiarity with GitHub 
 
 ## I've got a question!
 
 If you have any questions or encounter difficulties while working with MEGqc, please don’t hesitate a single second to get in touch with us. A great way to do this is to via e-mail @ aaron.reer@uol.de.
-
 
 <img src="https://c.tenor.com/MsuBYU4-fI0AAAAM/confused-math.gif" alt="bids-schema" width="250px">
 
