@@ -12,7 +12,6 @@ For this reason, quality control of MEG data is an essential step for ensuring v
 
 
 ## MEGqc
-<img src="../static/MEGqc.png" alt="logo" width="50px">
 
 To address this issue, the ANCP lab developed the MEGqc, a software tool for automated and standardized quality control of MEG recordings. By providing a standardized workflow, it helps minimize human bias and facilitates comparisosn between datasets.
 
@@ -48,6 +47,9 @@ MEGqc produces two types of [machine-readable outputs](details.md):
 - **TSV files**** with more detailed results for some of the metrics.
 
 To ensure the clarity of the results, the pipeline includes a **plotting module** that generates visual HTML reports based on the TSV files. For each metric, an html report is created (6 in total). The next section will delve in the kind of information included within each report. These outputs also maintain the **BIDS standards.**
+
+
+<img src="../static/MEGqc.png" alt="logo" width="200px">
 
 
 ### Next section
