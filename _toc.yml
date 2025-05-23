@@ -14,7 +14,6 @@ chapters:
   sections:
     - file: guide/installation
     - file: guide/easytoinstall
-    - file: guide/dataset
     - file: guide/run_calculation
     - file: guide/run_plotting
 - file: book/extra
