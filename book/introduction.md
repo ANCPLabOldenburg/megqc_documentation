@@ -10,6 +10,7 @@ For this reason, quality control of MEG data is an essential step for ensuring v
 
 <img src="https://media1.tenor.com/m/DCycRQnBpOYAAAAd/math-hmm.gif" alt="maths" width="250px">
 
+
 To address this issue, the ANCP lab developed **MEGqc**, a software tool for automated and standardized quality control of MEG recordings. By providing a standardized workflow, it helps minimize human bias and facilitates comparisosn between datasets. MEGqc **evaluates** the quality of raw data, but it is **not** an artifact removal tool.
 
 The MEGqc pipeline is designed to be user-friendly, so researches only need to:
@@ -29,6 +30,11 @@ The different calculation modules within MEGqc are called `metrics` and they are
 - **Muscle artifacts calculation**
 <br>  
 
+To ensure the clarity of the results, MEGqc will provide you with a detailed visual HTML report for each Metric. The next section will delve in the kind of information included within each report. MEGqc will also provide you with machine-readable outputs **JSON files** and **TSV files**. 
+
+For a deeper understanding of MEGqc's core functionality, dependencies and derivatives, [visit the pipeline basics page](details.md).
+
+
 ```{admonition} There are 2 other metrics within MEG QC:
 
 - **Peak-to-Peak automatic calculation:** This module, which relies on MNE library functions, is not used in the final version of the pipeline. Instead, the manual "Peak-to-Peak manual" is recommended.
@@ -36,9 +42,6 @@ The different calculation modules within MEGqc are called `metrics` and they are
 
 ``` 
 
-To ensure the clarity of the results, MEGqc will provide you with a detailed visual HTML report for each Metric. The next section will delve in the kind of information included within each report. MEGqc will also provide you with machine-readable outputs **JSON files** and **TSV files**. 
-
-For a deeper understanding of MEGqc's core functionality, dependencies and derivatives, [visit the pipeline basics page](details.md).
 
 ## Next section
 In the next section, we'll walk through the content of the HTML reports.      
