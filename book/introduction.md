@@ -18,7 +18,7 @@ The MEGqc pipeline is designed to be user-friendly, so researches only need to:
 - Set analysis parameters if desired (default parameters are available), and 
 - Run the analysis script.
 
-To ensure standardization of the pipeline, MEGqc software is tailored to the [**BIDS standards**](details.md).
+To ensure standardization of the pipeline, MEGqc software is tailored to the [**BIDS standards**](./extra/bids.md).
 
 
 ## Metrics in MEGqc
@@ -36,15 +36,15 @@ To ensure the clarity of the results, MEGqc will provide you with a detailed vis
 
 ```{admonition} There are 2 other metrics within MEG QC:
 
-- **Peak-to-Peak automatic calculation:** This module, which relies on MNE library functions, is not used in the final version of the pipeline. Instead, the manual "Peak-to-Peak manual" is recommended.
-- **Head movement calculation:** This module estimates subject's head movements. These movements may appear as sudden shifts or jumps in the MEG data, causing distortions in the spatial distribution of the recorded magnetic fields. The effects of head movements can vary depending on the strength and direction. This module is implemented but requires a substantial amount of information to perform the calculation.
+* **Peak-to-Peak automatic calculation:** This module, which relies on MNE library functions, is not used in the final version of the pipeline. Instead, the manual "Peak-to-Peak manual" is recommended.
+* **Head movement calculation:** This module estimates subject's head movements. These movements may appear as sudden shifts or jumps in the MEG data, causing distortions in the spatial distribution of the recorded magnetic fields. The effects of head movements can vary depending on the strength and direction. This module is implemented but requires a substantial amount of information to perform the calculation.
 
 ``` 
 
 
 ## Next section
 In the next section, we'll walk through the content of the HTML reports.
-For a deeper understanding of MEGqc's core functionality, dependencies and derivatives, [visit the pipeline basics page](details.md).
+For a deeper understanding of MEGqc's core functionality, dependencies and derivatives, [visit the pipeline basics page](./extra/details.md).
 
 
         
