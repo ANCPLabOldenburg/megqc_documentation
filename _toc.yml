@@ -13,7 +13,6 @@ chapters:
 - file: book/guide
   sections:
     - file: guide/installation
-    - file: guide/easytoinstall
     - file: guide/run_calculation
     - file: guide/run_plotting
 - file: book/extra
