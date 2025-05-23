@@ -11,6 +11,7 @@ For this reason, quality control of MEG data is an essential step for ensuring v
 <img src="https://media1.tenor.com/m/DCycRQnBpOYAAAAd/math-hmm.gif" alt="maths" width="250px">
 
 <br>  
+
 To address this issue, the ANCP lab developed **MEGqc**, a software tool for automated and standardized quality control of MEG recordings. By providing a standardized workflow, it helps minimize human bias and facilitates comparisosn between datasets. MEGqc **evaluates** the quality of raw data, but it is **not** an artifact removal tool.
 
 The MEGqc pipeline is designed to be user-friendly, so researches only need to:
