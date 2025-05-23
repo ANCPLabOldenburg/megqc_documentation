@@ -75,10 +75,10 @@ This type of figure is most relevant for experiments with relevant time events.
   <img src="../static/gifs/02_std/06_labels.gif" alt="STD zoom" width="700px">
 
 
-```{admonition} More metrics
+```{admonition} Want to check more reports?
 :class: tip
 
-Go back to the [metrics main page](../book/metrics.md) to see other reports.
+Head back to the [main metrics page](../book/metrics.md) to explore the others!
 
 ``` 
 
