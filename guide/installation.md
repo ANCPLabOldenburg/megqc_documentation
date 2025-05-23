@@ -4,12 +4,6 @@ Now we'll start with the installation process for MEGqc. Before diving in, we'll
 <br>
 
 
-```{admonition} Easy to install
-:class: tip
-Now MEGqc has a new installer for Linux. 🚀
-Check it out [here!](easytoinstall.md).
-
-```
 
 ## Virtual environments
 Virtual environments create isolated and sel-contained workspaces, allowing us to manage project-specific dependencies separatedly from system-wide installation. This isollation has several benefits:
