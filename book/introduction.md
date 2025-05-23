@@ -30,20 +30,21 @@ The different calculation modules within MEGqc are called `metrics` and they are
 - **Muscle artifacts calculation**
 <br>  
 
-To ensure the clarity of the results, MEGqc will provide you with a detailed visual HTML report for each Metric. MEGqc will also provide you with machine-readable outputs (**JSON files** and **TSV files**). The next section will delve in the kind of information included within each report. For a deeper understanding of MEGqc's core functionality, dependencies and derivatives, [visit the pipeline basics page](details.md).
-
+To ensure the clarity of the results, MEGqc will provide you with a detailed visual HTML report for each Metric. MEGqc will also provide you with machine-readable outputs (**JSON files** and **TSV files**). The next section will delve in the kind of information included within each report. 
 
 
 
 ```{admonition} There are 2 other metrics within MEG QC:
 
 - **Peak-to-Peak automatic calculation:** This module, which relies on MNE library functions, is not used in the final version of the pipeline. Instead, the manual "Peak-to-Peak manual" is recommended.
-- **Head movement calculation:** This module functions, but requires extensive head position data.
+- **Head movement calculation:** This module estimates subject's head movements. These movements may appear as sudden shifts or jumps in the MEG data, causing distortions in the spatial distribution of the recorded magnetic fields. The effects of head movements can vary depending on the strength and direction. This module is implemented but requires a substantial amount of information to perform the calculation.
 
 ``` 
 
 
 ## Next section
 In the next section, we'll walk through the content of the HTML reports.
+For a deeper understanding of MEGqc's core functionality, dependencies and derivatives, [visit the pipeline basics page](details.md).
+
 
         
