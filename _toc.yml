@@ -17,4 +17,9 @@ chapters:
     - file: guide/dataset
     - file: guide/run_calculation
     - file: guide/run_plotting
-- file: book/details
+- file: book/extra
+  sections:
+    - file: extra/details
+    - file: extra/bids
+    - file: extra/openneuro
+  
