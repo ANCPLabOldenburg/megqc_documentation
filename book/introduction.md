@@ -35,7 +35,8 @@ To ensure the clarity of the results, MEGqc will provide you with a detailed vis
 
 
 
-```{admonition} There are 2 other metrics within MEG QC:
+```{admonition} There are 2 other metrics within MEG QC
+:class: dropdown
 
 * **Peak-to-Peak automatic calculation:** This module, which relies on MNE library functions, is not used in the final version of the pipeline. Instead, the manual "Peak-to-Peak manual" is recommended.
 * **Head movement calculation:** This module estimates subject's head movements. These movements may appear as sudden shifts or jumps in the MEG data, causing distortions in the spatial distribution of the recorded magnetic fields. The effects of head movements can vary depending on the strength and direction. This module is implemented but requires a substantial amount of information to perform the calculation.
