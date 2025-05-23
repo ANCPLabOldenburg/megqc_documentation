@@ -17,3 +17,10 @@ In this plot, each box plot represents a specific sensor (color-coded by areas) 
 
 
 In this plot, each box plot represents an epoch and each point the PtP Ampltiude of the sensors during that specific time window.  
+
+```{admonition} Want to check more reports?
+:class: tip
+
+Head back to the [main metrics page](../book/metrics.md) to explore the others!
+
+``` 
