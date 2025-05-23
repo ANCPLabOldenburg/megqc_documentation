@@ -38,3 +38,11 @@ We'll briefly introduce them here the main ones and their functiionality:
 
 - **[plotly](https://plotly.com/python-api-reference/)**: This library is used to create the interactive plots and visualize results. Plotly also supports exporting the figures in HTML format.
 
+
+
+```{admonition} Want to check more extra content?
+:class: tip
+
+Head back to the [main extra content page](../book/extra.md) to explore the others!
+
+``` 
