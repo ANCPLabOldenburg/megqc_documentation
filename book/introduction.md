@@ -18,7 +18,7 @@ The MEGqc pipeline is designed to be user-friendly, so researches only need to:
 - Set analysis parameters if desired (default parameters are available), and 
 - Run the analysis script.
 
-To ensure standardization of the pipeline, MEGqc software is tailored to the [**BIDS standards**](./extra/bids.md).
+To ensure standardization of the pipeline, MEGqc software is tailored to the [**BIDS standards**](../extra/bids.md).
 
 
 ## Metrics in MEGqc
@@ -44,7 +44,7 @@ To ensure the clarity of the results, MEGqc will provide you with a detailed vis
 
 ## Next section
 In the next section, we'll walk through the content of the HTML reports.
-For a deeper understanding of MEGqc's core functionality, dependencies and derivatives, [visit the pipeline basics page](./extra/details.md).
+For a deeper understanding of MEGqc's core functionality, dependencies and derivatives, [visit the pipeline basics page](../extra/details.md).
 
 
         
