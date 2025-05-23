@@ -18,10 +18,6 @@ You can find more information the BIDS Specification on their [official BIDS web
 
 ```
 
-
-Gapontseva (2023) evaluated the MEGqc software thanks to 21  MEG datasets obtained from the OpenNeuro data library. [OpenNeuro](https://openneuro.org/) is a free and open platform with more than 50 thousand participants and more than one thousand public BIDS compliant MRI, PET, MEG, EEG and iEEG datasets. 
-
-
 ```{admonition} Want to check more extra content?
 :class: tip
 
