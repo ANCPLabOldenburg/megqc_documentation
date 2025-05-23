@@ -30,26 +30,15 @@ The different calculation modules within MEGqc are called `metrics` and they are
 <br>  
 
 ```{admonition} There are 2 other metrics within MEG QC:
-:class: dropdown
 
 - **Peak-to-Peak automatic calculation:** This module, which relies on MNE library functions, is not used in the final version of the pipeline. Instead, the manual "Peak-to-Peak manual" is recommended.
 - **Head movement calculation:** This module functions, but requires extensive head position data.
 
 ``` 
 
-To ensure the clarity of the results, MEGqc will provide you with a detailed visual HTML report for each Metric. The next section will delve in the kind of information included within each report. MEGqc will also provide you with machine-readable outputs **JSON files** and **TSV files**. For a deeper understanding of MEGqc's core functionality, [visit the pipeline basics page](details.md).
+To ensure the clarity of the results, MEGqc will provide you with a detailed visual HTML report for each Metric. The next section will delve in the kind of information included within each report. MEGqc will also provide you with machine-readable outputs **JSON files** and **TSV files**. 
 
-```{admonition} Machine-readable derivatives
-:class: tip
-
-       Following [**BIDS standards'**](details.md) suggestions, the derivatives should be saved in the following machine-readable formats:
-        - **JSON files** with the key information for each of the quality metrics.
-        - **TSV files** with more detailed results of the metrics. The plotting module of MEGqc will use them to build the visual HTML reports.
-
-```
-
-<img src="../static/MEGqc.png" alt="logo" width="300px" align="center">
-
+For a deeper understanding of MEGqc's core functionality, dependencies and derivatives, [visit the pipeline basics page](details.md).
 
 ## Next section
 In the next section, we'll walk through the content of the HTML reports.      
