@@ -5,7 +5,7 @@ Now that we have a general understanding of MEGqc and the Metrics reports, this 
 ```{admonition} New version?
 :class: tip
 Now MEGqc has a new installer and interface 🚀
-Check it out [here!](easytoinstall.md).
+Check it out [here!](compat/install.md).
 
 ```
 
