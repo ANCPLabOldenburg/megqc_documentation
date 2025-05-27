@@ -14,9 +14,9 @@ This plot represents the mean event shape, which indicates the typical waveform 
 
 Similar to the ECG report, the following three plots show the MEG channels affected by blink artifacts, ranked from the most affected to the least affected. This help us to identify channels that may require artifact correction before analysis.
 
-  <img src="../static/05_EOG/04" alt="pic4" width="300px">
-  <img src="../static/05_EOG/05" alt="pic5" width="300px">
-  <img src="../static/05_EOG/06" alt="pic6" width="300px">
+  <img src="../static/05_EOG/04" alt="pic4" width="500px">
+  <img src="../static/05_EOG/05" alt="pic5" width="500px">
+  <img src="../static/05_EOG/06" alt="pic6" width="500px">
 
 ```{admonition} Want to check more reports?
 :class: tip
