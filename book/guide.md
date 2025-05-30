@@ -1,4 +1,4 @@
-# Practical Guide to Classic MEGqc
+# MEGqc Classic
 Now that we have a general understanding of MEGqc and the Metrics reports, this guide will walk you through how to **install, run and use** Megqc on your own datasets. 
 
 
