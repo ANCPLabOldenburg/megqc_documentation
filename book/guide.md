@@ -1,11 +1,11 @@
-# Practical Guide to MEGqc
+# Practical Guide to Classic MEGqc
 Now that we have a general understanding of MEGqc and the Metrics reports, this guide will walk you through how to **install, run and use** Megqc on your own datasets. 
 
 
 ```{admonition} New version?
 :class: tip
 Now MEGqc has a new installer and interface 🚀
-Check it out [here!](compat/install.md).
+Check it out [here!](../compat/install.md).
 
 ```
 
