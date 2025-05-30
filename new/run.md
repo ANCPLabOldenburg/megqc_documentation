@@ -5,7 +5,7 @@ Thanks to the graphical user interface (GUI) you will be able to run MEGqc and g
 ## 1. Launching MEGqc
 To open the GUI, click the MEGqc shortcut on your Desktop.
 
-<img src="../static/mini/dektop.png" alt="icon" width="350px" align="center">
+<img src="../static/mini/desktop.png" alt="icon" width="350px" align="center">
 
 
 *(a terminal will open alongside the GUI, you can safely close the terminal if you want)*
