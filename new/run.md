@@ -68,7 +68,7 @@ Once the process is finished, a new folder called `MEG_qc` will be created insid
 
 <br>
 
-**Congratulations! You've successsfully run the calculation module!**
+**Congratulations! You've successsfully run the calculation module! 🎉 **
 
 ```{admonition} GUI visual theme
 :class: tip
