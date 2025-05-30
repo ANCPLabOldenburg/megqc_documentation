@@ -16,15 +16,11 @@ The time is on the Y axis, from top to bottom:
 - Selected **metrics** are executed (taking into account users' parameters) and results compiled into the **derivatives**.
 - ancpBIDS writes the **derivatives** to the dataset directory, maintaining BIDS naming convention.
 
-<br>   
-
 ### Derivatives Metadata
 [BIDS](/bids.md) suggest that the Metadata should be stored in .json and .tsv files, because both machine-readable type of file easily accesible by Python, Matlab, Excel or R. MEgqc offers both types of files:
 
 * **JSON files** with the key information for each of the quality metrics. JSON (JavaScript Object Notation) files are lightweight data format that store structured data in a readable, text-based format using key-value pairs, arrays, and nested objects.
 * **TSV files** with more detailed results of the metrics. The plotting module of MEGqc will use them to build the visual HTML reports. TSV (Tab-Separated Values) files are simple text files that stores tabular data, with each line representing a row and each value in the row separated by tab characters.
-
-<br>   
 
 ### Dependencies
 It's not necessary to manually pip install the different dependencies anymore.
