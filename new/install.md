@@ -54,7 +54,7 @@ On your **Desktop** you will also see two terminal launchers:
 * `MEGqc` — will launch the GUI.
 * `Uninstall MEGqc`  — will remove MEGqc from your system, including its environment and related files.
 
-<img src="../static/bids/desktop.png" alt="desktop-icons" width="200px" align="center">
+<img src="../static/mini/desktop.png" alt="desktop-icons" width="200px" align="center">
 
 
 ```{admonition} If you want to know...
