@@ -3,11 +3,19 @@
 Thanks to the graphical user interface (GUI) you will be able to run MEGqc and generate reports without using the terminal. 
 
 ## 1. Launching MEGqc
-To open the GUI, click the MEGqc shortcut on your Desktop *(a terminal will open alongside the GUI, you can safely close the terminal if you want)*.
+To open the GUI, click the MEGqc shortcut on your Desktop.
+
+<img src="../static/mini/dektop.png" alt="icon" width="350px" align="center">
+
+
+*(a terminal will open alongside the GUI, you can safely close the terminal if you want)*
+
+
+## 2. Set Calculation parameters
 
 <img src="../static/mini/mini.png" alt="mini-megqc-gui" width="350px" align="center">
 
-## 2. Set Calculation parameters
+
 * **Data directory:** you can *paste* the path to your dataset or click `Browse` to select the folder manually.
 * **Subjects:** you can write `all` to analyze every subject, or enter a specific ID (e.g., `009` for `sub-009`).
 * **Jobs:** Choose how many parallels jobs to use during the processing of your data. The default option is `1`, but you can increase the speed of the processing by increasing the number of parallel Jobs.
