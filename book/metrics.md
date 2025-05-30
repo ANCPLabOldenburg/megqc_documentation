@@ -56,7 +56,7 @@ Click on any of the metrics below to open a their report overview. In these over
 
 ```{admonition} Figures source
 
-The examples in this section are taken from the report of the subject 009 from the  _ds003483_ dataset available on OpenNeuro. This same dataset was used by Gaponsertva (2023) to evaluate the MEGqc tool. In the Practical Guide you'll learn how to [download this same dataset](extra/openneuro.md), so you can recreate these same reports yourself.
+The examples in this section are taken from the report of the subject 009 from the  _ds003483_ dataset available on OpenNeuro. This same dataset was used by Gaponsertva (2023) to evaluate the MEGqc tool. In the Practical Guide you'll learn how to [download this same dataset](../extra/openneuro.md), so you can recreate these same reports yourself.
 
 ``` 
 
