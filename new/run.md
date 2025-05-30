@@ -60,22 +60,27 @@ Once you've set your parameters (Data directory, Subjects and parallel Jobs) cli
 
 <img src="../static/mini/logs.png" alt="gui-log" width="350px" align="center">
 
-Once the process is finished, a new folder called `MEG_qc` will be created inside your dataset's `derivatives` folder . This folder will contain one folder per subject containing several machine-readable files (**.tsv** and **.json**) for each metric, run and task. If you're following this tutorial, the path to the MEGqc derivatives would look something like:
+Once the process is finished, a new folder called `MEG_qc` will be created inside your dataset's `derivatives` folder . This folder will contain one subfolder per subject, with machine-readable files (**.tsv** and **.json**) for each metric, run and task. If you're following this tutorial, the path to the MEGqc derivatives might look like this:
+<br>
 
 
    /path/to/your/dataset/ds003483/derivatives/Meg_QC/calculation/sub-009/
 
+<br>
 
-Congratulations! You did it!
+**Congratulations! You've successsfully run the calculation module!**
 
 ```{admonition} GUI visual theme
 :class: tip
 
-Use the left-corner icon to open a dropdown list with all available themes. This will only affect the display of the GUI. This list also includes themes with high-contrast options. 
+Click the left-corner icon of the GUI to open a dropdown list with all available themes. This will only affect the display of the GUI. This list also includes themes with high-contrast options. 
 
 ```
+
 # Next section
-In the next section you'll learn how to use calculation derivatives to create the html reports.
+In the next section, you'll learn how to use the calculation derivatives to generate the **HTML reports** with MEGqc's plotting module.
+
+<br>
 
 
 
