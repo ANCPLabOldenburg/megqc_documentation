@@ -7,7 +7,7 @@ Download the `.sh` file from the following link:
 
 * [MEGqc Installer (Mega.nz)](https://mega.nz/file/dMBh1QBQ#o3m1HGd_F-qZEXNR0s7kXzheUSgC3DXYVzSqhq-ulgY)
   
-### 2. Allow script execution
+## 2. Allow script execution
 This can be done in two different ways:
 
 ````{tab-set}
@@ -57,7 +57,7 @@ On your **Desktop** you will also see two terminal launchers:
 <img src="../static/mini/desktop.png" alt="desktop-icons" width="200px" align="center">
 
 
-# Next section
+## Next section
 
 In the next section you'll learn how to use the GUI to run MEGqc.
 
