@@ -9,6 +9,8 @@ Learn how to use the intuitive GUI to run the metrics calculation on your datase
 
 3. [Running the plotting module](../new/plot.md)
 Learn how to generate the HTML reports.
+
+
 <br>
 <img src="../static/mini/mini.png" alt="megqc-gui" width="350px" align="center">
 <br>
