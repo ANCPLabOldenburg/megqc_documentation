@@ -47,11 +47,15 @@ Given the dataset's size (21 participants, 24.48 GB), dowloading the full datase
 
 If the `get` command fails, try:
 
-   cd ds003483/
+
+      cd ds003483/
+
 
 And once within the folder
 
-   datalad get sub-009/
+
+      datalad get sub-009/
+
 
 ``` 
 
