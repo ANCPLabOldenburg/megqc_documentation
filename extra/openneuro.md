@@ -13,7 +13,7 @@
 Given the dataset's size (21 participants, 24.48 GB), dowloading the full dataset may be unnecessary. To save time and storage, we'll dowload only one subject's folder using **Datalad**.
 
 ## Getting started with DataLad
-[DataLad](github.com/datalad)is a free and open source data tool for management of large datasets. It can be used to download a single subject folder from a dataset.
+[DataLad](github.com/datalad) is a free and open source data tool for management of large datasets. It can be used to download a single subject folder from a dataset. Be sure to have your [environment](extra/environment.md) ready.
 
 0. **Ensure `git-annex` is properly installed on your environment:** DataLad requires `git-annex` version 8.20200309 (or higher). Verify your installation and, if needed, update `git-annex`.
 ```bash
