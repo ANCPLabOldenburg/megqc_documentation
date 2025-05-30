@@ -9,12 +9,14 @@
 
 The **[BIDS Specification](https://bids-specification.readthedocs.io/en/stable/)** defines the rules for data organizing and naming conventions. It is continuously updated thanks to community efforts. To ensure that the Specifications are implemented consistently, BIDS provides **[BIDS Schema](https://bids-specification.readthedocs.io/en/stable/appendices/schema.html)**, a machine readable representation written in YAML format. The BIDS Schema describes the different possible objects (BIDS concepts), rules (for naming filepaths and contents) and meta (the context to which rules can be applied).
 
-<img src="../static/bids/bids-schema.png" alt="bids-schema" width="200px">
+<img src="../static/bids/bids-schema.png" alt="bids-schema" width="200px" align="center">
 
 
-```{admonition} Would you like to know more about the BIDS specification?
+MEGqc uses [ancpBIDS](https://github.com/ANCPLabOldenburg/ancp-bids) to handle MEG datasets efficiently. This library builds on the BIDS specification and schema to **load datasets, manage metada and write derivatives** directly to your local drive; all in a structure and BIDS-compliant way. 
 
-You can find more information the BIDS Specification on their [official BIDS webpage](https://bids.neuroimaging.io/).
+```{admonition} Would you like to learn how to use ancpbids within your pileine?
+
+Check out the [ancpBIDS documentation](https://ancplaboldenburg.github.io/ancpbids_documentation/index.html) for a full tutorial with examples.
 
 ```
 
