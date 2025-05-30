@@ -5,7 +5,7 @@ Thanks to the graphical user interface (GUI) you will be able to run MEGqc and g
 ## 1. Launching MEGqc
 To open the GUI, click the MEGqc shortcut on your Desktop.
 
-<img src="../static/mini/desktop.png" alt="icon" width="350px" align="center">
+<img src="../static/mini/desktop.png" alt="icon" width="250px" align="center">
 
 
 *(a terminal will open alongside the GUI, you can safely close the terminal if you want)*
@@ -13,7 +13,7 @@ To open the GUI, click the MEGqc shortcut on your Desktop.
 
 ## 2. Set Calculation parameters
 
-<img src="../static/mini/mini.png" alt="mini-megqc-gui" width="350px" align="center">
+<img src="../static/mini/calculation.png" alt="mini-megqc-gui" width="350px" align="center">
 
 
 * **Data directory:** you can *paste* the path to your dataset or click `Browse` to select the folder manually.
@@ -57,7 +57,7 @@ Once your parameters are set (Data directory, Subjects and parallel Jobs) click 
 
 <img src="../static/mini/log.png" alt="settings-gui" width="350px" align="center">
 
-Once the process is finished, you will find a new folder within the derivatives called `MEG_qc`. If you're following this tutorial, the path would look something like:
+Once the process is finished, you will find a new folder within the derivatives folder called `MEG_qc`. This folder will contain several **.tsv** and **.json** files for each metric, run and task. If you're following this tutorial, the path to the MEGqc derivatives would look something like:
 
   /path/to/your/dataset/ds003483/derivatives/Meg_QC/calculation/sub-009/
 
