@@ -43,15 +43,15 @@ Given the dataset's size (21 participants, 24.48 GB), dowloading the full datase
         datalad get ds003483/sub-009/
 ```
 
-```{warning} 
-
-If the `get` command fails, try:
+```{warning} If the `get` command fails
+:class: dropdown
+First change directory within the dataset:
 
 
       cd ds003483/
 
 
-And once within the folder
+And then
 
 
       datalad get sub-009/
