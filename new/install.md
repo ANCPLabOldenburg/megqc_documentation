@@ -5,11 +5,10 @@ We have created a shell script installer that will make the installation process
 ## 1. Download the installer
 Download the `.sh` file from the following link:
 
-👉 [MEGqc Installer (Mega.nz)](https://mega.nz/file/UIQ0iJAQ#hvvyVY6RMaSXSqVQwDq-xMtY3JdDFluDxgOOVBayCKc)
+👉 [MEGqc Installer (Mega.nz)](https://mega.nz/file/dMBh1QBQ#o3m1HGd_F-qZEXNR0s7kXzheUSgC3DXYVzSqhq-ulgY)
   
 ### 2. Allow script execution
-This can be done in two different ways. 
-
+This can be done in two different ways:
 
 ````{tab-set}
 ```{tab-item} Option 1
@@ -43,7 +42,7 @@ Make the installer executable by right-clicking the file, selecting Properties, 
    
 ## 3. **Run the installer**
 
-Now your shell script installer is ready to run! You can either double-click the `sh` file or run it from the terminal:
+Now your shell script installer is ready to run! You can either **double-click the** `sh` **file** or **run it from the terminal**:
 
     ./install_megqc.sh
 
@@ -52,7 +51,7 @@ Once launched, the terminal will prompt you to input a path where MEGqc should b
 ```{admonition} If you want to learn more...
 :class: tip, dropdown
 
-About what is an [environment](./guide/installation.md) or what kind of [dependencies](./book/details.md) does MEGqc have, follow the links.
+About what is an [environment](../old/installation.md) or what kind of [dependencies](../extra/details.md) does MEGqc have, follow the links.
 
 ```
 
