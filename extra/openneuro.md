@@ -30,7 +30,7 @@ Given the dataset's size (21 participants, 24.48 GB), dowloading the full datase
 
 2. **Clone the dataset repository:** It copies the entire dataset's structure, but only lightweight metada (such as .json), the actual data files (.fif in this case) are not downloaded, even thought they _"broken links"_ placeholders will be created. Be sure you are working in your desired directory (with `cd`), then run:
 ```bash
-    datalad install https\://github.com/OpenNeuroDatasets/ds003483.git
+    datalad install https://github.com/OpenNeuroDatasets/ds003483.git
 ```
 
 <br>
