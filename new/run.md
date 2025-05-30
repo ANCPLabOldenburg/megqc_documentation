@@ -59,9 +59,11 @@ If you want to learn more about the specific settings included in MEGqc, you can
 Once you've set your parameters (Data directory, Subjects and parallel Jobs) click `Run Calculation`. The **Log** window will display the ongoing process, including updates and any errors. You can also find more detailed information in the terminal window.
 
 <img src="../static/mini/logs.png" alt="gui-log" width="350px" align="center">
+
 <br>
 
 Once the process is finished, a new folder called `MEG_qc` will be created inside your dataset's `derivatives` folder . This folder will contain one subfolder per subject, with machine-readable files (**.tsv** and **.json**) for each metric, run and task. If you're following this tutorial, the path to the MEGqc derivatives might look like this:
+
 <br>
 
     /path/to/your/dataset/ds003483/derivatives/Meg_QC/calculation/sub-009/
