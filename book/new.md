@@ -12,7 +12,7 @@ Learn how to generate the HTML reports.
 
 
 <br>
-<img src="../static/mini/mini.png" alt="megqc-gui" width="350px" align="center">
+<img src="../static/mini/gui.png" alt="megqc-gui" width="350px" align="center">
 <br>
 
 ```{admonition} Don't have a Dataset?
