@@ -12,11 +12,11 @@ The **[BIDS Specification](https://bids-specification.readthedocs.io/en/stable/)
 <img src="../static/bids/bids-schema.png" alt="bids-schema" width="200px" align="center">
 
 
-MEGqc uses [ancpBIDS](https://github.com/ANCPLabOldenburg/ancp-bids) to handle MEG datasets efficiently. This library builds on the BIDS specification and schema to **load datasets, manage metada and write derivatives** directly to your local drive; all in a structure and BIDS-compliant way. 
+MEGqc uses [**ancpBIDS**](https://github.com/ANCPLabOldenburg/ancp-bids) to handle MEG datasets efficiently. This library builds on the BIDS specification and schema to load datasets, manage metada and write derivatives directly to your local drive; all in a structure and BIDS-compliant way. 
 
-```{admonition} Would you like to learn how to use ancpbids within your pileine?
+```{admonition} Would you like to learn how to use ancpbids within your pipeleine?
 
-Check out the [ancpBIDS documentation](https://ancplaboldenburg.github.io/ancpbids_documentation/index.html) for a full tutorial with examples.
+Check out the [**ancpBIDS documentation**](https://ancplaboldenburg.github.io/ancpbids_documentation/index.html) for a full tutorial with examples.
 
 ```
 
