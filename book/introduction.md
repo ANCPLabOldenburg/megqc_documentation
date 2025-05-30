@@ -31,7 +31,7 @@ The different calculation modules within MEGqc are called `metrics` and they are
 - **Muscle artifacts calculation**
 <br>  
 
-To ensure the clarity of the results, MEGqc will provide you with a detailed visual HTML report for each Metric. MEGqc will also provide you with machine-readable outputs (**JSON files** and **TSV files**). The next section will delve in the kind of information included within each report. 
+MEGqc provides you with machine-readable outputs (**JSON files** and **TSV files**), and, to ensure clarity, MEGqc generates detailed visual HTML reports for each Metric.
 
 
 
