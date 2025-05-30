@@ -1,13 +1,9 @@
-[![License](https://img.shields.io/github/license/peerherholz/workshop_weizmann)](https://github.com/PeerHerholz/workshop_weizmann)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # Welcome!
 
 Hello everyone, and welcome to this MEGqc tutorial.
-**MEGqc** is a Python-based pipeline for quality control of MEG data. It was developed as **Evgeniia Gapontseva's Master Thesis (2023)** within the **Applied Neurocognitive Psychology Lab (ANCP Lab)**.
-
-
-* [Link to MEGqc GitHub](https://github.com/ANCPLabOldenburg/MEGqc)
-* [Link to ANCP Lab website](https://uol.de/en/applied-neurocognitive-psychology)
+[**MEGqc**](https://github.com/ANCPLabOldenburg/MEGqc) is a Python-based pipeline for quality control of MEG data. It was developed as **Evgeniia Gapontseva's Master Thesis (2023)** within the [**Applied Neurocognitive Psychology Lab (ANCP Lab)**](https://uol.de/en/applied-neurocognitive-psychology).
 
 ## This guide includes
 - What is MEGqc and why do we need it?
