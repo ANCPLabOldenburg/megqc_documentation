@@ -16,6 +16,7 @@ To open the GUI, click the MEGqc shortcut on your Desktop.
 <img src="../static/mini/calculation.png" alt="mini-megqc-gui" width="400px" align="center">
 
 
+
 * **Data directory:** you can *paste* the path to your dataset or click `Browse` to select the folder manually.
 * **Subjects:** you can write `all` to analyze every subject, or enter a specific ID (e.g., `009` for `sub-009`).
 * **Jobs:** Choose how many parallels jobs to use during the processing of your data. The default option is `1`, but you can increase the speed of the processing by increasing the number of parallel Jobs.
