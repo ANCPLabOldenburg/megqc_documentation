@@ -45,7 +45,7 @@ If you want to learn more about the specific settings included in MEGqc, you can
 ``` 
 
 ## 4. Run Calculation
-Once your parameters are set (Data directory, Subjects and parallel Jobs) click `Run Calculation`. The Log window will show you the on-going process, as well, as errors. You may find more details about the on-goin processes in the terminal.
+Once your parameters are set (Data directory, Subjects and parallel Jobs) click `Run Calculation`. The Log window will show you the on-going process, as well, as errors. You may find more details about the on-going processes in the terminal.
 
 
 
