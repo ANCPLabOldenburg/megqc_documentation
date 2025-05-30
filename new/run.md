@@ -5,7 +5,7 @@ Thanks to the graphical user interface (GUI) you will be able to run MEGqc and g
 ## 1. Launching MEGqc
 To open the GUI, click the MEGqc shortcut on your Desktop.
 
-<img src="../static/mini/desktop.png" alt="icon" width="250px" align="center">
+<img src="../static/mini/desktop.png" alt="icon" width="200px" align="center">
 
 
 *(a terminal will open alongside the GUI, you can safely close the terminal if you want)*
@@ -13,7 +13,7 @@ To open the GUI, click the MEGqc shortcut on your Desktop.
 
 ## 2. Set Calculation parameters
 
-<img src="../static/mini/calculation.png" alt="mini-megqc-gui" width="350px" align="center">
+<img src="../static/mini/calculation.png" alt="mini-megqc-gui" width="400px" align="center">
 
 
 * **Data directory:** you can *paste* the path to your dataset or click `Browse` to select the folder manually.
@@ -32,7 +32,7 @@ To open the GUI, click the MEGqc shortcut on your Desktop.
 ## 3. Advance Settings
 The `Setting` tab allows you to customize your analysis. These settings are optional, as the default values were calculated by Gaponsetva (2023) to be compatible with a broad variety of datasets.
 
-<img src="../static/mini/settings.png" alt="settings-gui" width="350px" align="center">
+<img src="../static/mini/gui_settings.png" alt="settings-gui" width="350px" align="center">
 
 * The basic settings allows you to select the channel types (`mag` or `grade` or both), and the specific metric to compute.
 * The settings are grouped into categories, such as *filtering, epoching,* and *metric-specific* options.  
