@@ -47,7 +47,11 @@ If you want to learn more about the specific settings included in MEGqc, you can
 ## 4. Run Calculation
 Once your parameters are set (Data directory, Subjects and parallel Jobs) click `Run Calculation`. The Log window will show you the on-going process, as well, as errors. You may find more details about the on-going processes in the terminal.
 
+<img src="../static/mini/log.png" alt="settings-gui" width="350px" align="center">
 
+Once the process is finished, you will find a new folder within the derivatives called `MEG_qc`. If you're following this tutorial, the path would look something like:
+
+  /path/to/your/dataset/ds003483/derivatives/Meg_QC/calculation/sub-009/
 
 
 ```{admonition} GUI visual theme
