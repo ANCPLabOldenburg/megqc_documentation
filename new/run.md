@@ -15,7 +15,7 @@ To open the GUI, click the MEGqc shortcut on your Desktop.
 
 <img src="../static/mini/calculation.png" alt="mini-megqc-gui" width="400px" align="center">
 
-
+<br>
 
 * **Data directory:** you can *paste* the path to your dataset or click `Browse` to select the folder manually.
 * **Subjects:** you can write `all` to analyze every subject, or enter a specific ID (e.g., `009` for `sub-009`).
@@ -34,6 +34,8 @@ To open the GUI, click the MEGqc shortcut on your Desktop.
 The `Setting` tab allows you to customize your analysis. These settings are optional, as the default values were calculated by Gaponsetva (2023) to be compatible with a broad variety of datasets.
 
 <img src="../static/mini/gui_settings.png" alt="settings-gui" width="350px" align="center">
+
+<br>
 
 * The basic settings allows you to select the channel types (`mag` or `grade` or both), and the specific metric to compute.
 * The settings are grouped into categories, such as *filtering, epoching,* and *metric-specific* options.  
@@ -54,14 +56,15 @@ If you want to learn more about the specific settings included in MEGqc, you can
 ``` 
 
 ## 4. Run Calculation
-Once your parameters are set (Data directory, Subjects and parallel Jobs) click `Run Calculation`. The Log window will show you the on-going process, as well, as errors. You may find more details about the on-going processes in the terminal.
+Once you've set your parameters (Data directory, Subjects and parallel Jobs) click `Run Calculation`. The **Log** window will display the ongoing process, including updates and any errors. You can also find more detailed information in the terminal window.
 
-<img src="../static/mini/log.png" alt="settings-gui" width="350px" align="center">
+<img src="../static/mini/logs.png" alt="gui-log" width="350px" align="center">
 
-Once the process is finished, you will find a new folder within the derivatives folder called `MEG_qc`. This folder will contain one folder per subject containing several machine-readable files (**.tsv** and **.json**) for each metric, run and task. If you're following this tutorial, the path to the MEGqc derivatives would look something like:
+Once the process is finished, a new folder called `MEG_qc` will be created inside your dataset's `derivatives` folder . This folder will contain one folder per subject containing several machine-readable files (**.tsv** and **.json**) for each metric, run and task. If you're following this tutorial, the path to the MEGqc derivatives would look something like:
 
 
    /path/to/your/dataset/ds003483/derivatives/Meg_QC/calculation/sub-009/
+
 
 Congratulations! You did it!
 
