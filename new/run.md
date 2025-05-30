@@ -21,7 +21,6 @@ To open the GUI, click the MEGqc shortcut on your Desktop. A terminal will open 
 
 ``` 
 
-
 ## 3. Advance Settings
 The `Setting` tab allows you to customize your analysis. These settings are optional, as the default values were calculated by Gaponsetva (2023) to be compatible with a broad variety of datasets.
 
@@ -29,10 +28,21 @@ The `Setting` tab allows you to customize your analysis. These settings are opti
 
 * The basic settings allows you to select the channel types (`mag` or `grade` or both), and the specific metric to compute.
 * The settings are grouped into categories, such as *filtering, epoching,* and *metric-specific* options.  
-* When you hover over them, you'll see a short description along with the default value. Once you have personalized your settings
+* When you hover over them, you'll see a short description along with the default value.
 * Once you're done editing your settings, don't forget to click `Save Settings` at the end of the list.
 
-If you want to learn more about the specific settings included in MEGqc, you can read a deep 
+If you want to learn more about the specific settings included in MEGqc, you can find a detailed explanation in the [Setting page](../extra/settings.md) or read a brief overview in the dropdwon below:
+
+
+```{admonition} Settings overview
+:class: dropdown
+
+  * **Default settings:** Select the **channel types** to incldues (`mag` or `grade` or both), which **metrics** to compute (e.g. STD, PSD or PTP), and what plots to generate (such as interactive time series).
+ * **Filtering:** configure the **high-pass / low-pass** cut-offs, choose between **IIR or FIR** filters, and apply **downsampling** if needed.
+ * **Epoching:** Customize epochs **duration**, define the *stimulus channel* or how to handle duplicate **events**.
+ * **Metric-specific settings:** Every metrics include their own editable settings, such as how many standard deviations from the mean to use as a threshold, the edge frequencies for PSD calculation, or the minimun PTP amplitude to count as a peak. 
+
+``` 
 
 ## 4. Run Calculation
 Once your parameters are set (Data directory, Subjects and parallel Jobs) click `Run Calculation`. The Log window will show you the on-going process, as well, as errors. You may find more details about the on-goin processes in the terminal.
