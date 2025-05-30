@@ -48,17 +48,19 @@ Now your shell script installer is ready to run! You can either **double-click t
 
 Once launched, the terminal will prompt you to input a path where MEGqc should be installed. The installer will then create its own **virtual environment** and handle all the **depedencies**. MEGqc is compatible with Python versions 3.8 to 3.12, but if you don't have any valid Python version, the installer will install Python 3.10. 
 
-```{admonition} If you want to learn more...
-:class: tip, dropdown
-
-About what is an [environment](../old/installation.md) or what kind of [dependencies](../extra/details.md) does MEGqc have, follow the links.
-
-```
-
 Now your installation is complete! In your chosen directory, you'll find a folder named `runMEGqc` containing the virtual environment, along with a script called `uninstall_megqc.sh`.
 
 On your **Desktop** you will also see two terminal launchers:
-* `MEGqc` — will launch [mini-MEGqc](mini.md), the simplified MEGqc interface
+* `MEGqc` — will launch the GUI.
 * `Uninstall MEGqc`  — will remove MEGqc from your system, including its environment and related files.
 
+```{admonition} If you want to know...
+:class: tip, dropdown
+
+what is an [environment](../old/installation.md) or what kind of [dependencies](../extra/details.md) does MEGqc have, follow the links.
+
+```
+# Next section
+
+In the next section you'll learn how to use the GUI to run MEGqc.
 
