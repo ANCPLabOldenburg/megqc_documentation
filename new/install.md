@@ -57,7 +57,7 @@ On your **Desktop** you will also see two terminal launchers:
 ```{admonition} If you want to know...
 :class: tip, dropdown
 
-what is an [environment](../old/installation.md) or what kind of [dependencies](../extra/details.md) does MEGqc have, follow the links.
+what is an [environment](../extra/environment.md) or what kind of [dependencies](../extra/details.md) does MEGqc have, follow the links.
 
 ```
 # Next section
