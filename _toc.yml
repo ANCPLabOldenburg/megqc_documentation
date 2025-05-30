@@ -25,5 +25,6 @@ chapters:
     - file: extra/details
     - file: extra/settings
     - file: extra/bids
+    - file: extra/environment
     - file: extra/openneuro
   
