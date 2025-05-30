@@ -44,7 +44,7 @@ The sensor labels appear when you hover over a  sensor dot. Alternatively, you c
 
 
 ## Metrics Overview
-In this tutorial we will focus only on the Magnetometers, but the logic and interpretation for Gradiometers are very similar. Click on any of the metrics below to open a their report overview:
+Click on any of the metrics below to open a their report overview. In these overviews we will focus only on the Magnetometers, but the logic and interpretation for Gradiometers are very similar. 
 
 1. [Standard Deviation of the Data](../report/std.md)
 2. [Power Spectral Density](../report/psd.md)
