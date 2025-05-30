@@ -32,7 +32,7 @@ Give execute permissions to the installer
 
 Make the installer executable by right-clicking the file, selecting Properties, navigating to the Permissions tab, and checking the box *"Allow this file to run as a program"*.
 
-<img src="../static/mini/properties.png" alt="properties-window" width="400px" align="center">
+    <img src="../static/mini/properties.png" alt="properties-window" width="400px" align="center">
 
 
 ```
