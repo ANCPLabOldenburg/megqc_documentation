@@ -3,7 +3,7 @@
 Thanks to the graphical user interface (GUI) you will be able to run MEGqc and generate reports without using the terminal. 
 
 ## 1. Launching MEGqc
-To open the GUI, click the MEGqc shortcut on your Desktop. A terminal will open alongside the GUI, you can safely close the terminal if you want.
+To open the GUI, click the MEGqc shortcut on your Desktop *(a terminal will open alongside the GUI, you can safely close the terminal if you want)*.
 
 <img src="../static/mini/gui.png" alt="mini-megqc-gui" width="350px" align="center">
 
