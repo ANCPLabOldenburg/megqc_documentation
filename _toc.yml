@@ -15,11 +15,11 @@ chapters:
     - file: new/install
     - file: new/run
     - file: new/plot
-- file: book/guide
+- file: book/old
   sections:
-    - file: guide/installation
-    - file: guide/run_calculation
-    - file: guide/run_plotting
+    - file: old/installation
+    - file: old/run
+    - file: old/plot
 - file: book/extra
   sections:
     - file: extra/details
