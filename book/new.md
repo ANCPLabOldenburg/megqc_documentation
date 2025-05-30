@@ -16,7 +16,7 @@ Learn how to generate the HTML reports.
 <br>
 
 ```{admonition} Don't have a Dataset?
-:class: tip
+
 In case you don't have a BIDS compliant MEG dataset, here’s how to download one from OpenNeuro:
 [How to download a dataset from OpenNeuro](../extra/openneuro.md)
 
