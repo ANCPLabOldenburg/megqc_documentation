@@ -10,14 +10,12 @@ chapters:
     - file: report/ecg
     - file: report/eog
     - file: report/muscle
-- file: book/new
+- file: book/installation
   sections:
-    - file: new/install
-    - file: new/run
-    - file: new/plot
+    - file: installation/gui
+    - file: installation/cli
 - file: book/old
   sections:
-    - file: old/installation
     - file: old/run
     - file: old/plot
 - file: book/extra
