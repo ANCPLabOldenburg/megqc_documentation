@@ -9,7 +9,7 @@ Magnetoencephalography (MEG) data is susceptible to  noise and artifacts, which 
 For this reason, quality control of MEG data is an essential step for ensuring valid and reproducible science (Niso et al., 2022). However, the detection and annotation of artifacts in MEG data is commonly performed manually (visual inspection), requires expertise and can be a tedious and time-consuming task. Also, as there's not a standardized procedure, it's vulnerable to biases.
 
 ## MEGqc
-To address this issue, the ANCP lab developed **MEGqc**, a software tool for automated and standardized quality control of MEG recordings. By providing a standardized workflow, it helps minimize human bias and facilitates comparisosn between datasets. MEGqc **evaluates** the quality of raw data, but it is **not** an artifact removal tool.
+To address this issue, the ANCP lab developed **MEGqc**, a software tool for automated and standardized quality control of MEG recordings.  By providing a standardized workflow, it helps minimize human bias and facilitates comparisosn between datasets. MEGqc **evaluates** the quality of raw data, but it is **not** an artifact removal tool. 
 
 The MEGqc pipeline can be used in two ways: via a **command-line interface (CLI)** or a **graphical user interface (GUI).** This documentation covers the [installation](./installation) and tutorial for both options.
 * The **CLI** is recommended for developers or advanced users.
@@ -20,9 +20,7 @@ Regardless, MEGqc is designed to be user-friendly. To run the analysis, the user
 - Set analysis parameters if desired (default parameters are available).
 - Run the analysis.
 
-
 To ensure standardization of the pipeline, MEGqc software is tailored to the [**BIDS standards**](../extra/bids.md).
-
 
 ## Metrics in MEGqc
 The different calculation modules within MEGqc are called `metrics` and they are used to evaluate specific types of artifacts or aspects of data quality. MEGqc provides you with machine-readable outputs (**JSON files** and **TSV files**), and, to ensure clarity, MEGqc generates detailed visual HTML reports for each Metric. There are six independent metrics, and this documentation we will cover each of their HTML reports:
