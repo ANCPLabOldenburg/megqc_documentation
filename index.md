@@ -20,7 +20,7 @@ MEGqc is designed to be as user-friendly as possible. This documentation will he
 
 ```{warning}
 
-Currently, MEGqc runs smoothly on Linux. A Windows-compatible version is under development.
+Currently, MEGqc runs smoothly on Linux. but a Windows-compatible version is under development! 🚀
 
 ```
 
