@@ -8,16 +8,18 @@ Magnetoencephalography (MEG) data is susceptible to  noise and artifacts, which 
 
 For this reason, quality control of MEG data is an essential step for ensuring valid and reproducible science (Niso et al., 2022). However, the detection and annotation of artifacts in MEG data is commonly performed manually (visual inspection), requires expertise and can be a tedious and time-consuming task. Also, as there's not a standardized procedure, it's vulnerable to biases.
 
-<img src="https://media1.tenor.com/m/DCycRQnBpOYAAAAd/math-hmm.gif" alt="maths" width="250px">
-
 <br>  
 
 To address this issue, the ANCP lab developed **MEGqc**, a software tool for automated and standardized quality control of MEG recordings. By providing a standardized workflow, it helps minimize human bias and facilitates comparisosn between datasets. MEGqc **evaluates** the quality of raw data, but it is **not** an artifact removal tool.
 
-The MEGqc pipeline is designed to be user-friendly, so researches only need to:
+The MEGqc pipeline can be used in two ways: through a via a **command-line interface (CLI)** or a **graphical user interface (GUI).** This documentation covers the installation and tutorial for bothe options.
+* The **CLI** is recommended for developers or advanced users
+* The **GUI** is ideal for beginners or users who prefer a more visual interface.
+
+Regardless, MEGqc is designed to be user-friendly. To run the analysis, the user just needs to:
 - Provide data for evaluation
-- Set analysis parameters if desired (default parameters are available), and 
-- Run the analysis script.
+- Set analysis parameters if desired (default parameters are available)
+- Run the analysis
 
 To ensure standardization of the pipeline, MEGqc software is tailored to the [**BIDS standards**](../extra/bids.md).
 
@@ -35,7 +37,7 @@ MEGqc provides you with machine-readable outputs (**JSON files** and **TSV files
 
 
 
-```{admonition} There are 2 other metrics within MEG QC
+```{admonition} There are 2 other metrics within MEGqc
 :class: dropdown
 
 * **Peak-to-Peak automatic calculation:** This module, which relies on MNE library functions, is not used in the final version of the pipeline. Instead, the manual "Peak-to-Peak manual" is recommended.
