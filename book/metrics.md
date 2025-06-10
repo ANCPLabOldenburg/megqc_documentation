@@ -11,9 +11,10 @@ Each metric is covered in individual reports. Here you can find an overview of t
 5. [EOG (Electrooculography) calculation]((../report/eog.md))
 6. [Muscle Artifacts calculation](../report/muscle.md)
 
+
 Almost every metric will start with basic information of the dataset and the sensor positions.
 
-## Raw Information
+## Basic Information
 
 This section includes some general metadata (date, experimenter, duration...), some channels' information (more on that later), and basic details about the sampling frequency and applied filters.
 
@@ -54,7 +55,7 @@ The sensor labels appear when you hover over a  sensor dot. Alternatively, you c
 
 ```{admonition} Figures source
 
-The examples in this section are taken from the report of the subject 009 from the  _ds003483_ dataset available on OpenNeuro. This same dataset was used by Gaponsertva (2023) to evaluate the MEGqc tool. In the Practical Guide you'll learn how to [download this same dataset](../extra/openneuro.md), so you can recreate these same reports yourself.
+All the examples in this section are taken from the report of the subject 009 from the  _ds003483_ dataset available on OpenNeuro. This dataset (among many others) was used to evaluate the MEGqc tool. You may [download this same dataset](../extra/openneuro.md), to recreate these same reports by yourself.
 
 ``` 
 
