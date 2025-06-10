@@ -7,8 +7,9 @@ To open the GUI, click the MEGqc shortcut on your Desktop.
 
 <img src="../static/mini/desktop.png" alt="icon" width="200px" align="center">
 
+Then the MEGqc GUI will open alongside a bash terminal. You can safely close the terminal, it will display more detailed information about the on-going processes. 
 
-*(a terminal will open alongside the GUI, you can safely close the terminal if you want)*
+<img src="../static/mini/gui.png" alt="icon" width="250px" align="center">
 
 
 ## 2. Set Calculation parameters
