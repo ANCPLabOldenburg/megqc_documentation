@@ -2,14 +2,15 @@
 
 Thanks to the graphical user interface (GUI) you will be able to run MEGqc and generate reports without using the terminal. 
 
+<img src="../static/mini/gui.png" alt="icon" width="250px" align="center">
+
+
 ## 1. Launching MEGqc
 To open the GUI, click the MEGqc shortcut on your Desktop.
 
 <img src="../static/mini/desktop.png" alt="icon" width="200px" align="center">
 
 Then the MEGqc GUI will open alongside a bash terminal. You can safely close the terminal, it will display more detailed information about the on-going processes.
-
-<img src="../static/mini/gui.png" alt="icon" width="250px" align="center">
 
 
 ## 2. Set Calculation parameters
