@@ -1,4 +1,4 @@
-# Settings description
+# Settings Description
 
 The **settings.ini** file not only specifies the data directory path and subjects to be analyzed, but also contains an extensive array of customizable parameters.
 
