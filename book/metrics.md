@@ -11,17 +11,15 @@ Each metric is covered in individual reports. Here you can find an overview of t
 5. [EOG (Electrooculography) calculation]((../report/eog.md))
 6. [Muscle Artifacts calculation](../report/muscle.md)
 
-## Basic information
+Almost every metric will start with basic information of the dataset and the sensor positions.
 
-Almost every metric will start with a basic overview of the data and the sensor poistion.
-
-### Raw Information
+## Raw Information
 
 This section includes some general metadata (date, experimenter, duration...), some channels' information (more on that later), and basic details about the sampling frequency and applied filters.
 
 <img src="../static/00.jpg" alt="raw-info" width="650px">
 
-### Sensor Positions
+## Sensor Positions
 
 <img src="../static/01.jpg" alt="sensor-distribution" width="600px">
 
