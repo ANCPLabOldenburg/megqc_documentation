@@ -1,4 +1,4 @@
-# Easy Installation
+# GUI Installation Guide
 
 We have created a shell script installer that will make the installation process of MEGqc smoother and easier. This installer only works for XFCE-based Linux systems so far, but we're working on a Windows version.
 
