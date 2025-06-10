@@ -38,26 +38,20 @@ Given the dataset's size (21 participants, 24.48 GB), dowloading the full datase
 ![placeholder](../static/placeholder.png)
 
 
-3. **Download only the sub-009 folder:** use the `get` command to download only the data for subject 009.
+3. **Download only the sub-009 folder:** First change directory within the dataset:
+   
 ```bash
-        datalad get ds003483/sub-009/
+      cd ds003483/
 ```
 
-```{warning} If the `get` command fails
-:class: dropdown
-First change directory within the dataset:
+Then use the `get` command to download only the data for subject 009.
 
+```bash
+        datalad get sub-009/
+```
 
-      cd ds003483/
+<br>
 
-
-And then
-
-
-      datalad get sub-009/
-
-
-``` 
 
 
 
