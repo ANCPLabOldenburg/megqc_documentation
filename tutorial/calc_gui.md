@@ -33,7 +33,7 @@ To open the GUI, click the MEGqc shortcut on your Desktop.
 ## 3. Advance Settings
 The `Setting` tab allows you to customize your analysis. These settings are optional, as the default values were calculated by Gaponsetva (2023) to be compatible with a broad variety of datasets.
 
-<img src="../static/mini/gui_settings.png" alt="settings-gui" width="350px" align="center">
+<img src="../static/mini/minimegqc_settings.png" alt="settings-gui" width="350px" align="center">
 
 <br>
 
