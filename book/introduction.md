@@ -23,7 +23,7 @@ Regardless, MEGqc is designed to be user-friendly. To run the analysis, the user
 To ensure standardization of the pipeline, MEGqc software is tailored to the [**BIDS standards**](../extra/bids.md).
 
 ## Metrics in MEGqc
-The different calculation modules within MEGqc are called `metrics` and they are used to evaluate specific types of artifacts or aspects of data quality. MEGqc provides you with machine-readable outputs (**JSON files** and **TSV files**), and, to ensure clarity, MEGqc generates detailed visual HTML reports for each Metric. There are six independent metrics, and this documentation we will cover each of their HTML reports:
+The different calculation modules within MEGqc are called `metrics` and they are used to evaluate specific types of artifacts or aspects of data quality. MEGqc provides you with machine-readable outputs (**JSON files** and **TSV files**), and, to ensure clarity, MEGqc generates detailed visual HTML reports for each Metric. There are six independent metrics, and this documentation will cover each of their HTML reports:
 
 1. [Standard Deviation of the Data](../report/std.md)
 2. [Power Spectral Density](../report/psd.md)
