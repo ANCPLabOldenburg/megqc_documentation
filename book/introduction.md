@@ -24,12 +24,14 @@ To ensure standardization of the pipeline, MEGqc software is tailored to the [**
 
 ## Metrics in MEGqc
 The different calculation modules within MEGqc are called `metrics` and they are used to evaluate specific types of artifacts or aspects of data quality. MEGqc provides you with machine-readable outputs (**JSON files** and **TSV files**), and, to ensure clarity, MEGqc generates detailed visual HTML reports for each Metric. There are six independent metrics, and this documentation we will cover each of their HTML reports:
-- **[Standard Deviation calculation](../reports/std.md)**
-- **[Power Spectral Density calculation](../reports/psd.md)**
-- **[Peak-to-Peak manual calculation](../reports/ptp.md)**
-- **[ECG (Electrocardiogram)](../reports/ecg.md)**
-- **[EOG (Electrooculography) calculation:](../reports/eog.md)**
-- **[Muscle artifacts calculation](../reports/muscle.md)**
+
+1. [Standard Deviation of the Data](../report/std.md)
+2. [Power Spectral Density](../report/psd.md)
+3. [Peal-to-Peak (manual calculation)](../report/ptp.md)
+4. [ECG (Electrocardiogram) calculation](../report/ecg.md)
+5. [EOG (Electrooculography) calculation]((../report/eog.md))
+6. [Muscle Artifacts calculation](../report/muscle.md)
+
 <br>  
 
 
