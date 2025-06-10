@@ -1,4 +1,4 @@
-# ECG: heart beat interference
+# ECG: Heartbeat Interference
 
 Heartbeat interference is a common source of noise in MEG recordings. This intereference shows up as a rhythmic and periodic fluctuation, and it varies among participants (Gapontseva, 2023). 
 
