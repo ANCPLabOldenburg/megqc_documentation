@@ -7,8 +7,8 @@ Now that we have a general understanding of MEGqc and its Metrics reports, this 
 
 ```{warning}
 
-  We strongly recommend using MEGqc within a **virtual environment** to avoid conflicts with system dependencies.
-  The GUI installer  automatically creates and manages a virtual environment. Meanwhile the CLI setup requires you to create one manually.
-  If you want to learn more about virtual environments and how to install them, [click here](../extra(environment.md)
+    We strongly recommend using MEGqc within a **virtual environment** to avoid conflicts with system dependencies.
+    The GUI installer  automatically creates and manages a virtual environment. Meanwhile the CLI setup requires you to create one manually.
+    If you want to learn more about virtual environments and how to install them, [click here](../extra(environment.md)
 
 ``` 
