@@ -1,4 +1,4 @@
-# Run Calculation
+# GUI: Run Calculation Module
 
 Thanks to the graphical user interface (GUI) you will be able to run MEGqc and generate reports without using the terminal. 
 
