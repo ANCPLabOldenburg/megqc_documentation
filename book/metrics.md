@@ -46,6 +46,7 @@ There are 2 different types of meters in MEG sensors: **Magnetometers** and **Gr
 
 
 ```{admonition} Sensor labels
+:class: tip
 
 The sensor labels appear when you hover over a  sensor dot. Alternatively, you can enable _"Always show channels names"_ option, which keeps all labels visible. Enabling this feature might take some time to render, specially if all lobes are visible.
 
@@ -53,7 +54,7 @@ The sensor labels appear when you hover over a  sensor dot. Alternatively, you c
 
 
 
-```{admonition} Figures source
+```{admonition} Source of the figures?
 
 All the examples in this section are taken from the report of the subject 009 from the  _ds003483_ dataset available on OpenNeuro. This dataset (among many others) was used to evaluate the MEGqc tool. You may [download this same dataset](../extra/openneuro.md), to recreate these same reports by yourself.
 
