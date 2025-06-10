@@ -33,7 +33,7 @@ Then the MEGqc GUI will open alongside a bash terminal. You can safely close the
 ``` 
 
 ## 3. Advance Settings
-The `Setting` tab allows you to customize your analysis. These settings are optional, as the default values were calculated by Gaponsetva (2023) to be compatible with a broad variety of datasets.
+The `Setting` tab allows you to customize your analysis. These settings are optional, as the default values were calculated by the ANCPLab to be compatible with a broad variety of datasets.
 
 <img src="../static/mini/minimegqc_settings.png" alt="settings-gui" width="350px" align="center">
 
@@ -44,7 +44,7 @@ The `Setting` tab allows you to customize your analysis. These settings are opti
 * When you hover over them, you'll see a short description along with the default value.
 * Once you're done editing your settings, don't forget to click `Save Settings` at the end of the list.
 
-If you want to learn more about the specific settings included in MEGqc, you can find a detailed explanation in the [Setting page](../extra/settings.md) or read a brief overview in the dropdwon below:
+If you want to learn more about the specific settings included in MEGqc, you can find a detailed explanation in the [settings page](../extra/settings.md) or read a brief overview in the dropdwon below:
 
 
 ```{admonition} Settings overview
