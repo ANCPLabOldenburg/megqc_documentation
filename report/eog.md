@@ -1,4 +1,4 @@
-# EOG: eye movement interference
+# EOG: Eye Movement Interference
 
 The EOG (Electrooculogram) sensor records eye activity and is used to detect eye movements, which are usually separated into saccades and blinks. The MNE algorithms, however, only identify blinks (Gapontseva, 2023).
 
