@@ -4,13 +4,17 @@ Now we'll start with the installation process for the command-line interface (CL
 
 <br>
 
-::::{important}
+
+```{admonition} Virtual Environments
+:class: important
 
 Before diving in, we strongly recommend using MEGqc within a **virtual environment** to avoid conflicts with system dependencies.
 The GUI installer  automatically creates and manages a virtual environment. Meanwhile the CLI setup requires you to create one manually.
 If you want to learn more about virtual environments and how to install them, [click here](../extra(environment.md)
 
-::::
+
+```
+ 
 
 ## Install the MEGqc Package
 Once your environment is activated, you can install Python packages with `pip`, and these installations will only apply to your virtual environment. To install MEGqc core functionality, run the following command in the terminal:
