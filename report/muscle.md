@@ -1,4 +1,4 @@
-# High frequency (Muscle) artifacts
+# High Frequency (Muscle) Artifacts
 Muslce contractions generate electrical activity noticeable in the range of 110-140 Hz (as suggested by MNE). Examples include clenching the jaw, swallowing or twitching cranial muscles (Gapontseva, 2023).
 
 This report includes a single plot displaying the z-scores of high frequency (blue line) and events (red-dots) where the z-score exceed the threshold of 5 (default in settings)
