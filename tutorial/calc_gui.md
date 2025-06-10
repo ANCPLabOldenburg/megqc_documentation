@@ -58,7 +58,7 @@ If you want to learn more about the specific settings included in MEGqc, you can
 ## 4. Run Calculation
 Once you've set your parameters (Data directory, Subjects and parallel Jobs) click `Run Calculation`. The **Log** window will display the ongoing process, including updates and any errors. You can also find more detailed information in the terminal window.
 
-<img src="../static/mini/logs.png" alt="gui-log" width="350px" align="center">
+<img src="../static/mini/log.png" alt="gui-log" width="350px" align="center">
 
 <br>
 
