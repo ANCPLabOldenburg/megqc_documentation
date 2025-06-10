@@ -1,4 +1,4 @@
-# Standard deviation of the data
+# Standard Deviation of the Data
 
 The Standard Deviation (STD) metric measures the variability of each channel. Channels with unusual high or low STD compared to others, might indicate potential malfunctions (Gapontseva, 2023).
 
