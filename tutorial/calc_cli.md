@@ -1,4 +1,4 @@
-# Running MEGqc
+# CLI: Running calculation module
 
 ## Running the calculation module
 Now, we're ready to run MEGqc! First, ensure that your environment is activated by checking the terminal prompt. It should look like this:
