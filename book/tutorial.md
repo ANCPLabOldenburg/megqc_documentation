@@ -9,7 +9,7 @@ Here you can find how to use both modules for each version of MEGqc:
 
 ## CLI MEGqc tutorial
 1. [Running the calculation module](../tutorial/calc_cli)
-2. 2. [Running the plotting module](../tutorial/plot_cli)
+2. [Running the plotting module](../tutorial/plot_cli)
 
 
 ```{admonition} Don't have a Dataset?
