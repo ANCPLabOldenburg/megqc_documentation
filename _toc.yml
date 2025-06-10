@@ -14,10 +14,12 @@ chapters:
   sections:
     - file: installation/gui
     - file: installation/cli
-- file: book/old
+- file: book/tutorial
   sections:
-    - file: old/run
-    - file: old/plot
+    - file: tutorial/calc_gui
+    - file: tutorial/plot_gui
+    - file: tutorial/calc_cli
+    - file: tutorial/plot_cli
 - file: book/extra
   sections:
     - file: extra/details
