@@ -5,15 +5,13 @@ To open the GUI, click the MEGqc shortcut on your Desktop. Then the MEGqc GUI wi
 
 <img src="../static/mini/launch_mini.png" alt="launchgui" width="700px" align="center">
 
-## 1. Set Calculation parameters
-
-<img src="../static/mini/calculation.png" alt="mini-megqc-gui" width="400px" align="center">
-
-<br>
+## 1. Set basic Calculation parameters
 
 * **Data directory:** you can *paste* the path to your dataset or click `Browse` to select the folder manually.
 * **Subjects:** you can write `all` to analyze every subject, or enter a specific ID (e.g., `009` for `sub-009`).
 * **Jobs:** Choose how many parallels jobs to use during the processing of your data. The default option is `1`, but you can increase the speed of the processing by increasing the number of parallel Jobs.
+
+<img src="../static/mini/calculation.png" alt="mini-megqc-gui" width="400px" align="center">
 
 ```{admonition} How do I know the right amount of parallel Jobs?
 :class: tip
@@ -25,29 +23,19 @@ To open the GUI, click the MEGqc shortcut on your Desktop. Then the MEGqc GUI wi
 ``` 
 
 ## 2. Advance Settings
-The `Setting` tab allows you to customize your analysis. These settings are optional, as the default values were calculated by the ANCPLab to be compatible with a broad variety of datasets.
+The `Setting` tab allows you to customize your analysis. The settings are grouped into categories:
+
+* The basic settings group allows you to select the channel types (`mag` or `grad` or both), and the specific metric to compute (e.g. STD, PSD or PTP). You can also apply your analysis to a smaller snippet of data (with `data_crop_tmin` and `data_crop_tmax`).
+* The *Filtering* and *Epoching* groups of settings allow you to edit how the filtering and epoching should be applied (such as high-pass / low-pass cut-offs frequencies and time windows).
+* *Metric-specfic settings:* every metric includes their own editable group of settings, such as how many standard deviations from the mean to use as a threshold, the edge frequencies for PSD calculation, or the minimun PTP amplitude to count as a peak.
+
+When you hover over each editable parameter, you'll see a short description along with the default value. Their default values were calculated by the ANCPLab to be compatible with a broad variety of datasets. 
 
 <img src="../static/mini/minimegqc_settings.png" alt="settings-gui" width="350px" align="center">
 
+
 <br>
-
-* The basic settings allows you to select the channel types (`mag` or `grade` or both), and the specific metric to compute.
-* The settings are grouped into categories, such as *filtering, epoching,* and *metric-specific* options.  
-* When you hover over them, you'll see a short description along with the default value.
-* Once you're done editing your settings, don't forget to click `Save Settings` at the end of the list.
-
-If you want to learn more about the specific settings included in MEGqc, you can find a detailed explanation in the [settings page](../extra/settings.md) or read a brief overview in the dropdwon below:
-
-
-```{admonition} Settings overview
-:class: dropdown
-
-  * **Default settings:** Select the **channel types** to incldues (`mag` or `grade` or both), which **metrics** to compute (e.g. STD, PSD or PTP), and what plots to generate (such as interactive time series).
- * **Filtering:** configure the **high-pass / low-pass** cut-offs, choose between **IIR or FIR** filters, and apply **downsampling** if needed.
- * **Epoching:** Customize epochs **duration**, define the *stimulus channel* or how to handle duplicate **events**.
- * **Metric-specific settings:** Every metrics include their own editable settings, such as how many standard deviations from the mean to use as a threshold, the edge frequencies for PSD calculation, or the minimun PTP amplitude to count as a peak. 
-
-``` 
+If you want a detailed explanation of all the settings available, visit the [settings page](../extra/settings.md). 
 
 ## 3. Run Calculation
 Once you've set your parameters (Data directory, Subjects and parallel Jobs) click `Run Calculation`. The **Log** window will display the ongoing process, including updates and any errors. You can also find more detailed information in the terminal window.
