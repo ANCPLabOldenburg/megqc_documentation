@@ -15,20 +15,20 @@ Hello everyone, and welcome to this MEGqc documentation.
 MEGqc is designed to be as user-friendly as possible. This documentation will help you to install and run MEGqc without a deep technical knowledge. Still, you might benefit from having some familiarity with the following:
 
 - Basic knowledge of the [BIDS structure](extra/bids.md)
-- Access to a Linux terminal/shell and basic [BASH commands](https://peerherholz.github.io/Python_for_Psychologists_Winter2021/introduction/intro_to_shell.html)
+- Access to a Linux terminal/shell and basic [BASH commands](https://peerherholz.github.io/Python_for_Psychologists_Winter2021/introduction/intro_to_shell.html) (link to an external tutorial)
 - Some familiarity with GitHub
-
-```{warning}
-
-Currently, MEGqc runs smoothly on Linux. but a Windows-compatible version is under development! 🚀
-
-```
 
 ## I've got a question!
 
 If you have any questions or encounter difficulties while working with MEGqc, please don’t hesitate to get in touch with us. You can send an e-mail to karel.mauricio.lopez.vilaret@uni-oldenburg.de or check a `New Issue` in the [MEGqc github](https://github.com/ANCPLabOldenburg/MEGqc/issues).
 
+
+```{important}
+
+Currently, MEGqc runs smoothly on Linux. but a Windows-compatible version is under development! 🚀
+
+```
+
 ## Acknowledgements
 
 This tutorial was made possible through the dedicated work of the [Jupyter community](https://jupyter.org/community), specifically, the [Executable/Jupyter Book](https://executablebooks.org/en/latest/).
-
