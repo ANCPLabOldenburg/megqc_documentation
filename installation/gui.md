@@ -44,7 +44,9 @@ Make the installer executable by right-clicking the file, selecting Properties, 
 
 Now your shell script installer is ready to run! You can either **double-click the** `sh` **file** or **run it from the terminal**:
 
-    ./install_megqc.sh
+```bash
+./install_megqc.sh
+```
 
 Once launched, the terminal will prompt you to input a path where MEGqc should be installed. The installer will then create its own [**virtual environment**](../extra/environment.md) and handle all the [**depedencies**](../extra/details.md). MEGqc is compatible with Python versions 3.8 to 3.12, but if you don't have any valid Python version, the installer will install Python 3.10. 
 
