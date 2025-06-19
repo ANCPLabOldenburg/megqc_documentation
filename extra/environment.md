@@ -1,5 +1,5 @@
 # Virtual environments
-Virtual environments create isolated and sel-contained workspaces, allowing us to manage project-specific dependencies separatedly from system-wide installation. This isollation has several benefits:
+Virtual environments create isolated and self-contained workspaces, allowing us to manage project-specific dependencies separatedly from system-wide installation. This isollation has several benefits:
 - **Avoid dependency conflicts:** prevents interferences between project-specific and system-wide dependenciesm, such as common erors related to version mismatches.
 - **Transparency and Open Science:** Ensures that others can replicate your results and reproduce your analysis reliably.
 
