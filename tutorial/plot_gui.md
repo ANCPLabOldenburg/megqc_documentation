@@ -29,7 +29,7 @@ Now you can open these [reports](../book/metrics) in Chrome or Firefox to explor
 ```{admonition} How many reports will be created?
 :class: tip
 
-MEGqc will create 1 report for every derivatives it founds within the `calculation` folder. This means, a different report for every metric, for every run, task, session, subject and sensor you have analyzed before. Be aware of this before you run the plotting module!
+MEGqc will create 1 report for every derivatives it founds within the `calculation` folder. This means, a different report for every metric, of every run, task, session, subject and sensor you have analyzed with the Calculation Module. Be aware of this before you run the plotting module!
 
 ``` 
 
