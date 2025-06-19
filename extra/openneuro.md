@@ -14,6 +14,7 @@ Given the dataset's size (21 participants, 24.48 GB), dowloading the full datase
 
 
 ```{warning} Windows Limitation
+:class: dropdown
 
 Sadly, both [Datalad](https://handbook.datalad.org/en/latest/intro/windows.html) and [git-annex](https://git-annex.branchable.com/install/Windows/) behave differently on Windows and come with known limitations. We are currently exploring different ways to approach this issue, but if possible, we recommen using Linux for working with Datalad and git-annex workflows.
 
