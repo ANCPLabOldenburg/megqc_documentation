@@ -17,12 +17,12 @@ To run the plotting module manually, use the following command in your terminal 
 ```{admonition} Which reports will be created?
 :class: tip
 
-MEGqc will create reports of all the derivatives it founds within the `/calculation` folder. This means, all subjects, sessions, tasks, runs, metrics and sensors you have analyzed before. Be aware of this before you run the plotting module!
+MEGqc will create reports of all the derivatives it founds within the `/calculation` folder of your dataset's derivatives. This means, all subjects, sessions, tasks, runs, metrics and sensors you have analyzed before. Be aware of this before you run the plotting module!
 
 ``` 
 
 ## Congratulations!
-You're done'! The HTML reports are now available in the `derivatives` folder of your dataset:
+You're done'! The HTML reports are now available in the `/derivatives` folder of your dataset:
 
 
         /path/to/your/dataset/derivatives/Meg_QC/reports/subject
