@@ -3,8 +3,9 @@
 ## Running the calculation module
 Now, we're ready to run MEGqc! First, ensure that your [environment](../extra/environment) is activated by checking the terminal prompt. It should look like this:
 
-        (<your_environment_name>) user_name:
-
+```bash
+(<your_environment_name>) user_name:
+```
 
 Once the environment is activated, execute the script from the **terminal** and not from the command panel. The command requires 2 inputs:
 1. **inputdata:** path to the root of your BIDS MEG dataset.
@@ -21,7 +22,9 @@ run-megqc --inputdata </path/to/your/dataset/> --subs <ID>
 
 For example, if you want to analyze only subject `009` of the dataset `ds003483`, the command line might look like:
 
-        run-megqc --inputdata /path/to/ds003483/ --subs 009
+```bash
+run-megqc --inputdata /path/to/ds003483/ --subs 009
+```
 
 For an alternative explanation, check `run-megqc -h` on your terminal.
 
@@ -32,15 +35,19 @@ When you enter the command, a terminal-based GUI will prompt you with the questi
 
 ### Customized Settings
 If you enter `n`, you will be instructed to use the following command LINE to specify a path to your `target directory` where a copy of the config file (`setting.ini`) will be created: 
-        
-        get-megqc-config --target_directory <path/to/your/target/directory>
+
+```bash
+get-megqc-config --target_directory <path/to/your/target/directory>
+```
 
 Then you can open your copy of `settings.ini` and adjust the settings. 
 - For instance, if you want to skip a specific metric, locate the section `For which metrics to run the pipleline?` at the  begining of the file and change the value from `True` to `False`.
 
 Once your config file is customized, you can run MEGqc including the option --config and the path to your customized **config file**. Make sure to include _"settings.ini"_ in the command line:
 
-        run-megqc --inputdata </path/to/your/dataset/> --subs 009 --config </path/to/your/config/file/setting.ini>
+```bash
+run-megqc --inputdata </path/to/your/dataset/> --subs 009 --config </path/to/your/config/file/setting.ini>
+```
 
 ### Already used config files?
 If you have already processed the dataset, MEGqc will be able to find the already used config file(s) and will prompt you if `Do you want to use any of them again?`.
