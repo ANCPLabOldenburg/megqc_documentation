@@ -17,7 +17,7 @@ Once the environment is activated, execute the script from the **terminal** and 
 Your command line might look something like this:
 
 ```bash
-run-megqc --inputdata </path/to/your/dataset/> --subs <ID>
+run-megqc --inputdata /path/to/your/dataset/ --subs <ID>
 ```
 
 For example, if you want to analyze only subject `009` of the dataset `ds003483`, the command line might look like:
@@ -31,13 +31,13 @@ For an alternative explanation, check `run-megqc -h` on your terminal.
 ## Settings
 
 ### Default settings
-When you enter the command, a terminal-based GUI will prompt you with the question: `Do you want to proceed with the default settings? (y/n)`. A hyperlink in the terminal will direct you to the [setting explanation page](../book/settings_explanation.md), where each parameter is described with more detail. If you enter **y**, the program will use the default values for the parameters of each **metric**. The **default settings,** as calculated by Gaponsetva (2023), are designed to be compatible with a broad variety of datasets. 
+When you enter the command, a terminal-based GUI will prompt you with the question: `Do you want to proceed with the default settings? (y/n)`. A hyperlink in the terminal will direct you to the [setting explanation page](../book/settings_explanation.md), where each parameter is described with more detail. If you enter `y`, the program will use the default values for the parameters of each **metric**. The **default settings** are designed to be compatible with a broad variety of datasets. 
 
 ### Customized Settings
 If you enter `n`, you will be instructed to use the following command LINE to specify a path to your `target directory` where a copy of the config file (`setting.ini`) will be created: 
 
 ```bash
-get-megqc-config --target_directory <path/to/your/target/directory>
+get-megqc-config --target_directory /path/to/your/target/directory
 ```
 
 Then you can open your copy of `settings.ini` and adjust the settings. 
@@ -46,7 +46,7 @@ Then you can open your copy of `settings.ini` and adjust the settings.
 Once your config file is customized, you can run MEGqc including the option --config and the path to your customized **config file**. Make sure to include _"settings.ini"_ in the command line:
 
 ```bash
-run-megqc --inputdata </path/to/your/dataset/> --subs 009 --config </path/to/your/config/file/setting.ini>
+run-megqc --inputdata </path/to/your/dataset/> --subs 009 --config /path/to/your/config/file/setting.ini
 ```
 
 ### Already used config files?
