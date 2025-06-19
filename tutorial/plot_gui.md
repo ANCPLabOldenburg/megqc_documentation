@@ -17,8 +17,11 @@ If you give a path to a different, such as the subject folder or the calculation
 ## Congratulations!
 You're done'! You will find the html reports in a folder called `reports` within the derivatives folder. The reports will be divided by subjects. If you've been following this tutorial, your path to your reports might look like this:
 
-  /path/to/your/dataset/ds003483/derivatives/Meg_QC/reports/sub-009/
 
+    /path/to/your/dataset/ds003483/derivatives/Meg_QC/reports/sub-009/
+
+
+Now you can open these reports in Chrome or Firefox to explore the interactive plots and visualize of the quality control analysis of your dataset!
 
 
 ```{admonition} Which reports will be created?
@@ -29,4 +32,3 @@ MEGqc will create reports of all the derivatives it founds within the `/calculat
 ``` 
 
 
-Now you can open these reports in Chrome or Firefox to explore the interactive plots and visualize of the quality control analysis of your dataset!
