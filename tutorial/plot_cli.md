@@ -13,16 +13,13 @@ To run the plotting module manually, use the following command in your terminal 
 
         run-megqc-plotting --inputdata </path/to/your/dataset/>
 
-## Interactive GUI
-After a short wait, the terminal will ask you several questions about specific parameters. The available options depend on the metadata in your dataset:
-- Subjects: ALL or a specific one
-- Sessions: ALL or a specific one
-- Tasks: ALL or a specific one
-- Runs: ALL or a specific one
-- Metrics: ALL or a specific one
-- Sensors: ALL, or only magnetometers or gradiometers
 
-![gui interface]( ../static/gui.png)
+```{admonition} Which reports will be created?
+:class: tip
+
+MEGqc will create reports of all the derivatives it founds within the `/calculation` folder. This means, all subjects, sessions, tasks, runs, metrics and sensors you have analyzed before. Be aware of this before you run the plotting module!
+
+``` 
 
 ## Congratulations!
 You're done'! The HTML reports are now available in the `derivatives` folder of your dataset:
@@ -58,7 +55,13 @@ Ensure that you are working within your environment and then run the script from
 
         python3 /path/to/environment/lib/python3.9/site-packages/meg_qc/plotting/meg_qc_plots.py
 
+## Interactive GUI
+After a short wait, the terminal will ask you several questions about specific parameters. The available options depend on the metadata in your dataset:
+- Subjects: ALL or a specific one
+- Sessions: ALL or a specific one
+- Tasks: ALL or a specific one
+- Runs: ALL or a specific one
+- Metrics: ALL or a specific one
+- Sensors: ALL, or only magnetometers or gradiometers
 
-
-
-
+![gui interface]( ../static/gui.png)
