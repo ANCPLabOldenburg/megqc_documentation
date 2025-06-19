@@ -25,7 +25,7 @@ If you have any questions or encounter difficulties while working with MEGqc, pl
 
 ```{important}
 
-Currently, MEGqc runs smoothly on Linux. but a Windows-compatible version is under development! 🚀
+Currently, MEGqc runs smoothly on Linux, but a Windows-compatible version is under development! 🚀
 
 ```
 
