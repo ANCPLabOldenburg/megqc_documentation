@@ -36,8 +36,6 @@ Once your environment is activated, you can install Python packages with `pip`, 
 pip install git+https://github.com/ANCPLabOldenburg/MEGqc.git
 ```
 
-<br>
-
 
 <!--
 Next, you will need to clone the [Github Repository](https://github.com/ANCPLabOldenburg/MEGqc). 
