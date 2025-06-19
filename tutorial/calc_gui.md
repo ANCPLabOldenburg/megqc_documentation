@@ -43,7 +43,7 @@ When you hover over each editable parameter, you'll see a short description alon
 
 
 <br>
-If you want a detailed explanation of all the settings available, visit the [settings page](../extra/settings.md). 
+If you want a detailed explanation of all the settings available, visit the [settings page](../extra/settings). 
 
 ## 3. Run Calculation
 Once you've set your parameters (Data directory, Subjects and parallel Jobs) click `Run Calculation`. The **Log** window will display the ongoing process, including updates and any errors. You can also find more detailed information in the terminal window.
