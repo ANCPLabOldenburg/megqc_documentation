@@ -4,16 +4,26 @@ Now we'll start with the installation process for the command-line interface (CL
 
 <br>
 
-
-```{admonition} Virtual Environments
-:class: important
-
 Before diving in, we strongly recommend using MEGqc within a **virtual environment** to avoid conflicts with system dependencies.
 The GUI installer  automatically creates and manages a virtual environment. Meanwhile the CLI setup requires you to create one manually.
-If you want to learn more about virtual environments and how to install them, [click here](../extra(environment.md)
 
+## Virtual environments
+Virtual environments create isolated and self-contained workspaces, allowing us to manage project-specific dependencies separatedly from system-wide installation. This isollation has several benefits:
+- **Avoid dependency conflicts:** prevents interferences between project-specific and system-wide dependenciesm, such as common erors related to version mismatches.
+- **Transparency and Open Science:** Ensures that others can replicate your results and reproduce your analysis reliably.
 
-```
+<img src="../static/environment.jpg" alt="environments" width="200px" align="center">
+
+To create and activate your virtual environment, follow these steps:
+1. Navigate to the directory where you want to create the environment using the `cd` command in the terminal.
+2. Create the virtual environment:
+
+        python3 -m venv <your_environment_name>
+
+3. Activate the virtual environment:
+
+        source /path/to/environment/bin/activate
+
  
 
 ## Install the MEGqc Package
