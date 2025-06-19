@@ -2,8 +2,7 @@
 
 ## Running the calculation module
 Now, we're ready to run MEGqc! First, ensure that your [environment](../extra/environment) is activated by checking the terminal prompt. It should look like this:
-
-        (<your_environment_name>) user_name: ~$
+<pre> ```bash (<your_environment_name>) user_name: ~$``` </pre>
 
 
 Once the environment is activated, execute the script from the **terminal** and not from the command panel. The command requires 2 inputs:
