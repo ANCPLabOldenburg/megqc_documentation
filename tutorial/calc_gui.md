@@ -1,19 +1,11 @@
 # GUI: Run Calculation Module
 
 Thanks to the graphical user interface (GUI) you will be able to run MEGqc and generate reports without using the terminal. 
+To open the GUI, click the MEGqc shortcut on your Desktop. Then the MEGqc GUI will open alongside a bash terminal. The terminal will display more detailed information about the on-going processes, but you can safely close it.
 
-<img src="../static/mini/gui.png" alt="icon" width="250px" align="center">
+<img src="../static/mini/launch_mini.png" alt="launchgui" width="250px" align="center">
 
-
-## 1. Launching MEGqc
-To open the GUI, click the MEGqc shortcut on your Desktop.
-
-<img src="../static/mini/desktop.png" alt="icon" width="200px" align="center">
-
-Then the MEGqc GUI will open alongside a bash terminal. You can safely close the terminal, it will display more detailed information about the on-going processes.
-
-
-## 2. Set Calculation parameters
+## 1. Set Calculation parameters
 
 <img src="../static/mini/calculation.png" alt="mini-megqc-gui" width="400px" align="center">
 
@@ -32,7 +24,7 @@ Then the MEGqc GUI will open alongside a bash terminal. You can safely close the
 
 ``` 
 
-## 3. Advance Settings
+## 2. Advance Settings
 The `Setting` tab allows you to customize your analysis. These settings are optional, as the default values were calculated by the ANCPLab to be compatible with a broad variety of datasets.
 
 <img src="../static/mini/minimegqc_settings.png" alt="settings-gui" width="350px" align="center">
@@ -57,7 +49,7 @@ If you want to learn more about the specific settings included in MEGqc, you can
 
 ``` 
 
-## 4. Run Calculation
+## 3. Run Calculation
 Once you've set your parameters (Data directory, Subjects and parallel Jobs) click `Run Calculation`. The **Log** window will display the ongoing process, including updates and any errors. You can also find more detailed information in the terminal window.
 
 <img src="../static/mini/log.png" alt="gui-log" width="350px" align="center">
