@@ -21,7 +21,7 @@ You're done'! You will find the html reports in a folder called `reports` within
     /path/to/your/dataset/ds003483/derivatives/Meg_QC/reports/sub-009/
 
 
-Now you can open these reports in Chrome or Firefox to explore the interactive plots and visualize of the quality control analysis of your dataset!
+Now you can open these [reports](../book/metrics) in Chrome or Firefox to explore the interactive plots and visualize of the quality control analysis of your dataset!
 
 
 ```{admonition} Which reports will be created?
