@@ -9,11 +9,15 @@ To create and activate your virtual environment, follow these steps:
 1. Navigate to the directory where you want to create the environment using the `cd` command in the terminal.
 2. Create the virtual environment:
 
-        python3 -m venv <your_environment_name>
+```bash
+python3 -m venv <your_environment_name>
+```
 
 3. Activate the virtual environment:
 
-        source /path/to/environment/bin/activate
+```bash
+source /path/to/environment/bin/activate
+```
 
 
 
