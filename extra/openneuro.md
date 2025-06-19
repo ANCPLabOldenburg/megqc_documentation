@@ -24,21 +24,23 @@ Sadly, both [Datalad](https://handbook.datalad.org/en/latest/intro/windows.html)
 [DataLad](github.com/datalad) is a free and open source data tool for management of large datasets. It can be used to download a single subject folder from a dataset. Be sure to have your [environment](extra/environment.md) ready.
 
 0. **Ensure `git-annex` is properly installed on your environment:** DataLad requires `git-annex` version 8.20200309 (or higher). Verify your installation and, if needed, update `git-annex`.
+   
 ```bash
-    git annex version
+git annex version
 ```
 <br>
 
 1. **Install datalad within your environment:** 
+
 ```bash
-    pip install datalad
+pip install datalad
 ```
 
 <br>
 
 2. **Clone the dataset repository:** It copies the entire dataset's structure, but only lightweight metada (such as .json), the actual data files (.fif in this case) are not downloaded, even thought they _"broken links"_ placeholders will be created. Be sure you are working in your desired directory (with `cd`), then run:
 ```bash
-    datalad install https://github.com/OpenNeuroDatasets/ds003483.git
+datalad install https://github.com/OpenNeuroDatasets/ds003483.git
 ```
 
 <br>
@@ -49,13 +51,13 @@ Sadly, both [Datalad](https://handbook.datalad.org/en/latest/intro/windows.html)
 3. **Download only the sub-009 folder:** First change directory within the dataset:
    
 ```bash
-      cd ds003483/
+cd ds003483/
 ```
 
 Then use the `get` command to download only the data for subject 009.
 
 ```bash
-        datalad get sub-009/
+datalad get sub-009/
 ```
 
 <br>
