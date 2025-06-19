@@ -5,6 +5,14 @@ To open the GUI, click the MEGqc shortcut on your Desktop. Then the MEGqc GUI wi
 
 <img src="../static/mini/launch_mini.png" alt="launchgui" width="650px" align="center">
 
+
+```{admonition} GUI visual theme
+:class: tip
+
+Click the left-corner icon of the GUI to open a dropdown list with all available visual themes. This will only affect the visual display of the GUI. This list also includes themes with high-contrast options. 
+
+```
+
 ## 1. Set basic Calculation parameters
 
 * **Data directory:** you can *paste* the path to your dataset or click `Browse` to select the folder manually.
@@ -52,14 +60,8 @@ Once the process is finished, a new folder called `MEG_qc` will be created insid
 
 <br>
 
-**Congratulations! You've successsfully run the calculation module! 🎉**
+#### Congratulations! You've successsfully run the calculation module! 🎉
 
-```{admonition} GUI visual theme
-:class: tip
-
-Click the left-corner icon of the GUI to open a dropdown list with all available themes. This will only affect the display of the GUI. This list also includes themes with high-contrast options. 
-
-```
 
 # Next section
 In the next section, you'll learn how to use the calculation derivatives to generate the **HTML reports** with MEGqc's plotting module.
