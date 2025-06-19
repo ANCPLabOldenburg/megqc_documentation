@@ -37,7 +37,7 @@ The `Setting` tab allows you to customize your analysis. The settings are groupe
 * The *Filtering* and *Epoching* groups of settings allow you to edit how the filtering and epoching should be applied (such as high-pass / low-pass cut-offs frequencies and time windows).
 * *Metric-specfic settings:* every metric includes their own editable group of settings, such as how many standard deviations from the mean to use as a threshold, the edge frequencies for PSD calculation, or the minimun PTP amplitude to count as a peak.
 
-When you hover over each editable parameter, you'll see a short description along with the default value. Their default values were calculated by the ANCPLab to be compatible with a broad variety of datasets. 
+When you hover over each editable parameter, you'll see a short description along with the default value. Their **default values** were calculated by the ANCPLab to be compatible with a broad variety of datasets. 
 
 <img src="../static/mini/minimegqc_settings.png" alt="settings-gui" width="350px" align="center">
 
