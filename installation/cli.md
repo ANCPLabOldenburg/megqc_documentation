@@ -18,18 +18,23 @@ To create and activate your virtual environment, follow these steps:
 1. Navigate to the directory where you want to create the environment using the `cd` command in the terminal.
 2. Create the virtual environment:
 
-        python3 -m venv <your_environment_name>
+```bash
+python3 -m venv <your_environment_name>
+```
 
 3. Activate the virtual environment:
 
-        source /path/to/environment/bin/activate
-
+```bash
+source /path/to/environment/bin/activate
+```
  
 
 ## Install the MEGqc Package
 Once your environment is activated, you can install Python packages with `pip`, and these installations will only apply to your virtual environment. To install MEGqc core functionality, run the following command in the terminal:
- 
-        pip install git+https://github.com/ANCPLabOldenburg/MEGqc.git
+
+```bash
+pip install git+https://github.com/ANCPLabOldenburg/MEGqc.git
+```
 
 <br>
 
