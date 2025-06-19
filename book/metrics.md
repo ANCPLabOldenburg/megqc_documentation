@@ -14,6 +14,14 @@ Each metric is covered in individual reports. Here you can find an overview of t
 
 Almost every metric will start with basic information of the dataset and the sensor positions.
 
+
+
+```{admonition} Source of the figures?
+
+All the examples in every section were created from the subject 009 from the  _ds003483_ dataset available on OpenNeuro. This dataset (among many others) was used to evaluate the MEGqc tool. You may [download this same dataset](../extra/openneuro.md), to recreate these same reports by yourself.
+
+``` 
+
 ## Basic Information
 
 This section includes some general metadata (date, experimenter, duration...), some channels' information (more on that later), and basic details about the sampling frequency and applied filters.
@@ -53,10 +61,4 @@ The sensor labels appear when you hover over a  sensor dot. Alternatively, you c
 ``` 
 
 
-
-```{admonition} Source of the figures?
-
-All the examples in this section are taken from the report of the subject 009 from the  _ds003483_ dataset available on OpenNeuro. This dataset (among many others) was used to evaluate the MEGqc tool. You may [download this same dataset](../extra/openneuro.md), to recreate these same reports by yourself.
-
-``` 
 
