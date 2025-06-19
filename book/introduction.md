@@ -16,7 +16,7 @@ The MEGqc pipeline can be used in two ways: via a **command-line interface (CLI)
 * The **GUI** is ideal for beginners or users who prefer a more visual interface.
 
 Regardless, MEGqc is designed to be user-friendly. To run the analysis, the user just needs to:
-- Provide data for evaluation.
+- Provide data for evaluation (in case you don't have a BIDS compliant MEG dataset, [here’s how to download one from OpenNeuro](../extra/openneuro)).
 - Set analysis parameters if desired (default parameters are available).
 - Run the analysis.
 
