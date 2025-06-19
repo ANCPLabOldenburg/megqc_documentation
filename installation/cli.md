@@ -49,4 +49,8 @@ If you want to know more about them and their functionalitiy, please [visit the 
 
 Still, if your python version is older than 3.9, it might be necessary to upgrade pandas to 2.2.3 version:
 
-        pip install --upgrade pandas.
+        pip install --upgrade pandas
+
+
+## Next section
+In the next section we'll get to the tutorial, where you can access the isntructions to run the calculation and the plotting module, both for GUI MEGqc and CLI MEGqc.
