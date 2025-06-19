@@ -2,7 +2,8 @@
 
 ## Running the calculation module
 Now, we're ready to run MEGqc! First, ensure that your [environment](../extra/environment) is activated by checking the terminal prompt. It should look like this:
-<pre> ```bash (<your_environment_name>) user_name: ~$``` </pre>
+
+        (<your_environment_name>) user_name:
 
 
 Once the environment is activated, execute the script from the **terminal** and not from the command panel. The command requires 2 inputs:
@@ -14,7 +15,9 @@ Once the environment is activated, execute the script from the **terminal** and 
 
 Your command line might look something like this:
 
-        run-megqc --inputdata </path/to/your/dataset/> --subs <ID>
+```bash
+run-megqc --inputdata </path/to/your/dataset/> --subs <ID>
+```
 
 For example, if you want to analyze only subject `009` of the dataset `ds003483`, the command line might look like:
 
