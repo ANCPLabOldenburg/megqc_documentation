@@ -5,7 +5,7 @@ After completing the analysis with the calculation module, the next step is to g
 ## Set Data directory
 You can *paste* the path to your **dataset** folder or click `Browse` to select the folder manually. MEGqc will search for the derivatives folder within your dataset and use the machine-readable outputs created by the calculation module. Then you just need to click on `Run Plotting`.
 
-<img src="../static/mini/run_plotting3.png" alt="launchgui" width="650px" align="center">
+<img src="../static/mini/run_plotting3.png" alt="launchgui" width="400px" align="center">
 
 ```{warning}
 
