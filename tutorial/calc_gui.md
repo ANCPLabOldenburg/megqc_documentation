@@ -31,20 +31,26 @@ Click the left-corner icon of the GUI to open a dropdown list with all available
 ``` 
 
 ## 2. Settings
-The `Setting` tab allows you to customize your analysis. The settings are grouped into categories:
+The `Setting` tab allows you to customize your analysis. 
+
+
+```{admonition} Settings overview
+:class: dropdown
+
+The settings are grouped into categories:
 
 * The basic settings group allows you to select the channel types (`mag` or `grad` or both), and the specific metric to compute (e.g. STD, PSD or PTP). You can also apply your analysis to a smaller snippet of data (with `data_crop_tmin` and `data_crop_tmax`).
 * The *Filtering* and *Epoching* groups of settings allow you to edit how the filtering and epoching should be applied (such as high-pass / low-pass cut-offs frequencies and time windows).
 * *Metric-specfic settings:* every metric includes their own editable group of settings, such as how many standard deviations from the mean to use as a threshold, the edge frequencies for PSD calculation, or the minimun PTP amplitude to count as a peak.
 
+```
+If you want a detailed explanation of all the settings available, visit the [settings page](../extra/settings). 
+
 When you hover over each editable parameter, you'll see a short description along with the default value. Their **default values** were calculated by the ANCPLab to be compatible with a broad variety of datasets. 
 
 <img src="../static/mini/minimegqc_settings.png" alt="settings-gui" width="350px" align="center">
 
-
 <br>
-
-If you want a detailed explanation of all the settings available, visit the [settings page](../extra/settings). 
 
 ## 3. Run Calculation
 Once you've set your parameters (Data directory, Subjects and parallel Jobs) click `Run Calculation`. The **Log** window will display the ongoing process, including updates and any errors. You can also find more detailed information in the terminal window.
