@@ -30,7 +30,6 @@ For an alternative explanation, check `run-megqc -h` on your terminal.
 
 ## Settings
 
-
 ```{admonition} Settings overview
 :class: dropdown
 
@@ -45,7 +44,6 @@ If you want a detailed explanation of all the settings available, visit the [set
 
 ``` 
 
-
 ### Default settings
 When you enter the command, a terminal-based GUI will prompt you with the question: `Do you want to proceed with the default settings? (y/n)`. A hyperlink in the terminal will direct you to the [setting explanation page](../book/settings_explanation.md), where each parameter is described with more detail. 
 If you enter `y`, the program will use the default values for the parameters of each metric. The default values are designed to be compatible with a broad variety of datasets. 
@@ -57,13 +55,13 @@ If you enter `n`, you will be instructed to use the following command line to sp
 get-megqc-config --target_directory /path/to/your/target/directory
 ```
 
-Then you can open your copy of `settings.ini` and adjust the settings. Once your settings file is customized, you can run MEGqc including the option --config and the path to your customized settings file. Make sure to include _"settings.ini"_ in the command line:
+Now you can open your copy of `settings.ini` and adjust them. Once you are done, you can run MEGqc including the option --config and the path to your customized `settings.ini`. Make sure to include _"settings.ini"_ in the command line:
 
 ```bash
 run-megqc --inputdata </path/to/your/dataset/> --subs 009 --config /path/to/your/setting.ini
 ```
 
-### Already used config files?
+### Already used settings files?
 If you have already processed the dataset, MEGqc will be able to find the already used config file(s) and will prompt you if `Do you want to use any of them again?`.
 A **numbered list** of paths to previous config file will be displayed in ther terminal.
 Then it will ask you to `Enter the number of the config file you want to use, or press Enter to use the default one`. Enter the corresponding **number** of the config file path you want to reuse.
