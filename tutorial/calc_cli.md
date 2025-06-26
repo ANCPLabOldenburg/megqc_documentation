@@ -41,7 +41,7 @@ get-megqc-config --target_directory /path/to/your/target/directory
 ```
 
 Then you can open your copy of `settings.ini` and adjust the settings. 
-- For instance, if you want to skip a specific metric, locate the section `For which metrics to run the pipleline?` at the  begining of the file and change the value from `True` to `False`.
+- For instance, if you want to skip a specific metric, locate the section `For which metrics to run the pipeline?` at the  begining of the file and change the value from `True` to `False`.
 
 Once your config file is customized, you can run MEGqc including the option --config and the path to your customized **config file**. Make sure to include _"settings.ini"_ in the command line:
 
