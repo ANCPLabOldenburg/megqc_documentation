@@ -58,14 +58,15 @@ get-megqc-config --target_directory /path/to/your/target/directory
 Now you can open your copy of `settings.ini` and adjust them. Once you are done, you can run MEGqc including the option `config` and the path to your customized `settings file`. Make sure to include _"settings.ini"_ in the command line:
 
 ```bash
-run-megqc --inputdata </path/to/your/dataset/> --subs 009 --config /path/to/your/setting.ini
+run-megqc --inputdata </path/to/your/dataset/> --subs 009 --config /path/to/modified/settings.ini
 ```
 
 ### Already used settings files?
 If you have already processed the dataset, MEGqc will be able to find the already used config file(s) and will prompt you if `Do you want to use any of them again?`.
-A **numbered list** of paths to previous config file will be displayed in ther terminal.
-Then it will ask you to `Enter the number of the config file you want to use, or press Enter to use the default one`. Enter the corresponding **number** of the config file path you want to reuse.
-If you don't want to use any previous config file, just press Enter to continue with your default setting or customized config file.
+The terminal will display a **numbered list** of paths to previous config files used for the data set.
+Then it will ask you to `Enter the number of the config file you want to use, or press Enter to use the default one`.
+* Enter the corresponding **number** of the config file path you want to reuse. The terminal ask you to confirm if you want to RERUN these subject with the same config parameters.
+* If you don't want to use any previous config file, just press Enter to continue with your default setting.
 
 ## Next section
 
