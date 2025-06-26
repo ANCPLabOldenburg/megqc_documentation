@@ -30,23 +30,37 @@ For an alternative explanation, check `run-megqc -h` on your terminal.
 
 ## Settings
 
+
+```{admonition} Settings overview
+:class: dropdown
+
+The settings are grouped into categories:
+
+* The basic settings group allows you to select the channel types (`mag` or `grad` or both), and the specific metric to compute (e.g. STD, PSD or PTP). You can also apply your analysis to a smaller snippet of data (with `data_crop_tmin` and `data_crop_tmax`).
+* The *Filtering* and *Epoching* groups of settings allow you to edit how the filtering and epoching should be applied (such as high-pass / low-pass cut-offs frequencies and time windows).
+* *Metric-specfic settings:* every metric includes their own editable group of settings, such as how many standard deviations from the mean to use as a threshold, the edge frequencies for PSD calculation, or the minimun PTP amplitude to count as a peak.
+
+If you want a detailed explanation of all the settings available, visit the [settings page](../extra/settings). 
+
+
+``` 
+
+
 ### Default settings
-When you enter the command, a terminal-based GUI will prompt you with the question: `Do you want to proceed with the default settings? (y/n)`. A hyperlink in the terminal will direct you to the [setting explanation page](../book/settings_explanation.md), where each parameter is described with more detail. If you enter `y`, the program will use the default values for the parameters of each **metric**. The **default settings** are designed to be compatible with a broad variety of datasets. 
+When you enter the command, a terminal-based GUI will prompt you with the question: `Do you want to proceed with the default settings? (y/n)`. A hyperlink in the terminal will direct you to the [setting explanation page](../book/settings_explanation.md), where each parameter is described with more detail. 
+If you enter `y`, the program will use the default values for the parameters of each metric. The default values are designed to be compatible with a broad variety of datasets. 
 
 ### Customized Settings
-If you enter `n`, you will be instructed to use the following command LINE to specify a path to your `target directory` where a copy of the config file (`setting.ini`) will be created: 
+If you enter `n`, you will be instructed to use the following command line to specify a path to your `target directory` where a copy of the config file (`setting.ini`) will be created: 
 
 ```bash
 get-megqc-config --target_directory /path/to/your/target/directory
 ```
 
-Then you can open your copy of `settings.ini` and adjust the settings. 
-- For instance, if you want to skip a specific metric, locate the section `For which metrics to run the pipeline?` at the  begining of the file and change the value from `True` to `False`.
-
-Once your config file is customized, you can run MEGqc including the option --config and the path to your customized **config file**. Make sure to include _"settings.ini"_ in the command line:
+Then you can open your copy of `settings.ini` and adjust the settings. Once your settings file is customized, you can run MEGqc including the option --config and the path to your customized settings file. Make sure to include _"settings.ini"_ in the command line:
 
 ```bash
-run-megqc --inputdata </path/to/your/dataset/> --subs 009 --config /path/to/your/config/file/setting.ini
+run-megqc --inputdata </path/to/your/dataset/> --subs 009 --config /path/to/your/setting.ini
 ```
 
 ### Already used config files?
