@@ -55,7 +55,7 @@ If you enter `n`, you will be instructed to use the following command line to sp
 get-megqc-config --target_directory /path/to/your/target/directory
 ```
 
-Now you can open your copy of `settings.ini` and adjust them. Once you are done, you can run MEGqc including the option --config and the path to your customized `settings.ini`. Make sure to include _"settings.ini"_ in the command line:
+Now you can open your copy of `settings.ini` and adjust them. Once you are done, you can run MEGqc including the option `config` and the path to your customized `settings file`. Make sure to include _"settings.ini"_ in the command line:
 
 ```bash
 run-megqc --inputdata </path/to/your/dataset/> --subs 009 --config /path/to/your/setting.ini
