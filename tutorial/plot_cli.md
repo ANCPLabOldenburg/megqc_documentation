@@ -4,14 +4,12 @@ After completing the analysis with the calculation module, the next step is to g
 ## Automatic Mode
 Once the calculation module has completed the analysis, the terminal will ask you if `Do you want to run the MEGqc plotting module on the MEGqc results? (y/n)`. Entering **y** will automatically start the plotting module.
 
-
-display where can you find your `derivatives` folder. 
+Then the terminal will display where can you find your calculation `derivatives` folder. It should look like this:
 
 ```bash
 /path/to/your/dataset/derivatives/Meg_QC/calculation
 ```
 
-Then in the terminal will 
 
 ## Manual Mode
 To run the plotting module manually, use the following command in your terminal including a filepath to the root of your **dataset folder**. MEGqc will find the derivatives folder within the dataset, so you just need the path to the dataset, not the derivatives.
@@ -28,7 +26,7 @@ MEGqc will create reports of all the derivatives it founds within the `/calculat
 ``` 
 
 ## Congratulations!
-You're done'! The HTML reports are now available in the `/derivatives` folder of your dataset:
+You're done'! The HTML reports are now available in the `derivatives` folder of your dataset (next to the calculation derivatives):
 
 ```bash
 /path/to/your/dataset/derivatives/Meg_QC/reports/subject
