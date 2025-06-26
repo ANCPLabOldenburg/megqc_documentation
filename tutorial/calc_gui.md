@@ -13,7 +13,7 @@ Click the left-corner icon of the GUI to open a dropdown list with all available
 
 ```
 
-## 1. Set basic Calculation parameters
+## 1. Calculation parameters
 
 * **Data directory:** you can *paste* the path to your dataset or click `Browse` to select the folder manually.
 * **Subjects:** you can write `all` to analyze every subject, or enter a specific ID (e.g., `009` for `sub-009`).
@@ -30,7 +30,7 @@ Click the left-corner icon of the GUI to open a dropdown list with all available
 
 ``` 
 
-## 2. Advance Settings
+## 2. Settings
 The `Setting` tab allows you to customize your analysis. The settings are grouped into categories:
 
 * The basic settings group allows you to select the channel types (`mag` or `grad` or both), and the specific metric to compute (e.g. STD, PSD or PTP). You can also apply your analysis to a smaller snippet of data (with `data_crop_tmin` and `data_crop_tmax`).
