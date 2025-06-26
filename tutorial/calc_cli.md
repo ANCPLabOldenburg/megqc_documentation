@@ -60,11 +60,11 @@ Now you can open your copy of `settings.ini` and adjust them. Once you are done,
 run-megqc --inputdata </path/to/your/dataset/> --subs 009 --config /path/to/modified/settings.ini
 ```
 
-### Already used settings files?
+### "There are already config files used for this data set"
 If you have already processed the dataset, MEGqc will be able to find the already used config file(s) and will prompt you if `Do you want to use any of them again?`.
 The terminal will display a **numbered list** of paths to previous config files used for the data set.
 Then it will ask you to `Enter the number of the config file you want to use, or press Enter to use the default one`.
-* Enter the corresponding **number** of the config file path you want to reuse. The terminal ask you to confirm if you want to RERUN these subject with the same config parameters.
+* Enter the corresponding **number** of the config file path you want to reuse. The terminal will ask you to confirm if you want to **RERUN** these subject with the same config parameters.
 * If you don't want to use any previous config file, just press Enter to continue with your default setting.
 
 ## Next section
