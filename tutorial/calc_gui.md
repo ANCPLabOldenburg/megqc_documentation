@@ -59,16 +59,19 @@ Once you've set your parameters (Data directory, Subjects and parallel Jobs) cli
 
 <br>
 
+### There are already config files used for this data set
+
+If you have already run the calculation with the same dataset, the Terminal will ask you if you want to use the same config files (settings customization). The terminal will show you a numbered `List of the config files previously used for this data set` and prompt you to `Enter the number of the config file you want to use, or press Enter to use the default one`. 
+
+
+
+## Congratulations! You've successsfully run the calculation module! 🎉
+
 Once the process is finished, a new folder called `MEG_qc` will be created inside your dataset's `derivatives` folder . This folder will contain one subfolder per subject, with machine-readable files (**.tsv** and **.json**) for each metric, run and task. If you're following this tutorial, the path to the MEGqc derivatives might look like this:
 
-<br>
-
-    /path/to/your/dataset/ds003483/derivatives/Meg_QC/calculation/sub-009/
-
-<br>
-
-#### Congratulations! You've successsfully run the calculation module! 🎉
-
+```bash
+/path/to/your/dataset/ds003483/derivatives/Meg_QC/calculation/sub-009/
+```
 
 # Next section
 In the next section, you'll learn how to use the calculation derivatives to generate the **HTML reports** with MEGqc's plotting module.
