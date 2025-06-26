@@ -39,10 +39,9 @@ The settings are grouped into categories:
 * The *Filtering* and *Epoching* groups of settings allow you to edit how the filtering and epoching should be applied (such as high-pass / low-pass cut-offs frequencies and time windows).
 * *Metric-specfic settings:* every metric includes their own editable group of settings, such as how many standard deviations from the mean to use as a threshold, the edge frequencies for PSD calculation, or the minimun PTP amplitude to count as a peak.
 
+```
+
 If you want a detailed explanation of all the settings available, visit the [settings page](../extra/settings). 
-
-
-``` 
 
 ### Default settings
 When you enter the command, a terminal-based GUI will prompt you with the question: `Do you want to proceed with the default settings? (y/n)`. A hyperlink in the terminal will direct you to the [setting explanation page](../book/settings_explanation.md), where each parameter is described with more detail. 
