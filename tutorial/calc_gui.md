@@ -57,9 +57,21 @@ Once you've set your parameters (Data directory, Subjects and parallel Jobs) cli
 
 <br>
 
-### There are already config files used for this data set
+### "There are already config files used for this data set"
 
-If you have already run the calculation with the same dataset, the Terminal will ask you if you want to use the same config files (settings customization). The terminal will show you a numbered `List of the config files previously used for this data set` and prompt you to `Enter the number of the config file you want to use, or press Enter to use the default one`. 
+If you have already processed the dataset, the **terminal** will ask you if you want to use again the same config files with the previous customized settings.
+
+The terminal will display a **numbered list** of paths to previous config files used for the data set.
+Then it will ask you to `Enter the number of the config file you want to use, or press Enter to use the default one`.
+* Enter the corresponding **number** of the config file path you want to reuse. The terminal will ask you to confirm if you want to **RERUN** these subject with the same config parameters.
+* If you don't want to use any previous config file, just press Enter to continue with your default setting
+
+
+```{warning}
+
+Rerun datasets, independently of the users' decision over the settings, seems to be failing. The calculation doesn't continue, the terminal becomes unresponsive.
+
+``` 
 
 
 
