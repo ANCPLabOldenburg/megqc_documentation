@@ -31,8 +31,7 @@ Click the left-corner icon of the GUI to open a dropdown list with all available
 ``` 
 
 ## 2. Settings
-The `Setting` tab allows you to customize your analysis. 
-
+The `Setting` tab allows you to customize your analysis. If you want a detailed explanation of all the settings available, visit the [settings page](../extra/settings). 
 
 ```{admonition} Settings overview
 :class: dropdown
@@ -44,7 +43,6 @@ The settings are grouped into categories:
 * *Metric-specfic settings:* every metric includes their own editable group of settings, such as how many standard deviations from the mean to use as a threshold, the edge frequencies for PSD calculation, or the minimun PTP amplitude to count as a peak.
 
 ```
-If you want a detailed explanation of all the settings available, visit the [settings page](../extra/settings). 
 
 When you hover over each editable parameter, you'll see a short description along with the default value. Their **default values** were calculated by the ANCPLab to be compatible with a broad variety of datasets. 
 
