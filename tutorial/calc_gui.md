@@ -43,6 +43,7 @@ When you hover over each editable parameter, you'll see a short description alon
 
 
 <br>
+
 If you want a detailed explanation of all the settings available, visit the [settings page](../extra/settings). 
 
 ## 3. Run Calculation
