@@ -29,7 +29,7 @@ The different calculation modules within MEGqc are called `metrics` and they are
 2. [Power Spectral Density](../report/psd.md)
 3. [Peal-to-Peak (manual calculation)](../report/ptp.md)
 4. [ECG (Electrocardiogram) calculation](../report/ecg.md)
-5. [EOG (Electrooculography) calculation]((../report/eog.md))
+5. [EOG (Electrooculography) calculation](../report/eog.md)
 6. [Muscle Artifacts calculation](../report/muscle.md)
 
 <br>  
