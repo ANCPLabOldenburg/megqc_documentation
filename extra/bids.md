@@ -1,4 +1,3 @@
-
 ## What is BIDS? <img src="../static/bids/logo.jpg" alt="bids-logo" width="200px">
 
 *"Neuroimaging experiments result in complex data that can be arranged in many different ways, and for a long time, there was no consensus on how to organize and share data obtained in neuroimaging experiments. **Brain Imaging Data Structure (BIDS)**, describes a simple and easy to adopt way of organizing neuroimaging and behavioral data"* (Gorgolewski et al., 2016; Niso et al., 2018). 
