@@ -21,7 +21,7 @@ Sadly, both [Datalad](https://handbook.datalad.org/en/latest/intro/windows.html)
 ```
 
 ## Getting started with DataLad
-[DataLad](github.com/datalad) is a free and open source data tool for management of large datasets. It can be used to download a single subject folder from a dataset. Be sure to have your [environment](./environment.md) ready.
+[DataLad](https://handbook.datalad.org/en/latest/index.html) is a free and open source data tool for management of large datasets. It can be used to download a single subject folder from a dataset. Be sure to have your [environment](./environment.md) ready.
 
 0. **Ensure `git-annex` is properly installed on your environment:** DataLad requires `git-annex` version 8.20200309 (or higher). Verify your installation and, if needed, update `git-annex`.
    
