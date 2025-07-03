@@ -1,5 +1,4 @@
 # How to download a dataset from OpenNeuro
-
 [OpenNeuro](https://openneuro.org/) is a free and open platform hosting over 1000 public, BIDS compliant datasets, including MRI, PET, MEG, EEG and iEEG datasets. Gapontseva (2023) evaluated the MEGqc software thanks to 21 MEG datasets obtained from the OpenNeuro data library. This section explains how to download one subject of one dataset from OpenNeuro: 
 
 1. **Find the dataset:** navigate to the [OpenNeuro homepage](https://openneuro.org/) (or follow the hyperlink) and search for the dataset using the Accession Number: `ds003483`.
