@@ -44,7 +44,7 @@ The settings are grouped into categories:
 ```
 
 ### Default settings
-When you enter the command, a terminal-based GUI will prompt you with the question: `Do you want to proceed with the default settings? (y/n)`. A hyperlink in the terminal will direct you to the [setting explanation page](../book/settings_explanation.md), where each parameter is described with more detail. 
+When you enter the command, a terminal-based GUI will prompt you with the question: `Do you want to proceed with the default settings? (y/n)`. A hyperlink in the terminal will direct you to the [setting explanation page](../extra/settings.md), where each parameter is described with more detail. 
 If you enter `y`, the program will use the default values for the parameters of each metric. The default values are designed to be compatible with a broad variety of datasets. 
 
 ### Customized Settings
