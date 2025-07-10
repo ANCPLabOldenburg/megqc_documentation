@@ -20,7 +20,7 @@ The MEGqc pipeline can be used in two ways: via a `command-line interface (CLI)`
 * The **GUI** is ideal for beginners or users who prefer a more visual interface.
 
 ## Metrics in MEGqc
-The different calculation modules within MEGqc are called `metrics` and they are used to evaluate specific types of artifacts or aspects of data quality. The outputs of the `calculation module` are provided as machine-readable outputs (**JSON files** and **TSV files**), which are used by the `plotting module` to generate detailed visual HTML reports of each metric. There are six independent metrics, and this documentation will cover each of their HTML reports. 
+The different calculation modules within MEGqc are called `metrics` and they are used to evaluate specific types of artifacts or aspects of data quality. The outputs of the `calculation module` are provided as machine-readable outputs (**JSON files** and **TSV files**), which are used by the `plotting module` to generate detailed visual HTML reports of each metric. There are six independent metrics, and this documentation will cover each of their HTML reports. The 6 metrics can be grouped as:
 
 1. **Channel Quality Metrics**
    
