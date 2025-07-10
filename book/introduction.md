@@ -33,11 +33,11 @@ The different calculation modules within MEGqc are called `metrics` and they are
    - **Electrocardiogram (ECG):** Detects correlated noise caused by cardiac activity. [Link to the report](../report/ecg.md).
    - **Electrooculography (EOG):** Detects correlated noise caused by eye movements. [Link to the report](../report/eog.md).
 
-5. **Muscle Artifacts**
+3. **Muscle Artifacts**
    
    - **Muscle Artifacts calculation:** Identifies high-frequency bursts from body movements, for example, when the subject clenches their jaw. [Link to the report](../report/muscle.md).
 
-7. **Frequency Domain Assessment**
+4. **Frequency Domain Assessment**
    
    - **Power Spectral Density (PSD):** It provides information on the strength of different frequency components of a signal. PSD calculation helps us to distinguish between brain activity and non-brain-related noise, for example, line noise. [Link to the report](../report/psd.md).
 
