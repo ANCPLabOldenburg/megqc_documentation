@@ -24,21 +24,21 @@ The different calculation modules within MEGqc are called `metrics` and they are
 
 1. **Channel Quality Metrics**
    
-        * **Standard Deviation (STD) of the Data:** Measures the variability of each channel. Channels with unusual high or low STD compared to others, might indicate very noisy or flat channels. [Link to the report](../report/std.md).
-        * **Peak-to-Peak (PtP) Amplitude (manual calculation):** Calculates the difference between maximun and minimun amplitude in a signal. It provides a measure of the total range of variation of the data across the sensors, and can help identify abnormal channels. [Link to the report](../report/ptp.md).
+* **Standard Deviation (STD) of the Data:** Measures the variability of each channel. Channels with unusual high or low STD compared to others, might indicate very noisy or flat channels. [Link to the report](../report/std.md).
+* **Peak-to-Peak (PtP) Amplitude (manual calculation):** Calculates the difference between maximun and minimun amplitude in a signal. It provides a measure of the total range of variation of the data across the sensors, and can help identify abnormal channels. [Link to the report](../report/ptp.md).
 
 3. **Physiological Artifact Correlation**
    
-        * **Electrocardiogram (ECG):** Detects correlated noise caused by cardiac activity. [Link to the report](../report/ecg.md).
-        * **Electrooculography (EOG):** Detects correlated noise caused by eye movements. [Link to the report](../report/eog.md).
+* **Electrocardiogram (ECG):** Detects correlated noise caused by cardiac activity. [Link to the report](../report/ecg.md).
+* **Electrooculography (EOG):** Detects correlated noise caused by eye movements. [Link to the report](../report/eog.md).
 
 5. **Muscle Artifacts**
    
-        * **Muscle Artifacts calculation:** Identifies high-frequency bursts from body movements, for example, when the subject clenches their jaw. [Link to the report](../report/muscle.md).
+* **Muscle Artifacts calculation:** Identifies high-frequency bursts from body movements, for example, when the subject clenches their jaw. [Link to the report](../report/muscle.md).
 
 7. **Frequency Domain Assessment**
    
-        * **Power Spectral Density (PSD):** It provides information on the strength of different frequency components of a signal. PSD calculation helps us to distinguish between brain activity and non-brain-related noise, for example, line noise. [Link to the report](../report/psd.md).
+* **Power Spectral Density (PSD):** It provides information on the strength of different frequency components of a signal. PSD calculation helps us to distinguish between brain activity and non-brain-related noise, for example, line noise. [Link to the report](../report/psd.md).
 
 <br>  
 
