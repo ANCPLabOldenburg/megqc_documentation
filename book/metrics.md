@@ -1,19 +1,15 @@
 # MEGqc report overview
 
-Every `metric` in MEGqc generates its own HTML report. Each report is full of interactive figures that you can zoom in and out, reveal legends on hovering, hide or show specific epochs or channels... In this tutorial we've included some GIFs to demonstrate the interactive capabilities of the figures.
-
-Each metric is covered in individual reports. Here you can find an overview of these reports (in these overviews we will focus only on the Magnetometers, but the logic and interpretation for Gradiometers are very similar):
+Every `metric` in MEGqc generates its own HTML report. Here you can find an overview of these reports _(in these overviews we will focus only on the Magnetometers, but the logic and interpretation for Gradiometers are very similar)_:
 
 1. [Standard Deviation of the Data](../report/std.md)
-2. [Power Spectral Density](../report/psd.md)
-3. [Peal-to-Peak (manual calculation)](../report/ptp.md)
-4. [ECG (Electrocardiogram) calculation](../report/ecg.md)
-5. [EOG (Electrooculography) calculation](../report/eog.md)
-6. [Muscle Artifacts calculation](../report/muscle.md)
+2. [Peal-to-Peak (manual calculation)](../report/ptp.md)
+3. [ECG (Electrocardiogram) calculation](../report/ecg.md)
+4. [EOG (Electrooculography) calculation](../report/eog.md)
+5. [Muscle Artifacts calculation](../report/muscle.md)
+6. [Power Spectral Density](../report/psd.md)
 
-
-Almost every metric will start with basic information of the dataset and the sensor positions.
-
+Each report is full of interactive figures that you can zoom in and out, reveal legends on hovering, hide or show specific epochs or channels... In this tutorial we've included some GIFs to demonstrate the interactive capabilities of the figures.
 
 
 ```{admonition} Source of the figures?
@@ -24,7 +20,7 @@ All the examples in every section were created from the subject 009 from the  _d
 
 ## Basic Information
 
-This section includes some general metadata (date, experimenter, duration...), some channels' information (more on that later), and basic details about the sampling frequency and applied filters.
+Almost every metric will start with some general metadata (date, experimenter, duration...) and basic information about the sensors, such as sensor positions and labels. 
 
 <img src="../static/00.jpg" alt="raw-info" width="650px">
 
@@ -34,29 +30,27 @@ This section includes some general metadata (date, experimenter, duration...), s
 
 Visual representation of the spatial distribution of MEG sensors on the subject's head. The sensors are divided into eight color-coded groups representing different lobes. This same color coding will be used frequently throughout the reports for reference.
 
-1. **Rotate the figure**
-By clicking and holding the mouse left-button while dragging, you can rotate the sensor positions figure to view it from different angles.
+1. **Rotate the figure:** By clicking and holding the mouse left-button while dragging, you can rotate the sensor positions figure to view it from different angles.
 
 <img src="../static/gifs/01_sensor_location/01_rotation.gif" alt="rotation" width="600px">
 
 
-2. **Hide and reveal sensors**
-By clicking on the legend block, you can hide the sensors of a specific lobe. Clicking the block again will make the sensors reappear.
+2. **Hide and reveal sensors:** By clicking on the legend block, you can hide the sensors of a specific lobe. Clicking the block again will make the sensors reappear.
 
 <img src="../static/gifs/01_sensor_location/02_hide.gif" alt="hide" width="600px">
 
+3. **Sensor labels:** The sensor labels appear when you hover over a  sensor dot. Alternatively, you can enable _"Always show channels names"_ option, which keeps all labels visible. Enabling this feature might take some time to render, specially if all lobes are visible.
+
+<img src="../static/gifs/01_sensor_location/03_labels.gif" alt="labels" width="600px">
+   
+
+```{admonition} Sensor Types
+:class: tip
 
 There are 2 different types of meters in MEG sensors: **Magnetometers** and **Gradiometers**. Each sensor might contain one type of meter or both. The sensor labels help you distinguish between them:
 - **Magnetometer:** it measures the magnetic field directly, providing data on its strength and direction. It is more sensitive to distant source, making it more vulnerable to external magnetic noise. Its label ends with _"1"_ (e.g., _MEG1011_).
 - **Gradiometers:** These sensors come in pairs and they measure the gradient of the magentic field, so the difference between 2 measurements. This setup helps filter out environemntal noise. Their labels end with _"2"_ and _"3"_ indicating the two Gradiometers in a specific sensor (e.g. _MEG0112_ and _MEG0113_).
 
-<img src="../static/gifs/01_sensor_location/03_labels.gif" alt="labels" width="600px">
-
-
-```{admonition} Sensor labels
-:class: tip
-
-The sensor labels appear when you hover over a  sensor dot. Alternatively, you can enable _"Always show channels names"_ option, which keeps all labels visible. Enabling this feature might take some time to render, specially if all lobes are visible.
 
 ``` 
 
