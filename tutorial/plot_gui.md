@@ -12,6 +12,17 @@ You can *paste* the path to your **dataset** folder or click `Browse` to select 
 If you give a path to a different folder, such as the `subject` folder or the `calculation folder`, you will see in the Log window
 "Plotting error: Process exited with code 1". It will also create an empty folder called `derivatives` within your given paths. Your path only needs to lead to the dataset, you don't need to go any deeper within the structure.
 
+```
+
+As with the Calculation Module, you can choose how many parallel jobs to use during the creation of the reports. The default option is `1`, but you can increase the speed of the processing by increasing the number of parallel Jobs.
+
+```{admonition} How do I know the right amount of parallel Jobs?
+:class: tip
+
+  * MEGqc automatically detects and displays the number of cores ('CPUs') and the total available RAM (see the lower-corner of the GUI).
+  * The `Info` button will give you personalized recommendations based on system memory.
+  * You may also use `-1` to use **all available cores**. 
+
 ``` 
 
 ## Congratulations!
