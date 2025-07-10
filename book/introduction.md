@@ -6,8 +6,9 @@ Magnetoencephalography (MEG) data is susceptible to  noise and artifacts, which 
 - Internal noise sources (e.g. eye movements of the subject).
 - Systemic noise sources (e.g. malfunction of a sensor).
 
-<img src="../static/sources.png" alt="noise-sources" width="200px" align="left">
+<img src="../static/sources.png" alt="noise-sources" width="200px" align="center">
 
+<br>
 
 For this reason, quality control of MEG data is an essential step for ensuring valid and reproducible science (Niso et al., 2022). However, the detection and annotation of artifacts in MEG data is commonly performed manually (visual inspection), requires expertise and can be a tedious and time-consuming task. Also, as there's not a standardized procedure, it's vulnerable to biases.
 
@@ -18,32 +19,31 @@ The MEGqc pipeline can be used in two ways: via a **command-line interface (CLI)
 * The **CLI** is recommended for developers or advanced users.
 * The **GUI** is ideal for beginners or users who prefer a more visual interface.
 
-Regardless, MEGqc is designed to be user-friendly. To run the analysis, the user just needs to:
-- Provide data for evaluation (in case you don't have a BIDS compliant MEG dataset, [here’s how to download one from OpenNeuro](../extra/openneuro)).
-- Set analysis parameters if desired (default parameters are available).
-- Run the analysis.
-
-To ensure standardization of the pipeline, MEGqc software is tailored to the [**BIDS standards**](../extra/bids.md).
-
 ## Metrics in MEGqc
-The different calculation modules within MEGqc are called `metrics` and they are used to evaluate specific types of artifacts or aspects of data quality. MEGqc provides you with machine-readable outputs (**JSON files** and **TSV files**), and, to ensure clarity, MEGqc generates detailed visual HTML reports for each Metric. There are six independent metrics, and this documentation will cover each of their HTML reports:
+The different calculation modules within MEGqc are called `metrics` and they are used to evaluate specific types of artifacts or aspects of data quality. The output of the calculation modules are provided as machine-readable outputs (**JSON files** and **TSV files**), which is used by the plotting module to generate detailed visual HTML reports of each `metric`. There are six independent `metrics`, and this documentation will cover each of their HTML reports. 
 
-1. [Standard Deviation of the Data](../report/std.md)
-2. [Power Spectral Density](../report/psd.md)
-3. [Peal-to-Peak (manual calculation)](../report/ptp.md)
-4. [ECG (Electrocardiogram) calculation](../report/ecg.md)
-5. [EOG (Electrooculography) calculation](../report/eog.md)
-6. [Muscle Artifacts calculation](../report/muscle.md)
+### 1. Channel Quality Metrics
+* Standard Deviation (STD) of the Data: Measures the variability of each channel. Channels with unusual high or low STD compared to others, might indicate very noisy or flat channels. [Link to the report](../report/std.md).
+* Peak-to-Peak (PtP) Amplitude (manual calculation): Calculates the difference between maximun and minimun amplitude in a signal. It provides a measure of the total range of variation of the data across the sensors, and can help identify abnormal channels. [Link to the report](../report/ptp.md).
+
+### 2. Physiological Artifact Correlation
+* Electrocardiogram (ECG): Detects correlated noise caused by cardiac activity. [Link to the report](../report/ecg.md).
+* Electrooculography (EOG): Detects correlated noise caused by eye movements. [Link to the report](../report/eog.md).
+
+### 3. Muscle Artifacts
+* Muscle Artifacts calculation: Identifies high-frequency bursts from body movements, for example, when the subject clenches their jaw. [Link to the report](../report/muscle.md).
+
+### 4. Frequency Domain Assessment
+* Power Spectral Density (PSD): It provides information on the strength of different frequency components of a signal. PSD calculation helps us to distinguish between brain activity and non-brain-related noise, for example, line noise. [Link to the report](../report/psd.md).
 
 <br>  
-
 
 
 
 ```{admonition} There are 2 other metrics within MEGqc
 :class: dropdown
 
-* **Peak-to-Peak automatic calculation:** This module, which relies on MNE library functions, is not used in the final version of the pipeline. Instead, the manual "Peak-to-Peak manual" is recommended.
+* **Peak-to-Peak automatic calculation:** This module, which relies on MNE library functions, is not used in the final version of the pipeline. Instead, the "manual calculation" is recommended.
 * **Head movement calculation:** This module estimates subject's head movements. These movements may appear as sudden shifts or jumps in the MEG data, causing distortions in the spatial distribution of the recorded magnetic fields. The effects of head movements can vary depending on the strength and direction. This module is implemented but requires a substantial amount of information to perform the calculation.
 
 ``` 
