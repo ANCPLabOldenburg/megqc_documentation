@@ -1,6 +1,6 @@
 # Standard Deviation of the Data
 
-The Standard Deviation (STD) metric measures the variability of each channel. Channels with unusual high or low STD compared to others, might indicate potential malfunctions (Gapontseva, 2023).
+The Standard Deviation (STD) metric measures the variability of each channel. Channels with unusual high or low STD compared to others, might indicate potential malfunctions.
 
 ## 1. Standard Deviation over the entire time series
 In the first figure, each dot represents the standard deviation of a Magnetometer channel over **the entire time series**.
