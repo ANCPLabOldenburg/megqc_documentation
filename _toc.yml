@@ -5,11 +5,11 @@ chapters:
 - file: book/metrics
   sections:
     - file: report/std
-    - file: report/psd
     - file: report/ptp
     - file: report/ecg
     - file: report/eog
     - file: report/muscle
+    - file: report/psd
 - file: book/installation
   sections:
     - file: installation/gui
