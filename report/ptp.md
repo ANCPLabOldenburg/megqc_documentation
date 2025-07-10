@@ -1,5 +1,5 @@
 # Peak to Peak Amplitude
-Peak-to-Peak (PtP) amplitude refers to the difference between the highest positive peak and the lowest negative peak. It provides a measue of the total range of variation of the data averaged over a time interval (Gapontseva, 2023). 
+Peak-to-Peak (PtP) amplitude refers to the difference between the highest positive peak and the lowest negative peak. It provides a measue of the total range of variation of the data averaged over a time interval. 
 
   <img src="../static/03_PtP/01" alt="pic1" width="800px">
 
