@@ -18,16 +18,13 @@ MEGqc offers 3 different modules:
 - **Global Quality Index (GQI):** It provides a single overall estimate of data quality for each subject.
 <br>
 
-<img src="../static/mini/gui.png" alt="gui" width="200px" align="left">
-
-
-
-
-
+<img src="../static/mini/gui.png" alt="gui" width="250px" align="right">
 
 MEGqc can be used via a **command-line interface (CLI)** or a **graphical user interface (GUI)**. Each of them have different [installation](./installation) and [usage](./tutorial) methods covered by this documentation.
 
 
+<br>
+<br>
 <br>
 <br>
 
