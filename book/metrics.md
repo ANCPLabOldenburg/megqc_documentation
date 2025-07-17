@@ -1,6 +1,6 @@
 # MEGqc report overview
 
-Every `metric` in MEGqc generates its own HTML report. Here you can find an overview of these reports:
+Every `metric` in MEGqc generates its own HTML report. Each report is full of interactive figures that you can zoom in and out, reveal legends on hovering, hide or show specific epochs or channels...  Here you can find an overview of each report:
 
 1. [Standard Deviation of the Data](../report/std.md)
 2. [Peak-to-Peak (manual calculation)](../report/ptp.md)
@@ -9,9 +9,7 @@ Every `metric` in MEGqc generates its own HTML report. Here you can find an over
 5. [Muscle Artifacts calculation](../report/muscle.md)
 6. [Power Spectral Density](../report/psd.md)
 
-Each report is full of interactive figures that you can zoom in and out, reveal legends on hovering, hide or show specific epochs or channels... In this tutorial we've included some GIFs to demonstrate the interactive capabilities of the figures.
-
-_*These overviews will show only data from the Magnetometers, but the logic and interpretation for Gradiometers are very similar._
+In this tutorial we've included some GIFs to demonstrate the interactive capabilities of the figures. These overviews will show only data from the Magnetometers, but the logic and interpretation for Gradiometers are very similar.
 
 
 ```{admonition} Source of the figures?
