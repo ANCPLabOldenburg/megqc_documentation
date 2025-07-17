@@ -13,6 +13,7 @@ For this reason, quality control of MEG data is an essential step for ensuring v
 
 ## MEGqc
 To address this issue, the [ANCP Lab](https://uol.de/en/applied-neurocognitive-psychology) developed MEGqc, a software tool for automated and standardized quality control of MEG recordings. By providing a standardized workflow, it helps minimize human bias and facilitates comparisosn between datasets. **MEGqc evaluates the quality of raw data, but it is not an artifact removal tool.**
+MEGqc can be used via a command-line interface (CLI) or a graphical user interface (GUI). Each of them have a different installation methods covered by this documentation.
 
 ## Metrics in MEGqc
 The different calculation modules within MEGqc are called `metrics` and they are used to evaluate specific types of artifacts. The outputs of the `calculation module` are provided as machine-readable outputs (**JSON files** and **TSV files**), which are used by the `plotting module` to generate detailed visual HTML reports of each metric.
