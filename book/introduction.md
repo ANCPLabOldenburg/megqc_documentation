@@ -22,7 +22,7 @@ There are six independent metrics, and this documentation will cover each of the
 1. **Channel Quality Metrics**
    
    - **Standard Deviation (STD) of the Data:** Measures the variability of each channel. Channels with unusual high or low STD compared to others, might indicate very noisy or flat channels. [Link to the report](../report/std.md).
-   - **Peak-to-Peak (PtP) Amplitude (manual calculation):** Calculates the difference between maximun and minimun amplitude in a signal. It provides a measure of the total range of variation of the data across the sensors, and can help identify abnormal channels. [Link to the report](../report/ptp.md).
+   - **Peak-to-Peak (PtP) Amplitude (manual calculation):** It provides a measure of the total range of variation of the data across the sensors, and can help identify abnormal channels. [Link to the report](../report/ptp.md).
 
 
 2. **Physiological Artifact Correlation**
