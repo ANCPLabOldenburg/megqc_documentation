@@ -30,6 +30,10 @@ MEGqc can be used via a **command-line interface (CLI)** or a **graphical user i
 
 <br>
 
+
+
+
+
 ## Metrics in MEGqc
 The different calculation modules within MEGqc are called `metrics` and they are used to evaluate specific types of artifacts. There are six independent metrics grouped by the source of the noise:
 
