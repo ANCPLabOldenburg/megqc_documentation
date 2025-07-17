@@ -20,6 +20,11 @@ MEGqc offers 3 different modules:
 
 <img src="../static/mini/gui.png" alt="gui" width="200px" align="left">
 
+
+
+
+
+
 MEGqc can be used via a **command-line interface (CLI)** or a **graphical user interface (GUI)**. Each of them have different [installation](./installation) and [usage](./tutorial) methods covered by this documentation.
 
 
