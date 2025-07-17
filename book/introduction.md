@@ -16,6 +16,7 @@ MEGqc offers 3 different modules:
 - **Calculation Module:** It gives you machine-readable output (JSON files and TSV files) based on certain quality control `metrics`.
 - **Plotting Module:** It generates detailed visual HTML reports of each metric.
 - **Global Quality Index (GQI):** It provides a single overall estimate of data quality for each subject.
+<br>
 
 <img src="../static/mini/gui.png" alt="gui" width="200px" align="left">
 
