@@ -2,11 +2,10 @@
 
 ## MEG data quality control
 Magnetoencephalography (MEG) data is susceptible to  noise and artifacts, which can severely corrupt the data quality. These artifacts may arise from:
+- Channel quality (e.g. malfunction of a sensor).
+- Internal noise sources (e.g. cardiac rythm of the subject).
+- Muscle noise sources (e.g. body movements of the subject).
 - Environmental noise sources (e.g. powerline noise).
-- Internal noise sources (e.g. eye movements of the subject).
-- Systemic noise sources (e.g. malfunction of a sensor).
-
-<img src="../static/sources.png" alt="noise-sources" width="200px" align="center">
 
 <br>
 
@@ -15,13 +14,9 @@ For this reason, quality control of MEG data is an essential step for ensuring v
 ## MEGqc
 To address this issue, the [ANCP Lab](https://uol.de/en/applied-neurocognitive-psychology) developed MEGqc, a software tool for automated and standardized quality control of MEG recordings. By providing a standardized workflow, it helps minimize human bias and facilitates comparisosn between datasets. **MEGqc evaluates the quality of raw data, but it is not an artifact removal tool.**
 
-The MEGqc pipeline can be used in two ways: via a `command-line interface (CLI)` or a `graphical user interface (GUI)` (this documentation covers the [installation](./installation) and [tutorial](./tutorial) for both options).
-* The **CLI** is recommended for developers or advanced users.
-* The **GUI** is ideal for beginners or users who prefer a more visual interface.
-
 ## Metrics in MEGqc
-The different calculation modules within MEGqc are called `metrics` and they are used to evaluate specific types of artifacts or aspects of data quality. The outputs of the `calculation module` are provided as machine-readable outputs (**JSON files** and **TSV files**), which are used by the `plotting module` to generate detailed visual HTML reports of each metric. There are six independent metrics, and this documentation will cover each of their HTML reports.
-These 6 metrics can be grouped as:
+The different calculation modules within MEGqc are called `metrics` and they are used to evaluate specific types of artifacts. The outputs of the `calculation module` are provided as machine-readable outputs (**JSON files** and **TSV files**), which are used by the `plotting module` to generate detailed visual HTML reports of each metric.
+There are six independent metrics, and this documentation will cover each of their HTML reports. They can be grouped by the source of the noise:
 
 1. **Channel Quality Metrics**
    
