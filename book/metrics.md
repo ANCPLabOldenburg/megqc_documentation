@@ -53,8 +53,8 @@ Visual representation of the spatial distribution of MEG sensors on the subject'
 :class: tip
 
 The sensor labels help you distinguish between Magnetometers and Gradiometers:
-- **Magnetometer:** it measures the magnetic field directly, providing data on its strength and direction. It is more sensitive to distant source, making it more vulnerable to external magnetic noise. Its label ends with _"1"_ (e.g., _MEG1011_).
-- **Gradiometers:** These sensors come in pairs and they measure the gradient of the magentic field, so the difference between 2 measurements. This setup helps filter out environemntal noise. Their labels end with _"2"_ and _"3"_ indicating the two Gradiometers in a specific sensor (e.g. _MEG0112_ and _MEG0113_).
+- **Magnetometer:** it measures the magnetic field directly, providing data on its strength and direction, therefore, they are more vulnerable to external magnetic noise. Its label ends with _"1"_ (e.g., _MEG1011_).
+- **Gradiometers:** These sensors come in pairs and they measure the gradient of the magentic field (the difference between 2 measurements). Their labels end with _"2"_ and _"3"_, one number per Gradiometer in a sensor (e.g. _MEG0112_ and _MEG0113_).
 
 ```
 
