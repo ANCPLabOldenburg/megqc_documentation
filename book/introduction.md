@@ -36,7 +36,7 @@ There are six independent metrics, and this documentation will cover each of the
 
 4. **Frequency Domain Assessment**
    
-   - **Power Spectral Density (PSD):** It provides information on the strength of different frequency components of a signal. PSD calculation helps us to distinguish between brain activity and non-brain-related noise, for example, line noise. [Link to the report](../report/psd.md).
+   - **Power Spectral Density (PSD):** It provides information on the strength of different frequency components of a signal. PSD calculation helps us to distinguish between brain activity and non-brain-related noise, for example, line noise or environmental noise. [Link to the report](../report/psd.md).
 
 <br>  
 
