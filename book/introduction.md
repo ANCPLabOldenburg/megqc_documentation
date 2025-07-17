@@ -17,7 +17,10 @@ MEGqc offers 3 different modules:
 - **Plotting Module:** It generates detailed visual HTML reports of each metric.
 - **Global Quality Index (GQI):** It provides a single overall estimate of data quality for each subject.
 
-MEGqc can be used via a command-line interface (CLI) or a graphical user interface (GUI). Each of them have different installation and used methods covered by this documentation.
+<img src="../static/mini/gui.png" alt="gui" width="200px" align="left"> MEGqc can be used via a command-line interface (CLI) or a graphical user interface (GUI). Each of them have different [installation](./installation) and [usage](./tutorial) methods covered by this documentation.
+
+
+
 
 ## Metrics in MEGqc
 The different calculation modules within MEGqc are called `metrics` and they are used to evaluate specific types of artifacts. There are six independent metrics grouped by the source of the noise:
@@ -54,7 +57,8 @@ The different calculation modules within MEGqc are called `metrics` and they are
 
 
 ## Next section
-In the next section, we'll walk through the content of the HTML reports.
+In the next section, you'll learn more about the Global Quality Index (GQI), how it is calculated and how to interprate the outcome.
+
 For a deeper understanding of MEGqc's core functionality, dependencies and derivatives, [visit the pipeline basics page](../extra/details.md).
 
 
