@@ -56,4 +56,10 @@ The sensor labels help you distinguish between Magnetometers and Gradiometers:
 
 ```
 
+# Next Section
+
+In the next pages you'll learn more about the interpretation of each specific report.
+
+Also, in the next section, you'll learn more about the Global Quality Index (GQI), how it is calculated and how to interprate the outcome.
+
 
