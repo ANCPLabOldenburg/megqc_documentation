@@ -2,7 +2,7 @@ root: index
 format: jb-book
 chapters:
 - file: book/introduction
-- file: book/metrics
+- file: book/report
   sections:
     - file: report/std
     - file: report/ptp
