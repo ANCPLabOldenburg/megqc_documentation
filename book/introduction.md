@@ -16,10 +16,10 @@ To address this issue, the [ANCP Lab](https://uol.de/en/applied-neurocognitive-p
 
 MEGqc offers 2 modules:
 - **Calculation Module:** It gives you machine-readable outputs (JSON files and TSV files) for every subject and selected `metric`. There are 6 independent `metrics` that evaluate specific types of artifacts.
-   - **GQI Module:** It provides the `Global Quality Index (GQI)` without re-running the Calculation Module. 
 - **Plotting Module:** It generates detailed visual HTML reports for every subject and selected `metric`.
 
-Finally, MEGqc offers a general **summary reports**, which consist of a JSON file for each subject, a TSV file for the group metrics and a PNG plot for the whole dataset. The summary reports shows the `Global Quality Index (GQI)`, a single overall estimate of data quality for each subject. [Click here if you want to know more about the GQI](./gqi).
+MEGqc offers a general **summary reports**, which consist of a JSON file for each subject, a TSV file for the group metrics and a PNG plot for the whole dataset. The summary reports shows the `Global Quality Index (GQI)`, a single overall estimate of data quality for each subject. [Click here if you want to know more about the GQI](./gqi).
+* There is a third module, the **GQI module**, that allows you to re-run the GQI calculation without re-running the calculation module.
 
 MEGqc can be used via a **command-line interface (CLI)** or a **graphical user interface (GUI)**. Each of them have different [installation](./installation) and [usage](./tutorial) methods covered by this documentation.
 
