@@ -1,4 +1,4 @@
-# MEGqc report overview
+# HTML reports overview
 
 Every `metric` in MEGqc generates its own HTML report. Each report is full of interactive figures that you can zoom in and out, reveal legends on hovering, hide or show specific epochs or channels...  Here you can find an overview of each report:
 
