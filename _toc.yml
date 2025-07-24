@@ -11,6 +11,7 @@ chapters:
     - file: report/muscle
     - file: report/psd
     - file: report/gqi
+- file: book/gqi
 - file: book/installation
   sections:
     - file: installation/gui
