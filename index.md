@@ -22,7 +22,7 @@ To run the quality control calculations and create the reports you just need to:
 
 ## This guide includes
 - [What is MEGqc and why do we need it?](book/introduction.md)
-- [Overview of MEGqc reports](book/metrics.md)
+- [Overview of MEGqc reports](book/report.md)
 - [Installation guide](book/installation.md)
 - [Tutorial on how to run MEGqc](book/tutorial.md)
 
