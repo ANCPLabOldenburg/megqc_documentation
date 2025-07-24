@@ -8,7 +8,7 @@ This report includes a single plot displaying the z-scores of high frequency (bl
 ```{admonition} Want to check more reports?
 :class: tip
 
-Head back to the [main metrics page](../book/metrics.md) to explore the others!
+Head back to the [main metrics page](../book/report.md) to explore the others!
 
 ``` 
 
