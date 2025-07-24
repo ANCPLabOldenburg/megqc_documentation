@@ -16,12 +16,13 @@ The penalization system is defined by a system of `weights` and `thresholds`. Th
 
 The weight and both thresholds are customizable, but there are defaults values calculated from datasets.
 ```
+<br>
 
 1. **Percentage variables:** The last 6 x-axis items (one item per metric) show the raw percentage of channels affected by the different sources of noise. If any of these value surpass their predefined `thresholds`, the calculation of the penalization starts.
 
 <img src="../static/gqi/03.png" alt="gqi-3" width="400px" align="center">
 
-
+<br>
 
 2. **Penalties:** Each x-axis item in the following plot represents the computed penalty which will be substracted from the GQI (starts at 100%). Each x-axis represents one of the four sources of noise *(channel variability, correlational noise from cardiac rythm and eye-blinks, muscle artifacts and power spectral density)*. The penalty is calculated as the percentage of the raw noise normalized (based on the thresholds) and multiply by the weight.
 
@@ -39,7 +40,9 @@ By default, a penalization to the GQI is applied if certain amount of channels s
 | Magnetometers | 8% | 8% |
 | Gradiometers | 8% | 8% |
 
-``` 
+```
+
+<br>
 
 
 3. **GQI:** Each dot represents a subject's GQI, and the violin plot summarizes the distribution of GQI scores across the dataset.
