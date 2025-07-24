@@ -21,6 +21,6 @@ Similar to the ECG report, the following three plots show the MEG channels affec
 ```{admonition} Want to check more reports?
 :class: tip
 
-Head back to the [main metrics page](../book/metrics.md) to explore the others!
+Head back to the [main metrics page](../book/report.md) to explore the others!
 
 ``` 
