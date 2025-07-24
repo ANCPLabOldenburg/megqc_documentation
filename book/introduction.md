@@ -16,9 +16,11 @@ To address this issue, the [ANCP Lab](https://uol.de/en/applied-neurocognitive-p
 
 MEGqc offers 2 modules:
 - **Calculation Module:** It gives you machine-readable outputs (JSON files and TSV files) for every subject and selected `metric`.
+   - **GQI Module:** It provides the `Global Quality Index (GQI)` without re-running the Calculation Module. 
 - **Plotting Module:** It generates detailed visual HTML reports for every subject and selected `metric`.
 
-Finally, MEGqc offers a general **summary report**, which consist of a JSON file for each subject and a TSV file for the group metrics. This comes along a PNG plot with the calculation of the `Global Quality Index (GQI)`.
+Finally, MEGqc offers a general **summary reports**, which consist of a JSON file for each subject, a TSV file for the group metrics and a PNG plot for the whole dataset. The summary reports shows the `Global Quality Index (GQI)`, a single overall estimate of data quality for each subject. If you want to know more how the GQI is calculated, [click here](./gqi).
+
 
 <br>  
    
@@ -48,9 +50,6 @@ The different calculation modules within MEGqc are called `metrics` and they are
    
    - **Power Spectral Density (PSD):** It provides information on the strength of different frequency components of a signal. PSD calculation helps us to distinguish between brain activity and non-brain-related noise, for example, line noise or environmental noise. [Link to the report](../report/psd.md).
 
-5. **Summary Report**
-   - **Global Quality Index:** MEGqc provides a single overall estimate of data quality for each subject based in the result of the other metrics. [Link to the report](../report/gqi.md).
-    
 <br>  
  
 <!--
