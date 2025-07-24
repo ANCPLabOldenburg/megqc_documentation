@@ -9,7 +9,7 @@ Inside you can find a `Shell Script` (for Linux systems) and a `Windows Batch Fi
 
 If you're working in Linux, you'll need first to allow the .sh script execution:
   
-### 1.2 Allow script execution (for Linux users)
+### (for Linux users) Allow script execution 
 This can be done in two different ways:
 
 ````{tab-set}
