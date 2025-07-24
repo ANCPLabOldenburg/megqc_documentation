@@ -7,8 +7,7 @@ In this section we will explain you how to run MEGqc in your dataset. MEGqc has 
 
 Each time you run the calculation module or the GQI module, it generates a new `summary reports` folder. This folder contains a summary of metrics and GQI values of your dataset. Every run creates a new summary report folder, stored as a numbered `attempt`.
 
-```{admonition} Summary Reports content
-::dropdown::
+```{dropdown} Summary Reports content
 
 The `summary reports` folder contains the following content:
 * config: it will contain the settings used for each `attempt`.
