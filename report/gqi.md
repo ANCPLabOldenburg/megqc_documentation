@@ -1,10 +1,14 @@
 # Global Quality Index (GQI)
 
-MEGqc can compute a `Global Quality Index (GQI)` to provide a single overall estimate of data quality for each subject. The GQI works as a **penalization system:** when one or more metrics detect quality issues, they reduce the subject's GQI score accordingly.
+MEGqc final metric computes a single overall estimate of data quality for each subject. The GQI works as a **penalization system:** when one or more metrics detect quality issues, they reduce the subject's GQI score accordingly.
 
 <img src="../static/gqi/gqi_1.png" alt="gqi" width="450px" align="center">
 
-The plot above illustrates how the GQI of a whole dataset is computed:
+The penalty system is defined by a system of `weights` and `thresholds`. The weight is the maximun possible penalty, and represents its relative importance for the GQI. There are two thresholds, the `start` and the `end`. If a metric exceeds the `start` (predefined *minimun* threshold) , a _portion_ of its weight is substracted from the GQI. If the metric exceeds a predefined **maximun** threshold (the end threshold), the _total_ weight will be penalized. The weight and the thresholds are customizable, but there are defaults values calculated from datasets.
+
+1. **Percentage variables:** The last 6 x-axis items show the raw percentage of channels affected by the different sources of noise.
+<img src="../static/gqi/03.png" alt="gqi-3" width="400px" align="center">
+
 
 1. **GQI:** Each dot represents a subject's GQI, and the violin plot summarizes the distribution of GQI scores across the dataset.
 <img src="../static/gqi/01.png" alt="gqi-1" width="250px" align="center">
@@ -12,11 +16,8 @@ The plot above illustrates how the GQI of a whole dataset is computed:
 2. **Penalties:** The GQI is reduced based on four sources of noise (channel variability, correlational noise from cardiac rythm and eye-blinks, muscle artifacts and power spectral density). Each x-axis item in the following plot represents the computed penalty from the different noise sources, substracted from the GQI (starts at 100%). 
 <img src="../static/gqi/02.png" alt="gqi-2" width="400px" align="center">
 
-The penalty system is defined by a system of `weights` and `thresholds`. The weight is the maximun possible penalty, and represents its relative importance for the GQI. There are two thresholds, the `start` and the `end`. If a metric exceeds the predefined **minimun** threshold (the start threshold) , a _portion_ of its weight is substracted from the GQI. If the metric exceeds a predefined **maximun** threshold (the end threshold), the _total_ weight will be penalized. The weight and the thresholds are customizable, but there are defaults values calculated from datasets.
 
 
-3. **Percentage variables:** The last 6 x-axis items show the raw percentage of channels affected by the different sources of noise.
-<img src="../static/gqi/03.png" alt="gqi-3" width="400px" align="center">
 
 
 ## Penalty categories
