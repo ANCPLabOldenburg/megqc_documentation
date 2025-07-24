@@ -38,6 +38,6 @@ The interactive feature allows you to hide (1 click) and isolate (2 clicks) spec
 ```{admonition} Want to check more reports?
 :class: tip
 
-Head back to the [main metrics page](../book/metrics.md) to explore the others!
+Head back to the [main metrics page](../book/report.md) to explore the others!
 
 ``` 
