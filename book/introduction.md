@@ -2,24 +2,25 @@
 
 ## MEG data quality control
 Magnetoencephalography (MEG) data is susceptible to  noise and artifacts, which can severely corrupt the data quality. These artifacts may arise from:
-- Channel quality (e.g. malfunction of a sensor).
-- Internal noise sources (e.g. cardiac rythm of the subject).
-- Muscle noise sources (e.g. body movements of the subject).
+- Channel variability (e.g. malfunction of a sensor, flat and noisy channels).
+- Internal noise sources (e.g. eye-blinks and cardiac rythm of the subject).
+- Muscle noise sources (e.g. jaw movements).
 - Environmental noise sources (e.g. powerline noise).
 
-For this reason, quality control of MEG data is an essential step for ensuring valid and reproducible science (Niso et al., 2022). However, the detection and annotation of artifacts in MEG data is commonly performed manually (visual inspection), requires expertise and can be a tedious and time-consuming task. Also, as there's not a standardized procedure, it's vulnerable to biases.
+For this reason, quality control of MEG data is an essential step for ensuring valid and reproducible science (Niso et al., 2022). However, the detection and annotation of artifacts in MEG data is commonly performed manually (visual inspection), requires expertise and can be a tedious and time-consuming task, and it's not scalable for big datasets (> 200 subjects). Also, as there's not a standardized procedure, it's vulnerable to biases. 
 
 ## MEGqc
 To address this issue, the [ANCP Lab](https://uol.de/en/applied-neurocognitive-psychology) developed MEGqc, a software tool for automated and standardized quality control of MEG recordings. By providing a standardized workflow, it helps minimize human bias and facilitates comparisosn between datasets. **MEGqc evaluates the quality of raw data, but it is not an artifact removal tool.**
 
-MEGqc offers 3 different modules:
-- **Calculation Module:** It gives you machine-readable output (JSON files and TSV files) based on certain quality control `metrics`.
-- **Plotting Module:** It generates detailed visual HTML reports of each metric.
-- **Global Quality Index (GQI):** It provides a single overall estimate of data quality for each subject.
+MEGqc offers 2 specific reports:
+- **Calculation Module:** It gives you machine-readable output (JSON files and TSV files) based on certain quality control `metrics` for every subject.
+- **Plotting Module:** It generates detailed visual HTML reports of each metric for every subject.
+
+MEGqc also offers general reports:
+- **Summary report:** Gives you a machine-readable output (JSON file) for each subject and a TSV file for the group `metrics`.
+
 <br>  
-
-<img src="../static/mini/gui.png" alt="gui" width="100px" align="right">
-
+   
 MEGqc can be used via a **command-line interface (CLI)** or a **graphical user interface (GUI)**. Each of them have different [installation](./installation) and [usage](./tutorial) methods covered by this documentation.
 
 <br>  
@@ -27,7 +28,7 @@ MEGqc can be used via a **command-line interface (CLI)** or a **graphical user i
 ## Metrics in MEGqc
 The different calculation modules within MEGqc are called `metrics` and they are used to evaluate specific types of artifacts. There are six independent metrics grouped by the source of the noise:
 
-1. **Channel Quality Metrics**
+1. **Channel Variability**
    
    - **Standard Deviation (STD) of the Data:** Measures the variability of each channel. Channels with unusual high or low STD compared to others, might indicate very noisy or flat channels. [Link to the report](../report/std.md).
    - **Peak-to-Peak (PtP) Amplitude (manual calculation):** It provides a measure of the total range of variation of the data across the sensors, and can help identify abnormal channels. [Link to the report](../report/ptp.md).
