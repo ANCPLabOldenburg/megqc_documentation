@@ -19,7 +19,6 @@ MEGqc offers 2 modules:
 - **Plotting Module:** It generates detailed visual HTML reports for every subject and selected `metric`.
 
 MEGqc offers a general **summary reports**, which consist of a JSON file for each subject, a TSV file for the group metrics and a PNG plot for the whole dataset. The summary reports shows the `Global Quality Index (GQI)`, a single overall estimate of data quality for each subject. [Click here if you want to know more about the GQI](./gqi).
-* There is a third module, the **GQI module**, that allows you to re-run the GQI calculation without re-running the calculation module.
 
 MEGqc can be used via a **command-line interface (CLI)** or a **graphical user interface (GUI)**. Each of them have different [installation](./installation) and [usage](./tutorial) methods covered by this documentation.
 
