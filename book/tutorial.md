@@ -4,11 +4,14 @@ In this section we will explain you how to run MEGqc in your dataset. MEGqc has 
 * In the **calculation module** you configure the file paths, specify parameters and execute the calculations.
 * The **plotting module** uses the machine-readable outputs (JSON files and TSV files) to generate the [HTML reports](./report).
 
+There is a third module, the **GQI module**, which allowsto re-calculate the GQI with different weight and thresholds parameters without re-running the calculation module.
+
 Here you can find how to use both modules for each version of MEGqc:
 
 ## GUI MEGqc tutorial
 1. [Running the calculation module](../tutorial/calc_gui)
 2. [Running the plotting module](../tutorial/plot_gui)
+3. [Running the GQI module](../tutorial/calc_gqi)
 
 ## CLI MEGqc tutorial
 1. [Running the calculation module](../tutorial/calc_cli)
