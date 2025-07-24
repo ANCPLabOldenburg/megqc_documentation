@@ -10,14 +10,13 @@ Magnetoencephalography (MEG) data is susceptible to  noise and artifacts, which 
 For this reason, quality control of MEG data is an essential step for ensuring valid and reproducible science (Niso et al., 2022). However, the detection and annotation of artifacts in MEG data is commonly performed manually (visual inspection), requires expertise and can be a tedious and time-consuming task, and it's not scalable for big datasets (> 200 subjects). Also, as there's not a standardized procedure, it's vulnerable to biases. 
 
 ## MEGqc
-To address this issue, the [ANCP Lab](https://uol.de/en/applied-neurocognitive-psychology) developed MEGqc, a software tool for automated and standardized quality control of MEG recordings. By providing a standardized workflow, it helps minimize human bias and facilitates comparisosn between datasets. **MEGqc evaluates the quality of raw data, but it is not an artifact removal tool.**
+To address this issue, the [ANCP Lab](https://uol.de/en/applied-neurocognitive-psychology) developed MEGqc, a software tool for automated and standardized quality control of MEG recordings. By providing a standardized workflow, it helps minimize human bias and facilitates comparisosn between datasets. **MEGqc evaluates the quality of raw data, but it is not an artifact removal tool.** There are 6 independent `metrics` that evaluate specific types of artifacts.
 
-MEGqc offers 2 specific reports:
-- **Calculation Module:** It gives you machine-readable output (JSON files and TSV files) based on certain quality control `metrics` for every subject.
-- **Plotting Module:** It generates detailed visual HTML reports of each metric for every subject.
+MEGqc offers 2 modules:
+- **Calculation Module:** It gives you machine-readable outputs (JSON files and TSV files) for every subject and selected `metric`.
+- **Plotting Module:** It generates detailed visual HTML reports for every subject and selected `metric`.
 
-MEGqc also offers general reports:
-- **Summary report:** Gives you a machine-readable output (JSON file) for each subject and a TSV file for the group `metrics`.
+Finally, MEGqc offers a general **summary report**, which consist of a JSON file for each subject and a TSV file for the group metrics. This comes along a PNG plot with the calculation of the `Global Quality Index (GQI)`.
 
 <br>  
    
@@ -47,8 +46,12 @@ The different calculation modules within MEGqc are called `metrics` and they are
    
    - **Power Spectral Density (PSD):** It provides information on the strength of different frequency components of a signal. PSD calculation helps us to distinguish between brain activity and non-brain-related noise, for example, line noise or environmental noise. [Link to the report](../report/psd.md).
 
+5. **Summary Report**
+   - **Global Quality Index:** MEGqc provides a single overall estimate of data quality for each subject based in the result of the other metrics. [Link to the report](../report/gqi.md).
+    
 <br>  
-
+ 
+<!--
 
 ```{admonition} There are 2 other metrics within MEGqc
 :class: dropdown
@@ -58,9 +61,14 @@ The different calculation modules within MEGqc are called `metrics` and they are
 
 ``` 
 
+-->
 
 ## Next section
+In the next section, we’ll walk through the content of the HTML reports. For a deeper understanding of MEGqc’s core functionality, dependencies and derivatives, visit the pipeline basics page.
+
+<!--
 In the next section, you'll learn more about the Global Quality Index (GQI), how it is calculated and how to interprate the outcome.
+-->
 
 For a deeper understanding of MEGqc's core functionality, dependencies and derivatives, [visit the pipeline basics page](../extra/details.md).
 
