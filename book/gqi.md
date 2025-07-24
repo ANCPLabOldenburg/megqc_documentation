@@ -14,11 +14,8 @@ If any of these value surpass their predefined `thresholds`, the penalization sy
 
 <img src="../static/gqi/02.png" alt="gqi-2" width="400px" align="center">
 
-4. **GQI:** Each dot represents a subject's GQI, and the violin plot summarizes the distribution of GQI scores across the dataset.
-<img src="../static/gqi/01.png" alt="gqi-1" width="250px" align="center">
 
-
-```{admonition} Example: GQI calculation 
+```{dropdown} Example: Channel variability calculation
 
 Channel variability penalization is calculated by the Standard Deviation (STD) and Peak-to-Peak (PtP) metrics. These 2 metrics are calculated separatedly for Magnetometers and Gradiometers, resulting in 4 "submetrics" in total. The final percentage of bad channels is calculate as an average of these 4 submetrics (each submetric contributes equally).
 
@@ -31,22 +28,17 @@ By default, a penalization to the GQI is applied if certain amount of channels s
 
 ``` 
 
-2. **Physiological Artifact Penalty**
 
-The weight (`24%` by default) of the penalty is divided equally between [Electrocardiogram (ECG)](../report/ecg.md) and [Electrooculography (EOG)](../report/eog.md) percentage of signal correlated with physiological signals. 
+3. **GQI:** Each dot represents a subject's GQI, and the violin plot summarizes the distribution of GQI scores across the dataset.
+<img src="../static/gqi/01.png" alt="gqi-1" width="250px" align="center">
 
-If these metrics can't be calculate because the dataset lacks of theses channels or they are too noisy to calculate the correlation, there will be a 6% penalization for each.
+```{warning}
 
-3. **Muscle Artifacts**
+If the metrics of the Electrocardiogram (ECG) and Electrooculography (EOG) can't be calculated because the dataset lacks of these channels, or they are too noisy to calculate the correlation, half of the weight of the Physiological Artifact Correlation (`24%` by default) will be penalize from the GQI.
 
-(../report/muscle.md)
-
-4. **Frequency Domain Assessment**
-
-(../report/psd.md)
-
+```
 
 ## Next section
-In the next section, we'll walk through the content of the HTML reports.
-For a deeper understanding of MEGqc's core functionality, dependencies and derivatives, [visit the pipeline basics page](../extra/details.md).
+In the next section, we'll walk through the installation process both for Linux and Windows.
+
 
