@@ -21,6 +21,6 @@ In this plot, each box plot represents an epoch and each point the PtP Ampltiude
 ```{admonition} Want to check more reports?
 :class: tip
 
-Head back to the [main metrics page](../book/metrics.md) to explore the others!
+Head back to the [main metrics page](../book/report.md) to explore the others!
 
 ``` 
