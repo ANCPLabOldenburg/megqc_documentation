@@ -5,7 +5,8 @@ We have created a shell script installer that will make the installation process
 ## 1. Download the installer
 Download the `.sh` file from the following link:
 
-* [MEGqc Installer (Mega.nz)](https://mega.nz/file/dMBh1QBQ#o3m1HGd_F-qZEXNR0s7kXzheUSgC3DXYVzSqhq-ulgY)
+* [📦 Download Installer (ZIP)](https://github.com/ANCPLabOldenburg/MEGqc/raw/main/installers/installers.zip)
+
   
 ## 2. Allow script execution
 This can be done in two different ways:
