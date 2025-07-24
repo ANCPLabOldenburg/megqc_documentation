@@ -4,7 +4,7 @@
 Download and extract the ZIP file. 
 
 * [📦 Download Installer (ZIP)](https://github.com/ANCPLabOldenburg/MEGqc/raw/main/installers/installers.zip)
-* 
+
 Inside you can find a `Shell Script` (for Linux systems) and a `Windows Batch File` (for Windows systems) to install MEGqc.
 
 If you're working in Linux, you'll need first to allow the .sh script execution:
