@@ -7,6 +7,8 @@ Magnetoencephalography (MEG) data is susceptible to  noise and artifacts, which 
 - Muscle noise sources (e.g. jaw movements).
 - Environmental noise sources (e.g. powerline noise).
 
+<img src="../static/source.png" alt="noise-source" width="300px" align="center">
+
 For this reason, quality control of MEG data is an essential step for ensuring valid and reproducible science (Niso et al., 2022). However, the detection and annotation of artifacts in MEG data is commonly performed manually (visual inspection), requires expertise and can be a tedious and time-consuming task, and it's not scalable for big datasets (> 200 subjects). Also, as there's not a standardized procedure, it's vulnerable to biases. 
 
 ## MEGqc
