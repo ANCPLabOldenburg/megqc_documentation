@@ -7,6 +7,7 @@ Hello everyone, and welcome to this MEGqc documentation.
 
 
 ```{admonition} Windows update!
+:class: tip
 
 Currently, MEGqc runs smoothly both on Linux and Windows! 🚀
 
