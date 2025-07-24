@@ -21,12 +21,7 @@ MEGqc offers 2 modules:
 
 Finally, MEGqc offers a general **summary reports**, which consist of a JSON file for each subject, a TSV file for the group metrics and a PNG plot for the whole dataset. The summary reports shows the `Global Quality Index (GQI)`, a single overall estimate of data quality for each subject. If you want to know more how the GQI is calculated, [click here](./gqi).
 
-
-<br>  
-   
 MEGqc can be used via a **command-line interface (CLI)** or a **graphical user interface (GUI)**. Each of them have different [installation](./installation) and [usage](./tutorial) methods covered by this documentation.
-
-<br>  
 
 ## Metrics in MEGqc
 The different calculation modules within MEGqc are called `metrics` and they are used to evaluate specific types of artifacts. There are six independent metrics grouped by the source of the noise:
