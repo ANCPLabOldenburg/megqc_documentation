@@ -12,10 +12,10 @@ Magnetoencephalography (MEG) data is susceptible to  noise and artifacts, which 
 For this reason, quality control of MEG data is an essential step for ensuring valid and reproducible science (Niso et al., 2022). However, the detection and annotation of artifacts in MEG data is commonly performed manually (visual inspection), requires expertise and can be a tedious and time-consuming task, and it's not scalable for big datasets (> 200 subjects). Also, as there's not a standardized procedure, it's vulnerable to biases. 
 
 ## MEGqc
-To address this issue, the [ANCP Lab](https://uol.de/en/applied-neurocognitive-psychology) developed MEGqc, a software tool for automated and standardized quality control of MEG recordings. By providing a standardized workflow, it helps minimize human bias and facilitates comparisosn between datasets. **MEGqc evaluates the quality of raw data, but it is not an artifact removal tool.** There are 6 independent `metrics` that evaluate specific types of artifacts.
+To address this issue, the [ANCP Lab](https://uol.de/en/applied-neurocognitive-psychology) developed MEGqc, a software tool for automated and standardized quality control of MEG recordings. By providing a standardized workflow, it helps minimize human bias and facilitates comparisosn between datasets. **MEGqc evaluates the quality of raw data, but it is not an artifact removal tool.** 
 
 MEGqc offers 2 modules:
-- **Calculation Module:** It gives you machine-readable outputs (JSON files and TSV files) for every subject and selected `metric`.
+- **Calculation Module:** It gives you machine-readable outputs (JSON files and TSV files) for every subject and selected `metric`. There are 6 independent `metrics` that evaluate specific types of artifacts.
    - **GQI Module:** It provides the `Global Quality Index (GQI)` without re-running the Calculation Module. 
 - **Plotting Module:** It generates detailed visual HTML reports for every subject and selected `metric`.
 
