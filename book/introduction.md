@@ -64,7 +64,5 @@ In the next section, we’ll walk through the content of the HTML reports. For a
 In the next section, you'll learn more about the Global Quality Index (GQI), how it is calculated and how to interprate the outcome.
 -->
 
-For a deeper understanding of MEGqc's core functionality, dependencies and derivatives, [visit the pipeline basics page](../extra/details.md).
-
 
         
