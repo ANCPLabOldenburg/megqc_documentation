@@ -2,7 +2,7 @@
 
 In this section we will explain you how to run MEGqc in your dataset. MEGqc has two main modules: the **calculation module** and the **plotting module**.
 * In the **calculation module** you configure the file paths, specify parameters and execute the calculations.
-* The **plotting module** uses the machine-readable outputs (JSON files and TSV files) to generate the [HTML reports](./metrics).
+* The **plotting module** uses the machine-readable outputs (JSON files and TSV files) to generate the [HTML reports](./report).
 
 Here you can find how to use both modules for each version of MEGqc:
 
