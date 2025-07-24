@@ -10,7 +10,7 @@ MEGqc computes a single overall estimate of data quality for each subject. The G
 
 If any of these value surpass their predefined `thresholds`, the penalization system starts. The penalization system is defined by a system of `weights` and `thresholds`. The weight is the maximun possible penalty, and represents its relative importance for the GQI. There are two thresholds, the `start` and the `end`. If a metric exceeds the `start` (predefined **minimun** threshold), a **portion** of its weight is substracted from the GQI. If the metric exceeds the `end` (predefined **maximun** threshold), the **total** weight will be penalized. The weight and both thresholds are customizable, but there are defaults values calculated from datasets.
 
-2. **Penalties:** The GQI is reduced based on four sources of noise (channel variability, correlational noise from cardiac rythm and eye-blinks, muscle artifacts and power spectral density). Each x-axis item in the following plot represents the computed penalty which will be substracted from the GQI (starts at 100%).
+2. **Penalties:** The GQI is reduced based on four sources of noise *(channel variability, correlational noise from cardiac rythm and eye-blinks, muscle artifacts and power spectral density)*. Each x-axis item in the following plot represents the computed penalty which will be substracted from the GQI (starts at 100%).
 
 <img src="../static/gqi/02.png" alt="gqi-2" width="400px" align="center">
 
