@@ -3,6 +3,10 @@
 MEGqc computes a single overall estimate of data quality for each subject. The GQI works as a **penalization system:** 
 
 
+
+<img src="../static/gqi/gqi_1.png" alt="gqi" width="500px" align="center">
+
+
 ```{admonition} Explanation of the penalization system
 :class: tip
 
@@ -12,9 +16,6 @@ The penalization system is defined by a system of `weights` and `thresholds`. Th
 
 The weight and both thresholds are customizable, but there are defaults values calculated from datasets.
 ```
-
-<img src="../static/gqi/gqi_1.png" alt="gqi" width="450px" align="center">
-
 
 1. **Percentage variables:** The last 6 x-axis items (one item per metric) show the raw percentage of channels affected by the different sources of noise.
 <img src="../static/gqi/03.png" alt="gqi-3" width="400px" align="center">
