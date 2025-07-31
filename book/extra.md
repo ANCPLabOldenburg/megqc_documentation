@@ -1,4 +1,4 @@
-# Dive Deeper
+# Extras
 
  This section explores the internal structure, configuration, and helpful background knowledge for advanced use or development.
  * [**Global Quality Index (GQI):**](../extra/gqi.md) It is a single overall estimate of data quality for each subject. It can be found within the summary reports.
