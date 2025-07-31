@@ -2,15 +2,14 @@
 
 The GQI module allows you to re-run the GQI calculation without re-running the calculation module. This will allow you to use different **GQI parameters** without having to re-analyze the whole dataset. Each time you run the calculation module or the GQI module, it generates a new summary reports folder stored as a numbered attempt.
 
-```{dropdown} GQI and the Summary Reports
+```{dropdown} The Summary Reports
 
 As mentioned previously:
-The [Global Quality Index (GQI)](../book/gqi) is a single overall estimate of data quality for each subject.
-The `summary reports` folder contains a summary of metrics and GQI values of your dataset. Every run creates a new summary report folder, stored as a numbered `attempt`.
-The `summary reports` folder contains the following content:
- * config: it will contain the settings used for each `attempt`.
- * group_metrics: Includes the TSV files and a PNG plot of the GQI distribution for each `attempt`.
- * global_quality_index_n = A folder for each attempt *(n = number of attempt)*, containing one subfolder per subject. These subfolders include GQI scores and the outputs of individual metrics.
+The summary reports folder contains the following subfolder and files. Every time you re-run the GQI module (more on that below) you will create a new `attempt` within the summary reports.
+* **config:** it will contain the specific settings used for the GQI calculation. Each `attempt` creates a new settings file.
+* **group_metrics:** Includes a TSV file and a PNG plot of the GQI distribution of the dataset. Each `attempt` creates a new pair of TSV and PNG files.
+* **global_quality_index_n:** A folder containing one subfolder per subject. These subfolders include a JSON file with the outputs of individual metrics and the GQI scores. Each `attempt` creates a whole new folder _(n = number of attempt)_.
+
 
 ```
 
