@@ -46,6 +46,9 @@ The settings are grouped into _categories_:
 * **Metric-specfic settings:** every metric includes their own editable group of settings, such as how many standard deviations from the mean to use as a threshold, the edge frequencies for PSD calculation, or the minimun PTP amplitude to count as a peak.
 
 When you hover over each editable parameter, you'll see a short description along with the default value. Their **default values** were calculated by the ANCPLab to be compatible with a broad variety of datasets.
+
+Once you have adjust your settings, don't forget to click on the `Save Settings` button at the very end.
+
  
  _(if you want a detailed explanation of all the settings available, visit the [settings page](../extra/settings))_ 
 
