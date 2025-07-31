@@ -16,8 +16,7 @@ If you give a path to a different folder, such as the `subject` folder or the `c
 
 As with the Calculation Module, you can choose how many parallel jobs to use during the creation of the reports. The default option is `1`, but you can increase the speed of the processing by increasing the number of parallel Jobs.
 
-```{admonition} How do I know the right amount of parallel Jobs?
-:class: tip
+```{dropdown} How do I know the right amount of parallel Jobs?
 
   * MEGqc automatically detects and displays the number of cores ('CPUs') and the total available RAM (see the lower-corner of the GUI).
   * The `Info` button will give you personalized recommendations based on system memory.
