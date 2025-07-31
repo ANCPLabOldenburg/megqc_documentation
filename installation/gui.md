@@ -7,10 +7,9 @@ Download and extract the ZIP file.
 
 Inside you can find a `Shell Script` (for Linux systems) and a `Windows Batch File` (for Windows systems) to install MEGqc.
 
-If you're working in Linux, you'll need first to allow the .sh script execution:
   
-### (for Linux users) Allow script execution 
-This can be done in two different ways:
+### Allow script execution (for Linux users) 
+If you're working in Linux, you'll need first to allow the .sh script execution. This can be done in two different ways:
 
 ````{tab-set}
 ```{tab-item} Option 1
@@ -41,9 +40,18 @@ Make the installer executable by right-clicking the file, selecting Properties, 
 
   
 ## 2. **Run the installer**
-Now you can **double-click the installer file**. A terminal will open showing the installation process. The installer will then create its own [**virtual environment**](../extra/environment.md) and handle all the [**depedencies**](../extra/details.md). MEGqc is compatible with Python versions 3.8 to 3.12, but if you don't have any valid Python version, the installer will install Python 3.10. 
+Now you can **double-click the installer file**. A terminal will open showing the installation process. The installer will then create its own [**virtual environment**](../extra/environment.md) and handle all the [**depedencies**](../extra/details.md).
+* _(MEGqc is compatible with Python versions 3.8 to 3.12, but if you don't have any valid Python version, the installer will install Python 3.10)_
 
-Now your installation is complete! On your **Desktop** you will see two terminal launchers:
+You may also run the installer from the terminal, such as:
+
+```bash
+path/to/your/installer/install_megqc.sh
+```
+
+### Now your installation is complete! 🎉
+
+ On your **Desktop** you will see two terminal launchers:
 * `MEGqc` — will launch the GUI.
 * `Uninstall MEGqc`  — will remove MEGqc from your system, including its environment and related files.
 
