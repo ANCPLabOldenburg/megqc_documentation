@@ -1,32 +1,33 @@
 # MEGqc tutorial
 
-In this section we will explain you how to run MEGqc in your dataset. MEGqc has two main modules: the **calculation module** and the **plotting module**.
-* In the **calculation module** you configure the file paths, specify parameters and execute the calculations.
-* The **plotting module** uses the machine-readable outputs (JSON files and TSV files) to generate the [HTML reports](./report).
-* There is a third module, the **GQI module**, which allows to re-calculate the GQI with different weight and thresholds parameters without re-running the calculation module.
+In this section we will explain you how to run MEGqc in your dataset, how to create the HTML reports and more about the summary reports.
 
-Each time you run the calculation module or the GQI module, it generates a new `summary reports` folder. This folder contains a summary of metrics and GQI values of your dataset. Every run creates a new summary report folder, stored as a numbered `attempt`.
+MEGqc has two main modules (the `calculation module` and the `plotting module`) which can be used via `command-line interface (CLI)` or a `graphical user interface (GUI)`. Below you will find links to the tutorials for both modules and  both modalities.
 
-```{dropdown} Summary Reports content
+## The calculation module
+The calculation module gives you machine-readable outputs (JSON files and TSV files) for every subject and selected **metric**. For that you need to configure the file paths, specify parameters and execute the calculations.
+1. [Running the calculation module for GUI](../tutorial/calc_gui)
+2. [Running the calculation module for CLI](../tutorial/calc_cli)
 
-The `summary reports` folder contains the following content:
-* config: it will contain the settings used for each `attempt`.
-* group_metrics: Includes the TSV files and a PNG plot of the GQI distribution for each `attempt`.
-* global_quality_index_n = A folder for each attempt *(n = number of attempt)*, containing one subfolder per subject. These subfolders include GQI scores and the outputs of individual metrics. 
+## The plotting module
+The plotting module uses the machine-readable outputs of the calculation module to generate the [HTML reports](./report).
+1. [Running the plotting module for GUI](../tutorial/plot_gui)
+2. [Running the plotting module for CLI](../tutorial/plot_cli)
 
+## Summary reports and the GQI module
+Once you run the calculation module, MEGqc generates the `summary reports` folder. The `summary reports` folder contains a series of reports with the summary of metrics outcome and the [Global Quality Index (GQI)](../extra/gqi) values of each participant of your dataset. This folder can be found within the derivatives folder of your dataset.
+
+```bash
+path\to\your\dataset\derivatives\Meg_QC\summary_reports
 ```
 
-Here you can find how to use both modules for each version of MEGqc:
+MEGqc offers a third module, the **GQI module**, which allows to re-calculate the GQI with different parameters *(more about the parameters within the tutorial)* without re-running the calculation module. 
+1. [Running the GQI module for GUI](../tutorial/gqi_gui.md)
 
-## GUI MEGqc tutorial
-1. [Running the calculation module](../tutorial/calc_gui)
-2. [Running the plotting module](../tutorial/plot_gui)
-3. [Running the GQI module](../tutorial/calc_gqi)
-
-## CLI MEGqc tutorial
-1. [Running the calculation module](../tutorial/calc_cli)
-2. [Running the plotting module](../tutorial/plot_cli)
-
+The `summary reports` folder contains the following content. Each time you re-run the GQI module, it creates a new `attempt` *(within the summary reports folder)* for better comparison:
+* **config:** it will contain the specific settings used for the GQI calculation. Each `attempt` creates a new settings file.
+* **group_metrics:** Includes a TSV file and a PNG plot of the GQI distribution of the dataset. Each `attempt` creates a new pair of TSV and PNG files.
+* **global_quality_index_n:** A folder containing one subfolder per subject. These subfolders include a JSON file with the outputs of individual metrics and the GQI scores. Each attempt creates a whole new folder _(n = number of attempt)_.
 
 ```{admonition} Don't have a Dataset?
 :class: tip
