@@ -9,8 +9,9 @@ You can *paste* the path to your **dataset** folder or click `Browse` to select 
 
 ```{warning}
 
-If you give a path to a different folder, such as the `subject` folder or the `calculation folder`, you will see in the Log window
-"Plotting error: Process exited with code 1". It will also create an empty folder called `derivatives` within your given paths. Your path only needs to lead to the dataset, you don't need to go any deeper within the structure.
+If you give a path to a different folder, such as the `subject` folder or the `calculation folder`, you will see in the Log window "Plotting error: Process exited with code 1". It will also create an empty folder called `derivatives` within your given paths.
+
+**Your path only needs to lead to the dataset, you don't need to go any deeper within the structure.**
 
 ```
 
