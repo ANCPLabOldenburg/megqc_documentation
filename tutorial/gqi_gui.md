@@ -19,3 +19,5 @@ The `summary reports` folder contains the following content:
 
 
 <img src="../static/gqi/gqi_gui.png" alt="gqi_gui" width="400px" align="center">
+
+<img src="../static/gqi/gqi_settings.png" alt="gqi_settings" width="400px" align="center">
