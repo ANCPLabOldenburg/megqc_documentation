@@ -23,6 +23,8 @@ Click the left-corner icon of the GUI to open a dropdown list with all available
 
 <img src="../static/mini/calculation.png" alt="mini-megqc-gui" width="400px" align="center">
 
+<br>
+
 ```{dropdown} How do I know the right amount of parallel Jobs?
 
   * MEGqc automatically detects and displays the number of cores ('CPUs') and the total available RAM (see the lower-corner of the GUI).
