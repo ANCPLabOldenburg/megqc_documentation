@@ -3,8 +3,7 @@
 ## MEG data quality control
 Magnetoencephalography (MEG) data is susceptible to  noise and artifacts, which can severely corrupt the data quality. These artifacts may arise from:
 - Channel variability (e.g. malfunction of a sensor, flat and noisy channels).
-- Internal noise sources (e.g. eye-blinks and cardiac rythm of the subject).
-- Muscle noise sources (e.g. jaw movements).
+- Muslce and internal noise sources (e.g. jaw movements, eye-blinks and cardiac rythm of the subject).
 - Environmental noise sources (e.g. powerline noise).
 
 <img src="../static/sources.png" alt="noise-source" width="300px" align="center">
@@ -12,15 +11,15 @@ Magnetoencephalography (MEG) data is susceptible to  noise and artifacts, which 
 For this reason, quality control of MEG data is an essential step for ensuring valid and reproducible science (Niso et al., 2022). However, the detection and annotation of artifacts in MEG data is commonly performed manually (visual inspection), requires expertise and can be a tedious and time-consuming task, and it's not scalable for big datasets (> 200 subjects). Also, as there's not a standardized procedure, it's vulnerable to biases. 
 
 ## MEGqc
-To address this issue, the [ANCP Lab](https://uol.de/en/applied-neurocognitive-psychology) developed MEGqc, a software tool for automated and standardized quality control of MEG recordings. By providing a standardized workflow, it helps minimize human bias and facilitates comparisosn between datasets. **MEGqc evaluates the quality of raw data, but it is not an artifact removal tool.** 
+To address this issue, the [ANCP Lab](https://uol.de/en/applied-neurocognitive-psychology) developed MEGqc, a software tool for automated and standardized quality control of MEG recordings. By providing a standardized workflow, it helps minimize human bias and facilitates comparison between datasets. **MEGqc evaluates the quality of raw data, but it is not an artifact removal tool.** 
 
-MEGqc offers 2 modules:
+MEGqc can be used via a **command-line interface (CLI)** or a **graphical user interface (GUI)**. Each of them have different [installation](./installation) and [usage](./tutorial) methods covered by this documentation.
+
+### MEGqc has 2 main modules:
 - **Calculation Module:** It gives you machine-readable outputs (JSON files and TSV files) for every subject and selected `metric`. There are 6 independent `metrics` that evaluate specific types of artifacts.
 - **Plotting Module:** It generates detailed visual HTML reports for every subject and selected `metric`.
 
-MEGqc offers a general **summary reports**, which consist of a JSON file for each subject, a TSV file for the group metrics and a PNG plot for the whole dataset. The summary reports shows the `Global Quality Index (GQI)`, a single overall estimate of data quality for each subject. [Click here if you want to know more about the GQI](./gqi).
-
-MEGqc can be used via a **command-line interface (CLI)** or a **graphical user interface (GUI)**. Each of them have different [installation](./installation) and [usage](./tutorial) methods covered by this documentation.
+MEGqc generates as well a general **summary reports**, which consist of a JSON file for each subject, a TSV file for the group metrics and a PNG plot for the whole dataset. The summary reports shows the `Global Quality Index (GQI)`, a single overall estimate of data quality for each subject [(click here if you want to know more about the GQI)](./gqi).
 
 ## Metrics in MEGqc
 The different calculation modules within MEGqc are called `metrics` and they are used to evaluate specific types of artifacts. There are six independent metrics grouped by the source of the noise:
@@ -36,13 +35,9 @@ The different calculation modules within MEGqc are called `metrics` and they are
    - **Electrocardiogram (ECG):** Detects correlated noise caused by cardiac activity. [Link to the report](../report/ecg.md).
    - **Electrooculography (EOG):** Detects correlated noise caused by eye movements. [Link to the report](../report/eog.md).
 
-3. **Muscle Artifacts**
-   
-   - **Muscle Artifacts calculation:** Identifies high-frequency bursts from body movements, for example, when the subject clenches their jaw. [Link to the report](../report/muscle.md).
+3. **Muscle Artifacts:** Identifies high-frequency bursts from body movements, for example, when the subject clenches their jaw. [Link to the report](../report/muscle.md).
 
-4. **Frequency Domain Assessment**
-   
-   - **Power Spectral Density (PSD):** It provides information on the strength of different frequency components of a signal. PSD calculation helps us to distinguish between brain activity and non-brain-related noise, for example, line noise or environmental noise. [Link to the report](../report/psd.md).
+4. **Power Spectral Density (PSD) Assessment:** It provides information on the strength of different frequency components of a signal. PSD calculation helps us to distinguish between brain activity and non-brain-related noise, for example, line noise or environmental noise. [Link to the report](../report/psd.md).
  
 <!--
 
@@ -57,7 +52,8 @@ The different calculation modules within MEGqc are called `metrics` and they are
 -->
 
 ## Next section
-In the next section, we’ll walk through the content of the HTML reports. For a deeper understanding of MEGqc’s core functionality, dependencies and derivatives, visit the pipeline basics page.
+In the next section, we’ll walk through the content of the HTML reports.
+For a deeper understanding of MEGqc’s core functionality, dependencies and derivatives or what are BIDS, please follow [this link](./extra).
 
 <!--
 In the next section, you'll learn more about the Global Quality Index (GQI), how it is calculated and how to interprate the outcome.
