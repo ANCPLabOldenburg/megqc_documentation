@@ -15,7 +15,8 @@ Click the left-corner icon of the GUI to open a dropdown list with all available
 
 ```
 
-## 1. Calculation parameters
+## 1. Basic parameters
+To run the calculation module you need the following basic parameters.
 
 * **Data directory:** you can *paste* the path to your dataset or click `Browse` to select the folder manually.
 * **Subjects:** you can write `all` to analyze every subject, or enter a specific ID (e.g., `009` for `sub-009`).
