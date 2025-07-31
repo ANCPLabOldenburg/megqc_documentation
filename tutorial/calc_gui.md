@@ -22,7 +22,7 @@ Click the left-corner icon of the GUI to open a dropdown list with all available
 <img src="../static/mini/calculation.png" alt="mini-megqc-gui" width="400px" align="center">
 
 ```{admonition} How do I know the right amount of parallel Jobs?
-:class: tip
+:class: dropdown
 
   * MEGqc automatically detects and displays the number of cores ('CPUs') and the total available RAM (see the lower-corner of the GUI).
   * The `Info` button will give you personalized recommendations based on system memory.
@@ -31,23 +31,19 @@ Click the left-corner icon of the GUI to open a dropdown list with all available
 ``` 
 
 ## 2. Settings
-The `Setting` tab allows you to customize your analysis. If you want a detailed explanation of all the settings available, visit the [settings page](../extra/settings). 
-
-```{admonition} Settings overview
-:class: dropdown
-
-The settings are grouped into categories:
-
-* The basic settings group allows you to select the channel types (`mag` or `grad` or both), and the specific metric to compute (e.g. STD, PSD or PTP). You can also apply your analysis to a smaller snippet of data (with `data_crop_tmin` and `data_crop_tmax`).
-* The *Filtering* and *Epoching* groups of settings allow you to edit how the filtering and epoching should be applied (such as high-pass / low-pass cut-offs frequencies and time windows).
-* *Metric-specfic settings:* every metric includes their own editable group of settings, such as how many standard deviations from the mean to use as a threshold, the edge frequencies for PSD calculation, or the minimun PTP amplitude to count as a peak.
-
-```
-
-When you hover over each editable parameter, you'll see a short description along with the default value. Their **default values** were calculated by the ANCPLab to be compatible with a broad variety of datasets. 
+The `Setting` tab allows you to customize your analysis.
 
 <img src="../static/mini/minimegqc_settings.png" alt="settings-gui" width="350px" align="center">
 
+The settings are grouped into _categories_:
+
+* The **General** group of settings allows you to select the channel types (`mag` or `grad` or both), and the specific metric to compute (e.g. `STD`, `PSD` or `PTP`). You can also apply your analysis to a smaller snippet of data by modifying  `data_crop_tmin` and `data_crop_tmax`.
+* The **Filtering** and **Epoching** groups of settings allow you to edit how the filtering and epoching should be applied, such as `high-pass` / `low-pass cut-offs frequencies` and time windows.
+* **Metric-specfic settings:** every metric includes their own editable group of settings, such as how many standard deviations from the mean to use as a threshold, the edge frequencies for PSD calculation, or the minimun PTP amplitude to count as a peak.
+
+When you hover over each editable parameter, you'll see a short description along with the default value. Their **default values** were calculated by the ANCPLab to be compatible with a broad variety of datasets _(if you want a detailed explanation of all the settings available, visit the [settings page](../extra/settings))._ 
+
+ 
 <br>
 
 ## 3. Run Calculation
