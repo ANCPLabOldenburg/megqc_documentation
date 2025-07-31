@@ -1,7 +1,9 @@
 # GUI: Calculation Module
 
 Thanks to the graphical user interface (GUI) you will be able to run MEGqc and generate reports without using the terminal. 
-To open the GUI, click the MEGqc shortcut on your Desktop. Then the MEGqc GUI will open alongside a bash terminal _(the terminal will display more detailed information about the on-going processes, but you can safely close it)_.
+To open the GUI, click the MEGqc shortcut on your Desktop. Then the MEGqc GUI will open alongside a bash terminal.
+ 
+ _(the terminal will display more detailed information about the on-going processes, but you can safely close it)_
 
 <img src="../static/mini/launch_mini.png" alt="launchgui" width="650px" align="center">
 
@@ -21,8 +23,7 @@ Click the left-corner icon of the GUI to open a dropdown list with all available
 
 <img src="../static/mini/calculation.png" alt="mini-megqc-gui" width="400px" align="center">
 
-```{admonition} How do I know the right amount of parallel Jobs?
-:class: dropdown
+```{dropdown} How do I know the right amount of parallel Jobs?
 
   * MEGqc automatically detects and displays the number of cores ('CPUs') and the total available RAM (see the lower-corner of the GUI).
   * The `Info` button will give you personalized recommendations based on system memory.
@@ -41,7 +42,9 @@ The settings are grouped into _categories_:
 * The **Filtering** and **Epoching** groups of settings allow you to edit how the filtering and epoching should be applied, such as `high-pass` / `low-pass cut-offs frequencies` and time windows.
 * **Metric-specfic settings:** every metric includes their own editable group of settings, such as how many standard deviations from the mean to use as a threshold, the edge frequencies for PSD calculation, or the minimun PTP amplitude to count as a peak.
 
-When you hover over each editable parameter, you'll see a short description along with the default value. Their **default values** were calculated by the ANCPLab to be compatible with a broad variety of datasets _(if you want a detailed explanation of all the settings available, visit the [settings page](../extra/settings))._ 
+When you hover over each editable parameter, you'll see a short description along with the default value. Their **default values** were calculated by the ANCPLab to be compatible with a broad variety of datasets.
+ 
+ _(if you want a detailed explanation of all the settings available, visit the [settings page](../extra/settings))_ 
 
  
 <br>
