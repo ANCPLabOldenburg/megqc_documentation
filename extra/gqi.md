@@ -1,11 +1,10 @@
 # Global Quality Index (GQI)
 
-MEGqc computes a single overall estimate of data quality for each subject. The GQI works as a **penalization system:** 
-
-
+MEGqc computes a single overall estimate of data quality for each subject. You can find the following figure (PNG plot) within the summary reports: 
 
 <img src="../static/gqi/gqi_1.png" alt="gqi" width="500px" align="center">
 
+ The GQI works as a **penalization system:** 
 
 ```{admonition} Explanation of the penalization system
 :class: tip
@@ -18,13 +17,13 @@ The weight and both thresholds are customizable, but there are defaults values c
 ```
 <br>
 
-1. **Percentage variables:** The last 6 x-axis items (one item per metric) show the raw percentage of channels affected by the different sources of noise. If any of these value surpass their predefined `thresholds`, the calculation of the penalization starts.
+1. **Percentage variables:** The last 6 x-axis items (one item per metric) show the raw percentage of channels affected by noise. If any of these value surpass their predefined `thresholds`, the calculation of the penalization starts.
 
 <img src="../static/gqi/03.png" alt="gqi-3" width="400px" align="center">
 
 <br>
 
-2. **Penalties:** Each x-axis item in the following plot represents the computed penalty which will be substracted from the GQI (starts at 100%). Each x-axis represents one of the four sources of noise *(channel variability, correlational noise from cardiac rythm and eye-blinks, muscle artifacts and power spectral density)*. The penalty is calculated as the percentage of the raw noise normalized (based on the thresholds) and multiply by the weight.
+2. **Penalties:** Each x-axis item in the following plot represents the computed penalty which will be substracted from the GQI (starts at 100%). Each x-axis represents one of the four sources of noise. The penalty is calculated as the percentage of the raw noise normalized (based on the thresholds) and multiply by the weight.
 
 <img src="../static/gqi/02.png" alt="gqi-2" width="400px" align="center">
 
