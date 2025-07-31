@@ -41,17 +41,17 @@ The GQI calculation is based on a penalization system defined by a system of `we
 - If a metric exceeds the `start` (predefined **minimun** threshold), a **portion** of its weight is substracted from the GQI.
 - If the metric exceeds the `end` (predefined **maximun** threshold), the **total** weight will be penalized.
 
-The weight and both thresholds of every "source of noise" are customizable, but you may also use the default values for the GQI calculation. If you want to learn more about GQI and the penalization system, visit the [GQI section](../extra/gqi.md).
+The weight and both thresholds of every "source of noise" are customizable, but you may also use the default values for the GQI calculation. If you want to learn more about the penalization system, visit the [GQI section](../extra/gqi.md).
 
 Once you have adjust your settings, don't forget to click on the `Save Settings` button at the very end.
 
 ## 3. Run GQI calculation
 Once you have define your basic parameters and advance settings, you can click on the `Run GQI` button. The Log window will display the ongoing process, including updates and any errors. You can also find more detailed information in the terminal window.
+
 You will find the results within the summary reports folder as a new numbered attempt.
 
 ```bash
 path\to\your\dataset\derivatives\Meg_QC\summary_reports
 ```
-
 
 
