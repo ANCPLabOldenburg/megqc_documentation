@@ -19,9 +19,9 @@ chapters:
   sections:
     - file: tutorial/calc_gui
     - file: tutorial/plot_gui
-    - file: tutorial/calc_gqi
     - file: tutorial/calc_cli
     - file: tutorial/plot_cli
+    - file: tutorial/gqi_gui
 - file: book/extra
   sections:
     - file: extra/gqi
