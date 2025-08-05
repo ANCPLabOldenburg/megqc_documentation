@@ -1,6 +1,6 @@
-# GUI: GQI Module
+#  GQI Module (GUI)
 
-The Global Quality Index (GQI) module allows you to re-calculate the [GQI](../extra/gqi.md) with different GQI calculation **settings** without re-running the calculation module. Each time you run the GQI module, it modifies the `summary reports` folder creating new `attempt`s.  
+The Global Quality Index (GQI) module allows you to re-calculate the [GQI](../extra/gqi.md) with different calculation **advance settings** without re-running the calculation module. Each time you run the GQI module, it modifies the `summary reports` folder creating new `attempt`s.  
 
 ```{dropdown} What can you find in the Summary Reports
 
