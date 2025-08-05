@@ -56,7 +56,7 @@ You will find the results within the summary reports folder as a new numbered at
 path\to\your\dataset\derivatives\Meg_QC\summary_reports
 ```
 
-## Congraulations
+## Congratulations
 
 By now, you've learned to run the **metrics calculation**, generate the **html reports** and create the **summary reports** with the GUI.
 Now you can continue with the **CLI** workflow, you can go back to the [tutorial section](../book/tutorial.md) or explore the [Extras](../book/extra.md)
