@@ -2,7 +2,7 @@
 
 MEGqc computes a single overall estimate of data quality for each subject. You can find the following figure (PNG plot) within the summary reports: 
 
-<img src="../static/gqi/gqi_1.png" alt="gqi" width="500px" align="center">
+<img src="../static/gqi/general_plot.png" alt="general" width="500px" align="center">
 
  The GQI works as a **penalization system:** 
 
