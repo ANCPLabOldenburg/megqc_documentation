@@ -2,7 +2,7 @@
 
 The Global Quality Index (GQI) module allows you to re-calculate the [GQI](../extra/gqi.md) with different GQI calculation **settings** without re-running the calculation module. Each time you run the GQI module, it modifies the `summary reports` folder creating new `attempt`s.  
 
-```{dropdown} The Summary Reports (recap)
+```{dropdown} What can you find in the Summary Reports
 
 As mentioned previously, the summary reports folder contains a series of "reports" with the summary of metrics and the GQI values of each participant of your dataset. This folder can be found within the derivatives folder of your dataset.
 
@@ -12,7 +12,7 @@ The summary reports folder contains the following subfolders and files:
 * **global_quality_index_n:** A folder containing one subfolder per subject. These subfolders include a JSON file with the outputs of individual metrics and the GQI scores. Each `attempt` creates a whole new folder _(n = number of attempt)_.
 
 ```
-## 1. Basic parameters
+## 1. Basic Parameters
 
 As with the Calculation module, there are some parameters that are necessary to run the GQI module:
 
@@ -35,9 +35,7 @@ As with the Calculation module, there are some parameters that are necessary to 
 ## 2. Advance Settings
 The `Setting` tab allows you to customize your GQI calculation. The specific settings for the GQI are at the very end of the list. 
 
-
 <img src="../static/gqi/gqi_settings.png" alt="gqi_settings" width="400px" align="center">
-
 
 The GQI calculation is based on a penalization system defined by a system of `weights` and `thresholds`. Every "source of noise" has its own `weights` and `thresholds`, which are customizable, but you may also use the default values. The weight is the maximun possible penalty, and represents its relative importance for the GQI. The two thresholds are the `start` and the `end`:
 - If a metric exceeds the `start` (predefined **minimun** threshold), a **portion** of its weight is substracted from the GQI.
