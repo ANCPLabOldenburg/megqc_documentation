@@ -23,15 +23,15 @@ The time is on the Y axis, from top to bottom:
 
 ### Dependencies
 Thanks to the installer, it's not necessary to manually pip install the different dependencies anymore.
-- `ancpbids`==0.3.0: for BIDS compatibility and handling MEG datasets. Also developed by the ANCP Lab.
-- `mne`~=1.6.0: for MEG data analysis
-- `pandas`>=2.0.3.: data manipulation and tables
-- `plotly`=5.24.1: to create the interactive plots and visualize results
-- `joblib`==1.4.2: parallel processing
-- `pyqt6-tools`==6.4.2.3.3
-- `numba`==0.58.1: compilation for performance
-- `psutil`==5.9.8: system mnitoring (e.g., memory usage)
-- `matplotlib`==3.8.4: plotting and figures
+- `ancpbids==0.3.0`: for BIDS compatibility and handling MEG datasets. Also developed by the ANCP Lab.
+- `mne~=1.6.0`: for MEG data analysis
+- `pandas>=2.0.3`: data manipulation and tables
+- `plotly=5.24.1`: to create the interactive plots and visualize results
+- `joblib==1.4.2`: parallel processing
+- `pyqt6-tools==6.4.2.3.3`: require for the graphical user interface (GUI)
+- `numba==0.58.1`: compilation for performance
+- `psutil==5.9.8`: system monitoring (e.g., memory usage)
+- `matplotlib==3.8.4`: plotting and figures
 - `statsmodels`: statistical modeling
 - `scikit-learn`: machine learning tools used in metrics
 - `seaborn`: statistic data visualization
