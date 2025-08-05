@@ -4,6 +4,7 @@
 
 Hello everyone, and welcome to this MEGqc documentation.
 [**MEGqc**](https://github.com/ANCPLabOldenburg/MEGqc) is a Python-based pipeline for quality control of MEG data. It was developed by the [**Applied Neurocognitive Psychology Lab (ANCP Lab)**](https://uol.de/en/applied-neurocognitive-psychology). To ensure standardization of the pipeline, MEGqc software is tailored to the [**BIDS standards**](extra/bids.md).
+
 This documentation includes an [installation guide](./book/installation.md) and a [tutorial](./book/tutorial.md) on how to run MEGqc (both for GUI and the CLI). This documentation also includes an overview of the different [html reports](./book/report.md) and how to understand the [Global Quality Index](./extra/gqi).
 
 
