@@ -1,4 +1,4 @@
-# CLI: Plotting Module
+# Plotting Module (CLI)
 After completing the analysis with the calculation module, the next step is to generate the visual reports. Below are the methods to run the plotting module.
 
 ## Automatic Mode
