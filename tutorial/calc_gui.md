@@ -1,4 +1,4 @@
-# GUI: Calculation Module
+# Calculation Module (GUI)
 
 Thanks to the graphical user interface (GUI) you will be able to run MEGqc and generate reports without using the terminal. 
 To open the GUI, click the MEGqc shortcut on your Desktop. Then the MEGqc GUI will open alongside a bash terminal.
