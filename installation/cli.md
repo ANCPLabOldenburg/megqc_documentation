@@ -46,7 +46,7 @@ Next, you will need to clone the [Github Repository](https://github.com/ANCPLabO
 - The folder *meg_qc* is a copy of the previously installed MEGqc package via `pip`.
 
 -->
-```{admonition} and the dependencies?
+```{admonition} Dependencies?
 :class: tip
 
 Thanks to the last update, it's not necessary to manually pip install the different dependencies anymore. All of them are installed automatically along with the MEGqc package.
