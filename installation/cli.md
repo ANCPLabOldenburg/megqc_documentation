@@ -33,7 +33,7 @@ source /path/to/environment/bin/activate
 Once your environment is activated, you can install Python packages with `pip`, and these installations will only apply to your virtual environment. To install MEGqc core functionality, run the following command in the terminal:
 
 ```bash
-pip install git+https://github.com/ANCPLabOldenburg/MEGqc.git
+pip install meg-qc
 ```
 
 
@@ -46,10 +46,13 @@ Next, you will need to clone the [Github Repository](https://github.com/ANCPLabO
 - The folder *meg_qc* is a copy of the previously installed MEGqc package via `pip`.
 
 -->
+```{admonition} and the dependencies?
+:class: tip
 
-## Install depencies?
 Thanks to the last update, it's not necessary to manually pip install the different dependencies anymore. All of them are installed automatically along with the MEGqc package.
 If you want to know more about them and their functionalitiy, please [visit the pipeline basics page](../extra/details.md).
+
+``` 
 
 
 
