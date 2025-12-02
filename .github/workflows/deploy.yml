@@ -6,7 +6,10 @@ on:
       - main
 
 env:
+  BUILD_DIR: . # add on 02.12
+  BUILD_OUTPUT: _build/html # add on 02.12
   BASE_URL: /${{ github.event.repository.name }}
+  
 
 concurrency:
   group: "pages"
@@ -17,17 +20,19 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
+      contents: read
       pages: write
       id-token: write      
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4 # add on 02.12
 
       - name: Set up Python 3.11
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5 # add on 02.12
         with:
           python-version: 3.11
 
       - name: Install dependencies
+      
         run: |
           pip install -r requirements.txt
 
