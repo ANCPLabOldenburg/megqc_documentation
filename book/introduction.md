@@ -3,7 +3,7 @@
 ## MEG data quality control
 Magnetoencephalography (MEG) data is susceptible to  noise and artifacts, which can severely corrupt the data quality. These artifacts may arise from:
 - Channel variability (e.g. malfunction of a sensor, flat and noisy channels).
-- Muslce and internal noise sources (e.g. jaw movements, eye-blinks and cardiac rythm of the subject).
+- Muscle and internal noise sources (e.g. jaw movements, eye-blinks and cardiac rythm of the subject).
 - Environmental noise sources (e.g. powerline noise).
 
 <img src="../static/sources.png" alt="noise-source" width="300px" align="center">
