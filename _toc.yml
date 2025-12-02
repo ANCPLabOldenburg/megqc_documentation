@@ -11,10 +11,7 @@ chapters:
     - file: report/muscle
     - file: report/psd
     - file: report/gqi
-- file: book/installation
-  sections:
-    - file: installation/gui
-    - file: installation/cli
+- file: book/installation2
 - file: book/tutorial
   sections:
     - file: tutorial/calc_gui
