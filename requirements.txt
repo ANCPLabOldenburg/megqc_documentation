@@ -1,5 +1,5 @@
-sphinx==4.5.0
-myst-nb==0.13.1
+sphinx
+myst-nb
 ghp-import
-jupyter-book==0.15.1
+jupyter-book
 jupytext
