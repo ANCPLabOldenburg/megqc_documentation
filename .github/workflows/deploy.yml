@@ -6,8 +6,8 @@ on:
       - main
 
 env:
-  BUILD_DIR: . # add on 02.12
-  BUILD_OUTPUT: _build/html # add on 02.12
+  BUILD_DIR: . # add on 02.12_attempt 1_failed
+  BUILD_OUTPUT: _build/html # add on 02.12_attempt 1_failed
   BASE_URL: /${{ github.event.repository.name }}
   
 
@@ -24,10 +24,10 @@ jobs:
       pages: write
       id-token: write      
     steps:
-      - uses: actions/checkout@v4 # add on 02.12
+      - uses: actions/checkout@v4 # add on 02.12_attempt 1_failed
 
       - name: Set up Python 3.11
-        uses: actions/setup-python@v5 # add on 02.12
+        uses: actions/setup-python@v5 # add on 02.12_attempt 1_failed
         with:
           python-version: 3.11
 
@@ -39,7 +39,7 @@ jobs:
           pip install "jupyter-book==1.0.0" "sphinx==7.4.7"
           # Your extras
           pip install sphinx-book-theme myst-nb ghp-import jupytext
-          # lines before: add on 02.12
+          # lines before: add on 02.12_attempt 2_worked!
           pip install -r requirements.txt
 
       - name: Build the book
