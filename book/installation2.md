@@ -16,7 +16,7 @@ Now that we have a general understanding of MEGqc and its Metrics reports, this 
 | **Linux**        | `install_MEGqc.sh`      | Allow execution (see below) and run the installer |
 | **MacOS**        | `install_MEGqc.command`      | Allow execution (see below) and run the installer |
 
-<img src="../static/folders.png" alt="folders" width="250px" align="center">
+<img src="../static/install/folders.png" alt="folders" width="250px" align="center">
 
 <br>
 
@@ -93,3 +93,68 @@ Because the installer is not from the App Store, macOS will initially block it.
 <img src="../static/install/mac_3.png" alt="mac-security" width="450px" align="center">
 
 <br>
+
+
+
+
+
+## Installation completed! 🎉
+
+
+After the installation finishes, you will find two **shortcuts** on your desktop:
+
+| OS          | Launch                    | Uninstall                      |
+|-------------|---------------------------|--------------------------------|
+| **Windows** | `run_MEGqc.bat`      | `uninstall_MEGqc.bat`    |
+| **Linux**   | `MEGqc` | `Uninstall MEGqc`    |
+| **MacOS**   | `MEGqc.command` | `Uninstall MEGqc.command`  |
+
+* _First time to launch will take a minute._
+
+
+```{admonition} Installation paths
+You can find your MEGqc installed in the following full paths:
+
+**Windows:**
+
+    C:\Users\<your_user>\MEGqc
+
+**Linux:**
+
+    /home/<your_user>/MEGqc
+
+
+**MacOS:**
+
+    /Users/<your_user>/MEGqc
+
+```
+
+### Activate the environment
+The installer automatically creates and manages a virtual environment ([learn more about virtual environments](../extra/environment.md)). If you want to manually activate the environment from a terminal or command prompt you can use the following full paths:
+
+
+```{admonition} Environment activation full path
+
+**Windows:**
+
+    \Users\<your user>\MEGqc\env\Scripts\activate
+
+
+**Linux:**
+
+    source home/<your user>/MEGqc/env/bin/activate
+
+
+**MacOS:**
+
+    source Users/<your user>/MEGqc/env/bin/activate
+
+
+```
+
+## Next section
+
+In the next section you'll learn how to use the GUI to run MEGqc.
+
+
