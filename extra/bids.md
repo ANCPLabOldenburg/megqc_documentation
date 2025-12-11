@@ -1,4 +1,10 @@
 # What is BIDS? <img src="../static/bids/logo.jpg" alt="bids-logo" width="200px">
+* BDS is a community initiative to make your data more _FAIR_ (Findable, Accessible, Interoperable, Reusable).
+* BIDS is a way to organize your existing raw data, to improve consistent and complete documentation, and to facilitate re-use by your future self and others.
+* BIDS is not a new file format, nor a search engine neither a data sharing platform.
+
+<img src="../static/bids/BIDS.png" alt="basic" width="600px" align="center">
+
 *"Neuroimaging experiments result in complex data that can be arranged in many different ways, and for a long time, there was no consensus on how to organize and share data obtained in neuroimaging experiments. **Brain Imaging Data Structure (BIDS)**, describes a simple and easy to adopt way of organizing neuroimaging and behavioral data"* (Gorgolewski et al., 2016; Niso et al., 2018). 
 
 <img src="../static/bids/bids-order.jpg" alt="bids-order" width="600px" align="center">
