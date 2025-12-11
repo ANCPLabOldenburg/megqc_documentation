@@ -3,7 +3,7 @@
 Thanks to the graphical user interface (GUI) you will be able to run MEGqc and generate reports without using the terminal. 
 To open the GUI, click the MEGqc shortcut on your Desktop (or use the command line `megqc` within the environment).
  
-<img src="../static/mini/gui.png" alt="launchgui" width="650px" align="center">
+<img src="../static/mini/gui.png" alt="launchgui" width="450px" align="center">
 
  _(the MEGqc GUI will open alongside a bash terminal, which will display more detailed information about the on-going processes, if youc close it, the GUI will also close)_
 
@@ -32,9 +32,10 @@ To run the calculation module you need the following basic parameters.
   * You may also use `-1` to use **all available cores**. 
 
 ``` 
-* **Subjects:** you can enter a specific ID (e.g., `009` for `sub-009`). By default, all subjects will be analyzed
   
 <img src="../static/mini/paremeters.png" alt="mini-megqc-gui" width="400px" align="center">
+
+<br>
 
 Before running your calculation module, you should check the `Setting` tab.
 
@@ -60,7 +61,12 @@ Once you have adjust your settings, don't forget to click on the `Save Settings`
 <br>
 
 ## 3. Run Calculation
-Once you've set your parameters and custom your Settings, click `Run Calculation`. The **Log** window will display the ongoing process, including updates and any errors. You can also find more detailed information in the terminal window.
+Once you've set your parameters and custom your Settings, you are almost ready.
+
+* **Subjects:** you can enter a specific ID (e.g., `009` for `sub-009`). By default, all subjects will be analyzed
+
+
+Finally, you can click on `Run Calculation`. The **Log** window will display the ongoing process, but you can also find more detailed information in the **terminal** window.
 
 <img src="../static/mini/log.png" alt="gui-log" width="350px" align="center">
 <img src="../static/mini/terminal.png" alt="terminal" width="350px" align="center">
