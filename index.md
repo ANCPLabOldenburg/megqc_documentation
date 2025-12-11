@@ -11,7 +11,7 @@ This documentation includes an [installation guide](./book/installation.md) and 
 ```{admonition} Windows update!
 :class: tip
 
-Currently, MEGqc runs smoothly both on Linux and Windows! 🚀
+Currently, MEGqc runs smoothly both on Windows (x86), Linux (x86) and macOS (ARM)! 🚀
 
 ```
 
