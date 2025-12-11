@@ -68,7 +68,7 @@ Once you've set your parameters and custom your Settings, you are almost ready.
 
 Finally, you can click on `Run Calculation`. The **Log** window will display the ongoing process, but you can also find more detailed information in the **terminal** window.
 
-<img src="../static/mini/log.png" alt="gui-log" width="350px" align="center">
+<img src="../static/mini/calculation.png" alt="gui-log" width="350px" align="center">
 <img src="../static/mini/terminal.png" alt="terminal" width="350px" align="center">
 
 
