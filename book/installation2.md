@@ -7,8 +7,13 @@ Now that we have a general understanding of MEGqc and its Metrics reports, this 
 The installation method includes all the depencies required to run the GUI and helper scripts. All core requirements are version pinned in [`pyproject.toml`](https://github.com/ANCPLabOldenburg/MEGqc/blob/main/pyproject.toml) to ensure consistent installations. 
 ```
 
-## What does the installer do?
+## Installers
+
+```{admonition} What does the installer do?
+:class: dropdown
+
 The installer is intended to make the installation process simple and easy, while ensuring every dependency and requierement is installed. So, users don't need any technical expertise. This is what is happening in the background:
+
 1. Creates a MEGqc folder in you user/home directory.
 2. Downloads a compressed embeded python 3.10 (ensures compatibily). MEGqc will only work in python 3.10. We, will give support to latest python versions in th future.
 3. Decompresses the embeded python.
@@ -16,8 +21,7 @@ The installer is intended to make the installation process simple and easy, whil
 5. Creates an environment using the embeded python 3.10
 6. pip install MEGqc in that environment.
 7. Creates shortcut scripts in your desktop to launch or unistall the BIDS_Manager app. 
-
-## Installers
+```
 
 * **Download the ZIP package:** **[📦 Installers](https://github.com/ANCPLabOldenburg/MEGqc/raw/main/installers/installers.zip)**
 
