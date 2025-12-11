@@ -1,6 +1,21 @@
 # Installation Guide
 Now that we have a general understanding of MEGqc and its Metrics reports, this section will guide you through the installation of MEGqc. 
 
+```{admonition} Required dependencies?
+:class: tip
+
+The installation method includes all the depencies required to run the GUI and helper scripts. All core requirements are version pinned in [`pyproject.toml`](https://github.com/ANCPLabOldenburg/MEGqc/blob/main/pyproject.toml) to ensure consistent installations. 
+```
+
+## What does the installer do?
+The installer is intended to make the installation process simple and easy, while ensuring every dependency and requierement is installed. So, users don't need any technical expertise. This is what is happening in the background:
+1. Creates a BIDS_MANAGER folder in you user/home directory.
+2. Downloads a compressed embeded python 3.10 (ensures compatibily). BIDS-Manager will only work in python 3.10. We, will give support to latest python versions in th future.
+3. Decompresses the embeded python.
+4. Ensures that pip library is working correctly.
+5. Creates an environment using the embeded python 3.10
+6. pip install bids-manager in that environment.
+7. Creates shortcut scripts in your desktop to launch or unistall the BIDS_Manager app. 
 
 ## Installers
 
@@ -100,7 +115,6 @@ Because the installer is not from the App Store, macOS will initially block it.
 
 ## Installation completed! 🎉
 
-
 After the installation finishes, you will find two **shortcuts** on your desktop:
 
 | OS          | Launch                    | Uninstall                      |
@@ -109,8 +123,11 @@ After the installation finishes, you will find two **shortcuts** on your desktop
 | **Linux**   | `MEGqc` | `Uninstall MEGqc`    |
 | **MacOS**   | `MEGqc.command` | `Uninstall MEGqc.command`  |
 
-* _First time to launch will take a minute._
+* _To open the app, double click on the launcher._
+* _First time to launch will take a minute. For the next times that you open the app, the initialization will be faster._
+* _To uninstall the app, double click on the uninstall launcher._
 
+## Where is MEGqc installed? 🤨
 
 ```{admonition} Installation paths
 You can find your MEGqc installed in the following full paths:
@@ -129,6 +146,8 @@ You can find your MEGqc installed in the following full paths:
     /Users/<your_user>/MEGqc
 
 ```
+
+## What if you don't like GUIs and want to work with commands in the python environment where MEGqc is installed? 🤨
 
 ### Activate the environment
 The installer automatically creates and manages a virtual environment ([learn more about virtual environments](../extra/environment.md)). If you want to manually activate the environment from a terminal or command prompt you can use the following full paths:
@@ -152,6 +171,17 @@ The installer automatically creates and manages a virtual environment ([learn mo
 
 
 ```
+
+
+After activation the following commands become available:
+
+- `bids-manager` – main GUI combining conversion and editing tools (similar to the desktop launcher)
+- `dicom-inventory` – generate `subject_summary.tsv` from a DICOM directory
+- `build-heuristic` – create a HeuDiConv heuristic from the TSV
+- `run-heudiconv` – run HeuDiConv using the generated heuristic
+- `post-conv-renamer` – rename fieldmap files after conversion and organize/write the IntendedFor fields in the metadata
+
+
 
 ## Next section
 
