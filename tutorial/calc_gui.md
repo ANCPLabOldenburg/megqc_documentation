@@ -52,7 +52,7 @@ The settings are grouped into _categories_:
 
 When you hover over each editable parameter, you'll see a short description along with the default value. Their **default values** were calculated by the ANCPLab to be compatible with a broad variety of datasets.
 
-Once you have adjust your settings, don't forget to click on the `Save Settings` button at the very end.
+Once you have adjust your settings, don't forget to click on the `Save Settings` button at the very end of the tab.
 
  
  _(if you want a detailed explanation of all the settings available, visit the [settings page](../extra/settings))_ 
