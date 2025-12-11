@@ -65,7 +65,6 @@ Once you've set your parameters and custom your Settings, you are almost ready.
 
 * **Subjects:** you can enter a specific ID (e.g., `009` for `sub-009`). By default, all subjects will be analyzed
 
-
 Finally, you can click on `Run Calculation`. The **Log** window will display the ongoing process, but you can also find more detailed information in the **terminal** window.
 
 <img src="../static/mini/calculation.png" alt="gui-log" width="350px" align="center">
@@ -73,8 +72,13 @@ Finally, you can click on `Run Calculation`. The **Log** window will display the
 
 
 <br>
+<!--
+comment out
+
 
 ### "There are already config files used for this data set"
+
+
 
 If you have already processed the dataset, the **terminal** will ask you if you want to use again the same config files with the previous customized settings.
 
@@ -89,12 +93,18 @@ Then it will ask you to `Enter the number of the config file you want to use, or
 Rerun datasets, independently of the users' decision over the settings, seems to be failing. The calculation doesn't continue, the terminal becomes unresponsive.
 
 ``` 
+-->
 
 
 
 ## Congratulations! You've successsfully run the calculation module! 🎉
 
-Once the process is finished, a new folder called `MEG_qc` will be created inside your dataset's `derivatives` folder . This folder will contain one subfolder per subject, with machine-readable files (**.tsv** and **.json**) for each metric, run and task. If you're following this tutorial, the path to the MEGqc derivatives might look like this:
+Once the process is finished, a new folder called `MEG_qc` will be created inside your dataset's `derivatives` folder, with the output of MEGqc. If you define a specific derivative output directory, this folder will be named as the original dataset, and will have the same subfolders structure.
+* `calculation` folder: it will contain a folder per subject with a TSV and JSON files per metric, type of channel and task. If you re-run the calculation module with the same participant and the same or different topics, it will create more TSV and JSON files without erasing the previous. 
+* `config` folder: it will contain the configuration settings of every run of the calculation module.
+* `summary_reports` folder: this will contain several folders related to the Global Quality Index.  
+
+This folder will contain one subfolder per subject, with machine-readable files (**.tsv** and **.json**) for each metric, run and task. If you're following this tutorial, the path to the MEGqc derivatives might look like this:
 
 ```bash
 /path/to/your/dataset/ds003483/derivatives/Meg_QC/calculation/sub-009/
