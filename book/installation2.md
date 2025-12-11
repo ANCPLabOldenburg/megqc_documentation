@@ -9,12 +9,12 @@ The installation method includes all the depencies required to run the GUI and h
 
 ## What does the installer do?
 The installer is intended to make the installation process simple and easy, while ensuring every dependency and requierement is installed. So, users don't need any technical expertise. This is what is happening in the background:
-1. Creates a BIDS_MANAGER folder in you user/home directory.
-2. Downloads a compressed embeded python 3.10 (ensures compatibily). BIDS-Manager will only work in python 3.10. We, will give support to latest python versions in th future.
+1. Creates a MEGqc folder in you user/home directory.
+2. Downloads a compressed embeded python 3.10 (ensures compatibily). MEGqc will only work in python 3.10. We, will give support to latest python versions in th future.
 3. Decompresses the embeded python.
 4. Ensures that pip library is working correctly.
 5. Creates an environment using the embeded python 3.10
-6. pip install bids-manager in that environment.
+6. pip install MEGqc in that environment.
 7. Creates shortcut scripts in your desktop to launch or unistall the BIDS_Manager app. 
 
 ## Installers
@@ -175,12 +175,10 @@ The installer automatically creates and manages a virtual environment ([learn mo
 
 After activation the following commands become available:
 
-- `bids-manager` – main GUI combining conversion and editing tools (similar to the desktop launcher)
-- `dicom-inventory` – generate `subject_summary.tsv` from a DICOM directory
-- `build-heuristic` – create a HeuDiConv heuristic from the TSV
-- `run-heudiconv` – run HeuDiConv using the generated heuristic
-- `post-conv-renamer` – rename fieldmap files after conversion and organize/write the IntendedFor fields in the metadata
-
+- `megqc` – opens GUI (similar to the desktop launcher)
+- `run-megqc` – runs the calculation module, you need to add `--inputdata` followed up by the path to your dataaset and you can also add `--subs` followed up by the subjects you want.
+- `run-megqc-plotting` – runs the plotting module, you need to add `--inputdata` followed up by the path to the derivatives of the calculation module. You can also add `--derivativs_output` followed by the path for the HTML reports.
+- `globalqualityindex` - calculates the Global Quality Index, you need to add `--inputdata` followed by the path to the dataset and you can also add `--derivativs_output` followed by the path for the HTML reports.
 
 
 ## Next section
