@@ -1,11 +1,11 @@
 # Calculation Module (GUI)
 
 Thanks to the graphical user interface (GUI) you will be able to run MEGqc and generate reports without using the terminal. 
-To open the GUI, click the MEGqc shortcut on your Desktop. Then the MEGqc GUI will open alongside a bash terminal.
+To open the GUI, click the MEGqc shortcut on your Desktop (or use the command line `megqc` within the environment).
  
- _(the terminal will display more detailed information about the on-going processes, but you can safely close it)_
+<img src="../static/mini/gui.png" alt="launchgui" width="650px" align="center">
 
-<img src="../static/mini/launch_mini.png" alt="launchgui" width="650px" align="center">
+ _(the MEGqc GUI will open alongside a bash terminal, which will display more detailed information about the on-going processes, if youc close it, the GUI will also close)_
 
 
 ```{admonition} GUI visual theme
@@ -18,11 +18,10 @@ Click the left-corner icon of the GUI to open a dropdown list with all available
 ## 1. Basic parameters
 To run the calculation module you need the following basic parameters.
 
-* **Data directory:** you can *paste* the path to your dataset or click `Browse` to select the folder manually.
-* **Subjects:** you can write `all` to analyze every subject, or enter a specific ID (e.g., `009` for `sub-009`).
+* **Data directory:** input the root path to your dataset or click `Browse` to select the folder manually. The path should lead to your whole dataset, not a particular subject.
+* **Derivatives output (optional):** input the path to the folder to store the calculation output: it will create a folder with the name of the original dataset, and a "derivative" folder inside. If left blank, the output will be saved in the derivativer folder of the original dataset.
 * **Jobs:** Choose how many parallels jobs to use during the processing of your data. The default option is `1`, but you can increase the speed of the processing by increasing the number of parallel Jobs.
 
-<img src="../static/mini/calculation.png" alt="mini-megqc-gui" width="400px" align="center">
 
 <br>
 
@@ -33,6 +32,11 @@ To run the calculation module you need the following basic parameters.
   * You may also use `-1` to use **all available cores**. 
 
 ``` 
+* **Subjects:** you can enter a specific ID (e.g., `009` for `sub-009`). By default, all subjects will be analyzed
+  
+<img src="../static/mini/paremeters.png" alt="mini-megqc-gui" width="400px" align="center">
+
+Before running your calculation module, you should check the `Setting` tab.
 
 ## 2. Settings
 The `Setting` tab allows you to customize your analysis.
