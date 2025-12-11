@@ -176,10 +176,9 @@ The installer automatically creates and manages a virtual environment ([learn mo
 After activation the following commands become available:
 
 - `megqc` – opens GUI (similar to the desktop launcher)
-- `run-megqc` – runs the calculation module, you need to add `--inputdata` followed up by the path to your dataaset and you can also add `--subs` followed up by the subjects you want.
-- `run-megqc-plotting` – runs the plotting module, you need to add `--inputdata` followed up by the path to the derivatives of the calculation module. You can also add `--derivativs_output` followed by the path for the HTML reports.
-- `globalqualityindex` - calculates the Global Quality Index, you need to add `--inputdata` followed by the path to the dataset and you can also add `--derivativs_output` followed by the path for the HTML reports.
-
+- `run-megqc` – runs the MEGqc calculation module, you need to add `--inputdata` followed up by the path to your dataaset. Optionally you can add `--subs` followed up by the list of subjects ID you want (default all) and `n_jobs` with the number of pararllel jobs (default 1).
+- `run-megqc-plotting` – runs the plotting module, you need to add `--inputdata` followed up by the root path to the derivatives of the calculation module. You can optionally add `--derivativs_output` followed by the path to a folder to store the HTML reports outside the BIDS dataset.
+- `globalqualityindex` - recomputes the Global Quality Index, you need to add `--inputdata` followed by the path to the root of your BIDS dataset. You can optionally add `--derivativs_output` followed by the path to a folder to store the HTML reports outside the BIDS dataset.
 
 ## Next section
 
