@@ -60,9 +60,11 @@ Once you have adjust your settings, don't forget to click on the `Save Settings`
 <br>
 
 ## 3. Run Calculation
-Once you've set your parameters (Data directory, Subjects and parallel Jobs) click `Run Calculation`. The **Log** window will display the ongoing process, including updates and any errors. You can also find more detailed information in the terminal window.
+Once you've set your parameters and custom your Settings, click `Run Calculation`. The **Log** window will display the ongoing process, including updates and any errors. You can also find more detailed information in the terminal window.
 
 <img src="../static/mini/log.png" alt="gui-log" width="350px" align="center">
+<img src="../static/mini/terminal.png" alt="terminal" width="350px" align="center">
+
 
 <br>
 
