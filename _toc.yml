@@ -10,7 +10,6 @@ chapters:
     - file: report/eog
     - file: report/muscle
     - file: report/psd
-    - file: report/gqi
 - file: book/installation2
 - file: book/tutorial
   sections:
