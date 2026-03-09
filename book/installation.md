@@ -1,17 +1,34 @@
 # Installation Guide
-Now that we have a general understanding of MEGqc and its Metrics reports, this section will guide you through the installation of MEGqc. As we mentioned earlier, MEGqc can be used via **graphical user interface (GUI)** or **command-line interface (CLI)**.  Each of them have a different installation method:
 
-* **[GUI Installation guide](../installation/gui.md)**: ideal for beginners or users who prefer a visual interface. 
-* **[CLI installation guide](../installation/cli.md)**: recommended for developers or advanced users. Requires Python 3 and works via `pip`. 
+MEGqc supports two installation pathways:
 
+1. **Installer-based installation** (recommended for most users)
+2. **CLI-based installation** (Conda + pip, recommended for advanced users)
 
-```{admonition} Virtual Environments
-:class: important
+## 1. Installer-based installation
 
-We strongly recommend using MEGqc within a **virtual environment** to avoid conflicts with system dependencies.
-The GUI installer  automatically creates and manages a virtual environment. Meanwhile the CLI setup requires you to create one manually.
+Use this pathway if you want a ready-to-run setup with minimal manual environment management.
 
-If you want to learn more about virtual environments and how to install them, [click here](../extra/environment.md)
+- Page: [Installer-based installation](../installation/gui.md)
+- What it does: provisions Python 3.10, creates a virtual environment, installs MEGqc, and creates launch/uninstall shortcuts.
 
-```
- 
+## 2. CLI-based installation
+
+Use this pathway when you need terminal-first workflows, scripting, or reproducible environment setup under Conda.
+
+- Page: [CLI-based installation](../installation/cli.md)
+- Recommended baseline: Python 3.10 in a dedicated Conda environment.
+
+## Installed commands
+
+After installation, these entry points are available in the active environment:
+
+| Command | Purpose |
+|---|---|
+| `megqc` | Launch GUI |
+| `run-megqc` | Calculation module |
+| `run-megqc-plotting` | Plotting module |
+| `globalqualityindex` | GQI recomputation |
+| `get-megqc-config` | Export default `settings.ini` |
+
+For usage and examples, go to the [Tutorial](./tutorial.md).

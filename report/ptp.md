@@ -1,26 +1,56 @@
-# Peak to Peak Amplitude
-Peak-to-Peak (PtP) amplitude calculates the difference between maximun and minimun amplitude in a signal. It provides a measure of the total range of variation of the data averaged over a time interval (customizable). 
+# Peak-to-Peak (PtP)
 
-  <img src="../static/03_PtP/01" alt="pic1" width="800px">
+Peak-to-peak (PtP) amplitude is `max(signal) - min(signal)` over the analyzed interval. It emphasizes transient excursions and outlier bursts.
 
+For execution steps, see [Tutorial](../book/tutorial.md).
 
-The PtP amplitude of the data over the entire time series represents how the PtP amplitude of every sensor varies over the entire time series. Every dot represent the PtP amplitude of a single sensor. If a sensor falls outside of the whiskers area, it might indicate that the sensor is malfunctioning or other issues.
+## Subject-report PtP views
 
-The position in the Y Axis is not meaningful but serves visualization purposes.
+| View | Encoding | What it reveals |
+|---|---|---|
+| Channel-wise topomap (3D) | one PtP value per channel in sensor space | spatial pattern of excursion burden |
+| Channel-wise distribution | one PtP value per channel | outlier channels and heavy-tail behavior |
+| Channel × epoch heatmap | PtP per channel and epoch | when/where transient bursts occur |
 
-  <img src="../static/03_PtP/02" alt="pic2" width="800px">
+### 1) Channel-wise PtP topomap (3D)
 
+<img src="../static/03_PtP/01_ptp_entire_timeseries.png" alt="PtP topomap" width="860px">
 
-In this plot, each box plot represents a specific sensor (color-coded by areas) and each point the PtP Amplitude for that sensor during a specific epoch (time window).  
+Interpretation:
 
-  <img src="../static/03_PtP/03" alt="pic3" width="800px">
+- focal extremes indicate spatially localized transients,
+- broad elevation suggests global bursts or movement-related effects.
 
+### 2) Channel-wise PtP distribution
 
-In this plot, each box plot represents an epoch and each point the PtP Ampltiude of the sensors during that specific time window.  
+<img src="../static/03_PtP/02_ptp_over_sensors.png" alt="PtP distribution" width="860px">
 
-```{admonition} Want to check more reports?
-:class: tip
+Interpretation:
 
-Head back to the [main metrics page](../book/report.md) to explore the others!
+- long upper tail indicates burst-prone channels,
+- multi-modal distributions can indicate mixed channel populations.
 
-``` 
+### 3) Channel × epoch heatmap
+
+<img src="../static/03_PtP/03_ptp_over_epochs.png" alt="PtP heatmap" width="860px">
+
+Interpretation:
+
+- vertical hot stripes: time-localized global excursions,
+- horizontal hot stripes: channel-specific recurrent burst behavior,
+- top/right profiles summarize epoch- and channel-level burden.
+
+## PtP (manual) vs PtP (auto)
+
+- **PtP (manual):** MEGqc’s internal PtP pathway and thresholds.
+- **PtP (auto):** MNE-based automatic PtP pathway (when present).
+
+Both can appear as separate tabs in subject reports. Compare them when validating threshold behavior.
+
+## QC implications
+
+- persistent high-PtP channels are bad-channel candidates,
+- sparse high-PtP epochs can be rejected selectively,
+- combine with STD/PSD to avoid rejecting physiologically plausible high-amplitude signal.
+
+The same visualization patterns apply to both MAG and GRAD channel types. PtP (auto) uses MNE's built-in detection algorithm, while PtP (manual) uses MEGqc's custom thresholding approach.

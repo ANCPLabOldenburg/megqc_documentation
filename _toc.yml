@@ -4,27 +4,37 @@ chapters:
 - file: book/introduction
 - file: book/report
   sections:
+    - file: report/qa_subject
+    - file: report/basic
     - file: report/std
     - file: report/ptp
+    - file: report/psd
     - file: report/ecg
     - file: report/eog
     - file: report/muscle
-    - file: report/psd
-    - file: report/gqi
-- file: book/installation2
+    - file: report/head
+    - file: report/stim
+    - file: report/qa_group
+    - file: report/qc_group
+    - file: report/multisample
+- file: book/installation
+  sections:
+    - file: installation/gui
+    - file: installation/cli
 - file: book/tutorial
   sections:
     - file: tutorial/calc_gui
-    - file: tutorial/plot_gui
-    - file: tutorial/gqi_gui
     - file: tutorial/calc_cli
+    - file: tutorial/plot_gui
     - file: tutorial/plot_cli
+    - file: tutorial/gqi_gui
+    - file: tutorial/programmatic
 - file: book/extra
   sections:
     - file: extra/gqi
+    - file: extra/profiles
     - file: extra/details
     - file: extra/settings
     - file: extra/bids
     - file: extra/environment
     - file: extra/openneuro
-  

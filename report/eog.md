@@ -1,26 +1,51 @@
-# EOG: Eye Movement Interference
+# EOG: Ocular Contamination
 
-The EOG (Electrooculogram) sensor records eye activity and is used to detect eye movements, which are usually separated into saccades and blinks. The MNE algorithms, however, only identify blinks (Gapontseva, 2023).
+EOG views quantify coupling between ocular reference activity and MEG channels.
 
+For execution steps, see [Tutorial](../book/tutorial.md).
 
-  <img src="../static/05_EOG/02" alt="pic2" width="800px">
+## Subject-report EOG views
 
-This plot shows the EOG signal over time (blue line). Each blink produces a peak, marked by a red dot. An averaged eye-blink event is expected to have a wave-like shape with one main crest. If no such shape is detected in most of the data files in a set, the EOG channel is marked as "bad". 
+| View | Encoding | What it reveals |
+|---|---|---|
+| EOG quality overview | reference-channel diagnostics | whether blink/eye coupling analysis is reliable |
+| Raw EOG recording | reference time series context | blink quality and reference noise |
+| Mean blink template | averaged blink waveform | blink event consistency |
+| EOG topomap | ocular burden over sensor layout | spatial spread of eye-movement contamination |
+| Affected-channel ranking | channels ranked by ocular coupling | strongest vs weakest ocular contamination |
 
-  <img src="../static/05_EOG/03" alt="pic3" width="800px">
+### 1) EOG quality overview
 
+<img src="../static/05_EOG/01_eog_overview.png" alt="EOG overview" width="560px">
 
-This plot represents the mean event shape, which indicates the typical waveform of a blink as captured by the EOG channel. This allows us to understand how blinks influence MEG sensors. 
+### 2) Raw EOG recording
 
-Similar to the ECG report, the following three plots show the MEG channels affected by blink artifacts, ranked from the most affected to the least affected. This help us to identify channels that may require artifact correction before analysis.
+<img src="../static/05_EOG/07_eog_recording.png" alt="EOG recording" width="860px">
 
-  <img src="../static/05_EOG/04" alt="pic4" width="500px">
-  <img src="../static/05_EOG/05" alt="pic5" width="500px">
-  <img src="../static/05_EOG/06" alt="pic6" width="500px">
+### 3) Mean blink template
 
-```{admonition} Want to check more reports?
-:class: tip
+<img src="../static/05_EOG/04_eog_mean_blink_signal.png" alt="Mean blink" width="860px">
 
-Head back to the [main metrics page](../book/report.md) to explore the others!
+### 4) EOG contamination topomap
 
-``` 
+<img src="../static/05_EOG/03_eog_contamination_topomap.png" alt="EOG topomap" width="800px">
+
+### 5) Channel ranking by contamination
+
+<img src="../static/05_EOG/02_eog_most_affected_channels.png" alt="Most affected EOG channels" width="860px">
+
+<img src="../static/05_EOG/05_eog_moderately_affected_channels.png" alt="Moderately affected EOG channels" width="860px">
+
+<img src="../static/05_EOG/06_eog_least_affected_channels.png" alt="Least affected EOG channels" width="860px">
+
+## EOG in QC summary
+
+`QC summary -> EOG` reports affected-channel counts and percentages (task/run-matched through GQI rows when available).
+
+## QC implications
+
+- broad high coupling suggests strong blink/ocular burden,
+- anteriorly concentrated maps are common but still quantify burden for thresholding,
+- combine with task timing and behavior context before exclusion decisions.
+
+EOG contamination typically shows strongest effects in frontal sensors. The QC summary provides affected-channel counts and percentages matched to GQI rows when available.

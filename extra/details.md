@@ -1,46 +1,56 @@
 # Pipeline basics
 
-In case you are curious about some functionalities of MEGqc, this section provides with a short overview of some key aspects:
+This section summarizes the MEGqc execution model and dependency roles.
 
-## General Pipeline Structure
-The pipeline was initially created by Evgeniia Gaponsetva in 2023. In the following figure she described the general process of the pipeline.
+## General pipeline structure
 
 ![Pipeline](../static/pipeline.png)
 
-The time is on the Y axis, from top to bottom: 
+At high level:
 
-- The **configuration** file contains the data directory path and the parameters for the selected metrics. Default values for all metrics are preset, but they can be modified as needed.
-- Data files are identified thanks to ancpBIDS.
-- Datasets are loaded and **early processed:** epoching, resampling and filtering (taking into account users' parameters).
-- Selected **metrics** are executed (taking into account users' parameters) and results compiled into the **derivatives**.
-- ancpBIDS writes the **derivatives** to the dataset directory, maintaining BIDS naming convention.
+1. Read runtime configuration (`settings.ini`) and execution flags.
+2. Discover BIDS-compatible MEG data with ANCPBIDS.
+3. Apply minimal preprocessing (crop/filter/resample/epoching).
+4. Compute selected metric modules.
+5. Write machine-readable derivatives (`TSV`, `JSON`).
+6. Generate report layers from derivatives (subject/group/multisample; QA/QC).
 
-### Derivatives Metadata
-[BIDS](./bids.md) suggest that the Metadata should be stored in .json and .tsv files, because both machine-readable type of file easily accesible by Python, Matlab, Excel or R. Each of the metrics of the calculation module offers both types of files:
+## Report levels
 
-* **JSON files** with the key information for each of the quality metrics. JSON (JavaScript Object Notation) files are lightweight data format that store structured data in a readable, text-based format using key-value pairs, arrays, and nested objects.
-* **TSV files** with more detailed results of the metrics. The plotting module of MEGqc will use them to build the visual HTML reports. TSV (Tab-Separated Values) files are simple text files that stores tabular data, with each line representing a row and each value in the row separated by tab characters.
+- **QA Subject**: per-subject interactive reports.
+- **QA Group**: dataset-level QA aggregation.
+- **QA Multisample**: cross-dataset QA comparison.
+- **QC Group**: GQI-based QC summary per dataset.
+- **QC Multisample**: cross-dataset QC comparison.
 
-### Dependencies
-Thanks to the installer, it's not necessary to manually pip install the different dependencies anymore.
-- `ancpbids==0.3.0`: for BIDS compatibility and handling MEG datasets. Also developed by the ANCP Lab.
-- `mne~=1.6.0`: for MEG data analysis
-- `pandas>=2.0.3`: data manipulation and tables
-- `plotly=5.24.1`: to create the interactive plots and visualize results
-- `joblib==1.4.2`: parallel processing
-- `pyqt6-tools==6.4.2.3.3`: require for the graphical user interface (GUI)
-- `numba==0.58.1`: compilation for performance
-- `psutil==5.9.8`: system monitoring (e.g., memory usage)
-- `matplotlib==3.8.4`: plotting and figures
-- `statsmodels`: statistical modeling
-- `scikit-learn`: machine learning tools used in metrics
-- `seaborn`: statistic data visualization
+## Derivative formats
 
+MEGqc uses machine-readable derivatives aligned with BIDS conventions:
 
+- **JSON**: structured summaries and metadata.
+- **TSV**: tabular metric-level details used by plotting and downstream processing.
+
+## Dependencies (what each one is used for)
+
+Core/direct dependencies in current package:
+
+- `ancpbids`: BIDS dataset traversal and derivatives handling.
+- `mne`: MEG signal I/O and domain-specific signal processing.
+- `pandas`: tabular computations and derivative tables.
+- `plotly`: interactive report figures.
+- `joblib`: subject-level parallelism.
+- `pyqt6`: GUI framework.
+- `pyqt6-plugins` (non-macOS): GUI platform plugin support.
+- `numba`: acceleration for selected kernels (for example manual PtP paths).
+- `psutil`: runtime system information in GUI (CPU/RAM awareness).
+- `matplotlib`: auxiliary plotting utilities in selected report modules.
+- `prompt_toolkit`: terminal UX utilities used by command-line workflows.
+
+Additional libraries may appear as transitive dependencies via core packages.
 
 ```{admonition} Want to check more extra content?
 :class: tip
 
-Head back to the [main extra content page](../book/extra.md) to explore the others!
+Head back to the [main extra content page](../book/extra.md) to explore the others.
 
-``` 
+```

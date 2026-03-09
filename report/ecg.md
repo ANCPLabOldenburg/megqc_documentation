@@ -1,43 +1,61 @@
-# ECG: Heartbeat Interference
+# ECG: Cardiac Contamination
 
-Heartbeat interference is a common source of noise in MEG recordings. This intereference shows up as a rhythmic and periodic fluctuation, and it varies among participants (Gapontseva, 2023). 
+ECG views quantify coupling between ECG reference activity and MEG channels.
 
-  <img src="../static/04_ECG/01.png" alt="pic1" width="400px">
+For execution steps, see [Tutorial](../book/tutorial.md).
 
+## Subject-report ECG views
 
-First, we have a short overview with key criteria about the ECG signal recorded. MEGqc evaluates whther the heartbeats were recordnd in a consistently (similar amplitude), without missing beats (no breaks) and without false detections (no bursts). These aspects are relevant for determining if the channel issuitable heartbeat artifact identification. 
+| View | Encoding | What it reveals |
+|---|---|---|
+| ECG quality overview | reference-channel diagnostics | whether ECG-driven analysis is reliable |
+| Raw ECG recording | time series context | signal quality and heartbeat structure |
+| Mean R-wave template | averaged cardiac waveform | template quality used for coupling analysis |
+| Affected-channel ranking | channels ordered by coupling magnitude | strongest vs weakest cardiac contamination |
+| ECG topomap | coupling burden on sensor layout | spatial distribution of cardiac contamination |
 
-  <img src="../static/04_ECG/02.png" alt="pic2" width="800px">
+### 1) ECG quality overview
 
+<img src="../static/04_ECG/01_ecg_overview.png" alt="ECG overview" width="560px">
 
-Here, we see the ECG signal (blue line) captured by the ECG channel (_ECG062_), with the red marking the R-peaks of each heartbeat. The R-peaks are components of the electrical activity of the heartbeat, and they can be easily used as reference points to identify heartbeat interference.
-THanks to the interactive features, you can activate or deactivate the ECG signal and the peaks by clicking on the legend. YOu may also  zoom in by selecting a section within the figure.
+Use this first to verify reference quality before interpreting channel rankings.
 
-  <img src="../static/gifs/04_ecg/01_selection_zoom.gif" alt="gif1" width="800px">
+### 2) Raw ECG recording
 
+<img src="../static/04_ECG/04_ecg_recording.png" alt="ECG raw recording" width="860px">
 
+Confirms cardiac waveform detectability and obvious corruption.
 
-The mean recorded R wave (from the ECG channel, real heartbeats) was shifted to align the _ECG signal found on MEG channels_. This alignment helps us understand the extend to which the heartbeats influence he MEG channels. Then, a Pearson correlation is performed between the __ECG signal found in each MEG channel__ and the reference mean signal of the ECG.
+### 3) Mean R-wave template
 
-  <img src="../static/04_ECG/03.png" alt="gif1" width="800px">
+<img src="../static/04_ECG/06_ecg_R_mean_wave.png" alt="ECG mean R wave" width="620px">
 
+A clean template indicates stable event-locked cardiac structure.
 
-The following 3 plots highlights the MEG channels affected by heartbeat interference. Each line representes one MEG sensor, colour-coded by region. The plots are ordered from the most affected to the least affected. 
+### 4) Channel ranking by contamination
 
-  <img src="../static/04_ECG/04.png" alt="pic4" width="400px">
+<img src="../static/04_ECG/02_ecg_most_affected_channels.png" alt="Most affected ECG channels" width="860px">
 
-  <img src="../static/04_ECG/05.png" alt="pic5" width="400px">
+<img src="../static/04_ECG/03_ecg_medium_affected_channels.png" alt="Mid affected ECG channels" width="860px">
 
-  <img src="../static/04_ECG/06.png" alt="pic6" width="400px">
+<img src="../static/04_ECG/05_ecg_least_affected.png" alt="Least affected ECG channels" width="620px">
 
+Ranking separates high, medium, and low contamination channel sets.
 
-The interactive feature allows you to hide (1 click) and isolate (2 clicks) specific groups of sensors, as well as zoom-in on certai sections of the figure.
+### 5) ECG contamination topomap
 
-  <img src="../static/gifs/04_ecg/02_hide.gif" alt="gif2" width="800px">
+<img src="../static/04_ECG/07_ecg_topomap.png" alt="ECG topomap" width="800px">
 
-```{admonition} Want to check more reports?
-:class: tip
+Shows spatial concentration of ECG coupling burden.
 
-Head back to the [main metrics page](../book/report.md) to explore the others!
+## ECG in QC summary
 
-``` 
+`QC summary -> ECG` includes affected-channel counts and percentages (by task/run) derived from GQI task rows when available.
+
+## QC implications
+
+- high affected-channel percentage indicates stronger need for cardiac artifact handling,
+- task-specific shifts may indicate condition-dependent contamination sensitivity,
+- if reference quality is poor, interpret ECG burden with caution.
+
+ECG contamination patterns are similar for MAG and GRAD channels, though the spatial distribution may differ slightly. The QC summary provides compact metrics for quick assessment across runs.

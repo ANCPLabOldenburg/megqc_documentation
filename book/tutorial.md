@@ -1,40 +1,42 @@
-# MEGqc tutorial
+# Tutorial
 
-In this section we will explain you how to run MEGqc in your dataset, how to create the HTML reports and more about the summary reports.
+This section explains how to run MEGqc in three ways:
 
-MEGqc has two main modules (the `calculation module` and the `plotting module`) which can be used via `command-line interface (CLI)` or a `graphical user interface (GUI)`. Below you will find links to the tutorials for both modules and  both modalities.
+1. **GUI workflows**
+2. **CLI workflows**
+3. **Programmatic Python workflows**
 
-## The calculation module
-The calculation module gives you machine-readable outputs (JSON files and TSV files) for every subject and selected **metric**. For that you need to configure the file paths, specify parameters and execute the calculations.
-1. [Running the calculation module for GUI](../tutorial/calc_gui)
-2. [Running the calculation module for CLI](../tutorial/calc_cli)
+It covers three operational modules:
 
-## The plotting module
-The plotting module uses the machine-readable outputs of the calculation module to generate the [HTML reports](./report).
-1. [Running the plotting module for GUI](../tutorial/plot_gui)
-2. [Running the plotting module for CLI](../tutorial/plot_cli)
+- **Calculation** (derivatives generation)
+- **Plotting** (HTML report generation)
+- **GQI recomputation** (attempt-based QC summaries)
 
-## The GQI module
-MEGqc offers a third module, the **GQI module**, which allows to re-calculate the [Global Quality Index (GQI)](../extra/gqi) with different parameters without re-running the calculation module. 
-1. [Running the GQI module for GUI](../tutorial/gqi_gui.md)
+## Recommended execution order
 
-### The GQI and the Summary Reports
-Once you run the calculation module, MEGqc generates the `summary reports` folder, which contains a series of reports with the the outcome of their metrics and the [Global Quality Index (GQI)](../extra/gqi) of every subject. This folder can be found within the derivatives folder of your dataset.
+0. Export editable config(s) with `get-megqc-config`.
+1. Run **Calculation**.
+2. Run **Plotting**.
+3. Re-run **GQI** only when QC settings change and raw metric recomputation is not needed.
 
-```bash
-path\to\your\dataset\derivatives\Meg_QC\summary_reports
-```
+## GUI tutorials
 
-The `summary reports` folder contains the following subfolder and files. Every time you re-run the GQI module you will create a new `attempt` within the summary reports.
-* **config:** it will contain the specific settings used for the GQI calculation. Each `attempt` creates a new settings file.
-* **group_metrics:** Includes a TSV file and a PNG plot of the GQI distribution of the dataset. Each `attempt` creates a new pair of TSV and PNG files.
-* **global_quality_index_n:** A folder containing one subfolder per subject. These subfolders include a JSON file with the outputs of individual metrics and the GQI scores. Each `attempt` creates a whole new folder _(n = number of attempt)_.
+- [Calculation (GUI)](../tutorial/calc_gui.md)
+- [Plotting (GUI)](../tutorial/plot_gui.md)
+- [GQI (GUI)](../tutorial/gqi_gui.md)
 
+## CLI tutorials
 
-```{admonition} Don't have a Dataset?
+- [Calculation (CLI)](../tutorial/calc_cli.md)
+- [Plotting (CLI)](../tutorial/plot_cli.md)
+
+## Programmatic tutorial
+
+- [Programmatic execution (Python)](../tutorial/programmatic.md)
+
+```{admonition} Advanced reference
 :class: tip
-In case you don't have a BIDS compliant MEG dataset, here’s how to download one from OpenNeuro:
-[How to download a dataset from OpenNeuro](../extra/openneuro.md)
+
+For full execution semantics (profiles, policies, dispatchers), see the [Analysis Profiles](../extra/profiles.md) and [Pipeline Details](../extra/details.md) pages.
 
 ```
-

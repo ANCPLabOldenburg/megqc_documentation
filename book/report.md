@@ -1,65 +1,50 @@
-# HTML reports overview
+# HTML Reports Overview
 
-Every `metric` in MEGqc generates its own HTML report. Each report is full of interactive figures that you can zoom in and out, reveal legends on hovering, hide or show specific epochs or channels...  Here you can find an overview of each report:
+MEGqc produces interactive HTML reports at four scopes:
 
-1. [Standard Deviation of the Data](../report/std.md)
-2. [Peak-to-Peak (manual calculation)](../report/ptp.md)
-3. [ECG (Electrocardiogram) calculation](../report/ecg.md)
-4. [EOG (Electrooculography) calculation](../report/eog.md)
-5. [Muscle Artifacts calculation](../report/muscle.md)
-6. [Power Spectral Density](../report/psd.md)
+1. **QA Subject reports** (per subject)
+2. **QA Group reports** (per dataset)
+3. **QC Group reports** (per dataset, Global Quality Index centered)
+4. **Multisample reports** (cross-dataset comparison)
 
-In this tutorial we've included some GIFs to demonstrate the interactive capabilities of the figures. These overviews will show only data from the Magnetometers, but the logic and interpretation for Gradiometers are very similar.
+This section explains report structure and interpretation. For run commands and GUI clicks, use the [Tutorial](./tutorial.md).
 
+## Report matrix
 
-```{admonition} Source of the figures?
-:dropdown:
+| Report scope | Input derivatives | Main question answered | Typical output location | Primary audience |
+|---|---|---|---|---|
+| QA Subject | `calculation/sub-*/...` + per-run summary JSON | What is the full quality profile of one subject across runs/tasks? | `reports/sub-*_meg.html` | Data curator, analyst |
+| QA Group | `calculation/` for one dataset | What are cohort-level quality patterns and task-dependent shifts? | `reports/group_QA_report.html` | Lab lead, cohort curator |
+| QC Group | `summary_reports/group_metrics/Global_Quality_Index_attempt_<n>.tsv` | How do QC indicators and GQI rank recordings/subjects? | `reports/group_QC_report.html` | QC operator, triage workflows |
+| QA/QC Multisample | multiple datasets (QA: `calculation/`; QC: GQI TSV attempts) | How do quality and QC profiles compare across datasets/systems/sites? | `reports/multisample_*.html` | Consortium harmonization |
 
-All the examples in every section were created from the subject 009 from the  _ds003483_ dataset available on OpenNeuro. This dataset (among many others) was used to evaluate the MEGqc tool. You may [download this same dataset](../extra/openneuro.md), to recreate these same reports by yourself.
+## Subject report tab map
 
-``` 
+| Subject tab | Core content | Main interpretation target |
+|---|---|---|
+| Overview | run/metric availability, raw header metadata, sensor geometry | confirm data completeness and context before metric interpretation |
+| STD | channel variability views (space/distribution/channel×epoch) | noisy/flat channels and non-stationary variance |
+| PtP (manual/auto) | excursion amplitude views | transient bursts and outlier excursions |
+| PSD | spectral burden views | mains/interference and band-dominance patterns |
+| ECG / EOG | physiological coupling views | cardiac/ocular contamination burden |
+| Muscle | high-frequency burden and event load | muscle artifacts over time |
+| Head | movement summaries (if cHPI available) | motion-related quality degradation |
+| Stimulus | event/stim channel structure | epoching validity and trigger integrity |
+| QC summary | metric-specific QC tables + GQI attempts | auditable QC footprint per run/task |
 
-## Basic Information
+## Report sections
 
-Almost every metric will start with some general metadata (date, experimenter, duration...) and basic information about the sensors, such as sensor positions and labels. 
-
-<img src="../static/00.jpg" alt="raw-info" width="650px">
-
-## Sensor Positions
-
-<img src="../static/01.jpg" alt="sensor-distribution" width="600px">
-
-Visual representation of the spatial distribution of MEG sensors on the subject's head. The sensors are divided into eight color-coded groups representing different lobes. This same color coding will be used frequently throughout the reports for reference.
-
-
-1. **Rotate the figure:** By clicking and holding the mouse left-button while dragging, you can rotate the sensor positions figure to view it from different angles.
-
-<img src="../static/gifs/01_sensor_location/01_rotation.gif" alt="rotation" width="600px">
-
-
-2. **Hide and reveal sensors:** By clicking on the legend block, you can hide the sensors of a specific lobe. Clicking the block again will make the sensors reappear.
-
-<img src="../static/gifs/01_sensor_location/02_hide.gif" alt="hide" width="600px">
-
-3. **Sensor labels:** The sensor labels appear when you hover over a  sensor dot. Alternatively, you can enable _"Always show channels names"_ option, which keeps all labels visible. Enabling this feature might take some time to render, specially if all lobes are visible.
-
-<img src="../static/gifs/01_sensor_location/03_labels.gif" alt="labels" width="600px">
-   
-
-
-```{admonition} Channel types
-:class: tip
-
-The sensor labels help you distinguish between Magnetometers and Gradiometers:
-- **Magnetometer:** it measures the magnetic field directly, providing data on its strength and direction, therefore, they are more vulnerable to external magnetic noise. Its label ends with _"1"_ (e.g., _MEG1011_).
-- **Gradiometers:** These sensors come in pairs and they measure the gradient of the magentic field (the difference between 2 measurements). Their labels end with _"2"_ and _"3"_, one number per Gradiometer in a sensor (e.g. _MEG0112_ and _MEG0113_).
-
-```
-
-# Next Section
-
-In the next pages you'll learn more about the interpretation of each specific report.
-
-Also, in the next section, you'll learn more about the Global Quality Index (GQI), how it is calculated and how to interprate the outcome.
-
+- [QA Subject report structure and features](../report/qa_subject.md)
+- [Basic information and report header](../report/basic.md)
+- [STD](../report/std.md)
+- [PtP](../report/ptp.md)
+- [PSD](../report/psd.md)
+- [ECG](../report/ecg.md)
+- [EOG](../report/eog.md)
+- [Muscle](../report/muscle.md)
+- [Head](../report/head.md)
+- [Stimulus](../report/stim.md)
+- [QA Group report](../report/qa_group.md)
+- [QC Group report](../report/qc_group.md)
+- [Multisample reports](../report/multisample.md)
 
