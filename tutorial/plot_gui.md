@@ -1,47 +1,55 @@
 # Plotting Module (GUI)
 
-After completing the analysis with the calculation module, the next step is to generate the `html reports`. Thanks to the GUI, you can run the plotting module without coding.
+Plotting reads existing derivatives and creates HTML reports.
 
-## Set Data directory
-You can *paste* the path to your **dataset** folder or click `Browse` to select the folder manually. MEGqc will search for the `derivatives` folder within your dataset and use the machine-readable outputs created by the calculation module. Then you just need to click on `Run Plotting`.
+<img src="../static/gui/gui_plotting.png" alt="GUI plotting tab" width="860px">
 
-<img src="../static/mini/run_plotting3.png" alt="launchgui" width="400px" align="center">
+## Step 1: Select datasets and profile mode
 
-```{warning}
+In **Inputs**:
 
-If you give a path to a different folder, such as the `subject` folder or the `calculation folder`, you will see in the Log window "Plotting error: Process exited with code 1". It will also create an empty folder called `derivatives` within your given paths.
+- add one or more datasets,
+- select profile mode (`legacy/new/reuse/latest`),
+- optionally load/refresh profile IDs.
 
-**Your path only needs to lead to the dataset, you don't need to go any deeper within the structure.**
+## Step 2: Select plotting scopes
 
-```
+In **QA/QC plotting** tab, enable one or more:
 
-As with the Calculation Module, you can choose how many parallel jobs to use during the creation of the reports. The default option is `1`, but you can increase the speed of the processing by increasing the number of parallel Jobs.
+- `QA Subject`
+- `QA Group`
+- `QA Multisample` (requires >=2 datasets)
+- `QC Group`
+- `QC Multisample` (requires >=2 datasets)
 
-```{dropdown} How do I know the right amount of parallel Jobs?
+## Step 3: Optional controls
 
-  * MEGqc automatically detects and displays the number of cores ('CPUs') and the total available RAM (see the lower-corner of the GUI).
-  * The `Info` button will give you personalized recommendations based on system memory.
-  * You may also use `-1` to use **all available cores**. 
+- `QC attempt (0=auto)`
+- `Plotting n_jobs`
+- `QC input TSV` (single-dataset QC Group)
+- `Output report` (single-report modes)
 
-``` 
+## Step 4: Run
 
-## Congratulations!
-You're done'! You will find the `html reports` in a folder called `reports` within the `derivatives` folder. The reports will be divided in `subjects` folder. If you've been following this tutorial, your path to your reports might look like this:
+Click **Run Plotting**. Use **Stop Plotting** to abort.
 
+## Example GUI scenarios
 
-    /path/to/your/dataset/ds003483/derivatives/Meg_QC/reports/sub-009/
+### Scenario A: Subject + Group QA for one dataset
 
+- Add one dataset.
+- Enable `QA Subject` and `QA Group`.
+- Click **Run Plotting**.
 
-Now you can open these [reports](../book/metrics) in Chrome or Firefox to explore the interactive plots and visualize of the quality control analysis of your dataset!
+### Scenario B: QA multisample for two datasets
 
-<img src="../static/mini/reports.png" alt="reporst" width="450px" align="center">
+- Add dataset A and B.
+- Enable `QA Multisample`.
+- Click **Run Plotting**.
 
+### Scenario C: QC group with specific attempt
 
-```{admonition} How many reports will be created?
-:class: tip
-
-MEGqc will create 1 report for every derivatives it founds within the `calculation` folder. This means, a different report for every metric, of every run, task, session, subject and sensor you have analyzed with the Calculation Module. Be aware of this before you run the plotting module!
-
-``` 
-
-
+- Add one dataset.
+- Enable `QC Group`.
+- Set attempt value.
+- Click **Run Plotting**.

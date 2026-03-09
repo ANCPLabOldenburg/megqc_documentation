@@ -1,2 +1,5 @@
 .DS_Store
 book/_build/*
+
+# MyST build outputs
+_build

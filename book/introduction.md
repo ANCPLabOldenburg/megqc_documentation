@@ -1,9 +1,9 @@
 # What is MEGqc?
 
 ## MEG data quality control
-Magnetoencephalography (MEG) data is susceptible to  noise and artifacts, which can severely corrupt the data quality. These artifacts may arise from:
+Magnetoencephalography (MEG) data is susceptible to noise and artifacts, which can severely corrupt the data quality. These artifacts may arise from:
 - Channel variability (e.g. malfunction of a sensor, flat and noisy channels).
-- Muscle and internal noise sources (e.g. jaw movements, eye-blinks and cardiac rythm of the subject).
+- Muscle and internal noise sources (e.g. jaw movements, eye-blinks and cardiac rhythm of the subject).
 - Environmental noise sources (e.g. powerline noise).
 
 <img src="../static/sources.png" alt="noise-source" width="300px" align="center">
@@ -13,16 +13,26 @@ For this reason, quality control of MEG data is an essential step for ensuring v
 ## MEGqc
 To address this issue, the [ANCP Lab](https://uol.de/en/applied-neurocognitive-psychology) developed MEGqc, a software tool for automated and standardized quality control of MEG recordings. By providing a standardized workflow, it helps minimize human bias and facilitates comparison between datasets. **MEGqc evaluates the quality of raw data, but it is not an artifact removal tool.** 
 
-MEGqc can be used via a **command-line interface (CLI)** or a **graphical user interface (GUI)**. Each of them have different [installation](./installation) and [usage](./tutorial) methods covered by this documentation.
+MEGqc follows a **QA-first approach**: it first profiles signal quality across multiple metrics (Quality Assessment, QA) and then provides an explicit Quality Control (QC) summarization through the [Global Quality Index (GQI)](../extra/gqi.md).
 
-### MEGqc has 2 main modules:
-- **Calculation Module:** It gives you machine-readable outputs (JSON files and TSV files) for every subject and selected `metric`. There are 6 independent `metrics` that evaluate specific types of artifacts.
-- **Plotting Module:** It generates detailed visual HTML reports for every subject and selected `metric`.
+MEGqc provides two installation pathways: **installer-based installation** and **CLI-based installation**. After installation, both CLI and GUI execution workflows are documented in [Installation](./installation.md) and [Tutorial](./tutorial.md).
 
-MEGqc generates as well a general **summary reports**, which consist of a JSON file for each subject, a TSV file for the group metrics and a PNG plot for the whole dataset. The summary reports shows the [**Global Quality Index (GQI)**](../extra/gqi.md), a single overall estimate of data quality for each subject.
+### MEGqc has 3 main modules:
+- **Calculation Module:** It gives you machine-readable outputs (JSON files and TSV files) for every subject and selected `metric`. There are 7 independent `metrics` that evaluate specific types of artifacts.
+- **Plotting Module:** It generates detailed visual HTML reports at multiple scales — from subject-level reports to dataset-level group analyses and multi-sample comparisons.
+- **GQI Module:** It computes (or re-computes) the [Global Quality Index](../extra/gqi.md), a single overall estimate of data quality for each subject.
+
+### Report types
+MEGqc generates **5 types of reports** at different scales:
+
+1. **QA Subject Report:** Detailed per-subject HTML report with interactive figures for every selected metric.
+2. **QA Group Report:** Dataset-level summary report that aggregates QA metrics across all subjects in a dataset.
+3. **QA Multisample Report:** Cross-dataset comparison report (requires 2 or more datasets).
+4. **QC Group Report:** Dataset-level report based on the Global Quality Index (GQI), showing quality scores and penalty breakdowns.
+5. **QC Multisample Report:** Cross-dataset QC comparison (requires 2 or more datasets).
 
 ## Metrics in MEGqc
-The different calculation modules within MEGqc are called `metrics` and they are used to evaluate specific types of artifacts. There are six independent metrics grouped by the source of the noise:
+The different calculation modules within MEGqc are called `metrics` and they are used to evaluate specific types of artifacts. There are seven independent metrics grouped by the source of the noise:
 
 1. **Channel Variability**
    
@@ -38,26 +48,9 @@ The different calculation modules within MEGqc are called `metrics` and they are
 3. **Muscle Artifacts:** Identifies high-frequency bursts from body movements, for example, when the subject clenches their jaw. [Link to the report](../report/muscle.md).
 
 4. **Power Spectral Density (PSD) Assessment:** It provides information on the strength of different frequency components of a signal. PSD calculation helps us to distinguish between brain activity and non-brain-related noise, for example, line noise or environmental noise. [Link to the report](../report/psd.md).
- 
-<!--
 
-```{admonition} There are 2 other metrics within MEGqc
-:class: dropdown
-
-* **Peak-to-Peak automatic calculation:** This module, which relies on MNE library functions, is not used in the final version of the pipeline. Instead, the "manual calculation" is recommended.
-* **Head movement calculation:** This module estimates subject's head movements. These movements may appear as sudden shifts or jumps in the MEG data, causing distortions in the spatial distribution of the recorded magnetic fields. The effects of head movements can vary depending on the strength and direction. This module is implemented but requires a substantial amount of information to perform the calculation.
-
-``` 
-
--->
+5. **Head Position and Movement:** Evaluates head movement during the recording using continuous head position indicator (cHPI) data. Disabled by default because cHPI data is not always available. [Link to the report](../report/head.md).
 
 ## Next section
-In the next section, we’ll walk through the content of the HTML reports.
-For a deeper understanding of MEGqc’s core functionality, dependencies and derivatives or what are BIDS, please follow [this link](./extra).
-
-<!--
-In the next section, you'll learn more about the Global Quality Index (GQI), how it is calculated and how to interprate the outcome.
--->
-
-
-        
+In the next section, we'll walk through the content of the HTML reports.
+For a deeper understanding of MEGqc's core functionality, dependencies and derivatives or what are BIDS, please follow [this link](./extra.md).

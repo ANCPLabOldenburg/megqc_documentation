@@ -1,119 +1,81 @@
 # Calculation Module (GUI)
 
-Thanks to the graphical user interface (GUI) you will be able to run MEGqc and generate reports without using the terminal. 
-To open the GUI, click the MEGqc shortcut on your Desktop (or use the command line `megqc` within the environment).
- 
-<img src="../static/mini/gui.png" alt="launchgui" width="400px" align="center">
-
- _(the MEGqc GUI will open alongside a bash terminal, which will display more detailed information about the on-going processes, if youc close it, the GUI will also close)_
-
-
-```{admonition} GUI visual theme
-:class: tip
-
-Click the left-corner icon of the GUI to open a dropdown list with all available visual themes. This will only affect the visual display of the GUI. This list also includes themes with high-contrast options. 
-
-```
-
-## 1. Basic parameters
-To run the calculation module you need the following basic parameters.
-
-* **Data directory:** input the root path to your dataset or click `Browse` to select the folder manually. The path should lead to your whole dataset, not a particular subject.
-* **Derivatives output (optional):** input the path to the folder to store the calculation output: it will create a folder with the name of the original dataset, and a "derivative" folder inside. If left blank, the output will be saved in the derivativer folder of the original dataset.
-* **Jobs:** Choose how many parallels jobs to use during the processing of your data. The default option is `1`, but you can increase the speed of the processing by increasing the number of parallel Jobs.
-
-
-<br>
-
-```{dropdown} How do I know the right amount of parallel Jobs?
-
-  * MEGqc automatically detects and displays the number of cores ('CPUs') and the total available RAM (see the lower-corner of the GUI).
-  * The `Info` button will give you personalized recommendations based on system memory.
-  * You may also use `-1` to use **all available cores**. 
-
-``` 
-  
-<img src="../static/mini/paremeters.png" alt="mini-megqc-gui" width="400px" align="center">
-
-<br>
-
-Before running your calculation module, you should check the `Setting` tab.
-
-## 2. Settings
-The `Setting` tab allows you to customize your analysis.
-
-<img src="../static/mini/minimegqc_settings.png" alt="settings-gui" width="350px" align="center">
-
-The settings are grouped into _categories_:
-
-* The **General** group of settings allows you to select the channel types (`mag` or `grad` or both), and the specific metric to compute (e.g. `STD`, `PSD` or `PTP`). You can also apply your analysis to a smaller snippet of data by modifying  `data_crop_tmin` and `data_crop_tmax`.
-* The **Filtering** and **Epoching** groups of settings allow you to edit how the filtering and epoching should be applied, such as `high-pass` / `low-pass cut-offs frequencies` and time windows.
-* **Metric-specfic settings:** every metric includes their own editable group of settings, such as how many standard deviations from the mean to use as a threshold, the edge frequencies for PSD calculation, or the minimun PTP amplitude to count as a peak.
-
-When you hover over each editable parameter, you'll see a short description along with the default value. Their **default values** were calculated by the ANCPLab to be compatible with a broad variety of datasets.
-
-Once you have adjust your settings, don't forget to click on the `Save Settings` button at the very end of the tab.
-
- 
- _(if you want a detailed explanation of all the settings available, visit the [settings page](../extra/settings))_ 
-
- 
-<br>
-
-## 3. Run Calculation
-Once you've set your parameters and custom your Settings, you are almost ready.
-
-* **Subjects:** you can enter a specific ID (e.g., `009` for `sub-009`). By default, all subjects will be analyzed
-
-Finally, you can click on `Run Calculation`. The **Log** window will display the ongoing process, but you can also find more detailed information in the **terminal** window.
-
-<img src="../static/mini/calculation.png" alt="gui-log" width="350px" align="center">
-<img src="../static/mini/terminal.png" alt="terminal" width="350px" align="center">
-
-
-<br>
-<!--
-comment out
-
-
-### "There are already config files used for this data set"
-
-
-
-If you have already processed the dataset, the **terminal** will ask you if you want to use again the same config files with the previous customized settings.
-
-The terminal will display a **numbered list** of paths to previous config files used for the data set.
-Then it will ask you to `Enter the number of the config file you want to use, or press Enter to use the default one`.
-* Enter the corresponding **number** of the config file path you want to reuse. The terminal will ask you to confirm if you want to **RERUN** these subject with the same config parameters.
-* If you don't want to use any previous config file, just press Enter to continue with your default setting
-
-
-```{warning}
-
-Rerun datasets, independently of the users' decision over the settings, seems to be failing. The calculation doesn't continue, the terminal becomes unresponsive.
-
-``` 
--->
-
-
-
-## Congratulations! You've successsfully run the calculation module! 🎉
-
-Once the process is finished, a new folder called `MEG_qc` will be created inside your dataset's `derivatives` folder, with the output of MEGqc. If you define a specific derivative output directory, this folder will be named as the original dataset, and will have the same subfolders structure.
-* `calculation` folder: it will contain a folder per subject with a TSV and JSON files per metric, type of channel and task. If you re-run the calculation module with the same participant and the same or different topics, it will create more TSV and JSON files without erasing the previous. 
-* `config` folder: it will contain the configuration settings of every run of the calculation module.
-* `summary_reports` folder: this will contain several folders related to the Global Quality Index.  
-
-This folder will contain one subfolder per subject, with machine-readable files (**.tsv** and **.json**) for each metric, run and task. If you're following this tutorial, the path to the MEGqc derivatives might look like this:
+Open MEGqc:
 
 ```bash
-/path/to/your/dataset/ds003483/derivatives/Meg_QC/calculation/sub-009/
+megqc
 ```
 
-# Next section
-In the next section, you'll learn how to use the calculation derivatives to generate the **HTML reports** with MEGqc's plotting module.
+Main window:
 
-<br>
+<img src="../static/gui/gui_main_light.png" alt="MEGqc main GUI" width="860px">
 
+Calculation module panel:
 
+<img src="../static/gui/gui_calculation.png" alt="GUI calculation module" width="860px">
 
+## Step 1: Configure inputs
+
+In **Inputs**:
+
+- add one or multiple BIDS dataset paths,
+- optionally reorder/remove datasets,
+- select global settings or enable `Use per-dataset configuration`.
+
+## Step 2: Set analysis profile and policies
+
+In **Analysis profile + policies**:
+
+- `Mode`: `legacy`, `new`, `reuse`, `latest`
+- `Profile ID`: optional or required depending on mode
+- `Config policy`: `provided`, `latest_saved`, `fail`
+- `Processed subjects`: `skip`, `rerun`, `fail`
+
+## Step 3: Optional output root
+
+In **Output folder (optional)** set `Derivatives output` only when outputs should be outside dataset roots.
+
+## Step 4: Configure calculation runtime
+
+In **QA/QC calculation** tab:
+
+- set global `Calculation n_jobs`,
+- optionally enable per-dataset `n_jobs` override,
+- use per-dataset **Scan/select** for subject selection.
+
+## Step 5: Execute
+
+- **Run Calculation**: calculation only.
+- **Run GQI**: recompute GQI attempts from existing metrics.
+- **Run ALL (calc + plotting)**: full orchestration (calculation then plotting).
+
+Stop buttons abort active tasks.
+
+## Example scenarios
+
+### Scenario A: one dataset, all subjects, new profile
+
+- add dataset,
+- set mode `new` (optional explicit profile ID),
+- keep subjects=`all`,
+- click **Run Calculation**.
+
+### Scenario B: two datasets, different configs and subjects
+
+- add datasets A and B,
+- enable per-dataset config,
+- assign each settings file,
+- use **Scan/select** per dataset,
+- click **Run Calculation**.
+
+### Scenario C: full pipeline in one action
+
+- configure plotting choices in **QA/QC plotting** tab,
+- click **Run ALL (calc + plotting)**.
+
+```{admonition} Runtime safety behavior
+:class: tip
+
+When one run starts, other run buttons are disabled until completion or stop.
+
+```

@@ -1,45 +1,70 @@
-# Power Spectrum Density
+# Power Spectral Density (PSD)
 
-The Power Spectrum Density describes how the power of a signal is distributed across different frequencies. It provides information on the strength or intensity of different frequency components. PSD calculation helps us to distinguish between brain activity and non-brain-related noise.
+Power spectral density (PSD) views characterize frequency-domain burden and are used to detect narrowband interference (for example mains harmonics) and broad-band contamination.
 
+For execution steps, see [Tutorial](../book/tutorial.md).
 
-  <img src="../static/02_PSD/01.png" alt="pic1" width="400px">
-  <img src="../static/02_PSD/02.png" alt="pic2" width="600px">
+## Subject-report PSD views
 
+| View | Encoding | What it reveals |
+|---|---|---|
+| PSD SNR pie | signal vs detected noise contribution | proportion of spectral burden attributable to flagged noise frequencies |
+| Welch periodograms | PSD curves per channel | peak frequencies, harmonics, and channel-specific contamination |
+| Channel-wise PSD topomap | PSD-derived burden mapped to sensors | spatial concentration of spectral contamination |
+| Relative band pie | delta/theta/alpha/beta/gamma/other contributions | dominant frequency content profile |
 
-This circle chart represents the Signal-to-Noise Ratio (SNR). A high SNR indicates minimal corruption of the signal of interest by background noise. The prominent amplitude of the 11.5 Hz frequency labels it as potential noise.
+### 1) PSD SNR summary
 
-  <img src="../static/02_PSD/03" alt="pic3" width="700px">
+<img src="../static/02_PSD/02_psd_welch_periodogram.png" alt="PSD SNR" width="860px">
 
-The Welch periodrogram is commonly used to estimate the power of a signal at different frequency components.  
-The X-axis represents the frequency range of the signal (from 0 to 140 Hz in this case) and the Y-axis represents the amplitude of the signal. 
-Each colored line represents the PSD for the different magnetometers. As it was previously reported, there's a visible peak at 11.5 Hz in this example.
+Interpretation:
 
-Interactive features in the HTML report allow toggling between linear a **linear** view or a **logarithmic** view of both the X-axis and the Y-axis independently. 
+- high noise slice indicates strong narrowband contamination burden,
+- useful for quick triage before detailed spectrum inspection.
 
+### 2) Welch PSD detail by channel
 
-  <img src="../static/gifs/03_psd/01_log.gif" alt="log" width="700px">
-  <img src="../static/02_PSD/03-2.png" alt="pics3-2" width="700px">
+<img src="../static/02_PSD/03_psd_welch_detail.png" alt="PSD curves by channel" width="860px">
 
+Interpretation:
 
-Also you can select from the legend box which sensors to show / hide (one click) or isolate on the figure (2 clicks).
+- narrow tall peaks at fixed frequencies suggest interference,
+- channel-specific peaks suggest localized hardware/environment interaction,
+- broadband elevation can indicate muscle/noise floor increase.
 
-  <img src="../static/gifs/03_psd/02_section.gif" alt="log" width="800px">
+Interactive controls:
 
+<img src="../static/gifs/03_psd/01_log.gif" alt="PSD axis controls" width="760px">
 
-Finally, each segment of the following circle chart represents the proportion of the total signal power that falls within each frequency range. How much does every frequency band contribute to the overall signal. 
+<img src="../static/gifs/03_psd/02_section.gif" alt="PSD legend-based channel selection" width="760px">
 
-  <img src="../static/02_PSD/04.png" alt="pic4" width="400px">
+### 3) PSD topomap
 
-  <img src="../static/02_PSD/05.png" alt="pic5" width="300px">
+<img src="../static/02_PSD/04_psd_band_power.png" alt="PSD topomap" width="860px">
 
+Shows where PSD burden is strongest in sensor space.
 
+### 4) Relative area by bands
 
-```{admonition} Want to check more reports?
-:class: tip
+<img src="../static/02_PSD/05_psd_noise_frequencies.png" alt="PSD relative band amplitude" width="860px">
 
-Head back to the [main metrics page](../book/report.md) to explore the others!
+Shows proportion of spectral energy in standard frequency bands and `other`.
 
-``` 
+## PSD summary table in `QC summary`
 
+In `QC summary -> PSD`, MEGqc derives compact values from `SimpleMetrics`:
 
+- **MAG/GRAD global noisy-frequency count**:
+  number of globally detected noisy frequencies for that sensor type.
+- **MAG/GRAD local noisy-channel burden**:
+  channels with local PSD-noise evidence (`affected/total (percentage)`).
+
+This summary is not a replacement for curves/topomaps; it is a compact QC descriptor.
+
+## QC implications
+
+- large local noisy-channel burden suggests channel-targeted QC,
+- high global noisy-frequency count suggests global filtering/interference mitigation review,
+- always interpret with task context and raw spectra.
+
+The same spectral analysis applies to both MAG and GRAD channels. Common interference sources (power line harmonics, environmental noise) typically affect both channel types similarly.

@@ -1,72 +1,68 @@
 # Plotting Module (CLI)
-After completing the analysis with the calculation module, the next step is to generate the visual reports. Below are the methods to run the plotting module.
 
-## Automatic Mode
-Once the calculation module has completed the analysis, the terminal will ask you if `Do you want to run the MEGqc plotting module on the MEGqc results? (y/n)`. Entering **y** will automatically start the plotting module.
-
-Then the terminal will display where can you find your calculation `derivatives` folder. It should look like this:
+## Default behavior
 
 ```bash
-/path/to/your/dataset/derivatives/Meg_QC/calculation
+run-megqc-plotting --inputdata /path/dataset
 ```
 
+If no mode flags are provided, MEGqc defaults to `--qa-subject`.
 
-## Manual Mode
-To run the plotting module manually, use the following command in your terminal including a filepath to the root of your **dataset folder**. MEGqc will find the derivatives folder within the dataset, so you just need the path to the dataset, not the derivatives.
+## QA modes
 
 ```bash
-run-megqc-plotting --inputdata </path/to/your/dataset/>
+# Subject-level QA
+run-megqc-plotting --inputdata /path/dataset --qa-subject
+
+# Dataset-level QA group
+run-megqc-plotting --inputdata /path/dataset --qa-group
+
+# Cross-dataset QA
+run-megqc-plotting --inputdata /path/ds1 /path/ds2 --qa-multisample
+
+# All QA modes valid for inputs
+run-megqc-plotting --inputdata /path/ds1 /path/ds2 --qa-all
 ```
 
-```{admonition} Which reports will be created?
-:class: tip
-
-MEGqc will create reports of all the derivatives it founds within the `/calculation` folder of your dataset's derivatives. This means, all subjects, sessions, tasks, runs, metrics and sensors you have analyzed before. Be aware of this before you run the plotting module!
-
-``` 
-
-## Congratulations!
-You're done'! The HTML reports are now available in the `derivatives` folder of your dataset (next to the calculation derivatives):
+## QC modes
 
 ```bash
-/path/to/your/dataset/derivatives/Meg_QC/reports/subject
+# Dataset-level QC group
+run-megqc-plotting --inputdata /path/dataset --qc-group
+
+# Specific attempt
+run-megqc-plotting --inputdata /path/dataset --qc-group --attempt 2
+
+# Explicit input TSV
+run-megqc-plotting --inputdata /path/dataset --qc-group --input_tsv /path/to/Global_Quality_Index_attempt_2.tsv
+
+# Cross-dataset QC
+run-megqc-plotting --inputdata /path/ds1 /path/ds2 --qc-multisample
+
+# All QC modes
+run-megqc-plotting --inputdata /path/ds1 /path/ds2 --qc-all
 ```
-        
-Open these reports in Chrome or Firefox to explore the interactive plots and visualize of the quality control analysis of your dataset!
 
-<!--
+## All modes
 
-OLD VERSION
-As you can see, the calculation module generates numerous metadata files. But what if we want the data to be neatly organized and presented in a visual and interactive way?
+```bash
+run-megqc-plotting --inputdata /path/ds1 /path/ds2 --all
+```
 
-Luckily MEGqc also contains the plotting module, which generates the HTML reports we saw earlier. Let's see how can we produce them:
+## Profile-aware plotting
 
+```bash
+run-megqc-plotting \
+  --inputdata /path/dataset \
+  --qa-group \
+  --analysis_mode reuse \
+  --analysis_id qa_pass_01
+```
 
+## Performance controls
 
-## Setting File Paths
+```bash
+run-megqc-plotting --inputdata /path/dataset --qa-group --njobs 4
+```
 
-First, locate the script *meg_qc_plots.py* within the `plotting`folder in the `meg_qc` package, which is located in the `site-packages` folder of your environment. The path might look like this:
-
-        /path/to/environment/lib/python3.9/site-packages/meg_qc/plotting/
-
-
-Open the *meg_qc_plots.py*, and at the very last line where **tsvs_to_plot=** is defined, add your path to your dataset (e.g., ds003483). The line should look similar to this:
-
-        tsvs_to_plot = make_plots_meg_qc(ds_paths=['/path/to/dataset/'])
-
-## Running the plotting module
-
-Ensure that you are working within your environment and then run the script from the command line. The command might look like:
-
-        python3 /path/to/environment/lib/python3.9/site-packages/meg_qc/plotting/meg_qc_plots.py
-
-## Interactive GUI
-After a short wait, the terminal will ask you several questions about specific parameters. The available options depend on the metadata in your dataset:
-- Subjects: ALL or a specific one
-- Sessions: ALL or a specific one
-- Tasks: ALL or a specific one
-- Runs: ALL or a specific one
-- Metrics: ALL or a specific one
-- Sensors: ALL, or only magnetometers or gradiometers
-
-![gui interface]( ../static/gui.png)
+Run `run-megqc-plotting --help` for the full flag set.

@@ -42,9 +42,9 @@ pip install datalad
 datalad install https://github.com/OpenNeuroDatasets/ds003483.git
 ```
 
-<br>
+This will create a folder structure with metadata files but without the actual MEG data files yet.
 
-![placeholder](../static/placeholder.png)
+<br>
 
 
 3. **Download only the sub-009 folder:** First change directory within the dataset:

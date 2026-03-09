@@ -1,69 +1,90 @@
 # CLI Installation Guide
 
-Now we'll start with the installation process for the command-line interface (CLI) MEGqc. 
+This section covers installation and verification for the command-line interface (CLI) of MEGqc.
 
-<br>
+## Recommended workflow: Conda + Python 3.10
 
-Before diving in, we strongly recommend using MEGqc within a **virtual environment** to avoid conflicts with system dependencies.
-The GUI installer  automatically creates and manages a virtual environment. Meanwhile the CLI setup requires you to create one manually.
+MEGqc is validated for **Python 3.10**. The most robust CLI setup is to create a dedicated Conda environment pinned to Python 3.10, then install MEGqc with `pip` inside that environment.
 
-## Virtual environments
-Virtual environments create isolated and self-contained workspaces, allowing us to manage project-specific dependencies separatedly from system-wide installation. This isollation has several benefits:
-- **Avoid dependency conflicts:** prevents interferences between project-specific and system-wide dependenciesm, such as common erors related to version mismatches.
-- **Transparency and Open Science:** Ensures that others can replicate your results and reproduce your analysis reliably.
-
-<img src="../static/environment.jpg" alt="environments" width="500px" align="center">
-
-To create and activate your virtual environment, follow these steps:
-1. Navigate to the directory where you want to create the environment using the `cd` command in the terminal.
-2. Create the virtual environment:
+## 1. Create a fresh environment
 
 ```bash
-python3 -m venv <your_environment_name>
+# Optional once per machine: initialize your shell for conda
+conda init zsh   # use bash/powershell as needed
+# restart terminal after conda init
+
+# Create dedicated environment with Python 3.10
+conda create -n megqc-py310 python=3.10 pip -y
+
+# Activate
+conda activate megqc-py310
+
+# Verify Python version
+python --version
+# Expected: Python 3.10.x
 ```
 
-3. Activate the virtual environment:
+## 2. Install MEGqc
 
 ```bash
-source /path/to/environment/bin/activate
-```
- 
-
-## Install the MEGqc Package
-Once your environment is activated, you can install Python packages with `pip`, and these installations will only apply to your virtual environment. To install MEGqc core functionality, run the following command in the terminal:
-
-```bash
+python -m pip install --upgrade pip
 pip install meg-qc
 ```
 
-
-<!--
-Next, you will need to clone the [Github Repository](https://github.com/ANCPLabOldenburg/MEGqc). 
-
-![repository](static/github.png)
-
-- The folder _docker_ contains the starting script *run_megqc.py*.
-- The folder *meg_qc* is a copy of the previously installed MEGqc package via `pip`.
-
--->
-```{admonition} Dependencies?
+```{admonition} Dependencies
 :class: tip
 
-Thanks to the last update, it's not necessary to manually pip install the different dependencies anymore. All of them are installed automatically along with the MEGqc package.
-If you want to know more about them and their functionalitiy, please [visit the pipeline basics page](../extra/details.md).
+You do **not** need to install dependencies manually. Installing `meg-qc` from PyPI installs required dependencies automatically.
 
-``` 
+```
 
+## 3. Verify CLI entry points
 
+```bash
+run-megqc --help
+run-megqc-plotting --help
+globalqualityindex --help
+get-megqc-config --help
+```
 
-<!--
-Still, if your python version is older than 3.9, it might be necessary to upgrade pandas to 2.2.3 version:
+If you also want to launch the GUI from the same environment:
 
-        pip install --upgrade pandas
--->
+```bash
+megqc
+```
 
+## 4. Upgrade / uninstall
 
+```bash
+# Upgrade MEGqc in the same environment
+pip install --upgrade meg-qc
 
+# Uninstall package only
+pip uninstall meg-qc
+
+# Remove whole environment (optional)
+conda deactivate
+conda env remove -n megqc-py310
+```
+
+## Optional: export environment spec
+
+```bash
+conda env export --from-history > megqc-py310.yml
+```
+
+## Troubleshooting
+
+- If `python --version` is not `3.10.x`, recreate the environment with `python=3.10`.
+- If commands are not found, confirm the environment is active (`conda activate megqc-py310`).
+- If installation fails due to old pip metadata, run `python -m pip install --upgrade pip setuptools wheel` and retry.
 
 ## Next section
-In the next section we'll get to the tutorial, where you can access the isntructions to run the calculation and the plotting module, both for GUI MEGqc and CLI MEGqc.
+
+Continue to the tutorial section to run calculation, plotting, and GQI workflows:
+
+- [Calculation Module (GUI)](../tutorial/calc_gui.md)
+- [Plotting Module (GUI)](../tutorial/plot_gui.md)
+- [GQI Module (GUI)](../tutorial/gqi_gui.md)
+- [Calculation Module (CLI)](../tutorial/calc_cli.md)
+- [Plotting Module (CLI)](../tutorial/plot_cli.md)
