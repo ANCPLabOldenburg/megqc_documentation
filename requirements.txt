@@ -1,5 +1,0 @@
-sphinx
-myst-nb
-ghp-import
-jupyter-book
-jupytext

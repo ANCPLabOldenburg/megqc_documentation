@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="The seven MEEGqc QA metrics (STD, PtP, PSD, ECG, EOG, Muscle, Head) plus the QC layer they feed: per-metric thresholding and the Global Quality Index.">
+  <title>Metrics + GQI &middot; MEEGqc</title>
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div data-include="header"></div>
+
+  <main>
+    <aside class="page-toc" data-toc aria-label="Page navigation">
+      <button class="page-toc-toggle" type="button"
+              aria-expanded="false" aria-controls="page-toc-panel"
+              aria-label="Toggle page navigation">
+        <span class="toc-bars" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+      <nav id="page-toc-panel" class="page-toc-panel" aria-label="Sections">
+        <span class="page-toc-title">On this page</span>
+        <a class="page-toc-link" href="#qa-vs-qc"><span class="page-toc-dot"></span>QA vs QC</a>
+        <a class="page-toc-link" href="#std"><span class="page-toc-dot"></span>STD</a>
+        <a class="page-toc-link" href="#ptp"><span class="page-toc-dot"></span>PtP</a>
+        <a class="page-toc-link" href="#psd"><span class="page-toc-dot"></span>PSD</a>
+        <a class="page-toc-link" href="#ecg"><span class="page-toc-dot"></span>ECG</a>
+        <a class="page-toc-link" href="#eog"><span class="page-toc-dot"></span>EOG</a>
+        <a class="page-toc-link" href="#muscle"><span class="page-toc-dot"></span>Muscle</a>
+        <a class="page-toc-link" href="#head"><span class="page-toc-dot"></span>Head movement</a>
+        <a class="page-toc-link" href="#stim"><span class="page-toc-dot"></span>Stimulus</a>
+        <a class="page-toc-link" href="#lobes"><span class="page-toc-dot"></span>Lobe palette</a>
+        <a class="page-toc-link" href="#gqi"><span class="page-toc-dot"></span>Global Quality Index</a>
+      </nav>
+    </aside>
+
+    <header class="page-hero">
+      <div class="container">
+        <span class="eyebrow">Metrics + GQI</span>
+        <h1>Seven QA metrics, one QC layer on top.</h1>
+        <p>
+          MEEGqc separates <strong>quality assessment</strong> (QA:
+          continuous, descriptive measurements) from <strong>quality
+          control</strong> (QC: criterion-based decisions). Each
+          metric below contributes a QA layer that can be inspected
+          in the reports, plus a QC layer that feeds the Global
+          Quality Index.
+        </p>
+      </div>
+    </header>
+
+    <article class="article reveal container container-narrow">
+
+      <h2 id="qa-vs-qc">QA vs QC, made concrete</h2>
+      <p>
+        Every metric on this page produces two complementary outputs
+        layered on the same calculation. Keeping them separate is the
+        single most important conceptual choice in MEEGqc.
+      </p>
+
+      <div class="card-grid">
+        <div class="card card-mint">
+          <h3>QA &middot; the measurement</h3>
+          <p>Continuous, unthresholded descriptors of the signal:
+             distributions, spectra, temporal footprints, spatial
+             patterns. Stored as per-subject TSV and JSON derivatives
+             and surfaced in the subject- and dataset-level QA
+             reports.</p>
+        </div>
+        <div class="card card-accent">
+          <h3>QC &middot; the decision</h3>
+          <p>Threshold-derived flags: noisy / flat channel %,
+             high-correlation channel %, muscle event rate, etc.
+             Written during the same calculation step but as
+             criterion-based summaries. They feed the dataset-level
+             QC report and the Global Quality Index.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <span class="callout-title">Why the separation matters</span>
+        QA describes what the signal looks like. QC says "this
+        recording is good / bad according to <em>these</em>
+        thresholds." Locking the QA output and varying only the QC
+        thresholds is what makes sensitivity analyses honest. Every
+        QC attempt also stores the exact parameters used, so the
+        decision trail is auditable.
+      </div>
+
+      <h2 id="std">STD &middot; Standard Deviation</h2>
+      <p>Per-channel, per-epoch standard deviation. The simplest
+         and most informative variability indicator. Captures
+         amplitude dispersion independent of waveform shape.</p>
+
+      <h3>QA: how the measurement works</h3>
+      <p>For each channel <code>c</code> and epoch <code>t</code>,
+         MEEGqc computes <code>STD[c, t] = std(signal_{c, t})</code>
+         on the preprocessed signal. The subject-level QA report
+         shows three panels per channel type:</p>
+      <ul>
+        <li>3D topomap with sensors colour-coded by STD.</li>
+        <li>Distribution boxplot with one dot per channel.</li>
+        <li>Channel x epoch heatmap with marginal profiles.
+            Horizontal bands = persistent issues (bad channel);
+            vertical bands = transient bursts (bad epoch).</li>
+      </ul>
+
+      <h3>QC: how decisions are derived</h3>
+      <ul>
+        <li><strong>Noisy channel</strong>: per-epoch STD &gt;
+            <code>noisy_channel_multiplier &times; mean</code>.</li>
+        <li><strong>Flat channel</strong>: per-epoch STD &lt;
+            <code>flat_multiplier &times; mean</code>.</li>
+        <li>A channel is flagged only when more than
+            <code>allow_percent_noisy_flat_epochs</code> of its
+            epochs are in the same state (default 70 %).</li>
+      </ul>
+      <p>The resulting noisy / flat channel percentages feed both
+         the QC Group report and the <code>ch</code> family of the
+         GQI.</p>
+
+      <h3>Settings</h3>
+      <p>See <a href="tutorial.html#settings-std"><code>[STD]</code></a>:
+         <code>std_lvl</code>, <code>noisy_channel_multiplier</code>,
+         <code>flat_multiplier</code>,
+         <code>allow_percent_noisy_flat_epochs</code>.</p>
+
+      <div class="figure-row">
+        <figure class="figure"><img src="assets/reports/subject/1_rotate_hover.gif" alt="STD topomap"></figure>
+        <figure class="figure"><img src="assets/reports/subject/3_hover.gif" alt="STD distribution"></figure>
+        <figure class="figure"><img src="assets/reports/subject/6_channel_x_epoch.png" alt="STD heatmap"></figure>
+      </div>
+
+      <h2 id="ptp">PtP &middot; Peak-to-Peak amplitude</h2>
+      <p>The total range of variation per epoch:
+         <code>max(signal) - min(signal)</code>. Catches transient
+         bursts and outlier excursions that STD averages out. Ships
+         in two flavours: <strong>PtP (manual)</strong>, MEEGqc's
+         own Numba-accelerated path, and <strong>PtP (auto)</strong>,
+         MNE's automatic epoch annotation (off by default).</p>
+
+      <h3>QA</h3>
+      <p>Same three-panel grammar as STD (topomap / distribution /
+         channel x epoch heatmap) on the peak-to-peak amplitude
+         instead of the standard deviation.</p>
+
+      <h3>QC</h3>
+      <p>Same noisy / flat logic as STD. Together with STD it drives
+         the <code>ch</code> family of the GQI.</p>
+
+      <h3>Settings</h3>
+      <p>See
+         <a href="tutorial.html#settings-ptp"><code>[PTP_manual]</code></a>:
+         <code>numba_version</code>, <code>max_pair_dist_sec</code>,
+         <code>ptp_thresh_lvl</code>,
+         <code>noisy_channel_multiplier</code>,
+         <code>flat_multiplier</code>.</p>
+
+      <h2 id="psd">PSD &middot; Power Spectral Density</h2>
+      <p>Welch periodogram per channel. The most direct view of
+         frequency-domain burden: mains harmonics (50 / 60 Hz and
+         multiples), broadband contamination, movement-related
+         spectral broadening.</p>
+
+      <h3>QA</h3>
+      <p>The subject-level QA report adds an SNR triage plot and a
+         relative-band amplitude view per channel:</p>
+      <ul>
+        <li>Narrow tall peaks at fixed frequencies = line noise.</li>
+        <li>Broad elevation across channels = environmental
+            broadening or motion-related noise.</li>
+        <li>Channel-specific peaks = localised hardware issues.</li>
+      </ul>
+
+      <h3>QC</h3>
+      <p>MEEGqc estimates a <strong>PSD noise burden percentage</strong>
+         per recording. This is the <code>psd</code> family of the
+         GQI.</p>
+
+      <h3>Settings</h3>
+      <p>See <a href="tutorial.html#settings-psd"><code>[PSD]</code></a>:
+         <code>freq_min</code>, <code>freq_max</code>,
+         <code>psd_step_size</code>.</p>
+
+      <div class="figure-row">
+        <figure class="figure"><img src="assets/reports/subject/1_snr.png" alt="PSD SNR"><figcaption>SNR for quick triage.</figcaption></figure>
+        <figure class="figure"><img src="assets/reports/subject/2_welch.gif" alt="Welch PSD"><figcaption>Welch PSD curves per channel.</figcaption></figure>
+      </div>
+
+      <h2 id="ecg">ECG &middot; Cardiac contamination</h2>
+      <p>Detects ECG events from a dedicated ECG channel; falls
+         back to reconstructing them from magnetometers if the ECG
+         channel is bad. Then measures the per-channel correlation
+         between the ECG signal and each MEG / EEG channel.</p>
+
+      <h3>QA</h3>
+      <ul>
+        <li>Raw ECG channel with detected peaks.</li>
+        <li>Average waveform around peaks.</li>
+        <li>3D topomap of correlation magnitude between ECG and each
+            sensor.</li>
+        <li>Highest / middle / lowest correlation subsets.</li>
+      </ul>
+
+      <h3>QC</h3>
+      <p>Channels with absolute correlation above a fixed
+         operational threshold (<code>0.8</code> in the current
+         code) are counted. The resulting high-correlation channel
+         % feeds the <code>corr</code> family of the GQI.</p>
+
+      <h3>Settings</h3>
+      <p>See <a href="tutorial.html#settings-ecg"><code>[ECG]</code></a>.
+         If the ECG signal itself is judged unreliable, the
+         correlation quality term falls back to a fixed value
+         (<code>0.5</code>) so a bad reference does not penalise
+         the recording unfairly.</p>
+
+      <div class="figure-row">
+        <figure class="figure"><img src="assets/reports/subject/5_ecg_general.gif" alt="ECG general"></figure>
+        <figure class="figure"><img src="assets/reports/subject/2_topo.gif" alt="ECG topomap"></figure>
+      </div>
+
+      <h2 id="eog">EOG &middot; Ocular contamination</h2>
+      <p>Same pipeline as ECG, applied to EOG channels (blinks and
+         saccades). Defaults use a larger <code>gaussian_sigma</code>
+         because EOG is noisier than ECG.</p>
+
+      <h3>QA</h3>
+      <ul>
+        <li>Raw EOG with detected events.</li>
+        <li>Average waveform around blinks.</li>
+        <li>Topographic impact on sensors (frontal concentration is
+            expected).</li>
+      </ul>
+
+      <h3>QC</h3>
+      <p>Same logic as ECG. The <code>corr</code> weight is split
+         between ECG and EOG when both are enabled.</p>
+
+      <h3>Settings</h3>
+      <p>See <a href="tutorial.html#settings-eog"><code>[EOG]</code></a>.</p>
+
+      <h2 id="muscle">Muscle &middot; High-frequency burden</h2>
+      <p>Power in the muscle band tracks jaw clenches, neck
+         tension, and similar movement artifacts.</p>
+
+      <h3>QA</h3>
+      <p>MEEGqc applies a band filter and z-score thresholding to
+         annotate high-frequency events. The band is modality-aware:</p>
+      <ul>
+        <li><strong>MEG</strong>: <code>110 - 140 Hz</code>
+            (default).</li>
+        <li><strong>EEG</strong>: <code>20 - 100 Hz</code>. EEG
+            muscle artifacts sit at lower frequencies than MEG;
+            configured via <code>muscle_freqs_eeg</code>.</li>
+      </ul>
+
+      <h3>QC</h3>
+      <p>The <strong>muscle event ratio</strong> feeds the
+         <code>mus</code> family of the GQI.</p>
+
+      <h3>Settings</h3>
+      <p>See <a href="tutorial.html#settings-muscle"><code>[Muscle]</code></a>:
+         <code>muscle_freqs</code>, <code>muscle_freqs_eeg</code>,
+         <code>threshold_muscle</code>, <code>min_length_good</code>.</p>
+
+      <h2 id="head">Head movement</h2>
+      <p>MEG-only metric. Uses cHPI data to quantify movement
+         across the recording in six directions
+         (<code>x</code>, <code>q1</code>, <code>y</code>,
+         <code>q2</code>, <code>z</code>, <code>q3</code>). Off by
+         default; enable with <code>Head = True</code> in
+         <code>[GENERAL]</code>.</p>
+
+      <div class="callout callout-warn">
+        <span class="callout-title">EEG recordings</span>
+        Head motion is automatically skipped for EEG recordings;
+        the pipeline prints a console note explaining that the
+        metric requires MEG cHPI coils. The metric does not
+        contribute to the GQI for EEG-only datasets.
+      </div>
+
+      <div class="figure">
+        <img src="assets/metrics/head/01_head_position.png" alt="Head position summary" style="max-width: 720px;">
+      </div>
+
+      <h2 id="stim">Stimulus channels</h2>
+      <p>Not a QA metric per se but a sanity-check view in the
+         subject-level report. Reads events from BIDS
+         <code>_events.tsv</code> first, then falls back to the raw
+         stim channels. Confirms event count, timing, and
+         trial-type distribution.</p>
+
+      <div class="figure-row">
+        <figure class="figure"><img src="assets/reports/subject/03_events_summary.jpg" alt="Events summary"></figure>
+        <figure class="figure"><img src="assets/reports/subject/05_bar_chart.jpg" alt="Event count bar chart"></figure>
+      </div>
+
+      <h2 id="lobes">Lobe palette</h2>
+      <p>Lobe colours are shared across every plot and every report
+         scope. For EEG, lobes are inferred from 10-20 / 10-10 / 10-05
+         channel-name conventions; for MEG, from the manufacturer's
+         sensor location tables.</p>
+
+      <div class="table-wrap"><table>
+        <thead><tr><th>Region</th><th>Left</th><th>Right</th></tr></thead>
+        <tbody>
+          <tr><td>Frontal</td><td><code>#1f77b4</code></td><td><code>#ff7f0e</code></td></tr>
+          <tr><td>Temporal</td><td><code>#2ca02c</code></td><td><code>#9467bd</code></td></tr>
+          <tr><td>Parietal</td><td><code>#e377c2</code></td><td><code>#d62728</code></td></tr>
+          <tr><td>Occipital</td><td><code>#bcbd22</code></td><td><code>#17becf</code></td></tr>
+          <tr><td>Central</td><td><code>#8c564b</code></td><td>-</td></tr>
+          <tr><td>Reference</td><td><code>#7f7f7f</code></td><td>-</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 id="gqi">Global Quality Index (GQI)</h2>
+      <p>The Global Quality Index is the QC aggregation layer. It
+         converts the per-metric QC outputs above into one composite
+         0-100 score per recording, with a transparent penalty
+         decomposition that explains exactly which family dragged
+         the score down.</p>
+
+      <h3 id="gqi-inputs">Inputs: four penalty families</h3>
+      <div class="card-grid">
+        <div class="card card-accent">
+          <h3><code>ch</code> &middot; Channel variability</h3>
+          <p>From STD and PtP noisy / flat channel percentages.</p>
+        </div>
+        <div class="card card-mint">
+          <h3><code>corr</code> &middot; Correlation</h3>
+          <p>From ECG / EOG high-correlation channel percentages.</p>
+        </div>
+        <div class="card">
+          <h3><code>mus</code> &middot; Muscle</h3>
+          <p>From the muscle event ratio.</p>
+        </div>
+        <div class="card card-warn">
+          <h3><code>psd</code> &middot; PSD noise</h3>
+          <p>From the estimated spectral noise contribution.</p>
+        </div>
+      </div>
+
+      <h3 id="gqi-defaults">Default thresholds and weights</h3>
+      <p>From
+         <a href="tutorial.html#settings-gqi"><code>[GlobalQualityIndex]</code></a>:</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Family</th><th>Parameter prefix</th><th>Start</th><th>End</th><th>Weight</th></tr></thead>
+        <tbody>
+          <tr><td><code>ch</code> (bad channels)</td><td><code>bad_ch_*</code></td><td>0</td><td>100</td><td>35</td></tr>
+          <tr><td><code>corr</code> (ECG / EOG)</td><td><code>correlation_*</code></td><td>0</td><td>100</td><td>30</td></tr>
+          <tr><td><code>mus</code> (muscle)</td><td><code>muscle_*</code></td><td>0</td><td>0.0001</td><td>15</td></tr>
+          <tr><td><code>psd</code> (PSD noise)</td><td><code>psd_noise_*</code></td><td>0</td><td>100</td><td>20</td></tr>
+        </tbody>
+      </table></div>
+      <p>Weights are integers that sum to 100 and are internally
+         normalised over the <em>active</em> families. The
+         <code>corr</code> weight is split between ECG and EOG when
+         both are enabled.</p>
+
+      <h3 id="gqi-transform">Per-family quality transform</h3>
+      <p>For a burden value <code>M</code> with <code>start</code>
+         and <code>end</code> thresholds, the per-family quality is
+         piecewise linear:</p>
+<pre><code>if M &lt;= start:  q(M) = 1.0
+if M &gt;= end:    q(M) = 0.0
+otherwise:      q(M) = 1 - (M - start) / (end - start)
+</code></pre>
+
+      <h3 id="gqi-final">Final GQI score</h3>
+      <p>Let <code>q_ch</code>, <code>q_corr_ecg</code>,
+         <code>q_corr_eog</code>, <code>q_mus</code>,
+         <code>q_psd</code> be the per-family qualities and
+         <code>w_*</code> their weights:</p>
+<pre><code>GQI = 100 * (w_ch*q_ch + w_ecg*q_corr_ecg + w_eog*q_corr_eog
+            + w_mus*q_mus + w_psd*q_psd) / sum(weights_used)
+</code></pre>
+      <p>Penalty terms are reported per family and proportional to
+         <code>(1 - q_family) &middot; weight</code>:</p>
+      <ul>
+        <li><code>GQI_penalty_ch</code></li>
+        <li><code>GQI_penalty_corr</code></li>
+        <li><code>GQI_penalty_mus</code></li>
+        <li><code>GQI_penalty_psd</code></li>
+      </ul>
+
+      <h3 id="gqi-special">Special handling</h3>
+      <ul>
+        <li>If the ECG / EOG description marks the reference
+            channels as noisy / invalid, correlation quality is
+            clamped to a fallback value (<code>q = 0.5</code>)
+            instead of computed from percentages.</li>
+        <li>If a family metric is missing, its default quality is
+            <code>1.0</code> and only the active weights contribute
+            to normalisation.</li>
+        <li>GQI can be disabled with
+            <code>compute_gqi = False</code>; the per-metric
+            summaries are still written.</li>
+      </ul>
+
+      <h3 id="gqi-attempts">Storage, attempts, and provenance</h3>
+      <p>GQI is <strong>versioned by attempt</strong>. Each run of
+         <code>globalqualityindex</code> writes a new per-modality
+         TSV plus a frozen configuration snapshot:</p>
+<pre><code># Legacy mode
+&lt;dataset&gt;/derivatives/Meg_QC/summary_reports/
+    group_metrics/meg/Global_Quality_Index_attempt_&lt;n&gt;_meg.tsv
+    group_metrics/eeg/Global_Quality_Index_attempt_&lt;n&gt;_eeg.tsv
+    config/global_quality_index_&lt;n&gt;.ini
+
+# Profile mode
+&lt;dataset&gt;/derivatives/Meg_QC/profiles/&lt;analysis_id&gt;/summary_reports/...
+</code></pre>
+
+      <h3 id="gqi-columns">Output columns</h3>
+      <div class="table-wrap"><table class="spec-table">
+        <thead><tr><th>Category</th><th>Columns</th></tr></thead>
+        <tbody>
+          <tr><td>Identifiers</td><td><code>task</code>, <code>subject</code>, <code>modality</code></td></tr>
+          <tr><td>Global score</td><td><code>GQI</code></td></tr>
+          <tr><td>Penalty terms</td><td><code>GQI_penalty_ch</code>, <code>GQI_penalty_corr</code>, <code>GQI_penalty_mus</code>, <code>GQI_penalty_psd</code></td></tr>
+          <tr><td>Component percentages</td><td><code>GQI_bad_pct</code>, <code>GQI_std_pct</code>, <code>GQI_ptp_pct</code>, <code>GQI_ecg_pct</code>, <code>GQI_eog_pct</code>, <code>GQI_muscle_pct</code>, <code>GQI_psd_noise_pct</code></td></tr>
+          <tr><td>Burden columns</td><td><code>STD_ts_*</code>, <code>STD_ep_*</code>, <code>PTP_ts_*</code>, <code>PTP_ep_*</code>, <code>ECG_*_high_corr_*</code>, <code>EOG_*_high_corr_*</code>, <code>PSD_noise_*_percentage</code>, <code>Muscle_events_num</code></td></tr>
+          <tr><td>Parameters</td><td><code>param_*</code>: the exact GQI thresholds and weights for the attempt</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="gqi-workflow">Sensitivity-analysis workflow</h3>
+      <ol>
+        <li>Keep the calculation derivatives fixed.</li>
+        <li>Edit only the <code>[GlobalQualityIndex]</code> section
+            in your settings.</li>
+        <li>Re-run <code>globalqualityindex</code>. A new attempt
+            file is written alongside the previous ones.</li>
+        <li>Compare attempts in the dataset-level QC report with
+            <code>--attempt &lt;n&gt;</code>.</li>
+      </ol>
+      <p>This isolates threshold effects without recomputing any raw
+         metric.</p>
+
+      <h3 id="gqi-commands">Recompute commands</h3>
+      <div class="code-label">CLI</div>
+<pre><code class="lang-bash">globalqualityindex --inputdata /path/to/dataset
+globalqualityindex --inputdata /path/to/dataset \
+                   --analysis_mode reuse \
+                   --analysis_id qa_pass_01
+</code></pre>
+      <div class="code-label">GUI</div>
+      <p>QA/QC calculation tab &rarr; <strong>Run GQI</strong>. Use
+         <strong>Stop GQI</strong> to interrupt mid-run.</p>
+      <div class="code-label">Python</div>
+<pre><code class="lang-python">from meg_qc.test import run_gqi_dispatch
+
+run_gqi_dispatch(
+    dataset_paths=["/path/ds1", "/path/ds2"],
+    default_config_file_path="./config/settings.ini",
+    analysis_mode="reuse",
+    analysis_id="qa_pass_01",
+)
+</code></pre>
+
+      <hr>
+      <p>
+        Next: the <a href="reports.html">reports reference</a> for
+        how these metrics surface in the HTML output, or the
+        <a href="tutorial.html#settings">settings reference</a> to
+        tune any of the knobs above.
+      </p>
+    </article>
+  </main>
+
+  <div data-include="footer"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>

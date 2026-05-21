@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MEGqc: automated, BIDS-aligned quality assessment and control for MEG and EEG. Documentation, installation guides, tutorial, and report reference.">
+  <title>MEGqc &middot; Documentation</title>
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Three.js for the rotating MEG helmet in the hero. Loaded via
+       import map so the inline <script type="module"> at the bottom
+       can resolve a bare "three" specifier from a CDN. -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div data-include="header"></div>
+
+  <main>
+    <!-- ===================================================================
+         Hero with screenshot collage, workflow animation, and GQI reveal
+         =================================================================== -->
+    <section class="hero" aria-labelledby="hero-title">
+      <!-- Six staggered, slowly-pulsing shots behind the hero content.
+           shot-a/b are full GUI windows (the main shell + the
+           calculation tab); shot-c/d/e/f mix the plotting GUI with
+           real report screenshots so the collage covers Convert,
+           Inspect and Validate visually. shot-a carries a data-light
+           variant so it swaps cleanly with the theme toggle. -->
+      <div class="hero-media" aria-hidden="true">
+        <img class="hero-shot shot-a"
+             src="assets/gui/gui_main_dark.png"
+             data-light="assets/gui/gui_main_light.png" alt="">
+        <img class="hero-shot shot-b"
+             src="assets/gui/gui_calculation.png" alt="">
+        <img class="hero-shot shot-c"
+             src="assets/gui/gui_plotting.png" alt="">
+        <img class="hero-shot shot-d"
+             src="assets/reports/group_qa/12_pooled_topomaps.png" alt="">
+        <img class="hero-shot shot-e"
+             src="assets/reports/subject/2_topo.gif" alt="">
+        <img class="hero-shot shot-f"
+             src="assets/gqi/general_plot.png" alt="">
+      </div>
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content">
+        <!-- 3D EEG cap with MEG-style sensor modules, built with Three.js
+             below in an inline module script. Slowly rotates on its
+             vertical axis. Decorative; aria-hidden so screen readers
+             skip it. The signal canvas underneath shows a wrap-around
+             multi-channel trace (left-to-right sweep cursor) just like
+             a real EEG monitor. -->
+        <div id="meeg-3d" class="meeg-3d-canvas" aria-hidden="true"></div>
+        <canvas id="meeg-signal" class="meeg-signal" aria-hidden="true"></canvas>
+
+        <h1 id="hero-title" class="hero-title hero-title-meeg">MEEGqc</h1>
+        <p class="hero-tagline">Automated quality assessment and quality control for MEG and EEG data.</p>
+        <p class="hero-lead">
+          MEGqc is a BIDS-aligned, schema-driven toolbox for objective
+          quality assessment (QA) and explicit quality control (QC) of
+          MEG and EEG data. It operates at three nested scopes -
+          <strong>subject-level</strong>,
+          <strong>dataset-level</strong>, and
+          <strong>multi-dataset-level</strong> - exposes the same
+          logic through a GUI, a CLI and a Python API, and produces
+          interactive HTML reports alongside machine-readable
+          derivatives.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="installation.html">Install &rarr;</a>
+          <a class="btn btn-ghost"   href="intro.html">How it works</a>
+          <a class="btn btn-ghost"   href="tutorial.html">Try the tutorial</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         The problem MEEGqc solves
+         =================================================================== -->
+    <section class="section reveal" style="padding-top: 32px;">
+      <div class="container container-narrow">
+        <div class="section-header">
+          <span class="section-eyebrow">The problem</span>
+          <h2 class="section-title">Data quality is the bottleneck.</h2>
+          <p class="section-lead">
+            MEG and EEG signals are exquisitely sensitive to
+            physiological, environmental, hardware, and motion noise.
+            Without a standardized quality layer, every group ends up
+            answering the same questions in slightly different ways,
+            and the answers don't travel.
+          </p>
+        </div>
+
+        <div class="points">
+          <div class="point">
+            <h3>Manual review does not scale.</h3>
+            <p>
+              Visual inspection of hundreds or thousands of recordings
+              is slow, operator-dependent, and hard to reproduce.
+              Decisions drift across reviewers, sessions, and sites.
+            </p>
+          </div>
+
+          <div class="point">
+            <h3>QA and QC are conflated.</h3>
+            <p>
+              Most tools collapse the measurement of quality (QA) and
+              the decisions made on top of it (QC) into one undocumented
+              process. That makes it impossible to tell what was
+              observed from what was decided.
+            </p>
+          </div>
+
+          <div class="point">
+            <h3>Quality stays trapped in pipelines.</h3>
+            <p>
+              When quality information lives inside preprocessing
+              outputs, it cannot be shared, queried, or reused
+              independently. Cross-study comparability and FAIR data
+              re-use suffer.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         How MEEGqc solves it
+         =================================================================== -->
+    <section class="section reveal">
+      <div class="container container-narrow">
+        <div class="section-header">
+          <span class="section-eyebrow">How MEEGqc solves it</span>
+          <h2 class="section-title">QA first, QC on top, both reproducible.</h2>
+          <p class="section-lead">
+            MEEGqc is an open-source, BIDS-aligned Python toolbox that
+            puts quality assessment at the front of the workflow, then
+            layers explicit, auditable quality-control decisions on top.
+            One tool, three usage modes, three reporting levels.
+          </p>
+        </div>
+
+        <div class="points">
+          <div class="point">
+            <h3>Automated, standardized QA.</h3>
+            <p>
+              Seven complementary metrics quantify signal variability,
+              spectral content, physiological contamination, muscle
+              burden, and head motion. Outputs are persistent,
+              machine-readable BIDS derivatives, not screenshots in a
+              report folder.
+            </p>
+          </div>
+
+          <div class="point">
+            <h3>Explicit QC with the Global Quality Index.</h3>
+            <p>
+              On top of the same derivative substrate, MEEGqc computes
+              a single, configurable 0-100 GQI score per recording with
+              a transparent penalty decomposition. Re-run with new
+              thresholds; previous attempts are preserved with their
+              exact parameters.
+            </p>
+          </div>
+
+          <div class="point">
+            <h3>Built for MEG and EEG together.</h3>
+            <p>
+              Magnetometers, gradiometers, and EEG electrodes are
+              first-class citizens. MEEGqc auto-detects the modality at
+              file load and routes each recording through the right
+              pipeline; EEG-only datasets and MEG recordings with
+              embedded EEG channels both work.
+            </p>
+          </div>
+
+          <div class="point">
+            <h3>Three reporting levels.</h3>
+            <p>
+              Subject-level, dataset-level, and multi-dataset-level
+              reports cover every scope you need, from individual
+              artifact triage to cross-dataset harmonization
+              assessment.
+            </p>
+          </div>
+
+          <div class="point">
+            <h3>Reproducible analysis profiles.</h3>
+            <p>
+              Every analysis pass is tagged with an
+              <code>analysis_id</code> and a frozen settings snapshot.
+              Multiple parameter variants can coexist for the same
+              dataset without overwriting each other.
+            </p>
+          </div>
+
+          <div class="point">
+            <h3>GUI, CLI, or Python API.</h3>
+            <p>
+              The same backend dispatchers power all three modes. Run a
+              click workflow on your laptop, scale to large datasets
+              from a Slurm queue, or wire MEEGqc into a notebook for
+              programmatic exploration.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         Three reporting levels
+         =================================================================== -->
+    <section class="section reveal">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Reports at every scale</span>
+          <h2 class="section-title">Three reporting levels.</h2>
+          <p class="section-lead">
+            MEEGqc operates at <strong>subject-level</strong>,
+            <strong>dataset-level</strong>, and
+            <strong>multi-dataset-level</strong> - each available in
+            both QA and QC flavours. Every report is a self-contained,
+            interactive HTML page that travels with the data.
+          </p>
+        </div>
+        <div class="card-grid">
+          <div class="card card-accent">
+            <h3>Subject-level <span class="pill">per recording</span></h3>
+            <p>
+              The full quality profile of one subject across runs and
+              tasks. Sensor maps, channel-by-epoch heatmaps, PSDs,
+              ECG / EOG correlation views, and the subject's GQI
+              summary.
+            </p>
+            <p><a href="reports.html#qa-subject">Open the subject-level tour &rarr;</a></p>
+          </div>
+          <div class="card card-mint">
+            <h3>Dataset-level <span class="pill pill-mint">per dataset</span></h3>
+            <p>
+              <code>QA Group</code> shows dataset distributions across
+              subjects, subject ranking, task-wise breakdowns, pooled
+              topomaps, and metric detail panels. <code>QC Group</code>
+              is the GQI-centric companion with score distributions and
+              penalty decomposition.
+            </p>
+            <p><a href="reports.html#qa-group">Open the dataset-level tour &rarr;</a></p>
+          </div>
+          <div class="card card-warn">
+            <h3>Multi-dataset-level <span class="pill pill-warn">across datasets</span></h3>
+            <p>
+              <code>QA Multi-dataset</code> compares raw signal
+              profiles; <code>QC Multi-dataset</code> compares GQI
+              scores. Built for cross-dataset harmonization,
+              longitudinal collection waves, and reference benchmarking.
+            </p>
+            <p><a href="reports.html#multisample">Open the multi-dataset tour &rarr;</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         Install pitch
+         =================================================================== -->
+    <section class="section reveal">
+      <div class="container container-narrow">
+        <div class="section-header">
+          <span class="section-eyebrow">Get started</span>
+          <h2 class="section-title">Install in one click.</h2>
+        </div>
+        <p class="section-lead">
+          Double-click installers for Windows, Linux, and macOS set up
+          a portable Python environment and register MEEGqc as a
+          native app on your system. CLI users get a clean
+          <code>pip install meg-qc</code> path on Python 3.10 to 3.14.
+        </p>
+        <p style="text-align: center; margin-top: 22px;">
+          <a class="btn btn-primary" href="installation.html">Read the installation guide &rarr;</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         Footer CTA
+         =================================================================== -->
+    <section class="section section-cta">
+      <div class="container container-narrow cta-strip">
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="installation.html">Install &rarr;</a>
+          <a class="btn btn-ghost"   href="intro.html">How it works</a>
+          <a class="btn btn-ghost"   href="tutorial.html">Try the tutorial</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="footer"></div>
+  <script src="script.js" defer></script>
+
+  <!-- ====================================================================
+       3D MEG helmet for the hero. A field of dark sensor cubes arranged
+       on the upper half of a hemisphere over a stylized head ellipsoid,
+       slowly rotating on the vertical axis. WebGL via Three.js. The
+       scene is purely decorative; if WebGL is unavailable the canvas
+       container simply stays empty and the hero still renders.
+       ==================================================================== -->
+  <script type="module">
+    import * as THREE from 'three';
+    // Real MEG sensor positions sourced from MNE-Python:
+    //   Vectorview-mag = 102 magnetometers from the Neuromag/Elekta
+    //   sample dataset (raw.info['chs'][i]['loc']). Each entry carries
+    //   both the sensor centre and its outward-facing normal.
+    // The generator script remaps axes from MNE device coords to Three.js
+    // (x=right, y=up, z=front). See assets/sensor-positions.js.
+    import { VECTORVIEW_MAG } from './assets/sensor-positions.js';
+
+    const container = document.getElementById('meeg-3d');
+    if (container) {
+      const W = () => container.clientWidth;
+      const H = () => container.clientHeight;
+
+      // Three.js axes used below:
+      //   X = left-right
+      //   Y = vertical (up-down)
+      //   Z = front-back  (+Z is the front of the face, toward camera)
+      // This maps directly to the user spec (their X / Y / Z = our X / Z / Y).
+
+      // 3/4 view from front-right, roughly at cap height.
+      const scene  = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(32, W() / H(), 0.1, 100);
+      camera.position.set(4.2, 1.3, 4.5);
+      camera.lookAt(0, 0.50, 0);
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(W(), H(), false);
+      renderer.setClearColor(0x000000, 0);
+      container.appendChild(renderer.domElement);
+
+      // ----- Lights ---------------------------------------------------
+      scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+      const key  = new THREE.DirectionalLight(0xfff3d6, 0.95);
+      key.position.set(4, 5, 5);
+      scene.add(key);
+      const fill = new THREE.DirectionalLight(0x66d9a8, 0.30);
+      fill.position.set(-4, 2, 1);
+      scene.add(fill);
+      const rim  = new THREE.DirectionalLight(0x4fc3f7, 0.55);
+      rim.position.set(-2, 1, -5);
+      scene.add(rim);
+
+      // Everything below sits inside a single rig that rotates on Y.
+      // Lifted slightly so the helmet sits higher in the hero frame.
+      const rig = new THREE.Group();
+      rig.position.y = 0.40;
+      scene.add(rig);
+
+      // ============================================================
+      // Vectorview-mag MEG sensors only. No cap shell underneath - just
+      // the 102 magnetometer modules floating in space with their real
+      // positions and outward orientations from MNE.
+      // ============================================================
+      const SENSOR_SCALE = 11.5;   // MNE meters -> scene units
+
+      // =================================================================
+      // Sensors arranged in staggered rows on the cap surface.
+      //   - Each row sits at a fraction v of the local phi_max(theta), so
+      //     row count and sensor density follow the asymmetric cap.
+      //   - Sensors are box geometries with a lighter inner panel and a
+      //     crisp edge outline. Alternating rows are angle-offset for the
+      //     classic hex pack.
+      // =================================================================
+      // Sensor tiles: low-depth modules with a clearly visible inner
+      // detail panel (the "coil" face) and a crisp edge outline. Each
+      // module also carries a tiny LED indicator on its outward face.
+      const sensorOuterGeo = new THREE.BoxGeometry(0.24, 0.24, 0.040);
+      const sensorOuterMat = new THREE.MeshStandardMaterial({
+        color: 0x101a2a, roughness: 0.32, metalness: 0.45,
+        emissive: 0x0a1322, emissiveIntensity: 0.15,
+      });
+      const sensorInnerGeo = new THREE.BoxGeometry(0.175, 0.175, 0.008);
+      const sensorInnerMat = new THREE.MeshStandardMaterial({
+        color: 0x3a4a72, roughness: 0.45, metalness: 0.40,
+      });
+      const sensorEdgeMat  = new THREE.LineBasicMaterial({
+        color: 0x6a7ba6, transparent: true, opacity: 0.80,
+      });
+      // Tiny indicator LEDs. Half the sensors get cyan, half mint, in
+      // a staggered pattern so the cap doesn't look uniform.
+      const ledGeo  = new THREE.SphereGeometry(0.024, 12, 10);
+      const ledMatCyan = new THREE.MeshBasicMaterial({ color: 0x6fd6ff });
+      const ledMatMint = new THREE.MeshBasicMaterial({ color: 0x8aefb6 });
+
+      const sensorUp = new THREE.Vector3(0, 0, 1);   // BoxGeometry's outward face
+
+      // Sensors are placed at the real Vectorview-mag positions, with
+      // each tile oriented along the actual MEG coil normal. The cap is
+      // bigger than an EEG sphere (helmet sits ~10 mm above the scalp),
+      // so the entries already have helmet-shape asymmetry baked in.
+      let sensorIdx = 0;
+      for (const s of VECTORVIEW_MAG) {
+        const px = s.pos[0] * SENSOR_SCALE;
+        const py = s.pos[1] * SENSOR_SCALE;
+        const pz = s.pos[2] * SENSOR_SCALE;
+
+        // Real outward normal from the FIF file (already remapped to tjs)
+        const normal = new THREE.Vector3(
+          s.normal[0], s.normal[1], s.normal[2],
+        ).normalize();
+
+        // Outer sensor body
+        const sensor = new THREE.Mesh(sensorOuterGeo, sensorOuterMat);
+        sensor.position.set(px, py, pz);
+        sensor.quaternion.setFromUnitVectors(sensorUp, normal);
+        rig.add(sensor);
+
+        // Inner detail panel sitting flush against the outward face
+        const inner = new THREE.Mesh(sensorInnerGeo, sensorInnerMat);
+        inner.position.copy(sensor.position)
+             .add(normal.clone().multiplyScalar(0.022));
+        inner.quaternion.copy(sensor.quaternion);
+        rig.add(inner);
+
+        // Crisp edge outline so each tile reads clearly
+        const edges = new THREE.LineSegments(
+          new THREE.EdgesGeometry(sensorOuterGeo), sensorEdgeMat,
+        );
+        edges.position.copy(sensor.position);
+        edges.quaternion.copy(sensor.quaternion);
+        rig.add(edges);
+
+        // Tiny LED centred on the outward face of the sensor.
+        const ledMat = (sensorIdx % 2 === 0) ? ledMatCyan : ledMatMint;
+        const led    = new THREE.Mesh(ledGeo, ledMat);
+        led.position.copy(sensor.position)
+           .add(normal.clone().multiplyScalar(0.034));
+        rig.add(led);
+
+        sensorIdx++;
+      }
+
+      // ----- Animation loop -------------------------------------------
+      function tick() {
+        rig.rotation.y += 0.0042;
+        renderer.render(scene, camera);
+        requestAnimationFrame(tick);
+      }
+      tick();
+
+      // ----- Resize handling ------------------------------------------
+      window.addEventListener('resize', () => {
+        const w = W(), h = H();
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h, false);
+      });
+    }
+
+    // ====================================================================
+    // Scrolling EEG-style signal monitor.
+    //   - Five channels (Fp1, F3, Cz, P3, O1) stacked vertically.
+    //   - Each channel's waveform is a randomized mix of 3-5 oscillators
+    //     drawn from delta / theta / alpha / beta / gamma bands, plus a
+    //     slow drift, an amplitude envelope, per-sample noise and rare
+    //     eye-blink-like spikes. The whole parameter set regenerates
+    //     every time the cursor wraps, so every sweep looks different.
+    //   - Display refreshes left-to-right via a sweep cursor: a small
+    //     wipe erases pixels ahead of the cursor and the new sample is
+    //     drawn behind it, just like a paper EEG monitor.
+    //   - Palette swaps with the page theme via a MutationObserver on
+    //     <html data-theme="...">.
+    // ====================================================================
+    (function initEegSignal() {
+      const canvas = document.getElementById('meeg-signal');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      const CHANNELS = 5;
+      const CH_LABELS = ['Fp1', 'F3', 'Cz', 'P3', 'O1'];
+      const SAMPLES_PER_FRAME = 1.6;   // pixels swept per animation frame
+
+      // ----- Theme palette -------------------------------------------
+      const PALETTES = {
+        dark: {
+          bg:     '#080e16',
+          grid:   'rgba(79, 195, 247, 0.10)',
+          label:  'rgba(151, 162, 184, 0.65)',
+          trace:  '#4fc3f7',
+          cursor: 'rgba(102, 217, 168, 0.55)',
+        },
+        light: {
+          bg:     '#f0f4fa',
+          grid:   'rgba(10, 127, 196, 0.16)',
+          label:  'rgba(60, 70, 89, 0.65)',
+          trace:  '#0a7fc4',
+          cursor: 'rgba(31, 153, 113, 0.55)',
+        },
+      };
+      function currentPalette() {
+        const t = document.documentElement.getAttribute('data-theme');
+        return PALETTES[t === 'light' ? 'light' : 'dark'];
+      }
+      let pal = currentPalette();
+
+      // ----- Canvas sizing -------------------------------------------
+      let cssW = 0, cssH = 0, dpr = 1;
+      function fitCanvas() {
+        dpr  = Math.min(window.devicePixelRatio || 1, 2);
+        cssW = canvas.clientWidth;
+        cssH = canvas.clientHeight;
+        canvas.width  = Math.max(1, Math.floor(cssW * dpr));
+        canvas.height = Math.max(1, Math.floor(cssH * dpr));
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        paintAll();
+        x = 0;
+        prevY = new Array(CHANNELS).fill(null);
+      }
+
+      function paintAll() {
+        paintBackground();
+        paintGuides();
+        paintLabels();
+      }
+
+      function paintBackground() {
+        ctx.fillStyle = pal.bg;
+        ctx.fillRect(0, 0, cssW, cssH);
+      }
+
+      function paintGuides() {
+        const laneH = cssH / CHANNELS;
+        ctx.save();
+        ctx.strokeStyle = pal.grid;
+        ctx.lineWidth = 1;
+        ctx.setLineDash([2, 4]);
+        for (let c = 0; c < CHANNELS; c++) {
+          const y = (c + 0.5) * laneH;
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(cssW, y);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      function paintLabels() {
+        const laneH = cssH / CHANNELS;
+        ctx.save();
+        ctx.fillStyle = pal.label;
+        ctx.font = '600 9px -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.textBaseline = 'middle';
+        for (let c = 0; c < CHANNELS; c++) {
+          ctx.fillText(CH_LABELS[c], 6, (c + 0.5) * laneH);
+        }
+        ctx.restore();
+      }
+
+      // ----- Randomized oscillator state -----------------------------
+      // Visual frequency bands (cycles per frame at ~60 fps). Each band
+      // pairs a frequency range with an amplitude range; per-channel
+      // makers pick 3-5 components randomly from across these bands.
+      const BANDS = [
+        { freq: [0.005, 0.020], amp: [0.10, 0.25] },  // delta-like drift
+        { freq: [0.030, 0.080], amp: [0.15, 0.35] },  // theta-ish
+        { freq: [0.090, 0.180], amp: [0.30, 0.60] },  // alpha-ish (dominant)
+        { freq: [0.200, 0.350], amp: [0.10, 0.25] },  // beta-ish
+        { freq: [0.420, 0.700], amp: [0.04, 0.12] },  // gamma-ish ripple
+      ];
+
+      function rnd(min, max) { return min + Math.random() * (max - min); }
+
+      function makeOscillator(chan) {
+        const components = [];
+        const n = 3 + Math.floor(Math.random() * 3);  // 3..5 mix
+        for (let i = 0; i < n; i++) {
+          const band = BANDS[Math.floor(Math.random() * BANDS.length)];
+          components.push({
+            freq:  rnd(band.freq[0], band.freq[1]),
+            amp:   rnd(band.amp[0],  band.amp[1]),
+            phase: rnd(0, Math.PI * 2),
+          });
+        }
+        return {
+          components,
+          drift: {
+            freq:  rnd(0.002, 0.012),
+            amp:   rnd(0.08, 0.22),
+            phase: rnd(0, Math.PI * 2),
+          },
+          envelope: {                              // slow amplitude breathing
+            freq:  rnd(0.003, 0.015),
+            depth: rnd(0.20, 0.65),
+            phase: rnd(0, Math.PI * 2),
+          },
+          noiseAmp:   rnd(0.12, 0.24),
+          // Frontal channels get bigger, more frequent blinks
+          blinkScale: Math.max(0, 1.0 - chan * 0.18),
+          blinkProb:  rnd(0.0005, 0.0014),
+        };
+      }
+
+      let oscillators = [];
+      function regenerateOscillators() {
+        oscillators = [];
+        for (let c = 0; c < CHANNELS; c++) {
+          oscillators.push(makeOscillator(c));
+        }
+      }
+      regenerateOscillators();
+
+      function sample(chan, t) {
+        const o = oscillators[chan];
+        // Sum of randomized oscillators
+        let v = 0;
+        for (const c of o.components) {
+          v += Math.sin(t * c.freq + c.phase) * c.amp;
+        }
+        // Slow amplitude envelope, scaled to [1 - depth, 1]
+        const envMod = 1 - o.envelope.depth * 0.5
+          + o.envelope.depth * 0.5 * Math.sin(t * o.envelope.freq + o.envelope.phase);
+        v *= envMod;
+        // Drift
+        v += Math.sin(t * o.drift.freq + o.drift.phase) * o.drift.amp;
+        // Per-sample noise
+        v += (Math.random() - 0.5) * o.noiseAmp;
+        // Rare eye-blink-like negative spike
+        if (Math.random() < o.blinkProb) {
+          v += -0.9 * o.blinkScale * (0.5 + Math.random() * 0.6);
+        }
+        return v;
+      }
+
+      // ----- Draw loop -----------------------------------------------
+      let x = 0;
+      let phase = 0;
+      let prevY = new Array(CHANNELS).fill(null);
+
+      function drawFrame() {
+        const laneH = cssH / CHANNELS;
+
+        // Wipe head: erase a small strip ahead of the cursor
+        const wipeW = 10;
+        ctx.fillStyle = pal.bg;
+        ctx.fillRect(x, 0, wipeW, cssH);
+
+        // Redraw guides in the wiped strip so they stay visible
+        ctx.save();
+        ctx.strokeStyle = pal.grid;
+        ctx.lineWidth = 1;
+        ctx.setLineDash([2, 4]);
+        for (let c = 0; c < CHANNELS; c++) {
+          const y = (c + 0.5) * laneH;
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + wipeW, y);
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        // Sweep cursor (thin highlight at the leading edge)
+        ctx.fillStyle = pal.cursor;
+        ctx.fillRect(x + wipeW, 0, 1, cssH);
+
+        // New sample per channel; connect from previous x to current x
+        ctx.strokeStyle = pal.trace;
+        ctx.lineWidth = 1.3;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        for (let c = 0; c < CHANNELS; c++) {
+          const yMid = (c + 0.5) * laneH;
+          const val  = sample(c, phase);
+          const y    = yMid + val * laneH * 0.42;
+
+          if (prevY[c] !== null && x > 0) {
+            ctx.beginPath();
+            ctx.moveTo(x - 1, prevY[c]);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+          }
+          prevY[c] = y;
+        }
+
+        // Advance and wrap, regenerating oscillators each sweep so the
+        // next pass has a different rhythm.
+        x += SAMPLES_PER_FRAME;
+        if (x >= cssW) {
+          x = 0;
+          prevY = new Array(CHANNELS).fill(null);
+          regenerateOscillators();
+          paintLabels();           // keep labels readable after the wrap
+        }
+        phase += 1;
+        requestAnimationFrame(drawFrame);
+      }
+
+      // ----- React to theme toggle -----------------------------------
+      const themeObserver = new MutationObserver(() => {
+        pal = currentPalette();
+        // Full repaint with the new palette; reset the trace state.
+        paintAll();
+        x = 0;
+        prevY = new Array(CHANNELS).fill(null);
+      });
+      themeObserver.observe(document.documentElement, {
+        attributes: true, attributeFilter: ['data-theme'],
+      });
+
+      fitCanvas();
+      window.addEventListener('resize', fitCanvas);
+      requestAnimationFrame(drawFrame);
+    })();
+  </script>
+</body>
+</html>

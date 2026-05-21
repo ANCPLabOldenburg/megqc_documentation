@@ -1,14 +1,44 @@
-# Welcome!
+# MEGqc documentation
 
-Hello everyone and welcome to the [MEGqc](https://github.com/ANCPLabOldenburg/MEGqc) documentation.
+Static HTML documentation for [MEGqc](https://github.com/ANCPLabOldenburg/MEGqc),
+the BIDS-aligned MEG and EEG quality assessment toolbox.
 
-Find the link to the documentation below the **About** subtitle or following this [link](https://alexisbaxman.github.io/megqc_documentation/). You will find information on how to install and use MEGqc.
+Live site: <https://ancplaboldenburg.github.io/megqc_documentation/>
 
-# I've got a question!
+## Structure
 
-In case you have any questions or difficulties working with MEGqc, please don’t hesitate to get in touch with
-us. A great way to do this is to via the [Issues section of MEGqc](https://github.com/ANCPLabOldenburg/MEGqc/issues)
+```
+megqc_documentation/
+  index.html               # landing page (hero + workflow animation)
+  intro.html               # what MEGqc is, the modules, metrics, scopes
+  installation.html        # bootstrap installers, CLI/conda, HPC/Apptainer
+  tutorial.html            # GUI walkthrough with CLI equivalents inline
+  reports.html             # the four HTML report scopes
+  metrics.html             # the seven QA metrics
+  eeg.html                 # new EEG implementation
+  gqi.html                 # Global Quality Index spec
+  settings.html            # settings.ini reference
+  programmatic.html        # Python API (meg_qc.test dispatchers)
+  styles.css               # hand-written; dark default + light toggle
+  script.js                # partial includes, theme toggle, hero animation
+  partials/                # header / footer
+  assets/                  # screenshots, GIFs, brand
+```
 
-## Acknowledgements
+No build step, no Jupyter Book, no Sphinx. Open `index.html` directly in
+a browser, or serve the directory statically (`python -m http.server`).
+The `data-include` mechanism in `script.js` fetches the partials, so use
+a local HTTP server rather than `file://` if header / footer should
+render.
 
- Shoutout to [Jupyter community](https://jupyter.org/community), specifically, the [Executable/Jupyter Book](https://executablebooks.org/en/latest/).
+## Deployment
+
+GitHub Actions in `.github/workflows/` uploads the directory as a Pages
+artifact on every push to `main`. No build is required: the source IS
+the site.
+
+## Questions
+
+If you have questions or run into issues with MEGqc, please open a
+[GitHub issue](https://github.com/ANCPLabOldenburg/MEGqc/issues) or
+email <karel.mauricio.lopez.vilaret@uni-oldenburg.de>.
