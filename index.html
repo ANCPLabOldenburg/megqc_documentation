@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="MEGqc: automated, BIDS-aligned quality assessment and control for MEG and EEG. Documentation, installation guides, tutorial, and report reference.">
   <title>MEGqc &middot; Documentation</title>
-  <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-256.png">
   <link rel="stylesheet" href="styles.css">
 
   <!-- Three.js for the rotating MEG helmet in the hero. Loaded via
@@ -28,25 +28,31 @@
          =================================================================== -->
     <section class="hero" aria-labelledby="hero-title">
       <!-- Six staggered, slowly-pulsing shots behind the hero content.
-           shot-a/b are full GUI windows (the main shell + the
-           calculation tab); shot-c/d/e/f mix the plotting GUI with
-           real report screenshots so the collage covers Convert,
-           Inspect and Validate visually. shot-a carries a data-light
-           variant so it swaps cleanly with the theme toggle. -->
+           A/B/C are real GUI screenshots (full shell, calculation tab,
+           plotting tab) - each with a dark/light pair that swaps via
+           the theme toggle. D/E/F are short autoplay loops sampled
+           from the dataset-level QA report (matrices) and subject-level
+           report (rotating sensor topomap, summary-distribution
+           violins) so the collage cycles real product output. -->
       <div class="hero-media" aria-hidden="true">
         <img class="hero-shot shot-a"
-             src="assets/gui/gui_main_dark.png"
-             data-light="assets/gui/gui_main_light.png" alt="">
+             src="assets/gui/full_gui_dark.png"
+             data-light="assets/gui/full_gui_light.png" alt="">
         <img class="hero-shot shot-b"
-             src="assets/gui/gui_calculation.png" alt="">
+             src="assets/gui/calculation_section_dark.png"
+             data-light="assets/gui/calculation_section_light.png" alt="">
         <img class="hero-shot shot-c"
-             src="assets/gui/gui_plotting.png" alt="">
-        <img class="hero-shot shot-d"
-             src="assets/reports/group_qa/12_pooled_topomaps.png" alt="">
-        <img class="hero-shot shot-e"
-             src="assets/reports/subject/2_topo.gif" alt="">
-        <img class="hero-shot shot-f"
-             src="assets/gqi/general_plot.png" alt="">
+             src="assets/gui/plotting_section_dark.png"
+             data-light="assets/gui/plotting_section_light.png" alt="">
+        <video class="hero-shot shot-d" autoplay muted loop playsinline
+               src="assets/reports/group-qa/dataset_overview_tab_dataset_matrices.mp4"
+               aria-hidden="true"></video>
+        <video class="hero-shot shot-e" autoplay muted loop playsinline
+               src="assets/reports/subject/overview_tab_sensor_locations_rotate_ans_hover.mp4"
+               aria-hidden="true"></video>
+        <video class="hero-shot shot-f" autoplay muted loop playsinline
+               src="assets/reports/group-qa/summary_distributions_tab_violins_part_1.mp4"
+               aria-hidden="true"></video>
       </div>
       <div class="hero-overlay"></div>
 
@@ -291,7 +297,7 @@
     <!-- ===================================================================
          Footer CTA
          =================================================================== -->
-    <section class="section section-cta">
+    <section class="section section-cta reveal">
       <div class="container container-narrow cta-strip">
         <div class="hero-actions">
           <a class="btn btn-primary" href="installation.html">Install &rarr;</a>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="MEEGqc tutorial: pick a dataset, walk the GUI, run from the CLI, drive it from Python, and look up every settings.ini knob.">
   <title>Tutorial &middot; MEEGqc</title>
-  <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-256.png">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -62,10 +62,10 @@
       </div>
     </header>
 
-    <article class="article reveal container container-narrow">
-
-      <!-- ============ DATASETS ============ -->
-      <h2 id="datasets">Pick a dataset</h2>
+    <!-- ============ DATASETS ============ -->
+    <section class="section reveal" id="datasets">
+      <div class="container container-narrow prose">
+      <h2>Pick a dataset</h2>
       <p>
         Four sample BIDS datasets are provided to follow the rest of
         the tutorial. Each card describes the modality, the system,
@@ -132,8 +132,13 @@ cd ds003483
 datalad get sub-009/</code></pre>
       </div>
 
-      <!-- ============ GUI WALKTHROUGH ============ -->
-      <h2 id="gui">GUI walkthrough</h2>
+      </div>
+    </section>
+
+    <!-- ============ GUI WALKTHROUGH ============ -->
+    <section class="section reveal" id="gui">
+      <div class="container container-narrow prose">
+      <h2>GUI walkthrough</h2>
       <p>
         Launch MEEGqc by double-clicking the desktop shortcut the
         installer created, or by running <code>megqc</code> in an
@@ -144,28 +149,86 @@ datalad get sub-009/</code></pre>
         each dataset row.
       </p>
 
-      <div class="figure">
-        <img src="assets/gui/gui_main_dark.png" alt="MEEGqc main window">
-        <figcaption>The MEEGqc main window with the QA/QC calculation
-           tab open.</figcaption>
-      </div>
+      <figure class="figure">
+        <img src="assets/gui/full_gui_dark.png"
+             data-light="assets/gui/full_gui_light.png"
+             alt="MEEGqc main window">
+        <figcaption>The full MEEGqc main window: top tabs select QA/QC
+          calculation or plotting; <em>Inputs</em>, <em>Output folder</em>,
+          and <em>Log</em> are collapsible. The whole layout swaps
+          dark / light with the header theme toggle.</figcaption>
+      </figure>
 
       <ol class="steps-list">
         <li>
           <strong>Add one or more BIDS datasets</strong> in the
-          <em>Inputs</em> section: click <em>+ Add dataset</em> and
-          browse to the BIDS root. You can reorder and remove
-          entries, and toggle <em>Use per-dataset configuration</em>
-          for multi-dataset runs.
+          <em>Inputs</em> section. You can optionally detach the panel
+          into its own window for multi-dataset runs, then click
+          <em>+ Add dataset</em> to browse to the BIDS root. Reorder
+          and remove entries, and toggle <em>Use per-dataset
+          configuration</em> as needed.
+          <figure class="figure">
+            <img src="assets/gui/inputs_section_detached_dark.png"
+                 data-light="assets/gui/inputs_section_detached_light.png"
+                 alt="Inputs section detached into its own window">
+            <figcaption>Step 1a. The empty Inputs panel, detached
+              into its own window. Useful when you plan to queue
+              several datasets.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/gui/add_dataset_example_dark.png"
+                 data-light="assets/gui/add_dataset_example_light.png"
+                 alt="Browsing to a BIDS root">
+            <figcaption>Step 1b. Click <em>Browse</em> and pick the
+              BIDS root of the dataset you want to QA.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/gui/inputs_section_with_added_dataset_dark.png"
+                 data-light="assets/gui/inputs_section_with_added_dataset_light.png"
+                 alt="Inputs section with one dataset added">
+            <figcaption>Step 1c. The dataset is now queued in the
+              Inputs panel; repeat to add more.</figcaption>
+          </figure>
         </li>
         <li>
-          <strong>Configure settings.</strong> Click
-          <em>Global settings...</em> for a single
-          <code>settings.ini</code> across all datasets, or
-          <em>Settings...</em> on a dataset row for a per-dataset
-          override. The dialog is a typed editor over the same
-          <code>settings.ini</code> the CLI consumes;
-          <a href="#settings">section reference</a> below.
+          <strong>Two separate things called "settings".</strong>
+          Don't conflate them:
+          <ul>
+            <li>
+              <strong>GUI Settings</strong> &mdash; the app's own
+              preferences (theme, parallel-worker count limit, system
+              info readout). Affects the GUI shell only, not the
+              analysis.
+              <figure class="figure">
+                <img src="assets/gui/gui_settings_dark.png"
+                     data-light="assets/gui/gui_settings_light.png"
+                     alt="MEEGqc GUI Settings dialog">
+                <figcaption>GUI Settings: theme, available CPUs,
+                  total RAM. Nothing here changes a metric.</figcaption>
+              </figure>
+            </li>
+            <li>
+              <strong>Analysis settings</strong> (the
+              <code>settings.ini</code> editor) &mdash; what actually
+              drives the pipeline: enabled metrics, channel types,
+              thresholds, GQI parameters, etc. Click
+              <em>Global settings...</em> for a single
+              <code>settings.ini</code> shared across all datasets,
+              or <em>Settings...</em> on a dataset row for a
+              per-dataset override. The dialog is a typed editor over
+              the same <code>settings.ini</code> the CLI consumes
+              (section reference at
+              <a href="#settings">settings.ini reference</a> below).
+              <figure class="figure">
+                <video class="media-loop" autoplay muted loop playsinline
+                       src="assets/gui/config_settings_gui_dark.mp4"
+                       data-light-src="assets/gui/config_settings_gui_light.mp4"></video>
+                <figcaption>Walking through the
+                  <code>settings.ini</code> editor: navigation,
+                  typing thresholds, applying overrides.</figcaption>
+              </figure>
+            </li>
+          </ul>
         </li>
         <li>
           <strong>Pick an analysis profile</strong> (optional). The
@@ -184,6 +247,13 @@ datalad get sub-009/</code></pre>
           click <strong>Run ALL (calc + plotting)</strong> to compute
           and generate every report in one shot. The Log panel
           streams progress.
+          <figure class="figure">
+            <img src="assets/gui/calculation_section_dark.png"
+                 data-light="assets/gui/calculation_section_light.png"
+                 alt="QA/QC calculation tab">
+            <figcaption>The calculation tab: pick the channel types,
+              tweak <code>n_jobs</code>, run.</figcaption>
+          </figure>
         </li>
         <li>
           <strong>Switch to the QA/QC plotting tab</strong> to render
@@ -191,21 +261,51 @@ datalad get sub-009/</code></pre>
           (<em>QA Subject</em>, <em>QA Group</em>,
           <em>QA Multi-dataset</em>, <em>QC Group</em>,
           <em>QC Multi-dataset</em>) and click <strong>Run Plotting</strong>.
+          <figure class="figure">
+            <img src="assets/gui/plotting_section_dark.png"
+                 data-light="assets/gui/plotting_section_light.png"
+                 alt="QA/QC plotting tab">
+            <figcaption>The plotting tab selects which report scopes to
+              render. Re-rendering does not re-run the calculation.</figcaption>
+          </figure>
         </li>
         <li>
           <strong>Recompute GQI</strong> independently with
           <strong>Run GQI</strong> in the calculation tab. Each click
           writes a new attempt file with the exact thresholds used.
         </li>
+        <li>
+          <strong>Point at an output folder</strong> (the
+          <em>Output folder</em> panel). By default MEEGqc writes
+          derivatives under
+          <code>&lt;dataset&gt;/derivatives/Meg_QC/</code>; the
+          <em>Output folder</em> override redirects them to a custom
+          root.
+          <div class="figure-row">
+            <figure class="figure">
+              <img src="assets/gui/output_section_dark.png"
+                   data-light="assets/gui/output_section_light.png"
+                   alt="Empty output folder panel">
+              <figcaption>Default: derivatives land inside each dataset.</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/gui/outputs_section_filled_dark.png"
+                   data-light="assets/gui/outputs_section_filled_light.png"
+                   alt="Output folder panel with custom root">
+              <figcaption>Override: redirect every dataset's derivatives
+                to a shared root.</figcaption>
+            </figure>
+          </div>
+        </li>
       </ol>
 
-      <div class="figure-row">
-        <figure class="figure"><img src="assets/gui/gui_calculation.png" alt="Calculation tab"><figcaption>QA/QC calculation tab.</figcaption></figure>
-        <figure class="figure"><img src="assets/gui/gui_plotting.png" alt="Plotting tab"><figcaption>QA/QC plotting tab.</figcaption></figure>
       </div>
+    </section>
 
-      <!-- ============ CLI WALKTHROUGH ============ -->
-      <h2 id="cli">CLI walkthrough</h2>
+    <!-- ============ CLI WALKTHROUGH ============ -->
+    <section class="section reveal" id="cli">
+      <div class="container container-narrow prose">
+      <h2>CLI walkthrough</h2>
       <p>
         For scripted runs and batch processing. The CLI exposes four
         entry points; the GUI calls into the same dispatchers under
@@ -267,8 +367,13 @@ run-megqc-plotting \
   --n_jobs 4
 </code></pre>
 
-      <!-- ============ CLI REFERENCE ============ -->
-      <h2 id="cli-reference">CLI reference</h2>
+      </div>
+    </section>
+
+    <!-- ============ CLI REFERENCE ============ -->
+    <section class="section reveal" id="cli-reference">
+      <div class="container container-narrow prose">
+      <h2>CLI reference</h2>
       <p>Every flag, grouped by command. Use <code>--help</code> on any
          command for the runtime version.</p>
 
@@ -338,8 +443,13 @@ run-megqc-plotting \
         </table>
       </div>
 
-      <!-- ============ PYTHON API ============ -->
-      <h2 id="python-api">Python API</h2>
+      </div>
+    </section>
+
+    <!-- ============ PYTHON API ============ -->
+    <section class="section reveal" id="python-api">
+      <div class="container container-narrow prose">
+      <h2>Python API</h2>
       <p>
         The dispatchers in <code>meg_qc.test</code> are the same
         backend the GUI and CLI call. Import them directly to wire
@@ -436,8 +546,13 @@ run_calculation_dispatch(
         </ul>
       </div>
 
-      <!-- ============ SETTINGS.INI REFERENCE ============ -->
-      <h2 id="settings">settings.ini reference</h2>
+      </div>
+    </section>
+
+    <!-- ============ SETTINGS.INI REFERENCE ============ -->
+    <section class="section reveal" id="settings">
+      <div class="container container-narrow prose">
+      <h2>settings.ini reference</h2>
       <p>
         Every behaviour knob in MEEGqc is controlled through
         <code>settings.ini</code>. Export the defaults with
@@ -611,7 +726,8 @@ run_calculation_dispatch(
         Next: the <a href="reports.html">reports reference</a> or the
         <a href="metrics.html">metrics + GQI page</a>.
       </p>
-    </article>
+      </div>
+    </section>
   </main>
 
   <div data-include="footer"></div>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="MEEGqc HTML reports: subject-level, dataset-level (QA + QC), and multi-dataset-level. Tab hierarchy, interactive controls, and what to look for first.">
   <title>Reports reference &middot; MEEGqc</title>
-  <link rel="icon" type="image/png" href="assets/brand/app-icon-128.png">
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-256.png">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -46,10 +46,10 @@
       </div>
     </header>
 
-    <article class="article reveal container container-narrow">
-
-      <!-- ============ SHARED CONTROLS ============ -->
-      <h2 id="shared">Shared interactive controls</h2>
+    <!-- ============ SHARED CONTROLS ============ -->
+    <section class="section reveal" id="shared">
+      <div class="container container-narrow prose">
+      <h2>Shared interactive controls</h2>
       <p>Every interactive figure across every report supports:</p>
       <ul>
         <li><strong>Hover</strong>: subject / recording IDs and exact metric values.</li>
@@ -67,8 +67,35 @@
         <a href="metrics.html">metrics page</a>.
       </div>
 
-      <!-- ============ SUBJECT-LEVEL QA ============ -->
-      <h2 id="qa-subject">Subject-level QA</h2>
+      <h3>The three control panels</h3>
+      <p>Every interactive figure exposes a control strip that scales
+         the visual primitives (point size, line width, label size) and
+         toggles overlays. Three flavours, one per plot type:</p>
+      <div class="figure-row">
+        <figure class="figure">
+          <img src="assets/reports/subject/general_plot_controls.png"
+               alt="General plot controls">
+          <figcaption>Standard distribution / line-plot controls.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/reports/subject/general_3d_topomap_controls.png"
+               alt="3D topomap controls">
+          <figcaption>3D topomap: rotate, zoom, toggle cap, swap projection.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/reports/subject/general_channel_x_epoch_heatmap_controls.png"
+               alt="Channel x epoch heatmap controls">
+          <figcaption>Channel x epoch heatmap: colour scale, channel sort, marginal profiles.</figcaption>
+        </figure>
+      </div>
+
+      </div>
+    </section>
+
+    <!-- ============ SUBJECT-LEVEL QA ============ -->
+    <section class="section reveal" id="qa-subject">
+      <div class="container container-narrow prose">
+      <h2>Subject-level QA</h2>
       <p>
         The subject-level QA report shows the full quality profile of
         one subject across all of its runs and tasks. Use it for
@@ -107,34 +134,104 @@
 
         <div class="tab-panel is-active" data-panel="sub-overview" role="tabpanel">
           <p>
-            Subject metadata, the run x metric availability table,
-            recording header details (acquisition date, sampling rate,
-            hardware filters, channel counts), and a 3D sensor
+            Subject metadata, recording header details (acquisition
+            date, sampling rate, hardware filters, channel counts),
+            a run x metric availability table, and a 3D sensor
             geometry view colour-coded by lobe.
           </p>
+          <figure class="figure">
+            <img src="assets/reports/subject/overview_tab_header_information.png"
+                 alt="Subject report header information">
+            <figcaption>Recording header: subject ID, task, acquisition
+              date, sampling rate, hardware filters, channel counts per
+              type. Use this to confirm you are looking at the recording
+              you expect before drilling into any metric tab.</figcaption>
+          </figure>
           <div class="figure-row">
-            <figure class="figure"><img src="assets/reports/subject_gifs/01_sensor_location/01_rotation.gif" alt="Rotate 3D sensor view"><figcaption>Drag to rotate the 3D scene.</figcaption></figure>
-            <figure class="figure"><img src="assets/reports/subject_gifs/01_sensor_location/02_hide.gif" alt="Toggle lobe groups"><figcaption>Click legend items to toggle lobe groups.</figcaption></figure>
+            <figure class="figure">
+              <img src="assets/reports/subject/overview_tab_subject_summary.png"
+                   alt="Subject summary card">
+              <figcaption>Per-subject quality summary: traffic-light
+                flags for each metric this subject ran. Green = nothing
+                tripped a threshold; orange / red = check the matching
+                metric tab.</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/reports/subject/overview_tab_recording_per_metric_availability.png"
+                   alt="Recording x metric availability">
+              <figcaption>Run x metric availability matrix: rows are
+                this subject's runs, columns are QA metrics. Blank
+                cells flag a metric that did not compute (e.g. Head on
+                EEG-only data, ECG when the reference channel was
+                rejected by the sanity check).</figcaption>
+            </figure>
+          </div>
+          <div class="figure-row">
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/overview_tab_sensor_locations_rotate_ans_hover.mp4"></video>
+              <figcaption>3D sensor layout colour-coded by lobe. Drag
+                to rotate; hover for the channel ID. Use it to confirm
+                expected sensor positions and lobe assignments before
+                reading any topomap.</figcaption>
+            </figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/overview_tab_sensor_location_active_labels.mp4"></video>
+              <figcaption>Click a lobe in the legend to toggle it
+                off, double-click to isolate a single lobe. Identical
+                interaction model to every other topomap in the
+                report.</figcaption>
+            </figure>
           </div>
         </div>
 
         <div class="tab-panel" data-panel="sub-std" role="tabpanel">
           <p>
-            Channel-wise standard deviation. Three panels: a 3D
-            topomap, a distribution boxplot with one dot per channel,
-            and a channel x epoch heatmap with marginal profiles.
+            Channel-wise standard deviation. Three subtabs: 3D
+            topomap, distribution boxplot (one dot per channel), and
+            channel x epoch heatmap with marginal profiles.
             Persistently high rows are bad-channel candidates;
             sparse vertical spikes are candidates for selective
             epoch rejection.
           </p>
+          <figure class="figure">
+            <img src="assets/reports/subject/std_tab_subtabs.png"
+                 alt="STD tab subtabs">
+            <figcaption>The three STD subtabs: 3D topomap, distribution,
+              channel x epoch heatmap. Same shape on every metric
+              tab.</figcaption>
+          </figure>
           <div class="figure-row">
-            <figure class="figure"><img src="assets/reports/subject/1_rotate_hover.gif" alt="STD topomap"><figcaption>3D topomap; hover for channel name + value.</figcaption></figure>
-            <figure class="figure"><img src="assets/reports/subject/3_hover.gif" alt="STD distribution"><figcaption>Distribution boxplot, one dot per channel.</figcaption></figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/std_tab_channel-wise-topomap.mp4"></video>
+              <figcaption>3D topomap of per-channel STD. Bright
+                sensors = high amplitude dispersion. Hover for the
+                channel name + exact value.</figcaption>
+            </figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/std_tab_channel-wise_std_distribution.mp4"></video>
+              <figcaption>Boxplot of channel STD with one dot per
+                channel, coloured by lobe. Dots well above the upper
+                whisker are bad-channel candidates.</figcaption>
+            </figure>
           </div>
-          <div class="figure">
-            <img src="assets/reports/subject/6_channel_x_epoch.png" alt="STD heatmap" style="max-width: 720px;">
-            <figcaption>Channel x epoch heatmap with marginal profiles.</figcaption>
-          </div>
+          <figure class="figure">
+            <video class="media-loop" autoplay muted loop playsinline
+                   src="assets/reports/subject/std_tab_channel_x_epoch_heatmap.mp4"></video>
+            <figcaption>Channel x epoch heatmap with marginal
+              profiles. Persistently bright <em>rows</em> = bad
+              channels; sparse bright <em>vertical stripes</em> =
+              epochs to reject. The marginal traces show the
+              per-channel and per-epoch summaries.</figcaption>
+          </figure>
+          <p class="deep-dive-link">
+            &rarr; Deep dive:
+            <a href="metrics.html#std">how the STD metric works</a>
+            (calculation, thresholds, GQI contribution).
+          </p>
         </div>
 
         <div class="tab-panel" data-panel="sub-ptp" role="tabpanel">
@@ -146,73 +243,281 @@
             Numba-accelerated path, <code>PtP (auto)</code> uses
             MNE's automatic epoch annotation.
           </p>
+          <figure class="figure">
+            <img src="assets/reports/subject/ptp_tab_subtabs.png"
+                 alt="PtP tab subtabs">
+            <figcaption>The three PtP subtabs, same shape as STD.</figcaption>
+          </figure>
           <div class="figure-row">
-            <figure class="figure"><img src="assets/reports/subject/1_rotate.gif" alt="PtP topomap"><figcaption>PtP 3D topomap.</figcaption></figure>
-            <figure class="figure"><img src="assets/reports/subject/3_boxplot_hover.gif" alt="PtP distribution"><figcaption>Distribution with per-lobe colouring.</figcaption></figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/ptp_tab_channel-wise-topomap.mp4"></video>
+              <figcaption>PtP 3D topomap. Catches transient bursts
+                that STD averages out: a sensor that is mostly quiet
+                with occasional huge excursions shows up here even
+                when its STD is normal.</figcaption>
+            </figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/ptp_tab_channel-wise_ptp_distribution.mp4"></video>
+              <figcaption>PtP distribution, one dot per channel,
+                lobe-coloured. Outliers above the upper whisker are
+                candidates for epoch-level rejection rather than
+                whole-channel rejection.</figcaption>
+            </figure>
           </div>
+          <figure class="figure">
+            <video class="media-loop" autoplay muted loop playsinline
+                   src="assets/reports/subject/ptp_tab_channel_x_epoch_heatmap.mp4"></video>
+            <figcaption>Channel x epoch heatmap, PtP variant.
+              Cross-reference the STD heatmap: a channel that lights
+              up here but not in STD is bursty rather than uniformly
+              noisy.</figcaption>
+          </figure>
+          <p class="deep-dive-link">
+            &rarr; Deep dive:
+            <a href="metrics.html#ptp">how the PtP metric works</a>
+            (manual vs auto, Numba acceleration, GQI contribution).
+          </p>
         </div>
 
         <div class="tab-panel" data-panel="sub-psd" role="tabpanel">
           <p>
             Power spectral density. Spot narrowband interference
             (mains harmonics at 50 / 60 / 100 / 120 Hz) and broadband
-            contamination. Same three-panel grammar plus an SNR
-            triage plot and a relative-band amplitude view.
+            contamination. Five views: SNR triage, Welch curves,
+            relative-band amplitude, and a frequency-selectable
+            topomap.
           </p>
+          <figure class="figure">
+            <img src="assets/reports/subject/psd_tab_subtabs.png"
+                 alt="PSD tab subtabs">
+            <figcaption>PSD subtabs: SNR triage, Welch curves,
+              relative-band amplitude, and a frequency-selectable
+              topomap.</figcaption>
+          </figure>
           <div class="figure-row">
-            <figure class="figure"><img src="assets/reports/subject/1_snr.png" alt="PSD SNR"><figcaption>SNR by channel.</figcaption></figure>
-            <figure class="figure"><img src="assets/reports/subject/2_welch.gif" alt="Welch PSD"><figcaption>Welch PSD curves.</figcaption></figure>
-            <figure class="figure"><img src="assets/reports/subject/4_topomap.gif" alt="PSD topomap"><figcaption>PSD topomap at the selected frequency.</figcaption></figure>
+            <figure class="figure">
+              <img src="assets/reports/subject/psd_tab_psd_snr_all_channels.png"
+                   alt="PSD SNR by channel">
+              <figcaption>SNR by channel for quick triage. A row of
+                bars sitting low across the spectrum points at a
+                broadband-noisy channel.</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/reports/subject/psd_tab_relative_band_amplitude_spectrum.png"
+                   alt="Relative band amplitude spectrum">
+              <figcaption>Relative-band amplitude per channel: a quick
+                stacked-bar view of how spectral energy splits across
+                bands. Useful to spot channels with abnormal band
+                distributions.</figcaption>
+            </figure>
           </div>
+          <div class="figure-row">
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/psd_tab_psd_curves_by_channel.mp4"></video>
+              <figcaption>Welch PSD curves, one line per channel.
+                <strong>Narrow tall peaks</strong> at 50 / 60 Hz and
+                multiples = mains contamination;
+                <strong>broad elevation</strong> across many channels
+                = environmental broadening or motion-related
+                noise.</figcaption>
+            </figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/psd_tab_channel-wise-topomap.mp4"></video>
+              <figcaption>PSD topomap at the frequency you pick on
+                the slider. Hot spots at a mains harmonic frequency
+                indicate where the noise is geographically
+                concentrated.</figcaption>
+            </figure>
+          </div>
+          <p class="deep-dive-link">
+            &rarr; Deep dive:
+            <a href="metrics.html#psd">how the PSD metric works</a>
+            (Welch window, noise band, GQI contribution).
+          </p>
         </div>
 
         <div class="tab-panel" data-panel="sub-ecg" role="tabpanel">
           <p>
             Cardiac contamination. The <strong>General</strong>
-            subtab visualises the ECG channel itself (peaks, beats
-            per minute, average waveform). MAG / GRAD / EEG subtabs
+            subtab visualises the ECG channel itself (peaks, BPM,
+            average R-mean waveform). The MAG / GRAD / EEG subtabs
             show how strongly the ECG signal correlates with each
-            sensor.
+            sensor, with three buckets (most / moderately / least
+            affected).
           </p>
+          <figure class="figure">
+            <video class="media-loop" autoplay muted loop playsinline
+                   src="assets/reports/subject/ecg_tab_subtabs.mp4"></video>
+            <figcaption>The ECG subtabs: <em>General</em> for the
+              reference channel itself, then one tab per sensor type
+              (MAG / GRAD / EEG) for the per-sensor correlation
+              breakdown.</figcaption>
+          </figure>
           <div class="figure-row">
-            <figure class="figure"><img src="assets/reports/subject/5_ecg_general.gif" alt="ECG general"><figcaption>Raw ECG with detected peaks.</figcaption></figure>
-            <figure class="figure"><img src="assets/reports/subject/ecg_6_waveform.gif" alt="ECG waveform"><figcaption>Average waveform around peaks.</figcaption></figure>
-            <figure class="figure"><img src="assets/reports/subject/2_topo.gif" alt="ECG topomap"><figcaption>3D topomap of ECG / sensor correlation.</figcaption></figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/ecg_tab_ecg_raw_signal_events.mp4"></video>
+              <figcaption>Raw ECG channel with the R-peaks MEEGqc
+                detected. This is what the three-condition sanity
+                check (amplitudes / breaks / bursts) is computed
+                on.</figcaption>
+            </figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/ecg_tab_r_mean_wave.mp4"></video>
+              <figcaption>Mean R-wave: the average of all detected
+                peak-locked epochs. It is the reference template the
+                per-channel correlation is measured against.</figcaption>
+            </figure>
           </div>
+          <figure class="figure">
+            <video class="media-loop" autoplay muted loop playsinline
+                   src="assets/reports/subject/ecg_tab_channel-wise_topomap.mp4"></video>
+            <figcaption>3D topomap of <code>abs(corr_coef)</code>
+              between each sensor's average artifact and the mean
+              R-wave. Brighter sensors carry more cardiac
+              contamination.</figcaption>
+          </figure>
+          <div class="figure-row">
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/ecg_tab_most_affected_channels.mp4"></video>
+              <figcaption>Most affected (top third by
+                <code>abs(corr_coef)</code>). Channel waves track the
+                mean R-wave closely.</figcaption>
+            </figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/ecg_tab_moderately_affected_channels.mp4"></video>
+              <figcaption>Moderately affected (middle third). Partial
+                tracking.</figcaption>
+            </figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/ecg_tab_least_affected_channels.mp4"></video>
+              <figcaption>Least affected (bottom third). Sensors here
+                are essentially uncorrelated with the cardiac
+                signature.</figcaption>
+            </figure>
+          </div>
+          <p class="deep-dive-link">
+            &rarr; Deep dive:
+            <a href="metrics.html#ecg">how the ECG metric works</a>
+            (sanity check, correlation procedure, GQI contribution).
+          </p>
         </div>
 
         <div class="tab-panel" data-panel="sub-eog" role="tabpanel">
           <p>
             Ocular contamination (blinks, saccades). Same structure
-            as ECG. Strongest impact typically frontal.
+            as ECG: General subtab for the raw EOG channel, MAG /
+            GRAD / EEG subtabs for sensor correlation buckets.
+            Strongest impact typically frontal.
           </p>
+          <figure class="figure">
+            <video class="media-loop" autoplay muted loop playsinline
+                   src="assets/reports/subject/eog_tab_subtabs.mp4"></video>
+            <figcaption>The EOG subtabs: same structure as ECG
+              (General + MAG / GRAD / EEG).</figcaption>
+          </figure>
           <div class="figure-row">
-            <figure class="figure"><img src="assets/reports/subject/4_waveform.gif" alt="EOG waveform"><figcaption>Average EOG waveform and peaks.</figcaption></figure>
-            <figure class="figure"><img src="assets/reports/subject/1_affected.gif" alt="EOG topomap"><figcaption>Topographic impact of ocular artifacts.</figcaption></figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/eog_tab_raw_eog_events.mp4"></video>
+              <figcaption>Raw EOG channel with detected blink events.
+                The three-condition sanity check runs on this
+                trace (with blink-specific bounds).</figcaption>
+            </figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/eog_tab_mean_blink_signal.mp4"></video>
+              <figcaption>Mean blink wave averaged across all detected
+                blink-locked epochs. Reference template for the
+                per-channel correlation.</figcaption>
+            </figure>
           </div>
+          <figure class="figure">
+            <video class="media-loop" autoplay muted loop playsinline
+                   src="assets/reports/subject/eog_tab_channel-wise_topomap.mp4"></video>
+            <figcaption>3D topomap of <code>abs(corr_coef)</code>:
+              ocular contamination typically concentrates on frontal
+              sensors.</figcaption>
+          </figure>
+          <div class="figure-row">
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/eog_tab_most_affected_channels.mp4"></video>
+              <figcaption>Most affected (top third by
+                <code>abs(corr_coef)</code>). Tight tracking of the
+                mean blink, usually frontal.</figcaption>
+            </figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/eog_tab_moderately_affected_channels.mp4"></video>
+              <figcaption>Moderately affected (middle third). Partial
+                tracking.</figcaption>
+            </figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/eog_tab_least_affected_channels.mp4"></video>
+              <figcaption>Least affected (bottom third). Sensors here
+                are largely unaffected by blinks.</figcaption>
+            </figure>
+          </div>
+          <p class="deep-dive-link">
+            &rarr; Deep dive:
+            <a href="metrics.html#eog">how the EOG metric works</a>
+            (sanity check, correlation procedure, GQI contribution).
+          </p>
         </div>
 
         <div class="tab-panel" data-panel="sub-muscle" role="tabpanel">
           <p>
             High-frequency muscle burden. 110-140 Hz for MEG, 20-100
             Hz for EEG. Burst-driven by jaw clenches, neck tension,
-            and similar artifacts.
+            and similar artifacts. The plot shows z-scored
+            high-frequency power across time.
           </p>
-          <div class="figure-row">
-            <figure class="figure"><img src="assets/reports/subject/muscle_1.gif" alt="Muscle events"></figure>
-            <figure class="figure"><img src="assets/reports/subject/muscle_2.gif" alt="Muscle controls"></figure>
-          </div>
+          <figure class="figure">
+            <video class="media-loop" autoplay muted loop playsinline
+                   src="assets/reports/subject/muscle_tab_h_frequency_zscores.mp4"></video>
+            <figcaption>Z-scored high-frequency activity across time.
+              Excursions above the threshold are flagged as muscle
+              events; the recording's muscle event ratio feeds the
+              <code>mus</code> family of the GQI.</figcaption>
+          </figure>
+          <p class="deep-dive-link">
+            &rarr; Deep dive:
+            <a href="metrics.html#muscle">how the Muscle metric works</a>
+            (band selection per modality, GQI contribution).
+          </p>
         </div>
 
         <div class="tab-panel" data-panel="sub-head" role="tabpanel">
           <p>
-            MEG-only. Movement across the recording from cHPI data.
+            MEG-only. Movement across the recording derived from
+            cHPI data: six motion parameters (three translations,
+            three rotations) plus a derived summary.
             EEG recordings show a banner explaining that the metric
             is skipped because cHPI is MEG-specific.
           </p>
-          <div class="figure">
-            <img src="assets/metrics/head/01_head_position.png" alt="Head position summary" style="max-width: 720px;">
-          </div>
+          <figure class="figure">
+            <video class="media-loop" autoplay muted loop playsinline
+                   src="assets/reports/subject/head_tab_motion_parameters.mp4"></video>
+            <figcaption>Head motion parameters derived from cHPI: three
+              translations + three rotations across the recording.
+              Sudden jumps mark gross-motion events you may want to
+              annotate.</figcaption>
+          </figure>
+          <p class="deep-dive-link">
+            &rarr; Deep dive:
+            <a href="metrics.html#head">how the Head movement metric works</a>
+            (MEG-only behaviour, EEG fallback).
+          </p>
         </div>
 
         <div class="tab-panel" data-panel="sub-stim" role="tabpanel">
@@ -221,30 +526,124 @@
             falls back to the raw stim channels. Confirms event
             count, timing, and trial-type distribution.
           </p>
+          <figure class="figure">
+            <img src="assets/reports/subject/stimulus_tab_header.png"
+                 alt="Stimulus tab header">
+            <figcaption>Event count summary: total events, distinct
+              trial types, and which source MEEGqc used
+              (<code>_events.tsv</code> or fallback stim channel
+              reconstruction).</figcaption>
+          </figure>
           <div class="figure-row">
-            <figure class="figure"><img src="assets/reports/subject/01_events_bids_summmary.jpg" alt="Events summary"><figcaption>Epoch summary from <code>_events.tsv</code>.</figcaption></figure>
-            <figure class="figure"><img src="assets/reports/subject/02_stim_channel.jpg" alt="Stim channel events"><figcaption>Per-channel x trigger-ID counts.</figcaption></figure>
-            <figure class="figure"><img src="assets/reports/subject/04_event_timeline.jpg" alt="Event timeline"><figcaption>Event timeline by trial type.</figcaption></figure>
+            <figure class="figure">
+              <img src="assets/reports/subject/stimulus_tab_bids_event_timeline.png"
+                   alt="BIDS event timeline">
+              <figcaption>Event timeline reconstructed from
+                <code>_events.tsv</code>. Colour-coded by trial type;
+                useful as a sanity check that triggers landed where the
+                protocol expected.</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/reports/subject/stimulus_tab_physical_stim_channel_event_timeline.png"
+                   alt="Stim channel timeline">
+              <figcaption>Fallback: raw stim-channel reconstruction
+                when <code>_events.tsv</code> is missing or
+                incomplete.</figcaption>
+            </figure>
           </div>
+          <p class="deep-dive-link">
+            &rarr; Deep dive:
+            <a href="metrics.html#stim">the Stimulus sanity-check view</a>.
+          </p>
         </div>
 
         <div class="tab-panel" data-panel="sub-qc" role="tabpanel">
           <p>
             Compact metric-by-metric distillation of the QA results
-            for this subject plus its GQI scores across attempts.
+            for this subject plus its GQI score across attempts.
             Short text summary, then auditable detail tables, then
             exact paths to the underlying derivatives.
+          </p>
+          <figure class="figure">
+            <img src="assets/reports/subject/qc_summary_tab_subtabs.png"
+                 alt="QC summary subtabs">
+            <figcaption>QC summary subtabs: one per metric plus the
+              top-level GQI card.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/reports/subject/qc_summary_tab_global_quality_index.png"
+                 alt="Subject GQI summary">
+            <figcaption>Subject GQI: composite 0-100 score plus the
+              decomposition into the four penalty families
+              (<code>ch</code>, <code>corr</code>, <code>mus</code>,
+              <code>psd</code>). Read the dominant family to know what
+              to fix.</figcaption>
+          </figure>
+          <div class="figure-row">
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/qc_summary_tab_std.mp4"></video>
+              <figcaption>STD QC summary: noisy / flat channel %, noisy
+                / flat epoch % for this subject.</figcaption>
+            </figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/qc_summary_tab_ptp.mp4"></video>
+              <figcaption>PtP QC summary: same shape as STD on the
+                peak-to-peak metric.</figcaption>
+            </figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/subject/qc_summary_tab_psd.mp4"></video>
+              <figcaption>PSD QC summary: noise-band burden %.</figcaption>
+            </figure>
+          </div>
+          <div class="figure-row">
+            <figure class="figure">
+              <img src="assets/reports/subject/qc_summary_tab_ecg.png"
+                   alt="ECG QC summary">
+              <figcaption>ECG QC summary: high-correlation channel %
+                per sensor type.</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/reports/subject/qc_summary_tab_eog.png"
+                   alt="EOG QC summary">
+              <figcaption>EOG QC summary: same metric on the ocular
+                channel.</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/reports/subject/qc_summary_tab_muscle.png"
+                   alt="Muscle QC summary">
+              <figcaption>Muscle QC summary: event count and event
+                ratio for this recording.</figcaption>
+            </figure>
+          </div>
+          <p class="deep-dive-link">
+            &rarr; Deep dive:
+            <a href="metrics.html#gqi">how the GQI is computed</a>
+            (penalty families, thresholds, weights, attempt versioning).
           </p>
         </div>
       </div>
 
-      <!-- ============ DATASET-LEVEL QA ============ -->
-      <h2 id="qa-group">Dataset-level QA</h2>
+      </div>
+    </section>
+
+    <!-- ============ DATASET-LEVEL QA ============ -->
+    <section class="section reveal" id="qa-group">
+      <div class="container container-narrow prose">
+      <h2>Dataset-level QA</h2>
       <p>
         The dataset-level QA report aggregates quality assessment
         across all subjects in one dataset. Use it to identify cohort
         patterns, outliers, and task-dependent shifts.
       </p>
+
+      <figure class="figure">
+        <img src="assets/reports/group-qa/dataset_qa_header.png"
+             alt="Dataset-level QA report header">
+        <figcaption>The dataset-level QA report header.</figcaption>
+      </figure>
 
       <h3>Tab hierarchy</h3>
       <div class="table-wrap"><table>
@@ -256,6 +655,19 @@
           <tr><td>4+</td><td>Measures (Median, Mean, Upper Tail) and figure types (Boxplot, Violin, Histogram, Density).</td></tr>
         </tbody>
       </table></div>
+
+      <div class="figure-row">
+        <figure class="figure">
+          <img src="assets/reports/group-qa/dataset_qa_channel_type_tabs.png"
+               alt="Channel-type tabs">
+          <figcaption>Channel-type tabs (Combined / MAG / GRAD / EEG).</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/reports/group-qa/dataset_main_tabs.png"
+               alt="Dataset section tabs">
+          <figcaption>The five section tabs.</figcaption>
+        </figure>
+      </div>
 
       <h3>Explore the five sections</h3>
 
@@ -272,29 +684,70 @@
           <p>
             Violin + box plots of every metric across every recording
             in the dataset, with each recording plotted as a hoverable
-            dot. Pooled 2D and 3D topomaps summarise where issues
+            dot. Pooled 3D topomaps summarise where issues
             concentrate.
           </p>
+          <figure class="figure">
+            <img src="assets/reports/group-qa/summary_distributions_tab_violin_box_plots_controls.png"
+                 alt="Violin / box plot controls">
+            <figcaption>Toggle between violin and box, switch measure (median, mean, upper tail).</figcaption>
+          </figure>
           <div class="figure-row">
-            <figure class="figure"><img src="assets/reports/group_qa/05_metric_summary_distributions.png" alt="Summary distributions"><figcaption>Per-metric violin + box plots.</figcaption></figure>
-            <figure class="figure"><img src="assets/reports/group_qa/03_pooled_topomap.gif" alt="Pooled topomap"><figcaption>Pooled 3D topomap.</figcaption></figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/group-qa/summary_distributions_tab_violins_part_1.mp4"></video>
+              <figcaption>Per-metric violin distributions (part 1).</figcaption>
+            </figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/group-qa/summary_distributions_tab_violins_part_2.mp4"></video>
+              <figcaption>Per-metric violin distributions (part 2).</figcaption>
+            </figure>
           </div>
+          <figure class="figure">
+            <video class="media-loop" autoplay muted loop playsinline
+                   src="assets/reports/group-qa/summary_distibutions_tab_3d_topomaps.mp4"></video>
+            <figcaption>Pooled 3D topomaps across the cohort: where
+              each metric concentrates spatially. Hotspots in the
+              same location across metrics often point at a
+              consistently bad sensor.</figcaption>
+          </figure>
+          <p class="deep-dive-link">
+            &rarr; Reference: the
+            <a href="metrics.html">metrics page</a> covers what each
+            distribution is measuring.
+          </p>
         </div>
 
         <div class="tab-panel" data-panel="ds-cohort" role="tabpanel">
           <p>
-            Subject ranking table (worst first), recording x metric
-            and subject x metric heatmaps, and epoch profile bands
-            for the top-burden subjects.
+            General dataset information, subject ranking table (worst
+            first), and recording x metric / subject x metric
+            matrices.
           </p>
-          <div class="figure">
-            <img src="assets/reports/group_qa/cohort_overview_ranking_table.png" alt="Subject ranking" style="max-width: 820px;">
+          <figure class="figure">
+            <img src="assets/reports/group-qa/dataset_overview_tab_general_information.png"
+                 alt="Dataset general information">
+            <figcaption>General dataset info: subject count, task list, sampling rate.</figcaption>
+          </figure>
+          <figure class="figure">
+            <video class="media-loop" autoplay muted loop playsinline
+                   src="assets/reports/group-qa/dataset_overview_tab_ranking_table.mp4"></video>
             <figcaption>Subject ranking by aggregated quality footprint.</figcaption>
-          </div>
-          <div class="figure-row">
-            <figure class="figure"><img src="assets/reports/group_qa/recording-metric.jpg" alt="Recording x metric heatmap"><figcaption>Recording x metric heatmap.</figcaption></figure>
-            <figure class="figure"><img src="assets/reports/group_qa/subject-metric.png" alt="Subject x metric heatmap"><figcaption>Subject x metric heatmap.</figcaption></figure>
-          </div>
+          </figure>
+          <figure class="figure">
+            <video class="media-loop" autoplay muted loop playsinline
+                   src="assets/reports/group-qa/dataset_overview_tab_dataset_matrices.mp4"></video>
+            <figcaption>Recording x metric and subject x metric
+              matrices. A bright vertical stripe = a single bad
+              recording; a bright horizontal stripe = a metric that
+              is systematically degraded across the cohort.</figcaption>
+          </figure>
+          <p class="deep-dive-link">
+            &rarr; Reference: the
+            <a href="metrics.html">metrics page</a> for what each
+            matrix column measures.
+          </p>
         </div>
 
         <div class="tab-panel" data-panel="ds-tasks" role="tabpanel">
@@ -302,9 +755,19 @@
             Line plots: one line per subject, dark line for the
             cohort median. Reveals task-dependent shifts.
           </p>
-          <div class="figure">
-            <img src="assets/reports/group_qa/across_tasks.gif" alt="QA across tasks">
-          </div>
+          <figure class="figure">
+            <video class="media-loop" autoplay muted loop playsinline
+                   src="assets/reports/group-qa/dataset_metrics_across_tasks_tab.mp4"></video>
+            <figcaption>Metric trajectories across tasks, per
+              subject. Sharp shifts at a specific task point at a
+              task-dependent issue (instructions, condition, stim
+              equipment).</figcaption>
+          </figure>
+          <p class="deep-dive-link">
+            &rarr; Reference: the
+            <a href="metrics.html">metrics page</a> for the per-metric
+            definitions plotted on the Y axis.
+          </p>
         </div>
 
         <div class="tab-panel" data-panel="ds-details" role="tabpanel">
@@ -316,26 +779,108 @@
             modes to compare across conditions without changing rank.
           </p>
           <div class="figure-row">
-            <figure class="figure"><img src="assets/reports/group_qa/11_std_heatmap.png" alt="STD heatmap"><figcaption>Pooled channel x epoch heatmap.</figcaption></figure>
-            <figure class="figure"><img src="assets/reports/group_qa/16_psd_frequency_group.png" alt="Group PSD"><figcaption>Dataset-level PSD frequency view.</figcaption></figure>
+            <figure class="figure">
+              <img src="assets/reports/group-qa/dataset_metric_details_tab_subtabs.png"
+                   alt="Metric details subtabs">
+              <figcaption>Per-metric subtabs.</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/reports/group-qa/dataset_metric_details_tab_distribution_plots_controls.png"
+                   alt="Distribution plot controls">
+              <figcaption>Distribution-plot controls (figure type + measure).</figcaption>
+            </figure>
           </div>
+          <figure class="figure">
+            <video class="media-loop" autoplay muted loop playsinline
+                   src="assets/reports/group-qa/dataset_metric_details_tab_distribution_plots.mp4"></video>
+            <figcaption>Distribution plots, cycling through measures and figure types.</figcaption>
+          </figure>
+          <div class="figure-row">
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/group-qa/dataset_metric_details_tab_per_task_heatmap.mp4"></video>
+              <figcaption>Per-task channel x epoch heatmap. The same
+                grammar as the subject-level heatmap, but pooled
+                across subjects for one task at a time.</figcaption>
+            </figure>
+            <figure class="figure">
+              <video class="media-loop" autoplay muted loop playsinline
+                     src="assets/reports/group-qa/dataset_metric_details_tab_per_task_topomap.mp4"></video>
+              <figcaption>Per-task 3D topomap. Useful to confirm
+                whether a hotspot in the pooled topomap is driven by
+                one task or persists across all of them.</figcaption>
+            </figure>
+          </div>
+          <p class="deep-dive-link">
+            &rarr; Reference: the
+            <a href="metrics.html">metrics page</a> for the
+            per-metric pipeline behind each subtab.
+          </p>
         </div>
 
         <div class="tab-panel" data-panel="ds-ecdf" role="tabpanel">
           <p>
             Empirical cumulative distribution functions. Read "what
             percentage of recordings sit below value X" directly off
-            the curve to support threshold-selection decisions.
+            the curve to support threshold-selection decisions. One
+            ECDF per QA metric:
           </p>
           <div class="figure-row">
-            <figure class="figure"><img src="assets/reports/group_qa/ECDF_std.png" alt="ECDF STD"><figcaption>STD ECDF.</figcaption></figure>
-            <figure class="figure"><img src="assets/reports/group_qa/17_ECDF_mains_ratio.png" alt="ECDF mains ratio"><figcaption>Mains-ratio ECDF.</figcaption></figure>
+            <figure class="figure">
+              <img src="assets/reports/group-qa/dataset_cummulative_distributions_tab_std.png"
+                   alt="STD ECDF">
+              <figcaption>STD ECDF. See the
+                <a href="metrics.html#std">STD metric</a> for the
+                exact quantity on the X axis.</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/reports/group-qa/dataset_cummulative_distributions_tab_ptp.png"
+                   alt="PtP ECDF">
+              <figcaption>PtP ECDF.
+                <a href="metrics.html#ptp">PtP metric reference.</a></figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/reports/group-qa/dataset_cummulative_distributions_tab_psd.png"
+                   alt="PSD ECDF">
+              <figcaption>PSD-noise-burden ECDF.
+                <a href="metrics.html#psd">PSD metric reference.</a></figcaption>
+            </figure>
           </div>
+          <div class="figure-row">
+            <figure class="figure">
+              <img src="assets/reports/group-qa/dataset_cummulative_distributions_tab_ecg.png"
+                   alt="ECG ECDF">
+              <figcaption>ECG-correlation ECDF.
+                <a href="metrics.html#ecg">ECG metric reference.</a></figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/reports/group-qa/dataset_cummulative_distributions_tab_eog.png"
+                   alt="EOG ECDF">
+              <figcaption>EOG-correlation ECDF.
+                <a href="metrics.html#eog">EOG metric reference.</a></figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/reports/group-qa/dataset_cummulative_distributions_tab_muscle.png"
+                   alt="Muscle ECDF">
+              <figcaption>Muscle-burden ECDF.
+                <a href="metrics.html#muscle">Muscle metric reference.</a></figcaption>
+            </figure>
+          </div>
+          <p class="deep-dive-link">
+            Read directly off the curve: "what fraction of recordings
+            sit below threshold X?" Useful for picking GQI thresholds
+            (<a href="metrics.html#gqi">see the GQI section</a>).
+          </p>
         </div>
       </div>
 
-      <!-- ============ DATASET-LEVEL QC ============ -->
-      <h2 id="qc-group">Dataset-level QC</h2>
+      </div>
+    </section>
+
+    <!-- ============ DATASET-LEVEL QC ============ -->
+    <section class="section reveal" id="qc-group">
+      <div class="container container-narrow prose">
+      <h2>Dataset-level QC</h2>
       <p>
         Dataset-level QC reports centre on the Global Quality Index
         (GQI). Unlike QA reports, QC reports summarise
@@ -344,11 +889,40 @@
         breakdowns explain what dragged the score down.
       </p>
 
+      <figure class="figure">
+        <img src="assets/reports/group-qc/dataset_qc_header.png"
+             alt="Dataset-level QC report header">
+        <figcaption>The dataset-level QC report header.</figcaption>
+      </figure>
+
+      <h3>Dataset overview</h3>
+      <div class="figure-row">
+        <figure class="figure">
+          <img src="assets/reports/group-qc/dataset_overview_tab_general_information.png"
+               alt="QC dataset general information">
+          <figcaption>General information about the cohort.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/reports/group-qc/dataset_overview_tab_metrics_availability.png"
+               alt="Metrics availability matrix">
+          <figcaption>Per-recording metrics availability.</figcaption>
+        </figure>
+      </div>
+
       <h3>Inputs and attempts</h3>
       <p>QC Group reads GQI results from attempt-indexed,
          per-modality TSVs:</p>
-<pre><code>summary_reports/group_metrics/meg/Global_Quality_Index_attempt_&lt;n&gt;_meg.tsv
-summary_reports/group_metrics/eeg/Global_Quality_Index_attempt_&lt;n&gt;_eeg.tsv</code></pre>
+<div class="dataset-tree" role="img"
+     aria-label="QC Group input TSVs">
+  <div class="dataset-tree-row">
+    <span class="chev">&#8226;</span>
+    <span class="name">summary_reports/group_metrics/meg/Global_Quality_Index_attempt_&lt;n&gt;_meg.tsv</span>
+  </div>
+  <div class="dataset-tree-row">
+    <span class="chev">&#8226;</span>
+    <span class="name">summary_reports/group_metrics/eeg/Global_Quality_Index_attempt_&lt;n&gt;_eeg.tsv</span>
+  </div>
+</div>
       <p>Attempt resolution order:</p>
       <ol>
         <li>Explicit <code>--input_tsv</code> path.</li>
@@ -364,6 +938,62 @@ summary_reports/group_metrics/eeg/Global_Quality_Index_attempt_&lt;n&gt;_eeg.tsv
           <tr><td>2</td><td>Metric tabs (below).</td></tr>
         </tbody>
       </table></div>
+
+      <div class="figure-row">
+        <figure class="figure">
+          <img src="assets/reports/group-qc/dataset_qc_channel_type_tabs.png"
+               alt="QC channel-type tabs">
+          <figcaption>Channel-type tabs.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/reports/group-qc/dataset_qc_main_tabs.png"
+               alt="QC main tabs">
+          <figcaption>Per-metric main tabs.</figcaption>
+        </figure>
+      </div>
+
+      <h3>Summary distributions</h3>
+      <p>The summary distribution tab shows box / violin plots for
+         every QC metric across the cohort, so a single glance shows
+         where the dataset sits relative to the configured thresholds.</p>
+      <figure class="figure">
+        <img src="assets/reports/group-qc/dataset_qc_box_violin_plots_controls.png"
+             alt="QC box / violin plot controls">
+        <figcaption>Toggle violin or box; pick the measure and bucket.</figcaption>
+      </figure>
+      <figure class="figure">
+        <video class="media-loop" autoplay muted loop playsinline
+               src="assets/reports/group-qc/dataset_qc_summary_distribution_tab_GQI.mp4"></video>
+        <figcaption>GQI distribution across the cohort.</figcaption>
+      </figure>
+      <div class="figure-row">
+        <figure class="figure">
+          <video class="media-loop" autoplay muted loop playsinline
+                 src="assets/reports/group-qc/dataset_qc_summary_distribution_tab_metrics_part_1.mp4"></video>
+          <figcaption>Per-metric QC distributions (part 1).</figcaption>
+        </figure>
+        <figure class="figure">
+          <video class="media-loop" autoplay muted loop playsinline
+                 src="assets/reports/group-qc/dataset_qc_summary_distribution_tab_metric_part2.mp4"></video>
+          <figcaption>Per-metric QC distributions (part 2).</figcaption>
+        </figure>
+      </div>
+
+      <h3>Metric details: across tasks + subject ranking</h3>
+      <p>The metric-details tab adds two layers on top of the
+         summary distributions: a per-task trajectory view and a
+         worst-first subject ranking, both shared across every metric
+         subtab.</p>
+      <figure class="figure">
+        <video class="media-loop" autoplay muted loop playsinline
+               src="assets/reports/group-qc/dataset_qc_metric_details_tab_metrics_across_tasks.mp4"></video>
+        <figcaption>QC metric trajectories across tasks.</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="assets/reports/group-qc/dataset_qc_metric_details_per_task-metric_subject_ranking.png"
+             alt="Per-task subject ranking">
+        <figcaption>Subject ranking by metric, worst first.</figcaption>
+      </figure>
 
       <h3>Explore the metric tabs</h3>
 
@@ -395,30 +1025,113 @@ summary_reports/group_metrics/eeg/Global_Quality_Index_attempt_&lt;n&gt;_eeg.tsv
               <tr><td>Below 50 %</td><td>Poor. Significant issues.</td></tr>
             </tbody>
           </table></div>
+          <figure class="figure">
+            <video class="media-loop" autoplay muted loop playsinline
+                   src="assets/reports/group-qc/dataset_qc_metric_details_per_task_GQI.mp4"></video>
+            <figcaption>GQI trajectory across tasks per subject.
+              Crossing lines = subjects whose relative rank changes
+              between tasks; flat low lines = consistently
+              low-quality recordings.</figcaption>
+          </figure>
+          <p class="deep-dive-link">
+            &rarr; Deep dive:
+            <a href="metrics.html#gqi">how the GQI is computed</a>
+            (penalty families, defaults, weights, attempts).
+          </p>
         </div>
 
         <div class="tab-panel" data-panel="qc-std" role="tabpanel">
           <p>
             Noisy / flat channel %, noisy / flat epoch %.
-            Distributions across recordings + ranking table.
+            Distributions across recordings + ranking per task.
+          </p>
+          <figure class="figure">
+            <video class="media-loop" autoplay muted loop playsinline
+                   src="assets/reports/group-qc/dataset_qc_metric_details_per_task_std.mp4"></video>
+            <figcaption>Per-task STD QC trajectory: how the
+              noisy / flat channel percentage shifts across the
+              tasks of the recording.</figcaption>
+          </figure>
+          <p class="deep-dive-link">
+            &rarr; Deep dive:
+            <a href="metrics.html#std">how the STD metric works</a>.
           </p>
         </div>
         <div class="tab-panel" data-panel="qc-ptp" role="tabpanel">
           <p>
             Same content as STD but for peak-to-peak amplitude.
           </p>
+          <figure class="figure">
+            <video class="media-loop" autoplay muted loop playsinline
+                   src="assets/reports/group-qc/dataset_qc_metric_details_per_task_ptp.mp4"></video>
+            <figcaption>Per-task PtP QC trajectory.</figcaption>
+          </figure>
+          <p class="deep-dive-link">
+            &rarr; Deep dive:
+            <a href="metrics.html#ptp">how the PtP metric works</a>.
+          </p>
         </div>
         <div class="tab-panel" data-panel="qc-psd" role="tabpanel">
-          <p>PSD noise burden % per recording, distribution + ranking.</p>
+          <p>PSD noise burden % per recording, distribution + ranking
+             per task.</p>
+          <figure class="figure">
+            <video class="media-loop" autoplay muted loop playsinline
+                   src="assets/reports/group-qc/dataset_qc_metric_details_per_task_psd.mp4"></video>
+            <figcaption>Per-task PSD QC trajectory. Spikes at a
+              specific task can signal task-correlated environmental
+              noise (e.g. a stimulus device that emits broadband
+              interference).</figcaption>
+          </figure>
+          <p class="deep-dive-link">
+            &rarr; Deep dive:
+            <a href="metrics.html#psd">how the PSD metric works</a>.
+          </p>
         </div>
         <div class="tab-panel" data-panel="qc-ecg" role="tabpanel">
-          <p>High-correlation channel % per recording.</p>
+          <p>High-correlation channel % per recording, per task.</p>
+          <figure class="figure">
+            <img src="assets/reports/group-qc/dataset_qc_metric_details_per_task_ecg.png"
+                 alt="Per-task ECG QC">
+            <figcaption>Per-task ECG QC: how the high-correlation
+              fraction shifts task-to-task. A task with consistently
+              higher cardiac correlation across subjects suggests a
+              fixed condition (e.g. an instructed-rest block) where
+              the heart rate effect is more visible.</figcaption>
+          </figure>
+          <p class="deep-dive-link">
+            &rarr; Deep dive:
+            <a href="metrics.html#ecg">how the ECG metric works</a>
+            (sanity check, correlation procedure, GQI contribution).
+          </p>
         </div>
         <div class="tab-panel" data-panel="qc-eog" role="tabpanel">
-          <p>High-correlation channel % per recording.</p>
+          <p>High-correlation channel % per recording, per task.</p>
+          <figure class="figure">
+            <img src="assets/reports/group-qc/dataset_qc_metric_details_per_task_eog.png"
+                 alt="Per-task EOG QC">
+            <figcaption>Per-task EOG QC. Tasks that involve more
+              visual fixation (e.g. fixation crosses) typically
+              show fewer blinks here.</figcaption>
+          </figure>
+          <p class="deep-dive-link">
+            &rarr; Deep dive:
+            <a href="metrics.html#eog">how the EOG metric works</a>.
+          </p>
         </div>
         <div class="tab-panel" data-panel="qc-muscle" role="tabpanel">
-          <p>Muscle event count, event rate, and GQI muscle component.</p>
+          <p>Muscle event count, event rate, and GQI muscle component
+             per task.</p>
+          <figure class="figure">
+            <img src="assets/reports/group-qc/dataset_qc_metric_details_per_task_muscle.png"
+                 alt="Per-task Muscle QC">
+            <figcaption>Per-task Muscle QC. Speaking / moving-jaw
+              tasks tend to show consistently elevated muscle event
+              rates here.</figcaption>
+          </figure>
+          <p class="deep-dive-link">
+            &rarr; Deep dive:
+            <a href="metrics.html#muscle">how the Muscle metric works</a>.
+          </p>
         </div>
       </div>
 
@@ -437,8 +1150,13 @@ summary_reports/group_metrics/eeg/Global_Quality_Index_attempt_&lt;n&gt;_eeg.tsv
             recording for the full channel x epoch picture.</li>
       </ol>
 
-      <!-- ============ MULTI-DATASET ============ -->
-      <h2 id="multisample">Multi-dataset-level reports</h2>
+      </div>
+    </section>
+
+    <!-- ============ MULTI-DATASET ============ -->
+    <section class="section reveal" id="multisample">
+      <div class="container container-narrow prose">
+      <h2>Multi-dataset-level reports</h2>
       <p>
         Multi-dataset-level reports compare two or more datasets
         side by side. They come in two flavours that mirror QA / QC:
@@ -451,11 +1169,6 @@ summary_reports/group_metrics/eeg/Global_Quality_Index_attempt_&lt;n&gt;_eeg.tsv
         <div class="card"><h3>Longitudinal waves</h3><p>Track quality changes across collection waves; detect equipment degradation and protocol drift.</p></div>
         <div class="card"><h3>Harmonization</h3><p>Decide whether datasets can be pooled, or whether each needs its own QC threshold.</p></div>
         <div class="card"><h3>Benchmarking</h3><p>Compare a new dataset against a reference to validate collection procedures.</p></div>
-      </div>
-
-      <div class="figure">
-        <img src="assets/reports/multisample/01_multisample_comparison.png" alt="Multi-dataset comparison" style="max-width: 900px;">
-        <figcaption>Cross-dataset distribution comparison. Each dataset is colour-coded; hover reveals subject and dataset identity.</figcaption>
       </div>
 
       <h3>Structure</h3>
@@ -483,8 +1196,13 @@ QC Multi-dataset
         <li>Comparable tasks / conditions for task-dependent views.</li>
       </ul>
 
-      <!-- ============ READING ORDER ============ -->
-      <h2 id="reading-order">Practical reading order</h2>
+      </div>
+    </section>
+
+    <!-- ============ READING ORDER ============ -->
+    <section class="section reveal" id="reading-order">
+      <div class="container container-narrow prose">
+      <h2>Practical reading order</h2>
       <p>The fastest path through a fresh dataset:</p>
       <ol>
         <li>Open the <strong>dataset-level QC</strong> report. Look
@@ -506,7 +1224,8 @@ QC Multi-dataset
         <a href="tutorial.html#settings-gqi"><code>[GlobalQualityIndex]</code></a>
         in the settings reference.
       </p>
-    </article>
+      </div>
+    </section>
   </main>
 
   <div data-include="footer"></div>

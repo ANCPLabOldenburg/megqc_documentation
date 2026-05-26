@@ -24,6 +24,7 @@
   --accent: #4fc3f7;       /* cyan, matches the Qt highlight */
   --accent-strong: #7fd5ff;
   --accent-soft: rgba(79, 195, 247, 0.16);
+  --title-blue: #2da3e8;   /* deeper blue from the hero title gradient */
   --mint: #66d9a8;         /* "quality" green */
   --mint-soft: rgba(102, 217, 168, 0.18);
   --warn: #ffb454;
@@ -78,6 +79,7 @@
   --accent: #0a7fc4;
   --accent-strong: #075a8c;
   --accent-soft: rgba(10, 127, 196, 0.12);
+  --title-blue: #0a7fc4;   /* deep blue from the hero title gradient */
   --mint: #1f9971;
   --mint-soft: rgba(31, 153, 113, 0.15);
   --warn: #b97400;
@@ -500,7 +502,7 @@ img { max-width: 100%; height: auto; }
 main { display: block; }
 
 .section {
-  padding: 64px 0;
+  padding: clamp(56px, 9vw, 110px) 0;
   border-bottom: 1px solid var(--border);
 }
 
@@ -683,6 +685,7 @@ p code, li code, td code, th code, h2 code, h3 code, h4 code, a code {
 }
 
 pre {
+  position: relative;
   background: var(--code-bg);
   color: var(--code-text);
   padding: 16px 18px;
@@ -700,6 +703,156 @@ pre code {
   padding: 0;
   font-size: 0.92em;
 }
+
+/* --- Copy-to-clipboard button on every <pre>. Ported verbatim from
+ * the BIDS Manager docs (script.js initCodeCopy + styles.css .code-copy).
+ * Frosted-glass chip in the top-right corner; flashes "Copied!" for
+ * 1.5 s on success and "Failed" otherwise. */
+.code-copy {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: var(--panel-glass-strong);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  border: 1px solid var(--border-glass);
+  color: var(--muted);
+  border-radius: 8px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0.7;
+  transition: opacity 180ms ease, color 160ms ease,
+              border-color 160ms ease, transform 160ms ease;
+}
+.code-copy svg {
+  width: 13px;
+  height: 13px;
+  stroke-width: 2;
+  fill: none;
+  stroke: currentColor;
+}
+pre:hover .code-copy,
+.code-copy:focus-visible {
+  opacity: 1;
+}
+.code-copy:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+.code-copy.is-copied {
+  color: var(--mint, var(--accent));
+  border-color: var(--mint, var(--accent));
+  opacity: 1;
+}
+.code-copy.is-failed {
+  color: var(--danger, #ff6b6b);
+  border-color: var(--danger, #ff6b6b);
+  opacity: 1;
+}
+
+/* --- Dataset / directory tree (replaces file-tree <pre><code> blocks).
+ * Ported from BIDS Manager docs (`.dataset-tree-row`). Folder rows get
+ * `.is-folder` (accent-coloured, bold name + optional chev). Depth is
+ * controlled by `.d1` / `.d2` / `.d3` / `.d4` classes. Optional `.meta`
+ * pill at the right for sizes / counts. */
+.dataset-tree {
+  padding: 14px 18px;
+  margin: 16px 0;
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 10px;
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--code-text);
+  overflow-x: auto;
+}
+.dataset-tree-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 4px;
+  white-space: nowrap;
+  flex-wrap: wrap;
+}
+.dataset-tree-row.d1 { padding-left: 22px; }
+.dataset-tree-row.d2 { padding-left: 44px; }
+.dataset-tree-row.d3 { padding-left: 66px; }
+.dataset-tree-row.d4 { padding-left: 88px; }
+.dataset-tree-row .chev {
+  display: inline-block;
+  width: 14px;
+  text-align: center;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.dataset-tree-row .name { color: var(--code-text); }
+.dataset-tree-row.is-folder .name {
+  color: var(--accent);
+  font-weight: 600;
+}
+.dataset-tree-row .note {
+  color: var(--muted);
+  font-style: italic;
+  margin-left: 8px;
+}
+.dataset-tree-row.is-blank { height: 8px; padding: 0; }
+.dataset-tree-row.is-heading {
+  color: var(--muted);
+  font-weight: 600;
+  margin-top: 6px;
+  padding: 4px;
+}
+
+/* --- Autoplay looping videos (used across the docs for short report
+ *     and GUI clips). All <video class="media-loop"> elements ship with
+ *     `autoplay muted loop playsinline` so they behave like GIFs. */
+video.media-loop,
+.media-figure video.media-loop {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+}
+
+/* Figure wrapper for screenshots + clips: rounds corners, subtle border,
+ * matches the look of inline code blocks. */
+.media-figure {
+  margin: 22px 0 18px;
+  text-align: center;
+}
+.media-figure img,
+.media-figure video {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.media-figure figcaption {
+  margin-top: 10px;
+  font-size: 0.88rem;
+  color: var(--muted);
+  text-align: center;
+}
+/* Side-by-side rows of two figures. */
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 18px;
+  margin: 22px 0 18px;
+}
+.media-grid .media-figure { margin: 0; }
 
 .code-label {
   display: inline-block;
@@ -745,15 +898,36 @@ tbody tr:last-child td { border-bottom: none; }
 
 /* ---------- Figures and screenshots ---------- */
 .figure {
-  margin: 22px 0 32px;
+  margin: 22px auto 32px;
   text-align: center;
+  /* Cap solo figures so they don't dominate the prose column. Inside
+     `.figure-row` the row sets its own grid columns and overrides this. */
+  max-width: 600px;
+  cursor: zoom-in;
+  transition: transform 180ms ease, box-shadow 180ms ease;
 }
+.figure:hover,
+.figure:focus-visible {
+  transform: translateY(-2px) scale(1.005);
+  outline: none;
+}
+/* Inside a grid row, each cell takes the column's width. */
+.figure-row > .figure { max-width: none; margin: 0; }
 
-.figure img {
+.figure img,
+.figure video {
   border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--bg-elev-2);
   box-shadow: var(--shadow-1);
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: auto;
+  /* Cap the tallest dimension too so portrait-ish PNGs don't tower
+     over wide screenshots in the same column. */
+  max-height: 60vh;
+  object-fit: contain;
   max-width: 100%;
 }
 
@@ -766,7 +940,9 @@ tbody tr:last-child td { border-bottom: none; }
 
 .figure-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  /* Bumped from 280px so 3-up rows wrap to 2+1 inside the narrow prose
+     column instead of squeezing every cell. */
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 18px;
   margin: 22px 0 28px;
 }
@@ -804,13 +980,28 @@ tbody tr:last-child td { border-bottom: none; }
   margin: 0;
 }
 
-/* ---------- Article body (content pages) ---------- */
-.article { padding: 48px 0 80px; }
-.article h2 { margin-top: 2.4em; font-size: 1.8rem; }
-.article h3 { margin-top: 1.8em; font-size: 1.25rem; color: var(--accent); }
-.article h4 { margin-top: 1.4em; }
-.article ul, .article ol { color: var(--text); }
-.article li { margin-bottom: 0.35em; }
+/* ---------- Prose typography (used by content pages) ---------- */
+/* Applied to `.prose` wrappers inside `.section` blocks. The previous
+   `.article` rules lived here; they were retargeted to `.prose` when
+   the content pages were split into one `<section>` per `<h2>` block. */
+.prose h2 { margin-top: 2.4em; font-size: 1.8rem; }
+.prose h3 {
+  margin-top: 2em;
+  margin-bottom: 0.55em;
+  font-size: 1.32rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  /* Pulled from the hero title gradient (the bottom blue stop), not
+     from `--accent` (which is the cyan used by the eyebrow "bubbles"
+     on the index page). */
+  color: var(--title-blue);
+}
+.prose h4 { margin-top: 1.4em; }
+.prose ul, .prose ol { color: var(--text); }
+.prose li { margin-bottom: 0.35em; }
+.prose > h2:first-child,
+.prose > h3:first-child,
+.prose > h4:first-child { margin-top: 0; }
 
 .anchor-jumplist {
   background: var(--card);
@@ -1047,18 +1238,18 @@ tbody tr:last-child td { border-bottom: none; }
 .article > p,
 .article > ul,
 .article > ol,
-.article > pre,
-.article > .figure,
-.article > .figure-row,
-.article > .table-wrap,
-.article > .card-grid,
-.article > .callout,
-.article > .anchor-jumplist {
+.prose > pre,
+.prose > .figure,
+.prose > .figure-row,
+.prose > .table-wrap,
+.prose > .card-grid,
+.prose > .callout,
+.prose > .anchor-jumplist {
   margin-left: auto;
   margin-right: auto;
   max-width: 78ch;
 }
-.article > pre { max-width: 82ch; }
+.prose > pre { max-width: 82ch; }
 .article > .figure,
 .article > .figure-row,
 .article > .table-wrap,
@@ -1068,28 +1259,22 @@ tbody tr:last-child td { border-bottom: none; }
    column. The article is centered with max-width 900px; this trick
    recentres the figure at viewport center and lets it grow up to
    1100px (or full viewport minus 48px of gutter). */
-.article > .workflow-figure {
-  position: relative;
-  left: 50%;
-  width: min(1100px, calc(100vw - 48px));
-  margin-left: calc(-1 * min(550px, calc(50vw - 24px)));
-  max-width: none;
-}
+/* The workflow figure lives inside `.prose` at the narrow prose width;
+   the "Expand" button opens a modal with a much larger version. The old
+   article-breakout rule is gone with the section refactor. */
 
-/* Scroll-reveal: sections fade up when scrolled into view. */
+/* Scroll-reveal: sections fade up when scrolled into view.
+   Verbatim port of the BIDS Manager docs rule. */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity .8s cubic-bezier(.2,.7,.2,1),
-              transform .8s cubic-bezier(.2,.7,.2,1);
-  will-change: opacity, transform;
+  transform: translateY(12px);
+  transition: opacity 600ms ease, transform 600ms ease;
 }
-.reveal.in-view {
+.reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
   .hero-shot { animation: none; opacity: 0.65; }
 }
 
@@ -1246,6 +1431,227 @@ tbody tr:last-child td { border-bottom: none; }
   width: 100%;
   position: relative;
 }
+
+/* Expand button anchored in the figure's top-right corner. Opens the
+   modal that re-hosts the same figure node so popover JS keeps working. */
+.workflow-expand-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel-glass);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(8px) saturate(140%);
+  transition: border-color 150ms ease, color 150ms ease, background 150ms ease;
+}
+.workflow-expand-btn:hover,
+.workflow-expand-btn:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  outline: none;
+}
+.workflow-expand-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Workflow modal. Fullscreen overlay with a dark backdrop; the same
+   .workflow-figure node is moved into .workflow-modal-body on open
+   and moved back to its original position on close (via a placeholder
+   comment marker), so the popover JS keeps working untouched. */
+.workflow-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.workflow-modal[hidden] { display: none; }
+
+.workflow-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+.workflow-modal-shell {
+  position: relative;
+  z-index: 1;
+  width: min(96vw, 1600px);
+  max-height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+
+.workflow-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+}
+.workflow-modal-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+.workflow-modal-close {
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  font-size: 26px;
+  line-height: 1;
+  padding: 4px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 150ms ease, background 150ms ease;
+}
+.workflow-modal-close:hover,
+.workflow-modal-close:focus-visible {
+  color: var(--accent);
+  background: var(--panel-glass);
+  outline: none;
+}
+
+.workflow-modal-body {
+  padding: 24px;
+  overflow: auto;
+  flex: 1;
+}
+.workflow-modal-body .workflow-figure {
+  margin: 0;
+  max-width: none;
+  width: 100%;
+}
+/* Hide the expand button while the figure is inside the modal. */
+.workflow-modal-body .workflow-expand-btn { display: none; }
+
+/* --- Generic media modal: click any .figure to expand it. The same
+ * shell as the workflow modal but the media node is CLONED rather than
+ * moved (so the original keeps playing in the page) and the caption
+ * text doubles as the explanation. */
+.media-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.media-modal[hidden] { display: none; }
+.media-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+.media-modal-shell {
+  position: relative;
+  z-index: 1;
+  width: min(96vw, 1500px);
+  max-height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+.media-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  z-index: 2;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  font-size: 28px;
+  line-height: 1;
+  padding: 4px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 150ms ease, background 150ms ease;
+}
+.media-modal-close:hover,
+.media-modal-close:focus-visible {
+  color: var(--accent);
+  background: var(--panel-glass);
+  outline: none;
+}
+.media-modal-body {
+  padding: 28px 28px 18px;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-height: 0;
+}
+.media-modal-body img,
+.media-modal-body video {
+  max-width: 100%;
+  max-height: 78vh;
+  height: auto;
+  width: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev-2);
+  box-shadow: var(--shadow-2);
+}
+.media-modal-caption {
+  padding: 14px 28px 22px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.96rem;
+  line-height: 1.55;
+  text-align: center;
+}
+.media-modal-caption[hidden] { display: none; }
+
+/* Small accent-tinted block at the bottom of each report tab panel
+ * pointing at the matching metric explanation on metrics.html. */
+.deep-dive-link {
+  margin: 22px 0 4px;
+  padding: 12px 16px;
+  background: var(--accent-soft);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  font-size: 0.94rem;
+}
+.deep-dive-link a {
+  font-weight: 600;
+  text-decoration: none;
+}
+.deep-dive-link a:hover { text-decoration: underline; }
 
 .workflow-diagram {
   display: block;

@@ -52,13 +52,27 @@
     swapThemedImages(theme);
   }
 
-  // Any <img data-light="..."> swaps its src between the dark version
-  // (original src, cached on first call) and the light version on toggle.
+  // Theme-aware media swap. Two opt-in shapes:
+  //   <img   data-light="...">  swaps `src` between the dark default
+  //                             and the named light variant.
+  //   <video data-light-src="..."> same idea for autoplay loops; we
+  //                             cache the original src, swap on toggle,
+  //                             and re-play so the loop keeps running.
   function swapThemedImages(theme) {
     document.querySelectorAll("img[data-light]").forEach((img) => {
       if (!img.dataset.dark) img.dataset.dark = img.getAttribute("src");
       const target = theme === "light" ? img.dataset.light : img.dataset.dark;
       if (img.getAttribute("src") !== target) img.setAttribute("src", target);
+    });
+    document.querySelectorAll("video[data-light-src]").forEach((vid) => {
+      if (!vid.dataset.darkSrc) vid.dataset.darkSrc = vid.getAttribute("src");
+      const target = theme === "light" ? vid.dataset.lightSrc : vid.dataset.darkSrc;
+      if (vid.getAttribute("src") !== target) {
+        const wasPlaying = !vid.paused;
+        vid.setAttribute("src", target);
+        vid.load();
+        if (wasPlaying) vid.play().catch(() => { /* autoplay may be blocked */ });
+      }
     });
   }
 
@@ -236,14 +250,18 @@
 
   // -------------------------------------------------------------------
   // Section reveal-on-scroll: any element with class .reveal fades up
-  // when it scrolls into view. Runs once per element (we unobserve).
+  // when it scrolls into view. Same shape as the BIDS Manager docs
+  // observer: a single threshold, no rootMargin, no pre-reveal pass.
+  // Elements already inside the viewport at page load get the class
+  // synchronously the first time the observer fires for them, so the
+  // first-paint sections don't flash.
   // -------------------------------------------------------------------
   function initRevealObserver() {
     const targets = document.querySelectorAll(".reveal");
     if (!targets.length) return;
 
     if (!("IntersectionObserver" in window)) {
-      targets.forEach((el) => el.classList.add("in-view"));
+      targets.forEach((el) => el.classList.add("is-visible"));
       return;
     }
 
@@ -251,29 +269,15 @@
       (entries, observer) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            e.target.classList.add("in-view");
+            e.target.classList.add("is-visible");
             observer.unobserve(e.target);
           }
         });
       },
-      // Trigger as soon as ANY pixel of the target is within 120px of
-      // the viewport edges. Critical for very tall articles where a
-      // 5%-of-element threshold may never be reached.
-      { rootMargin: "120px 0px 120px 0px", threshold: 0 },
+      { threshold: 0.12 },
     );
 
-    targets.forEach((el) => {
-      const rect = el.getBoundingClientRect();
-      // If the element is already in (or close to) the viewport at
-      // page load, reveal immediately and skip the observer. This
-      // avoids leaving the main article stuck at opacity 0 when its
-      // top sits just below a tall hero.
-      if (rect.top < window.innerHeight + 120 && rect.bottom > -120) {
-        el.classList.add("in-view");
-      } else {
-        io.observe(el);
-      }
-    });
+    targets.forEach((el) => io.observe(el));
   }
 
   // -------------------------------------------------------------------
@@ -526,6 +530,201 @@
     });
   }
 
+  // -------------------------------------------------------------------
+  // Code copy-to-clipboard. Ported verbatim from the BIDS Manager docs.
+  // For every <pre>, snapshot its plain-text contents BEFORE the button
+  // is appended (so the button label is never copied along with the
+  // code) and inject a small "Copy" chip. Click copies via the async
+  // Clipboard API with a document.execCommand fallback for older
+  // browsers / non-secure contexts. Flashes "Copied!" for 1.5 s.
+  // -------------------------------------------------------------------
+  function initCodeCopy() {
+    const COPY_ICON = `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="9" y="9" width="12" height="12" rx="2"/>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+      </svg>`;
+
+    document.querySelectorAll("pre").forEach((pre) => {
+      if (pre.dataset.copyReady) return;
+      pre.dataset.copyReady = "1";
+
+      pre.dataset.copyText = pre.textContent;
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "code-copy";
+      btn.setAttribute("aria-label", "Copy code to clipboard");
+      btn.innerHTML = `${COPY_ICON}<span class="code-copy-label">Copy</span>`;
+      pre.appendChild(btn);
+
+      btn.addEventListener("click", () => copyFromPre(pre, btn));
+    });
+
+    async function copyFromPre(pre, btn) {
+      const text = pre.dataset.copyText || "";
+      let ok = false;
+      if (navigator.clipboard?.writeText) {
+        try { await navigator.clipboard.writeText(text); ok = true; }
+        catch { /* fall through to legacy path */ }
+      }
+      if (!ok) ok = legacyCopy(text);
+      flashCopy(btn, ok);
+    }
+
+    function legacyCopy(text) {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "absolute";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      let ok = false;
+      try { ok = document.execCommand("copy"); } catch { ok = false; }
+      document.body.removeChild(ta);
+      return ok;
+    }
+
+    function flashCopy(btn, ok) {
+      const label = btn.querySelector(".code-copy-label");
+      if (!label) return;
+      label.textContent = ok ? "Copied!" : "Failed";
+      btn.classList.toggle("is-copied", ok);
+      btn.classList.toggle("is-failed", !ok);
+      setTimeout(() => {
+        label.textContent = "Copy";
+        btn.classList.remove("is-copied", "is-failed");
+      }, 1500);
+    }
+  }
+
+  // -------------------------------------------------------------------
+  // Generic media modal: every `.figure` (except the workflow figure,
+  // which has its own custom modal) becomes click-to-expand. The
+  // figure's media (img / video) is CLONED into the modal so the
+  // original keeps playing in the page. The figcaption text shows
+  // below the large media as the explanation.
+  // -------------------------------------------------------------------
+  function initMediaModal() {
+    if (document.querySelector("[data-media-modal]")) return;
+
+    const modal = document.createElement("div");
+    modal.className = "media-modal";
+    modal.hidden = true;
+    modal.setAttribute("data-media-modal", "");
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
+    modal.innerHTML = `
+      <div class="media-modal-backdrop" data-media-close></div>
+      <div class="media-modal-shell">
+        <button class="media-modal-close" type="button"
+                data-media-close aria-label="Close">&times;</button>
+        <div class="media-modal-body" data-media-modal-body></div>
+        <div class="media-modal-caption" data-media-modal-caption></div>
+      </div>`;
+    document.body.appendChild(modal);
+
+    const body = modal.querySelector("[data-media-modal-body]");
+    const captionEl = modal.querySelector("[data-media-modal-caption]");
+
+    function open(figure) {
+      const media = figure.querySelector("img, video");
+      if (!media) return;
+      const clone = media.cloneNode(true);
+      if (clone.tagName === "VIDEO") {
+        clone.muted = true;
+        clone.loop = true;
+        clone.autoplay = true;
+        clone.setAttribute("playsinline", "");
+      }
+      body.replaceChildren(clone);
+      if (clone.tagName === "VIDEO") {
+        clone.play().catch(() => { /* autoplay may be blocked */ });
+      }
+      const cap = figure.querySelector("figcaption");
+      const txt = cap ? cap.textContent.trim() : "";
+      captionEl.textContent = txt;
+      captionEl.hidden = !txt;
+      modal.hidden = false;
+      document.body.style.overflow = "hidden";
+    }
+
+    function close() {
+      body.replaceChildren();
+      modal.hidden = true;
+      document.body.style.overflow = "";
+    }
+
+    modal.querySelectorAll("[data-media-close]").forEach((el) => {
+      el.addEventListener("click", close);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !modal.hidden) close();
+    });
+
+    document.querySelectorAll(".figure").forEach((figure) => {
+      // Skip the workflow figure: it owns its own modal + popovers.
+      if (figure.closest("[data-workflow]")) return;
+      figure.setAttribute("tabindex", "0");
+      figure.setAttribute("role", "button");
+      figure.setAttribute("aria-label", "Expand figure");
+      figure.addEventListener("click", (e) => {
+        // Allow clicks on links inside the caption to navigate normally.
+        if (e.target.closest("a")) return;
+        open(figure);
+      });
+      figure.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          open(figure);
+        }
+      });
+    });
+  }
+
+  // -------------------------------------------------------------------
+  // Workflow modal (intro.html). The Expand button moves the workflow
+  // figure node into the modal body on open, then back to its original
+  // position on close (via a placeholder comment marker). The popover
+  // JS keeps working untouched because the DOM nodes are the same.
+  // -------------------------------------------------------------------
+  function initWorkflowModal() {
+    const expandBtn = document.querySelector("[data-workflow-expand]");
+    const modal     = document.querySelector("[data-workflow-modal]");
+    if (!expandBtn || !modal) return;
+    const host    = modal.querySelector("[data-workflow-modal-host]");
+    const figure  = document.querySelector(".workflow-figure");
+    if (!host || !figure) return;
+
+    const placeholder = document.createComment("workflow-figure-anchor");
+
+    function open() {
+      figure.parentNode.insertBefore(placeholder, figure);
+      host.appendChild(figure);
+      modal.removeAttribute("hidden");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+    function close() {
+      if (placeholder.parentNode) {
+        placeholder.parentNode.insertBefore(figure, placeholder);
+        placeholder.remove();
+      }
+      modal.setAttribute("hidden", "");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    expandBtn.addEventListener("click", open);
+    modal.querySelectorAll("[data-workflow-close]").forEach((el) => {
+      el.addEventListener("click", close);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !modal.hasAttribute("hidden")) close();
+    });
+  }
+
   ready(() => {
     loadPartials().then(() => {
       initThemeToggle();
@@ -534,8 +733,11 @@
       initPageToc();
       initRevealObserver();
       initWorkflowDiagram();
+      initWorkflowModal();
       initInstallPipeline();
       initTabs();
+      initCodeCopy();
+      initMediaModal();
     });
   });
 })();
