@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" href="assets/brand/app-icon-256.png">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="page-reports">
   <div data-include="header"></div>
 
   <main>
@@ -642,7 +642,11 @@
       <figure class="figure">
         <img src="assets/reports/group-qa/dataset_qa_header.png"
              alt="Dataset-level QA report header">
-        <figcaption>The dataset-level QA report header.</figcaption>
+        <figcaption>Header of the dataset-level QA report:
+          dataset name, number of subjects / recordings included in
+          the aggregation, sensor systems present, and the analysis
+          profile / attempt used. Use it to confirm you are looking
+          at the right cohort before reading any distribution.</figcaption>
       </figure>
 
       <h3>Tab hierarchy</h3>
@@ -660,12 +664,23 @@
         <figure class="figure">
           <img src="assets/reports/group-qa/dataset_qa_channel_type_tabs.png"
                alt="Channel-type tabs">
-          <figcaption>Channel-type tabs (Combined / MAG / GRAD / EEG).</figcaption>
+          <figcaption>Channel-type tabs at the top of the report:
+            <em>Combined</em> (mag + grad together), <em>MAG</em>,
+            <em>GRAD</em>, and <em>EEG</em> when present. Switching
+            tabs re-scopes every section below to that channel type;
+            a recording's quality often differs sharply between
+            sensor types, so check each before drawing
+            conclusions.</figcaption>
         </figure>
         <figure class="figure">
           <img src="assets/reports/group-qa/dataset_main_tabs.png"
                alt="Dataset section tabs">
-          <figcaption>The five section tabs.</figcaption>
+          <figcaption>The five section tabs that organise the QA
+            report: Summary distributions, Cohort overview,
+            Metrics across tasks, Metric details, and ECDFs. Each
+            tab answers a different question; the
+            <a href="#reading-order">practical reading order</a>
+            below covers when to use which.</figcaption>
         </figure>
       </div>
 
@@ -690,18 +705,31 @@
           <figure class="figure">
             <img src="assets/reports/group-qa/summary_distributions_tab_violin_box_plots_controls.png"
                  alt="Violin / box plot controls">
-            <figcaption>Toggle between violin and box, switch measure (median, mean, upper tail).</figcaption>
+            <figcaption>Plot-type and summary controls: flip between
+              violin (full shape of the distribution) and box (median
+              + IQR + whiskers), and switch the per-recording summary
+              statistic between <em>Median</em>, <em>Mean</em>, and
+              <em>Upper Tail</em>. Upper-tail is the most useful for
+              spotting outliers driven by a few bad epochs.</figcaption>
           </figure>
           <div class="figure-row">
             <figure class="figure">
               <video class="media-loop" autoplay muted loop playsinline
                      src="assets/reports/group-qa/summary_distributions_tab_violins_part_1.mp4"></video>
-              <figcaption>Per-metric violin distributions (part 1).</figcaption>
+              <figcaption>Per-metric violin distributions (first
+                group of metrics). Each violin is the spread of one
+                metric across all recordings in the dataset; each dot
+                inside is one recording (hover for subject + run
+                identity). Long thin tails point at a few outlier
+                recordings dragging the cohort down.</figcaption>
             </figure>
             <figure class="figure">
               <video class="media-loop" autoplay muted loop playsinline
                      src="assets/reports/group-qa/summary_distributions_tab_violins_part_2.mp4"></video>
-              <figcaption>Per-metric violin distributions (part 2).</figcaption>
+              <figcaption>Per-metric violin distributions (remaining
+                metrics). Same grammar as part 1; the split into two
+                parts is purely cosmetic so the page isn't crushed
+                horizontally.</figcaption>
             </figure>
           </div>
           <figure class="figure">
@@ -728,20 +756,34 @@
           <figure class="figure">
             <img src="assets/reports/group-qa/dataset_overview_tab_general_information.png"
                  alt="Dataset general information">
-            <figcaption>General dataset info: subject count, task list, sampling rate.</figcaption>
+            <figcaption>General dataset metadata: number of subjects
+              and recordings, the list of distinct tasks present,
+              sampling rate range, and the channel-type breakdown.
+              Use it as a sanity check that you're aggregating the
+              cohort you think you are (e.g. only the resting-state
+              runs).</figcaption>
           </figure>
           <figure class="figure">
             <video class="media-loop" autoplay muted loop playsinline
                    src="assets/reports/group-qa/dataset_overview_tab_ranking_table.mp4"></video>
-            <figcaption>Subject ranking by aggregated quality footprint.</figcaption>
+            <figcaption>Subject ranking table, sorted by aggregated
+              quality footprint (a normalised composite of every
+              metric). Worst recordings at the top. Click any row to
+              jump to that subject's subject-level QA report; this
+              is the canonical entry point for "which recordings
+              should I look at first?".</figcaption>
           </figure>
           <figure class="figure">
             <video class="media-loop" autoplay muted loop playsinline
                    src="assets/reports/group-qa/dataset_overview_tab_dataset_matrices.mp4"></video>
             <figcaption>Recording x metric and subject x metric
-              matrices. A bright vertical stripe = a single bad
-              recording; a bright horizontal stripe = a metric that
-              is systematically degraded across the cohort.</figcaption>
+              matrices. Each cell is a normalised metric value
+              colour-coded by severity. <strong>Vertical stripe</strong>
+              of bright cells = one bad recording dragging multiple
+              metrics down; <strong>horizontal stripe</strong> = a
+              specific metric that is systematically degraded across
+              the cohort (often a site-wide issue like mains or
+              shielding).</figcaption>
           </figure>
           <p class="deep-dive-link">
             &rarr; Reference: the
@@ -782,18 +824,34 @@
             <figure class="figure">
               <img src="assets/reports/group-qa/dataset_metric_details_tab_subtabs.png"
                    alt="Metric details subtabs">
-              <figcaption>Per-metric subtabs.</figcaption>
+              <figcaption>One subtab per metric inside this section.
+                Switching subtab re-scopes the controls and plots
+                below to that metric; STD / PtP / PSD have the
+                richest sub-views since they support both
+                channel-per-epoch and epoch-per-channel
+                perspectives.</figcaption>
             </figure>
             <figure class="figure">
               <img src="assets/reports/group-qa/dataset_metric_details_tab_distribution_plots_controls.png"
                    alt="Distribution plot controls">
-              <figcaption>Distribution-plot controls (figure type + measure).</figcaption>
+              <figcaption>Distribution-plot controls: pick the
+                <em>figure type</em> (boxplot, violin, histogram,
+                density) and the <em>summary measure</em>
+                (median / mean / upper tail). Toggle
+                <em>Raw</em> vs <em>Normalized</em> to compare
+                across conditions without letting absolute scale
+                change the ranking.</figcaption>
             </figure>
           </div>
           <figure class="figure">
             <video class="media-loop" autoplay muted loop playsinline
                    src="assets/reports/group-qa/dataset_metric_details_tab_distribution_plots.mp4"></video>
-            <figcaption>Distribution plots, cycling through measures and figure types.</figcaption>
+            <figcaption>Distribution plots, cycling through the
+              available figure types and summary measures for one
+              metric. The same data, four lenses: long tails are
+              easiest to spot on the box, modality of the
+              distribution is easiest on the violin, exact density
+              shape on the histogram / density curve.</figcaption>
           </figure>
           <div class="figure-row">
             <figure class="figure">
@@ -829,20 +887,29 @@
             <figure class="figure">
               <img src="assets/reports/group-qa/dataset_cummulative_distributions_tab_std.png"
                    alt="STD ECDF">
-              <figcaption>STD ECDF. See the
-                <a href="metrics.html#std">STD metric</a> for the
-                exact quantity on the X axis.</figcaption>
+              <figcaption>STD ECDF across all recordings. Y axis is
+                the cumulative fraction of recordings; X axis is the
+                per-recording STD summary. Read "what % of recordings
+                fall below a candidate threshold" directly off the
+                curve.
+                <a href="metrics.html#std">STD metric reference.</a></figcaption>
             </figure>
             <figure class="figure">
               <img src="assets/reports/group-qa/dataset_cummulative_distributions_tab_ptp.png"
                    alt="PtP ECDF">
-              <figcaption>PtP ECDF.
+              <figcaption>PtP ECDF. Same grammar as STD, but on
+                peak-to-peak amplitude. PtP ECDF typically has a
+                heavier right tail than STD because bursts inflate
+                PtP more than STD.
                 <a href="metrics.html#ptp">PtP metric reference.</a></figcaption>
             </figure>
             <figure class="figure">
               <img src="assets/reports/group-qa/dataset_cummulative_distributions_tab_psd.png"
                    alt="PSD ECDF">
-              <figcaption>PSD-noise-burden ECDF.
+              <figcaption>PSD-noise-burden ECDF. A pronounced "knee"
+                far to the right typically reflects a subset of
+                recordings with strong mains or environmental
+                contamination.
                 <a href="metrics.html#psd">PSD metric reference.</a></figcaption>
             </figure>
           </div>
@@ -850,19 +917,29 @@
             <figure class="figure">
               <img src="assets/reports/group-qa/dataset_cummulative_distributions_tab_ecg.png"
                    alt="ECG ECDF">
-              <figcaption>ECG-correlation ECDF.
+              <figcaption>ECG-correlation ECDF. The X axis is the
+                fraction of channels with
+                <code>abs(corr_coef)</code> above the operational
+                threshold; the curve answers "how much of the cohort
+                has more than X % cardiac-affected channels?".
                 <a href="metrics.html#ecg">ECG metric reference.</a></figcaption>
             </figure>
             <figure class="figure">
               <img src="assets/reports/group-qa/dataset_cummulative_distributions_tab_eog.png"
                    alt="EOG ECDF">
-              <figcaption>EOG-correlation ECDF.
+              <figcaption>EOG-correlation ECDF. Same grammar as the
+                ECG version on the ocular metric. EOG often shows a
+                steeper curve because frontal sensors dominate the
+                affected set in most recordings.
                 <a href="metrics.html#eog">EOG metric reference.</a></figcaption>
             </figure>
             <figure class="figure">
               <img src="assets/reports/group-qa/dataset_cummulative_distributions_tab_muscle.png"
                    alt="Muscle ECDF">
-              <figcaption>Muscle-burden ECDF.
+              <figcaption>Muscle-burden ECDF. X axis is the
+                per-recording muscle event ratio; recordings far to
+                the right are the ones with the most jaw / neck
+                artifacts.
                 <a href="metrics.html#muscle">Muscle metric reference.</a></figcaption>
             </figure>
           </div>
@@ -892,7 +969,11 @@
       <figure class="figure">
         <img src="assets/reports/group-qc/dataset_qc_header.png"
              alt="Dataset-level QC report header">
-        <figcaption>The dataset-level QC report header.</figcaption>
+        <figcaption>Header of the dataset-level QC report: dataset
+          name, GQI attempt number used to populate every chart on
+          this page, and the analysis profile in effect. Different
+          attempts can produce different decisions on the same data,
+          so always confirm the attempt before drawing conclusions.</figcaption>
       </figure>
 
       <h3>Dataset overview</h3>
@@ -900,12 +981,23 @@
         <figure class="figure">
           <img src="assets/reports/group-qc/dataset_overview_tab_general_information.png"
                alt="QC dataset general information">
-          <figcaption>General information about the cohort.</figcaption>
+          <figcaption>General cohort information: subject count,
+            recording count, tasks, channel-type breakdown. The QC
+            view also surfaces the GQI parameter snapshot
+            (<code>global_quality_index_&lt;n&gt;.ini</code>) tied
+            to the current attempt, so the decision criteria are
+            visible alongside the data.</figcaption>
         </figure>
         <figure class="figure">
           <img src="assets/reports/group-qc/dataset_overview_tab_metrics_availability.png"
                alt="Metrics availability matrix">
-          <figcaption>Per-recording metrics availability.</figcaption>
+          <figcaption>Per-recording metrics-availability matrix.
+            Each row is a recording; each column is a QC metric.
+            Blank cells flag a metric the QC layer could not compute
+            for that recording (e.g. Head on EEG-only data, ECG when
+            the reference channel failed the sanity check) and is
+            therefore neutralised in the GQI for that
+            row.</figcaption>
         </figure>
       </div>
 
@@ -943,12 +1035,19 @@
         <figure class="figure">
           <img src="assets/reports/group-qc/dataset_qc_channel_type_tabs.png"
                alt="QC channel-type tabs">
-          <figcaption>Channel-type tabs.</figcaption>
+          <figcaption>Channel-type tabs at the top of the QC report
+            (Combined / MAG / GRAD / EEG). The GQI tab uses the
+            combined score; the per-metric tabs let you check
+            whether a problem is sensor-type specific (e.g.
+            magnetometers worse than gradiometers).</figcaption>
         </figure>
         <figure class="figure">
           <img src="assets/reports/group-qc/dataset_qc_main_tabs.png"
                alt="QC main tabs">
-          <figcaption>Per-metric main tabs.</figcaption>
+          <figcaption>Per-metric tabs: GQI (the composite) followed
+            by each component metric (STD / PtP / PSD / ECG / EOG /
+            Muscle). The drill-down workflow is "start at GQI, then
+            open the tab matching the dominant penalty family".</figcaption>
         </figure>
       </div>
 
@@ -959,23 +1058,42 @@
       <figure class="figure">
         <img src="assets/reports/group-qc/dataset_qc_box_violin_plots_controls.png"
              alt="QC box / violin plot controls">
-        <figcaption>Toggle violin or box; pick the measure and bucket.</figcaption>
+        <figcaption>Plot-type and measure controls for the QC
+          distributions. Toggle between violin and box; switch the
+          per-recording aggregate (Median / Mean / Upper Tail).
+          Upper-tail is the most diagnostic for picking GQI
+          thresholds because it answers "how bad are my worst
+          recordings?" rather than "how is the median doing?".</figcaption>
       </figure>
       <figure class="figure">
         <video class="media-loop" autoplay muted loop playsinline
                src="assets/reports/group-qc/dataset_qc_summary_distribution_tab_GQI.mp4"></video>
-        <figcaption>GQI distribution across the cohort.</figcaption>
+        <figcaption>GQI score distribution across the cohort. Each
+          dot is a recording; hover for subject + task. The shape of
+          the violin tells you whether the dataset is uniformly
+          good (a tight pile near 100), bimodal (two clusters
+          suggest a subgroup with consistent problems), or has a
+          long low-quality tail (a few bad recordings dragging the
+          mean down).</figcaption>
       </figure>
       <div class="figure-row">
         <figure class="figure">
           <video class="media-loop" autoplay muted loop playsinline
                  src="assets/reports/group-qc/dataset_qc_summary_distribution_tab_metrics_part_1.mp4"></video>
-          <figcaption>Per-metric QC distributions (part 1).</figcaption>
+          <figcaption>Per-metric QC distributions (first group).
+            These are the components that feed the GQI: noisy /
+            flat channel %, high-correlation channel %, muscle
+            event ratio, PSD noise burden %. The dotted line on each
+            shows the threshold the current attempt is using; bars
+            beyond it are the recordings being penalised.</figcaption>
         </figure>
         <figure class="figure">
           <video class="media-loop" autoplay muted loop playsinline
                  src="assets/reports/group-qc/dataset_qc_summary_distribution_tab_metric_part2.mp4"></video>
-          <figcaption>Per-metric QC distributions (part 2).</figcaption>
+          <figcaption>Per-metric QC distributions (remaining
+            metrics). Same grammar as part 1; pairing the two views
+            shows you whether one penalty family is dominating the
+            GQI more than its weight suggests it should.</figcaption>
         </figure>
       </div>
 
@@ -987,12 +1105,21 @@
       <figure class="figure">
         <video class="media-loop" autoplay muted loop playsinline
                src="assets/reports/group-qc/dataset_qc_metric_details_tab_metrics_across_tasks.mp4"></video>
-        <figcaption>QC metric trajectories across tasks.</figcaption>
+        <figcaption>QC metric trajectories across tasks: one line
+          per subject, dark line for the cohort median. Use it to
+          decide whether a metric should have a different threshold
+          for different tasks (e.g. muscle artifacts naturally
+          higher in a speech production task than in resting
+          state).</figcaption>
       </figure>
       <figure class="figure">
         <img src="assets/reports/group-qc/dataset_qc_metric_details_per_task-metric_subject_ranking.png"
              alt="Per-task subject ranking">
-        <figcaption>Subject ranking by metric, worst first.</figcaption>
+        <figcaption>Subject ranking table per task and metric,
+          worst at the top. Same identity as the QA ranking but
+          scoped to the active metric tab; this is the table you
+          screenshot for a meeting when you need to justify
+          dropping specific recordings.</figcaption>
       </figure>
 
       <h3>Explore the metric tabs</h3>
@@ -1028,10 +1155,16 @@
           <figure class="figure">
             <video class="media-loop" autoplay muted loop playsinline
                    src="assets/reports/group-qc/dataset_qc_metric_details_per_task_GQI.mp4"></video>
-            <figcaption>GQI trajectory across tasks per subject.
-              Crossing lines = subjects whose relative rank changes
-              between tasks; flat low lines = consistently
-              low-quality recordings.</figcaption>
+            <figcaption>GQI trajectory across tasks, per subject.
+              Each line is one subject across their tasks.
+              <strong>Crossing lines</strong> = subjects whose
+              relative rank changes between tasks (often a
+              condition-driven issue: same brain, different quality).
+              <strong>Flat low lines</strong> = consistently
+              low-quality recordings to consider dropping entirely.
+              <strong>Wide spread</strong> at one task = the cohort
+              is heterogeneous on that task and may need its own
+              threshold.</figcaption>
           </figure>
           <p class="deep-dive-link">
             &rarr; Deep dive:
@@ -1048,9 +1181,13 @@
           <figure class="figure">
             <video class="media-loop" autoplay muted loop playsinline
                    src="assets/reports/group-qc/dataset_qc_metric_details_per_task_std.mp4"></video>
-            <figcaption>Per-task STD QC trajectory: how the
-              noisy / flat channel percentage shifts across the
-              tasks of the recording.</figcaption>
+            <figcaption>Per-task STD QC trajectory: one line per
+              subject. Y axis is the noisy / flat channel percentage.
+              A sustained shift up at a particular task (across many
+              subjects) typically means the task induces a specific
+              artifact &mdash; jaw movement during speech, eye
+              motion during reading, etc. &mdash; rather than
+              hardware drift.</figcaption>
           </figure>
           <p class="deep-dive-link">
             &rarr; Deep dive:
@@ -1064,7 +1201,13 @@
           <figure class="figure">
             <video class="media-loop" autoplay muted loop playsinline
                    src="assets/reports/group-qc/dataset_qc_metric_details_per_task_ptp.mp4"></video>
-            <figcaption>Per-task PtP QC trajectory.</figcaption>
+            <figcaption>Per-task PtP QC trajectory. Burst-driven
+              artifacts (e.g. occasional motion spikes) hit PtP
+              harder than STD because PtP picks up the single worst
+              excursion in each epoch. Compare with the STD tab: a
+              task that elevates PtP but not STD is a task with
+              transient bursts rather than uniformly noisy
+              data.</figcaption>
           </figure>
           <p class="deep-dive-link">
             &rarr; Deep dive:

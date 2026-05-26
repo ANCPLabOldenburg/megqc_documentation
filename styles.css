@@ -1637,6 +1637,187 @@ tbody tr:last-child td { border-bottom: none; }
 }
 .media-modal-caption[hidden] { display: none; }
 
+/* =====================================================================
+ * Glass-bubble + shatter effect for report-section figures.
+ * Scoped to <body class="page-reports">.
+ *
+ * Idle:  every figure's media sits inside a `.media-frame` wrapper
+ *        with a top-light glass highlight, a subtle inner ring, and
+ *        a soft outer glow.
+ * Click: JS injects 6 clip-path shards inside the frame, adds
+ *        `.is-shattering`, and waits ~380 ms for the animation
+ *        before the existing media modal opens.
+ * ===================================================================== */
+
+.page-reports .media-frame {
+  position: relative;
+  display: inline-block;
+  border-radius: 12px;
+  overflow: hidden;
+  vertical-align: top;
+  max-width: 100%;
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.32),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+  transition: box-shadow 220ms ease, transform 220ms ease;
+}
+.page-reports .figure:hover .media-frame,
+.page-reports .figure:focus-visible .media-frame {
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 0 28px rgba(79, 195, 247, 0.22);
+}
+[data-theme="light"] .page-reports .media-frame {
+  box-shadow:
+    0 12px 28px rgba(15, 25, 40, 0.14),
+    0 0 0 1px rgba(15, 25, 40, 0.06);
+}
+[data-theme="light"] .page-reports .figure:hover .media-frame,
+[data-theme="light"] .page-reports .figure:focus-visible .media-frame {
+  box-shadow:
+    0 18px 42px rgba(15, 25, 40, 0.18),
+    0 0 0 1px rgba(15, 25, 40, 0.10),
+    0 0 28px rgba(10, 127, 196, 0.18);
+}
+
+/* Media inside the frame: drop the per-element border so the frame's
+   own ring shows cleanly. */
+.page-reports .media-frame > img,
+.page-reports .media-frame > video {
+  display: block;
+  border: 0;
+  border-radius: inherit;
+  box-shadow: none;
+  margin: 0;
+  width: 100%;
+  height: auto;
+  background: var(--bg-elev-2);
+  transition: transform 380ms cubic-bezier(.2,.7,.2,1),
+              opacity   380ms cubic-bezier(.2,.7,.2,1),
+              filter    380ms cubic-bezier(.2,.7,.2,1);
+}
+
+/* Top-light highlight: the "glass surface" sheen. */
+.page-reports .media-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(180deg,
+      rgba(255, 255, 255, 0.18) 0%,
+      rgba(255, 255, 255, 0.04) 28%,
+      rgba(255, 255, 255, 0)    55%),
+    radial-gradient(ellipse 60% 35% at 22% 0%,
+      rgba(255, 255, 255, 0.28),
+      rgba(255, 255, 255, 0) 65%);
+  z-index: 3;
+  transition: opacity 220ms ease;
+  mix-blend-mode: screen;
+}
+
+/* Inner ring + bottom-edge bloom: more depth. */
+.page-reports .media-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+    inset 0 -28px 48px -28px rgba(255, 255, 255, 0.08);
+  z-index: 3;
+  transition: opacity 220ms ease;
+}
+[data-theme="light"] .page-reports .media-frame::after {
+  box-shadow:
+    inset 0 0 0 1px rgba(15, 25, 40, 0.12),
+    inset 0 -28px 48px -28px rgba(15, 25, 40, 0.05);
+}
+
+.page-reports .figure:hover .media-frame::before,
+.page-reports .figure:focus-visible .media-frame::before {
+  background:
+    linear-gradient(180deg,
+      rgba(255, 255, 255, 0.26) 0%,
+      rgba(255, 255, 255, 0.06) 28%,
+      rgba(255, 255, 255, 0)    55%),
+    radial-gradient(ellipse 60% 35% at 22% 0%,
+      rgba(255, 255, 255, 0.38),
+      rgba(255, 255, 255, 0) 65%);
+}
+
+/* Shatter shards injected on click. */
+.page-reports .media-frame .glass-shards {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.page-reports .media-frame .shard {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.65),
+    rgba(255, 255, 255, 0.15));
+  opacity: 0;
+  will-change: transform, opacity;
+  mix-blend-mode: screen;
+}
+.page-reports .media-frame .shard.s1 { clip-path: polygon(0   0,   55% 0,    48% 50%, 0    42%); }
+.page-reports .media-frame .shard.s2 { clip-path: polygon(55% 0,   100% 0,   100% 36%, 48% 50%); }
+.page-reports .media-frame .shard.s3 { clip-path: polygon(100% 36%, 100% 100%, 62% 100%, 48% 50%); }
+.page-reports .media-frame .shard.s4 { clip-path: polygon(62% 100%, 0   100%, 0   72%,  48% 50%); }
+.page-reports .media-frame .shard.s5 { clip-path: polygon(0   72%, 0   42%,  48% 50%); }
+.page-reports .media-frame .shard.s6 { clip-path: polygon(30% 25%, 70% 35%,  60% 65%,  35% 60%); }
+
+/* Default outward trajectory per shard (overridden per-shard below). */
+.page-reports .media-frame.is-shattering .shard {
+  animation: shard-fly 380ms cubic-bezier(.4, 0, .2, 1) forwards;
+}
+.page-reports .media-frame.is-shattering .shard.s1 { --tx: -60px; --ty: -48px; --rot: -22deg; animation-delay:   0ms; }
+.page-reports .media-frame.is-shattering .shard.s2 { --tx:  64px; --ty: -54px; --rot:  18deg; animation-delay:  20ms; }
+.page-reports .media-frame.is-shattering .shard.s3 { --tx:  72px; --ty:  56px; --rot:  24deg; animation-delay:  40ms; }
+.page-reports .media-frame.is-shattering .shard.s4 { --tx: -68px; --ty:  60px; --rot: -20deg; animation-delay:  10ms; }
+.page-reports .media-frame.is-shattering .shard.s5 { --tx: -30px; --ty: -24px; --rot: -10deg; animation-delay:  60ms; }
+.page-reports .media-frame.is-shattering .shard.s6 { --tx:  18px; --ty:  10px; --rot:   8deg; animation-delay:  30ms; }
+
+@keyframes shard-fly {
+  0%   { opacity: 0;    transform: translate(0, 0) rotate(0deg); }
+  18%  { opacity: 0.95; }
+  100% { opacity: 0;    transform: translate(var(--tx, 0), var(--ty, 0)) rotate(var(--rot, 0)); }
+}
+
+/* Media itself: flash brighter then fade behind the shards. */
+.page-reports .media-frame.is-shattering > img,
+.page-reports .media-frame.is-shattering > video {
+  animation: media-burst 380ms cubic-bezier(.4, 0, .2, 1) forwards;
+}
+@keyframes media-burst {
+  0%   { transform: scale(1);    opacity: 1; filter: brightness(1); }
+  35%  { transform: scale(1.04); opacity: 1; filter: brightness(1.4); }
+  100% { transform: scale(0.94); opacity: 0; filter: brightness(1); }
+}
+
+/* Glass highlight collapses as the shatter starts. */
+.page-reports .media-frame.is-shattering::before,
+.page-reports .media-frame.is-shattering::after {
+  opacity: 0;
+  transition: opacity 120ms ease-out;
+}
+
+/* Reduced-motion: no shards, no burst, just open the modal. */
+@media (prefers-reduced-motion: reduce) {
+  .page-reports .media-frame.is-shattering .shard { animation: none; opacity: 0; }
+  .page-reports .media-frame.is-shattering > img,
+  .page-reports .media-frame.is-shattering > video { animation: none; opacity: 1; }
+}
+
 /* Small accent-tinted block at the bottom of each report tab panel
  * pointing at the matching metric explanation on metrics.html. */
 .deep-dive-link {

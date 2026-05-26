@@ -600,11 +600,73 @@
   }
 
   // -------------------------------------------------------------------
+  // Glass-bubble wrapper for report-section figures. Each <img> / <video>
+  // gets wrapped in a `.media-frame` div so the glass highlights, ring,
+  // and shatter shards clip to the media bounds (not the figcaption).
+  // -------------------------------------------------------------------
+  function initGlassFrames() {
+    if (!document.body.classList.contains("page-reports")) return;
+    document.querySelectorAll(".page-reports .figure").forEach((fig) => {
+      const media = fig.querySelector(":scope > img, :scope > video");
+      if (!media) return;
+      if (media.parentElement.classList.contains("media-frame")) return;
+      const frame = document.createElement("div");
+      frame.className = "media-frame";
+      media.parentNode.insertBefore(frame, media);
+      frame.appendChild(media);
+    });
+  }
+
+  // -------------------------------------------------------------------
+  // Shatter animation: inject 6 clip-path shards into the media frame,
+  // toggle .is-shattering, wait ~380 ms for the CSS animation, then
+  // resolve so the caller can open the modal. Honours
+  // prefers-reduced-motion (resolves immediately, no shards).
+  // -------------------------------------------------------------------
+  function shatterMediaFrame(figure) {
+    const frame = figure.querySelector(".media-frame");
+    if (!frame) return Promise.resolve();
+    const reduced = window.matchMedia
+      && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return Promise.resolve();
+
+    const shards = document.createElement("div");
+    shards.className = "glass-shards";
+    shards.setAttribute("aria-hidden", "true");
+    shards.innerHTML =
+      '<span class="shard s1"></span>' +
+      '<span class="shard s2"></span>' +
+      '<span class="shard s3"></span>' +
+      '<span class="shard s4"></span>' +
+      '<span class="shard s5"></span>' +
+      '<span class="shard s6"></span>';
+    frame.appendChild(shards);
+    // Force a reflow so the animation actually starts when the class
+    // is added (avoids the browser short-circuiting the transition).
+    void frame.offsetWidth;
+    frame.classList.add("is-shattering");
+
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+        // Clean up a tick after the modal opens so the figure is back
+        // to its idle glass state when the user closes the modal.
+        setTimeout(() => {
+          frame.classList.remove("is-shattering");
+          shards.remove();
+        }, 50);
+      }, 380);
+    });
+  }
+
+  // -------------------------------------------------------------------
   // Generic media modal: every `.figure` (except the workflow figure,
   // which has its own custom modal) becomes click-to-expand. The
   // figure's media (img / video) is CLONED into the modal so the
   // original keeps playing in the page. The figcaption text shows
-  // below the large media as the explanation.
+  // below the large media as the explanation. On the reports page the
+  // figure shatters first (see `shatterMediaFrame`) before the modal
+  // opens.
   // -------------------------------------------------------------------
   function initMediaModal() {
     if (document.querySelector("[data-media-modal]")) return;
@@ -663,6 +725,16 @@
       if (e.key === "Escape" && !modal.hidden) close();
     });
 
+    function triggerOpen(figure) {
+      // Reports-page figures shatter first, then the modal opens.
+      // Elsewhere the modal opens immediately.
+      if (figure.closest(".page-reports")) {
+        shatterMediaFrame(figure).then(() => open(figure));
+      } else {
+        open(figure);
+      }
+    }
+
     document.querySelectorAll(".figure").forEach((figure) => {
       // Skip the workflow figure: it owns its own modal + popovers.
       if (figure.closest("[data-workflow]")) return;
@@ -672,12 +744,12 @@
       figure.addEventListener("click", (e) => {
         // Allow clicks on links inside the caption to navigate normally.
         if (e.target.closest("a")) return;
-        open(figure);
+        triggerOpen(figure);
       });
       figure.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          open(figure);
+          triggerOpen(figure);
         }
       });
     });
@@ -737,6 +809,7 @@
       initInstallPipeline();
       initTabs();
       initCodeCopy();
+      initGlassFrames();
       initMediaModal();
     });
   });
