@@ -67,69 +67,98 @@
       <div class="container container-narrow prose">
       <h2>Pick a dataset</h2>
       <p>
-        Four sample BIDS datasets are provided to follow the rest of
-        the tutorial. Each card describes the modality, the system,
-        and what is interesting about it. Download links will be
-        populated here once the datasets are publicly hosted.
+        Two small BIDS datasets are provided to follow the rest of
+        the tutorial &mdash; one MEG, one EEG. Pick either to
+        exercise the full pipeline; use both to also exercise the
+        multi-dataset-level reports.
       </p>
 
       <div class="modality-grid">
+
+        <!-- MEG dataset -->
         <article class="modality-card mod-meg">
-          <span class="modality-badge">MEG &middot; MEGIN</span>
-          <h3>Dataset 1.</h3>
-          <p class="modality-meta">MEGIN / Elekta Vectorview 306-channel &middot; small lifespan slice.</p>
-          <p>A short cross-section of a multi-task MEG cohort, ideal
-             for testing the subject-level and dataset-level reports.</p>
+          <span class="modality-badge">MEG &middot; MEGIN Vectorview</span>
+          <h3>Logical reasoning study (MEG)</h3>
+          <p class="modality-meta">
+            2 subjects &middot; 1 session each &middot; 2 tasks (deduction,
+            induction) &middot; ~20 min per run &middot; 2.4 GB total.
+          </p>
+          <p>
+            BIDS-organised slice of the public
+            <a href="https://openneuro.org/datasets/ds003483" target="_blank" rel="noopener">OpenNeuro ds003483</a>
+            ("Logical reasoning study") from the Cognitive and
+            Computational Neuroscience Lab (UPM&ndash;UCM, Madrid).
+            Recorded on an <strong>Elekta / Neuromag Vectorview</strong>
+            306-channel system (102 magnetometers + 204 planar
+            gradiometers) at 1&nbsp;kHz sampling, 50&nbsp;Hz line
+            frequency, with continuous head localisation (cHPI) on.
+            The two subjects (<code>sub-009</code>, <code>sub-012</code>)
+            give just enough cohort to exercise both subject-level
+            reports and the dataset-level QA / QC views; the two tasks
+            per subject also drive the per-task trajectory plots.
+          </p>
+          <p>
+            Pure MEG (no EEG / ECG / EOG channels), so this dataset
+            shows the standard MEG path: MAG + GRAD calculation,
+            Head-motion metric enabled via cHPI, ECG / EOG metrics
+            reconstructed from magnetometers (no reference channel).
+          </p>
           <div class="modality-actions">
-            <a class="btn btn-primary" href="#" aria-disabled="true">Download (TBD)</a>
+            <a class="btn btn-primary"
+               href="https://cloud.uol.de/s/D2fnb6FLqmEDq6P"
+               target="_blank" rel="noopener">Download (2.4 GB) &rarr;</a>
           </div>
         </article>
 
-        <article class="modality-card mod-meg">
-          <span class="modality-badge">MEG &middot; CTF</span>
-          <h3>Dataset 2.</h3>
-          <p class="modality-meta">CTF 275-channel axial gradiometers &middot; auditory / language paradigm.</p>
-          <p>Cross-system comparison data. Use together with Dataset 1
-             to exercise the multi-dataset-level reports.</p>
-          <div class="modality-actions">
-            <a class="btn btn-primary" href="#" aria-disabled="true">Download (TBD)</a>
-          </div>
-        </article>
-
+        <!-- EEG dataset -->
         <article class="modality-card mod-eeg">
-          <span class="modality-badge">EEG</span>
-          <h3>Dataset 3.</h3>
-          <p class="modality-meta">Standalone EEG &middot; BrainVision <code>.vhdr</code>.</p>
-          <p>An EEG-only dataset that exercises the auto-detected
-             montage, the average-reference path, and the EEG-specific
-             20-100 Hz muscle band.</p>
+          <span class="modality-badge">EEG &middot; Neuroscan 10/20</span>
+          <h3>HAD-MEEG action recognition (EEG)</h3>
+          <p class="modality-meta">
+            2 subjects &middot; 1 session each &middot; 1 task (action) &middot;
+            8 runs per subject &middot; ~5 min per run &middot; 1.4 GB total.
+          </p>
+          <p>
+            BIDS-organised slice of the public
+            <a href="https://openneuro.org/datasets/ds007353" target="_blank" rel="noopener">OpenNeuro ds007353</a>
+            ("HAD-MEEG") from Beijing Normal University. Recorded on a
+            <strong>Neuroscan</strong> cap with the extended 10/20
+            scheme: 62&nbsp;EEG + 2&nbsp;EOG channels at 1&nbsp;kHz
+            sampling, 50&nbsp;Hz line frequency. Files are in EEGLAB
+            <code>.set</code> format. Participants watched short video
+            clips and classified each as "sports" or not using the
+            left / right hand &mdash; the 8 runs per subject give
+            enough event-rich material to exercise the Stimulus and
+            ECG / EOG views.
+          </p>
+          <p>
+            Pure EEG, so this dataset shows the EEG path: auto-detected
+            10/20 montage, average reference, the EEG-specific 20&ndash;100&nbsp;Hz
+            muscle band, Head-motion metric skipped (cHPI is
+            MEG-only), and EOG-correlation reconstructed from the two
+            dedicated EOG channels.
+          </p>
           <div class="modality-actions">
-            <a class="btn btn-primary" href="#" aria-disabled="true">Download (TBD)</a>
-          </div>
-        </article>
-
-        <article class="modality-card mod-meg">
-          <span class="modality-badge">MEG + EEG</span>
-          <h3>Dataset 4.</h3>
-          <p class="modality-meta">MEGIN <code>.fif</code> with embedded EEG channels.</p>
-          <p>Simultaneous MEG and EEG. Shows the embedded-EEG flow:
-             the EEG channels are processed alongside MAG / GRAD and
-             surface in their own report tab.</p>
-          <div class="modality-actions">
-            <a class="btn btn-primary" href="#" aria-disabled="true">Download (TBD)</a>
+            <a class="btn btn-primary"
+               href="https://cloud.uol.de/s/yJMQG4AADiwEJyR"
+               target="_blank" rel="noopener">Download (1.4 GB) &rarr;</a>
           </div>
         </article>
       </div>
 
       <div class="callout">
         <span class="callout-title">Bring your own dataset</span>
-        Any BIDS-organized MEG or EEG dataset works. If you do not
-        have one handy, OpenNeuro hosts hundreds of public,
-        BIDS-compliant studies. Fetch one subject with DataLad and
-        point MEEGqc at the dataset root.
-<pre style="margin: 10px 0 0;"><code class="lang-bash">datalad install https://github.com/OpenNeuroDatasets/ds003483.git
-cd ds003483
-datalad get sub-009/</code></pre>
+        Any BIDS-organised MEG or EEG dataset works. If you would
+        rather start from one of the original OpenNeuro releases the
+        two samples above were sliced from, DataLad will fetch a
+        single subject without pulling the whole archive:
+<pre style="margin: 10px 0 0;"><code class="lang-bash"># MEG (Logical reasoning study, openneuro.ds003483)
+datalad install https://github.com/OpenNeuroDatasets/ds003483.git
+cd ds003483 && datalad get sub-009/
+
+# EEG (HAD-MEEG, openneuro.ds007353)
+datalad install https://github.com/OpenNeuroDatasets/ds007353.git
+cd ds007353 && datalad get sub-01/</code></pre>
       </div>
 
       </div>
