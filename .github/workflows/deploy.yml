@@ -1,58 +1,35 @@
-name: deploy-book 
+name: deploy-docs
 
 on:
   push:
     branches:
       - main
-
-env:
-  BUILD_DIR: . # add on 02.12_attempt 1_failed
-  BUILD_OUTPUT: _build/html # add on 02.12_attempt 1_failed
-  BASE_URL: /${{ github.event.repository.name }}
-  
+  workflow_dispatch:
 
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  deploy-book:
+  deploy:
     runs-on: ubuntu-latest
-
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     permissions:
       contents: read
       pages: write
-      id-token: write      
+      id-token: write
+
     steps:
-      - uses: actions/checkout@v4 # add on 02.12_attempt 1_failed
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v5 # add on 02.12_attempt 1_failed
-        with:
-          python-version: 3.11
-
-      - name: Install dependencies
-      
-        run: |
-         python -m pip install -U pip 
-          # Pin jb/sphinx to avoid breaking changes
-          pip install "jupyter-book==1.0.0" "sphinx==7.4.7"
-          # Your extras
-          pip install sphinx-book-theme myst-nb ghp-import jupytext
-          # lines before: add on 02.12_attempt 2_worked!
-          pip install -r requirements.txt
-
-      - name: Build the book
-        run: |
-          jupyter-book build .
-
-      - name: Upload artifact
+      - name: Upload static site as Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "_build/html"
+          path: "."
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          artifact_name: github-pages

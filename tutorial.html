@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MEEGqc tutorial: pick a dataset, walk the GUI, run from the CLI, drive it from Python, and look up every settings.ini knob.">
+  <title>Tutorial &middot; MEEGqc</title>
+  <link rel="icon" href="favicon.ico?v=2" sizes="any">
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-256.png?v=2" sizes="256x256">
+  <link rel="apple-touch-icon" href="assets/brand/app-icon-256.png?v=2">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div data-include="header"></div>
+
+  <main>
+    <aside class="page-toc" data-toc aria-label="Page navigation">
+      <button class="page-toc-toggle" type="button"
+              aria-expanded="false" aria-controls="page-toc-panel"
+              aria-label="Toggle page navigation">
+        <span class="toc-bars" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+      <nav id="page-toc-panel" class="page-toc-panel" aria-label="Sections">
+        <span class="page-toc-title">On this page</span>
+        <a class="page-toc-link" href="#datasets">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          Pick a dataset
+        </a>
+        <a class="page-toc-link" href="#gui">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          GUI walkthrough
+        </a>
+        <a class="page-toc-link" href="#cli">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          CLI walkthrough
+        </a>
+        <a class="page-toc-link" href="#cli-reference">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          CLI reference
+        </a>
+        <a class="page-toc-link" href="#python-api">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          Python API
+        </a>
+        <a class="page-toc-link" href="#settings">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          settings.ini reference
+        </a>
+      </nav>
+    </aside>
+
+    <header class="page-hero">
+      <div class="container">
+        <span class="eyebrow">Tutorial</span>
+        <h1>Run MEEGqc on a BIDS dataset.</h1>
+        <p>
+          Pick a sample dataset, then run MEEGqc three ways: from the
+          GUI, from the command line, and from a Python notebook. This
+          page also carries the full CLI flag reference and the
+          settings.ini section reference.
+        </p>
+      </div>
+    </header>
+
+    <!-- ============ DATASETS ============ -->
+    <section class="section reveal" id="datasets">
+      <div class="container container-narrow prose">
+      <h2>Pick a dataset</h2>
+      <p>
+        Two small BIDS datasets are provided to follow the rest of
+        the tutorial: one MEG, one EEG. Pick either to
+        exercise the full pipeline; use both to also exercise the
+        multi-dataset-level reports.
+      </p>
+
+      <div class="modality-grid">
+
+        <!-- MEG dataset -->
+        <article class="modality-card mod-meg">
+          <span class="modality-badge">MEG &middot; MEGIN Vectorview</span>
+          <h3>Logical reasoning study (MEG)</h3>
+          <p class="modality-meta">
+            2 subjects &middot; 1 session each &middot; 2 tasks (deduction,
+            induction) &middot; ~20 min per run &middot; 2.4 GB total.
+          </p>
+          <p>
+            BIDS-organised slice of the public
+            <a href="https://openneuro.org/datasets/ds003483" target="_blank" rel="noopener">OpenNeuro ds003483</a>
+            ("Logical reasoning study") from the Cognitive and
+            Computational Neuroscience Lab (UPM&ndash;UCM, Madrid).
+            Recorded on an <strong>Elekta / Neuromag Vectorview</strong>
+            306-channel system (102 magnetometers + 204 planar
+            gradiometers) at 1&nbsp;kHz sampling, 50&nbsp;Hz line
+            frequency, with continuous head localisation (cHPI) on.
+            The two subjects (<code>sub-009</code>, <code>sub-012</code>)
+            give just enough multi-subject material to exercise both
+            subject-level reports and the dataset-level QA / QC
+            views; the two tasks per subject also drive the per-task
+            trajectory plots.
+          </p>
+          <p>
+            Pure MEG (no EEG / ECG / EOG channels), so this dataset
+            shows the standard MEG path: MAG + GRAD calculation,
+            Head-motion metric enabled via cHPI, ECG / EOG metrics
+            reconstructed from magnetometers (no reference channel).
+          </p>
+          <div class="modality-actions">
+            <a class="btn btn-primary"
+               href="https://cloud.uol.de/s/D2fnb6FLqmEDq6P/download"
+               target="_blank" rel="noopener">Download (2.4 GB) &rarr;</a>
+          </div>
+        </article>
+
+        <!-- EEG dataset -->
+        <article class="modality-card mod-eeg">
+          <span class="modality-badge">EEG &middot; Neuroscan 10/20</span>
+          <h3>HAD-MEEG action recognition (EEG)</h3>
+          <p class="modality-meta">
+            2 subjects &middot; 1 session each &middot; 1 task (action) &middot;
+            8 runs per subject &middot; ~5 min per run &middot; 1.4 GB total.
+          </p>
+          <p>
+            BIDS-organised slice of the public
+            <a href="https://openneuro.org/datasets/ds007353" target="_blank" rel="noopener">OpenNeuro ds007353</a>
+            ("HAD-MEEG") from Beijing Normal University. Recorded on a
+            <strong>Neuroscan</strong> cap with the extended 10/20
+            scheme: 62&nbsp;EEG + 2&nbsp;EOG channels at 1&nbsp;kHz
+            sampling, 50&nbsp;Hz line frequency. Files are in EEGLAB
+            <code>.set</code> format. Participants watched short video
+            clips and classified each as "sports" or not using the
+            left / right hand. The 8 runs per subject give
+            enough event-rich material to exercise the Stimulus and
+            ECG / EOG views.
+          </p>
+          <p>
+            Pure EEG, so this dataset shows the EEG path: auto-detected
+            10/20 montage, average reference, the EEG-specific 20&ndash;100&nbsp;Hz
+            muscle band, Head-motion metric skipped (cHPI is
+            MEG-only), and EOG-correlation reconstructed from the two
+            dedicated EOG channels.
+          </p>
+          <div class="modality-actions">
+            <a class="btn btn-primary"
+               href="https://cloud.uol.de/s/yJMQG4AADiwEJyR/download"
+               target="_blank" rel="noopener">Download (1.4 GB) &rarr;</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="callout">
+        <span class="callout-title">Bring your own dataset</span>
+        Any BIDS-organised MEG or EEG dataset works. If you would
+        rather start from one of the original OpenNeuro releases the
+        two samples above were sliced from, DataLad will fetch a
+        single subject without pulling the whole archive:
+<pre style="margin: 10px 0 0;"><code class="lang-bash"># MEG (Logical reasoning study, openneuro.ds003483)
+datalad install https://github.com/OpenNeuroDatasets/ds003483.git
+cd ds003483 && datalad get sub-009/
+
+# EEG (HAD-MEEG, openneuro.ds007353)
+datalad install https://github.com/OpenNeuroDatasets/ds007353.git
+cd ds007353 && datalad get sub-01/</code></pre>
+      </div>
+
+      </div>
+    </section>
+
+    <!-- ============ GUI WALKTHROUGH ============ -->
+    <section class="section reveal" id="gui">
+      <div class="container container-narrow prose">
+      <h2>GUI walkthrough</h2>
+      <p>
+        Launch MEEGqc by double-clicking the desktop shortcut the
+        installer created, or by running <code>meegqc</code> in an
+        activated environment. The main window has two top tabs
+        (<em>QA/QC calculation</em> and <em>QA/QC plotting</em>),
+        plus collapsible <em>Inputs</em>, <em>Output folder</em>, and
+        <em>Log</em> sections, and a <em>Settings...</em> button on
+        each dataset row.
+      </p>
+
+      <figure class="figure">
+        <img src="assets/gui/full_gui_dark.png"
+             data-light="assets/gui/full_gui_light.png"
+             alt="MEEGqc main window">
+        <figcaption>The full MEEGqc main window: top tabs select QA/QC
+          calculation or plotting; <em>Inputs</em>, <em>Output folder</em>,
+          and <em>Log</em> are collapsible. The whole layout swaps
+          dark / light with the header theme toggle.</figcaption>
+      </figure>
+
+      <ol class="steps-list">
+        <li>
+          <strong>Add one or more BIDS datasets</strong> in the
+          <em>Inputs</em> section. You can optionally detach the panel
+          into its own window for multi-dataset runs, then click
+          <em>+ Add dataset</em> to browse to the BIDS root. Reorder
+          and remove entries, and toggle <em>Use per-dataset
+          configuration</em> as needed.
+          <figure class="figure">
+            <img src="assets/gui/inputs_section_detached_dark.png"
+                 data-light="assets/gui/inputs_section_detached_light.png"
+                 alt="Inputs section detached into its own window">
+            <figcaption>Step 1a. The empty Inputs panel, detached
+              into its own window. Useful when you plan to queue
+              several datasets.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/gui/add_dataset_example_dark.png"
+                 data-light="assets/gui/add_dataset_example_light.png"
+                 alt="Browsing to a BIDS root">
+            <figcaption>Step 1b. Click <em>Browse</em> and pick the
+              BIDS root of the dataset you want to QA.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="assets/gui/inputs_section_with_added_dataset_dark.png"
+                 data-light="assets/gui/inputs_section_with_added_dataset_light.png"
+                 alt="Inputs section with one dataset added">
+            <figcaption>Step 1c. The dataset is now queued in the
+              Inputs panel; repeat to add more.</figcaption>
+          </figure>
+        </li>
+        <li>
+          <strong>Two separate things called "settings".</strong>
+          Don't conflate them:
+          <ul>
+            <li>
+              <strong>GUI Settings</strong>: the app's own
+              preferences (theme, parallel-worker count limit, system
+              info readout). Affects the GUI shell only, not the
+              analysis.
+              <figure class="figure">
+                <img src="assets/gui/gui_settings_dark.png"
+                     data-light="assets/gui/gui_settings_light.png"
+                     alt="MEEGqc GUI Settings dialog">
+                <figcaption>GUI Settings: theme, available CPUs,
+                  total RAM. Nothing here changes a metric.</figcaption>
+              </figure>
+            </li>
+            <li>
+              <strong>Analysis settings</strong> (the
+              <code>settings.ini</code> editor): what actually
+              drives the pipeline: enabled metrics, channel types,
+              thresholds, GQI parameters, etc. Click
+              <em>Global settings...</em> for a single
+              <code>settings.ini</code> shared across all datasets,
+              or <em>Settings...</em> on a dataset row for a
+              per-dataset override. The dialog is a typed editor over
+              the same <code>settings.ini</code> the CLI consumes
+              (section reference at
+              <a href="#settings">settings.ini reference</a> below).
+              <figure class="figure">
+                <video class="media-loop" autoplay muted loop playsinline
+                       src="assets/gui/config_settings_gui_dark.mp4"
+                       data-light-src="assets/gui/config_settings_gui_light.mp4"></video>
+                <figcaption>Walking through the
+                  <code>settings.ini</code> editor: navigation,
+                  typing thresholds, applying overrides.</figcaption>
+              </figure>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Pick an analysis profile</strong> (optional). The
+          <em>Mode</em> control switches between
+          <code>legacy</code> / <code>new</code> / <code>reuse</code> /
+          <code>latest</code>. For sensitivity sweeps, choose
+          <code>new</code> and give the profile an explicit ID.
+        </li>
+        <li>
+          <strong>Set parallelism</strong> with <em>n_jobs</em> in the
+          QA/QC calculation tab. Each parallel job handles one
+          subject.
+        </li>
+        <li>
+          <strong>Run Calculation</strong> to compute QA metrics, or
+          click <strong>Run ALL (calc + plotting)</strong> to compute
+          and generate every report in one shot. The Log panel
+          streams progress.
+          <figure class="figure">
+            <img src="assets/gui/calculation_section_dark.png"
+                 data-light="assets/gui/calculation_section_light.png"
+                 alt="QA/QC calculation tab">
+            <figcaption>The calculation tab: pick the channel types,
+              tweak <code>n_jobs</code>, run.</figcaption>
+          </figure>
+        </li>
+        <li>
+          <strong>Switch to the QA/QC plotting tab</strong> to render
+          reports independently. Tick the scopes you want
+          (<em>QA Subject</em>, <em>QA Group</em>,
+          <em>QA Multi-dataset</em>, <em>QC Group</em>,
+          <em>QC Multi-dataset</em>) and click <strong>Run Plotting</strong>.
+          <figure class="figure">
+            <img src="assets/gui/plotting_section_dark.png"
+                 data-light="assets/gui/plotting_section_light.png"
+                 alt="QA/QC plotting tab">
+            <figcaption>The plotting tab selects which report scopes to
+              render. Re-rendering does not re-run the calculation.</figcaption>
+          </figure>
+        </li>
+        <li>
+          <strong>Recompute GQI</strong> independently with
+          <strong>Run GQI</strong> in the calculation tab. Each click
+          writes a new attempt file with the exact thresholds used.
+        </li>
+        <li>
+          <strong>Point at an output folder</strong> (the
+          <em>Output folder</em> panel). By default MEEGqc writes
+          derivatives under
+          <code>&lt;dataset&gt;/derivatives/Meg_QC/</code>; the
+          <em>Output folder</em> override redirects them to a custom
+          root.
+          <div class="figure-row">
+            <figure class="figure">
+              <img src="assets/gui/output_section_dark.png"
+                   data-light="assets/gui/output_section_light.png"
+                   alt="Empty output folder panel">
+              <figcaption>Default: derivatives land inside each dataset.</figcaption>
+            </figure>
+            <figure class="figure">
+              <img src="assets/gui/outputs_section_filled_dark.png"
+                   data-light="assets/gui/outputs_section_filled_light.png"
+                   alt="Output folder panel with custom root">
+              <figcaption>Override: redirect every dataset's derivatives
+                to a shared root.</figcaption>
+            </figure>
+          </div>
+        </li>
+      </ol>
+
+      </div>
+    </section>
+
+    <!-- ============ CLI WALKTHROUGH ============ -->
+    <section class="section reveal" id="cli">
+      <div class="container container-narrow prose">
+      <h2>CLI walkthrough</h2>
+      <p>
+        For scripted runs and batch processing. The CLI exposes four
+        entry points; the GUI calls into the same dispatchers under
+        the hood.
+      </p>
+
+      <div class="code-label">Step 0. Export an editable settings.ini</div>
+<pre><code class="lang-bash">mkdir -p ./config
+get-meegqc-config --target_directory ./config --filename settings.ini
+</code></pre>
+
+      <div class="code-label">Step 1. Calculation (compute the QA metrics)</div>
+<pre><code class="lang-bash">run-meegqc \
+  --inputdata /path/to/bids_dataset \
+  --config ./config/settings.ini \
+  --n_jobs 4
+</code></pre>
+
+      <div class="code-label">Step 2. Plotting (render the reports)</div>
+<pre><code class="lang-bash"># Subject + dataset-level QA from one dataset
+run-meegqc-plotting \
+  --inputdata /path/to/bids_dataset \
+  --qa-subject --qa-group
+
+# Cross-dataset comparison; --njobs (no underscore) for plotting
+run-meegqc-plotting \
+  --inputdata /path/ds1 /path/ds2 \
+  --qa-multisample --qc-multisample --njobs 4
+</code></pre>
+
+      <div class="code-label">Step 3. (Optional) GQI recomputation</div>
+<pre><code class="lang-bash">globalqualityindex \
+  --inputdata /path/to/bids_dataset \
+  --analysis_mode reuse \
+  --analysis_id qa_pass_01
+
+# Then re-render the QC Group report against the new attempt
+run-meegqc-plotting \
+  --inputdata /path/to/bids_dataset \
+  --qc-group --attempt 2
+</code></pre>
+
+      <div class="code-label">One-shot: compute + plot in one command</div>
+<pre><code class="lang-bash">run-meegqc \
+  --inputdata /path/ds1 /path/ds2 \
+  --config ./config/settings.ini \
+  --run-all --all
+</code></pre>
+
+      <h3>Multi-dataset with per-dataset overrides</h3>
+<pre><code class="lang-bash">run-meegqc \
+  --inputdata /path/ds1 /path/ds2 \
+  --subs_per_dataset \
+    "/path/ds1::001,002,003" \
+    "/path/ds2::all" \
+  --config_per_dataset \
+    "/path/ds1::./config/ds1.ini" \
+    "/path/ds2::./config/ds2.ini" \
+  --n_jobs 4
+</code></pre>
+
+      </div>
+    </section>
+
+    <!-- ============ CLI REFERENCE ============ -->
+    <section class="section reveal" id="cli-reference">
+      <div class="container container-narrow prose">
+      <h2>CLI reference</h2>
+      <p>Every flag, grouped by command. Use <code>--help</code> on any
+         command for the runtime version.</p>
+
+      <h3 id="cli-run-meegqc"><code>run-meegqc</code> (calculation)</h3>
+      <div class="table-wrap">
+        <table class="spec-table">
+          <thead><tr><th>Flag</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>--inputdata</code></td><td>path(s)</td><td>One or more BIDS dataset roots.</td></tr>
+            <tr><td><code>--config</code></td><td>path</td><td><code>settings.ini</code> file shared across all datasets.</td></tr>
+            <tr><td><code>--config_per_dataset</code></td><td>list</td><td>Per-dataset config overrides as <code>"&lt;path&gt;::&lt;config&gt;"</code> pairs.</td></tr>
+            <tr><td><code>--subs</code></td><td>list</td><td>Subject IDs to process (default: <code>all</code>).</td></tr>
+            <tr><td><code>--subs_per_dataset</code></td><td>list</td><td>Per-dataset subject lists as <code>"&lt;path&gt;::&lt;ids&gt;"</code> pairs.</td></tr>
+            <tr><td><code>--n_jobs</code></td><td>int</td><td>Parallel subject workers.</td></tr>
+            <tr><td><code>--derivatives_output</code></td><td>path</td><td>Write derivatives to a custom root instead of <code>&lt;dataset&gt;/derivatives/Meg_QC/</code>.</td></tr>
+            <tr><td><code>--analysis_mode</code></td><td>enum</td><td><code>legacy</code> | <code>new</code> | <code>reuse</code> | <code>latest</code>.</td></tr>
+            <tr><td><code>--analysis_id</code></td><td>str</td><td>Profile identifier. Required with <code>reuse</code>; recommended with <code>new</code>.</td></tr>
+            <tr><td><code>--existing_config_policy</code></td><td>enum</td><td><code>provided</code> | <code>latest_saved</code> | <code>fail</code> when a settings file already exists in the profile.</td></tr>
+            <tr><td><code>--processed_subjects_policy</code></td><td>enum</td><td><code>skip</code> | <code>rerun</code> | <code>fail</code> for subjects already processed.</td></tr>
+            <tr><td><code>--run-all</code></td><td>flag</td><td>After calculation, automatically run plotting.</td></tr>
+            <tr><td><code>--all</code> / <code>--qa-all</code> / <code>--qc-all</code></td><td>flag</td><td>With <code>--run-all</code>, choose which plotting scopes to render.</td></tr>
+            <tr><td><code>--qa-subject</code> / <code>--qa-group</code> / <code>--qa-multisample</code></td><td>flag</td><td>Selective QA scopes (with <code>--run-all</code>).</td></tr>
+            <tr><td><code>--qc-group</code> / <code>--qc-multisample</code></td><td>flag</td><td>Selective QC scopes (with <code>--run-all</code>).</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="cli-plotting"><code>run-meegqc-plotting</code> (reports)</h3>
+      <div class="table-wrap">
+        <table class="spec-table">
+          <thead><tr><th>Flag</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>--inputdata</code></td><td>path(s)</td><td>One or more BIDS dataset roots.</td></tr>
+            <tr><td><code>--qa-subject</code></td><td>flag</td><td>Render subject-level QA reports.</td></tr>
+            <tr><td><code>--qa-group</code></td><td>flag</td><td>Render dataset-level QA report.</td></tr>
+            <tr><td><code>--qa-multisample</code></td><td>flag</td><td>Render multi-dataset-level QA report (&ge; 2 datasets).</td></tr>
+            <tr><td><code>--qc-group</code></td><td>flag</td><td>Render dataset-level QC report.</td></tr>
+            <tr><td><code>--qc-multisample</code></td><td>flag</td><td>Render multi-dataset-level QC report (&ge; 2 datasets).</td></tr>
+            <tr><td><code>--qa-all</code> / <code>--qc-all</code> / <code>--all</code></td><td>flag</td><td>Convenience presets.</td></tr>
+            <tr><td><code>--attempt</code></td><td>int</td><td>QC Group / QC Multi-dataset: GQI attempt to render. Defaults to the latest.</td></tr>
+            <tr><td><code>--input_tsv</code></td><td>path</td><td>QC Group: explicit GQI TSV path.</td></tr>
+            <tr><td><code>--analysis_mode</code> / <code>--analysis_id</code></td><td></td><td>Profile selection (same semantics as <code>run-meegqc</code>).</td></tr>
+            <tr><td><code>--njobs</code></td><td>int</td><td>Parallel subject workers (note: no underscore on the plotting command).</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="cli-gqi"><code>globalqualityindex</code> (GQI recomputation)</h3>
+      <div class="table-wrap">
+        <table class="spec-table">
+          <thead><tr><th>Flag</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>--inputdata</code></td><td>path(s)</td><td>One or more BIDS dataset roots.</td></tr>
+            <tr><td><code>--analysis_mode</code> / <code>--analysis_id</code></td><td></td><td>Profile selection.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="cli-getconfig"><code>get-meegqc-config</code> (export settings.ini)</h3>
+      <div class="table-wrap">
+        <table class="spec-table">
+          <thead><tr><th>Flag</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>--target_directory</code></td><td>path</td><td>Where to write the file.</td></tr>
+            <tr><td><code>--filename</code></td><td>str</td><td>Output filename (default <code>settings.ini</code>).</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      </div>
+    </section>
+
+    <!-- ============ PYTHON API ============ -->
+    <section class="section reveal" id="python-api">
+      <div class="container container-narrow prose">
+      <h2>Python API</h2>
+      <p>
+        The dispatchers in <code>meg_qc.test</code> are the same
+        backend the GUI and CLI call. Import them directly to wire
+        MEEGqc into a notebook, a Snakemake workflow, or any larger
+        Python pipeline.
+      </p>
+
+      <div class="code-label">Setup: export an editable config (once)</div>
+<pre><code class="lang-bash">mkdir -p ./config
+get-meegqc-config --target_directory ./config --filename settings.ini
+</code></pre>
+
+      <div class="code-label">Resolve the internal config path</div>
+<pre><code class="lang-python">from pathlib import Path
+import meg_qc
+
+pkg_root     = Path(meg_qc.__file__).resolve().parent
+internal_cfg = str(pkg_root / "settings" / "settings_internal.ini")
+</code></pre>
+
+      <div class="code-label">Calculation</div>
+<pre><code class="lang-python">from meg_qc.test import (
+    run_calculation_dispatch,
+    run_plotting_dispatch,
+    run_gqi_dispatch,
+    run_all_dispatch,
+)
+
+run_calculation_dispatch(
+    dataset_paths=["/path/ds1", "/path/ds2"],
+    config_file_path="./config/settings.ini",
+    internal_config_file_path=internal_cfg,
+    sub_list="all",
+    n_jobs=4,
+    analysis_mode="new",
+    analysis_id="qa_pass_01",
+    existing_config_policy="provided",
+    processed_subjects_policy="skip",
+)
+</code></pre>
+
+      <div class="code-label">Plotting</div>
+<pre><code class="lang-python">run_plotting_dispatch(
+    dataset_paths=["/path/ds1", "/path/ds2"],
+    qa_subject=True,
+    qa_group=True,
+    qa_multisample=True,
+    qc_group=True,
+    qc_multisample=True,
+    analysis_mode="reuse",
+    analysis_id="qa_pass_01",
+    njobs=4,
+)
+</code></pre>
+
+      <div class="code-label">GQI recomputation</div>
+<pre><code class="lang-python">run_gqi_dispatch(
+    dataset_paths=["/path/ds1", "/path/ds2"],
+    default_config_file_path="./config/settings.ini",
+    analysis_mode="reuse",
+    analysis_id="qa_pass_01",
+)
+</code></pre>
+
+      <div class="code-label">Run ALL orchestration</div>
+<pre><code class="lang-python">run_all_dispatch(
+    dataset_paths=["/path/ds1", "/path/ds2"],
+    config_file_path="./config/settings.ini",
+    internal_config_file_path=internal_cfg,
+    sub_list="all",
+    calc_n_jobs=4,
+    plot_njobs=4,
+    analysis_mode="new",
+    analysis_id="qa_pass_02",
+    qa_subject=True,
+    qa_group=True,
+    qa_multisample=True,
+    qc_group=True,
+    qc_multisample=True,
+)
+</code></pre>
+
+      <div class="callout">
+        <span class="callout-title">Notes</span>
+        <ul style="margin-bottom: 0;">
+          <li><code>analysis_mode='reuse'</code> requires
+              <code>analysis_id</code>.</li>
+          <li>Multi-dataset modes (<code>qa_multisample</code>,
+              <code>qc_multisample</code>) need at least two
+              datasets.</li>
+          <li>The dispatchers print to standard stdout / stderr, so
+              you can capture output with
+              <code>contextlib.redirect_stdout</code> in a notebook.</li>
+        </ul>
+      </div>
+
+      </div>
+    </section>
+
+    <!-- ============ SETTINGS.INI REFERENCE ============ -->
+    <section class="section reveal" id="settings">
+      <div class="container container-narrow prose">
+      <h2>settings.ini reference</h2>
+      <p>
+        Every behaviour knob in MEEGqc is controlled through
+        <code>settings.ini</code>. Export the defaults with
+        <code>get-meegqc-config</code>, edit the copy, and pass it via
+        <code>--config</code> or load it in the GUI.
+      </p>
+
+      <h3 id="settings-general"><code>[GENERAL]</code></h3>
+      <div class="table-wrap"><table class="spec-table">
+        <thead><tr><th>Variable</th><th>Default</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>ch_types</code></td><td><code>mag, grad, eeg</code></td><td>string list</td><td>Channel types to process. <code>mag, grad</code> for MEG, <code>eeg</code> for EEG, all three for simultaneous.</td></tr>
+          <tr><td><code>STD</code></td><td><code>True</code></td><td>bool</td><td>Enable the Standard Deviation metric.</td></tr>
+          <tr><td><code>PSD</code></td><td><code>True</code></td><td>bool</td><td>Enable Power Spectral Density.</td></tr>
+          <tr><td><code>PTP_manual</code></td><td><code>True</code></td><td>bool</td><td>Enable manual Peak-to-Peak.</td></tr>
+          <tr><td><code>ECG</code></td><td><code>True</code></td><td>bool</td><td>Enable ECG correlation.</td></tr>
+          <tr><td><code>EOG</code></td><td><code>True</code></td><td>bool</td><td>Enable EOG correlation.</td></tr>
+          <tr><td><code>Head</code></td><td><code>False</code></td><td>bool</td><td>Enable head-motion metric. Requires cHPI; MEG only.</td></tr>
+          <tr><td><code>Muscle</code></td><td><code>True</code></td><td>bool</td><td>Enable the muscle metric.</td></tr>
+          <tr><td><code>data_crop_tmin</code></td><td><code>0</code></td><td>float</td><td>Start crop time (s).</td></tr>
+          <tr><td><code>data_crop_tmax</code></td><td>blank</td><td>float / blank</td><td>End crop time. Blank uses the full recording.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="settings-filtering"><code>[Filtering]</code></h3>
+      <div class="table-wrap"><table class="spec-table">
+        <thead><tr><th>Variable</th><th>Default</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>apply_filtering</code></td><td><code>True</code></td><td>bool</td><td>Enable the filtering stage.</td></tr>
+          <tr><td><code>downsample_to_hz</code></td><td><code>1000</code></td><td>float / int / False</td><td>Target sampling rate. Must be &ge; 5x <code>h_freq</code>. Set <code>False</code> to skip.</td></tr>
+          <tr><td><code>l_freq</code></td><td><code>0</code></td><td>float</td><td>High-pass edge (Hz).</td></tr>
+          <tr><td><code>h_freq</code></td><td><code>140</code></td><td>float</td><td>Low-pass edge (Hz).</td></tr>
+          <tr><td><code>method</code></td><td><code>iir</code></td><td>string</td><td>Filter method.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="settings-epoching"><code>[Epoching]</code></h3>
+      <div class="table-wrap"><table class="spec-table">
+        <thead><tr><th>Variable</th><th>Default</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>event_dur</code></td><td><code>0.002</code></td><td>float</td><td>Minimum trigger pulse duration (only used when no BIDS <code>_events.tsv</code> is found).</td></tr>
+          <tr><td><code>epoch_tmin</code></td><td><code>-0.2</code></td><td>float</td><td>Epoch start relative to event (s).</td></tr>
+          <tr><td><code>epoch_tmax</code></td><td><code>1</code></td><td>float</td><td>Epoch end relative to event (s).</td></tr>
+          <tr><td><code>stim_channel</code></td><td>blank</td><td>string</td><td>Explicit stim channel; blank for auto detection.</td></tr>
+          <tr><td><code>preferred_stim_channels</code></td><td>see config</td><td>string list</td><td>Combined trigger channels (STI101 / STI 014 / UPPT00x / STATUS).</td></tr>
+          <tr><td><code>noisy_stim_channels</code></td><td><code>STI301, STI 301</code></td><td>string list</td><td>Stim channels excluded from auto detection.</td></tr>
+          <tr><td><code>event_repeated</code></td><td><code>merge</code></td><td>string</td><td>Duplicate-event handling: <code>error</code> / <code>drop</code> / <code>merge</code>.</td></tr>
+          <tr><td><code>use_fixed_length_epochs</code></td><td><code>True</code></td><td>bool</td><td>Fallback to fixed-length epochs when no events are available.</td></tr>
+          <tr><td><code>fixed_epoch_duration</code></td><td><code>2.0</code></td><td>float</td><td>Fixed-length epoch size (s).</td></tr>
+          <tr><td><code>fixed_epoch_overlap</code></td><td><code>0.0</code></td><td>float</td><td>Overlap between consecutive fixed epochs (s).</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="settings-std"><code>[STD]</code></h3>
+      <div class="table-wrap"><table class="spec-table">
+        <thead><tr><th>Variable</th><th>Default</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>std_lvl</code></td><td><code>1</code></td><td>int</td><td>Std-from-mean cutoff.</td></tr>
+          <tr><td><code>allow_percent_noisy_flat_epochs</code></td><td><code>70</code></td><td>int</td><td>Max % of epochs a channel can be noisy / flat before flagging.</td></tr>
+          <tr><td><code>noisy_channel_multiplier</code></td><td><code>1.2</code></td><td>float</td><td>Higher = fewer noisy flags.</td></tr>
+          <tr><td><code>flat_multiplier</code></td><td><code>0.5</code></td><td>float</td><td>Flat-channel multiplier.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="settings-psd"><code>[PSD]</code></h3>
+      <div class="table-wrap"><table class="spec-table">
+        <thead><tr><th>Variable</th><th>Default</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>freq_min</code></td><td><code>0.5</code></td><td>float</td><td>Lower edge (Hz).</td></tr>
+          <tr><td><code>freq_max</code></td><td><code>140</code></td><td>float</td><td>Upper edge (Hz).</td></tr>
+          <tr><td><code>psd_step_size</code></td><td><code>1</code></td><td>float</td><td>Frequency resolution (Hz).</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="settings-ptp"><code>[PTP_manual]</code></h3>
+      <div class="table-wrap"><table class="spec-table">
+        <thead><tr><th>Variable</th><th>Default</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>numba_version</code></td><td><code>True</code></td><td>bool</td><td>Use the Numba-accelerated path.</td></tr>
+          <tr><td><code>max_pair_dist_sec</code></td><td><code>20</code></td><td>float</td><td>Maximum pair distance (s).</td></tr>
+          <tr><td><code>ptp_thresh_lvl</code></td><td><code>10</code></td><td>int</td><td>Higher = more peaks detected.</td></tr>
+          <tr><td><code>allow_percent_noisy_flat_epochs</code></td><td><code>70</code></td><td>int</td><td>Same semantics as in <code>[STD]</code>.</td></tr>
+          <tr><td><code>std_lvl</code></td><td><code>1</code></td><td>int</td><td>Std-from-mean cutoff.</td></tr>
+          <tr><td><code>noisy_channel_multiplier</code></td><td><code>1.2</code></td><td>float</td><td></td></tr>
+          <tr><td><code>flat_multiplier</code></td><td><code>0.5</code></td><td>float</td><td></td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="settings-ecg"><code>[ECG]</code></h3>
+      <div class="table-wrap"><table class="spec-table">
+        <thead><tr><th>Variable</th><th>Default</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>drop_bad_ch</code></td><td><code>True</code></td><td>bool</td><td>Drop a bad ECG channel and reconstruct from magnetometers.</td></tr>
+          <tr><td><code>n_breaks_bursts_allowed_per_10min</code></td><td><code>3</code></td><td>int</td><td>Allowed breaks per 10 minutes.</td></tr>
+          <tr><td><code>allowed_range_of_peaks_stds</code></td><td><code>0.14</code></td><td>float</td><td>Peak-height variability tolerance.</td></tr>
+          <tr><td><code>height_multiplier</code></td><td><code>0.6</code></td><td>float</td><td>Higher = fewer peaks.</td></tr>
+          <tr><td><code>norm_lvl</code></td><td><code>1</code></td><td>int</td><td>Threshold scaling factor.</td></tr>
+          <tr><td><code>gaussian_sigma</code></td><td><code>4</code></td><td>int</td><td>Gaussian smoothing kernel sigma.</td></tr>
+          <tr><td><code>thresh_lvl_peakfinder</code></td><td><code>5</code></td><td>int</td><td></td></tr>
+          <tr><td><code>fixed_channel_names</code></td><td>blank</td><td>string list</td><td>Explicit ECG channel names.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="settings-eog"><code>[EOG]</code></h3>
+      <div class="table-wrap"><table class="spec-table">
+        <thead><tr><th>Variable</th><th>Default</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>n_breaks_bursts_allowed_per_10min</code></td><td><code>3</code></td><td>int</td><td></td></tr>
+          <tr><td><code>allowed_range_of_peaks_stds</code></td><td><code>0.15</code></td><td>float</td><td></td></tr>
+          <tr><td><code>norm_lvl</code></td><td><code>1</code></td><td>int</td><td></td></tr>
+          <tr><td><code>gaussian_sigma</code></td><td><code>6</code></td><td>int</td><td>Larger than ECG (EOG is noisier).</td></tr>
+          <tr><td><code>thresh_lvl_peakfinder</code></td><td><code>3</code></td><td>int</td><td></td></tr>
+          <tr><td><code>fixed_channel_names</code></td><td>blank</td><td>string list</td><td>Explicit EOG channel names.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="settings-head"><code>[Head_movement]</code></h3>
+      <p>
+        Reserved section. The block exists in the default
+        <code>settings.ini</code> but has no keys; head motion is
+        toggled by the top-level <code>Head</code> flag in
+        <code>[GENERAL]</code>.
+      </p>
+
+      <h3 id="settings-muscle"><code>[Muscle]</code></h3>
+      <div class="table-wrap"><table class="spec-table">
+        <thead><tr><th>Variable</th><th>Default</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>muscle_freqs</code></td><td><code>110, 140</code></td><td>int pair</td><td>MEG muscle band (Hz).</td></tr>
+          <tr><td><code>muscle_freqs_eeg</code></td><td><code>20, 100</code></td><td>int pair</td><td>EEG muscle band (Hz).</td></tr>
+          <tr><td><code>threshold_muscle</code></td><td><code>5</code></td><td>int</td><td>Z-score threshold.</td></tr>
+          <tr><td><code>min_length_good</code></td><td><code>0.2</code></td><td>float</td><td>Min "good" gap between events (s).</td></tr>
+          <tr><td><code>min_distance_between_different_muscle_events</code></td><td><code>1</code></td><td>float</td><td>Min separation between distinct events (s).</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="settings-eeg"><code>[EEG]</code></h3>
+      <div class="table-wrap"><table class="spec-table">
+        <thead><tr><th>Variable</th><th>Default</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>reference_method</code></td><td><code>average</code></td><td>string</td><td><code>average</code>, <code>REST</code>, or <code>none</code>.</td></tr>
+          <tr><td><code>montage</code></td><td><code>auto</code></td><td>string</td><td><code>auto</code> tries 10-20 / 10-10 / 10-05 with reference-suffix stripping. Or pass a builtin name (<code>standard_1020</code>, <code>biosemi64</code>, etc.).</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="settings-gqi"><code>[GlobalQualityIndex]</code></h3>
+      <p>The GQI math is documented on the
+         <a href="metrics.html#gqi">metrics page</a>.</p>
+      <div class="table-wrap"><table class="spec-table">
+        <thead><tr><th>Variable</th><th>Default</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>compute_gqi</code></td><td><code>True</code></td><td>bool</td><td>Enable GQI computation.</td></tr>
+          <tr><td><code>include_ecg_eog</code></td><td><code>True</code></td><td>bool</td><td>Include the correlation term.</td></tr>
+          <tr><td><code>bad_ch_start</code></td><td><code>0</code></td><td>int</td><td>% bad channels with no penalty.</td></tr>
+          <tr><td><code>bad_ch_end</code></td><td><code>100</code></td><td>int</td><td>% bad channels yielding max penalty.</td></tr>
+          <tr><td><code>bad_ch_weight</code></td><td><code>35</code></td><td>int</td><td>Channel variability weight.</td></tr>
+          <tr><td><code>correlation_start</code></td><td><code>0</code></td><td>int</td><td>% correlated channels with no penalty.</td></tr>
+          <tr><td><code>correlation_end</code></td><td><code>100</code></td><td>int</td><td>% correlated channels yielding max penalty.</td></tr>
+          <tr><td><code>correlation_weight</code></td><td><code>30</code></td><td>int</td><td>ECG / EOG correlation weight.</td></tr>
+          <tr><td><code>muscle_start</code></td><td><code>0</code></td><td>float</td><td>Muscle ratio with no penalty.</td></tr>
+          <tr><td><code>muscle_end</code></td><td><code>0.0001</code></td><td>float</td><td>Muscle ratio yielding max penalty.</td></tr>
+          <tr><td><code>muscle_weight</code></td><td><code>15</code></td><td>int</td><td>Muscle weight.</td></tr>
+          <tr><td><code>psd_noise_start</code></td><td><code>0</code></td><td>int</td><td>% PSD noise with no penalty.</td></tr>
+          <tr><td><code>psd_noise_end</code></td><td><code>100</code></td><td>int</td><td>% PSD noise yielding max penalty.</td></tr>
+          <tr><td><code>psd_noise_weight</code></td><td><code>20</code></td><td>int</td><td>PSD weight.</td></tr>
+        </tbody>
+      </table></div>
+
+      <hr>
+      <p>
+        Next: the <a href="reports.html">reports reference</a> or the
+        <a href="metrics.html">metrics + GQI page</a>.
+      </p>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="footer"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>

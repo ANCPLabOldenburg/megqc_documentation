@@ -1,0 +1,2595 @@
+/* =====================================================================
+   MEEGqc documentation styles
+   Dark default, with a light theme toggle. Same visual grammar as the
+   BIDS Manager docs (header, hero, sections, cards, code, tables), but
+   re-keyed to the MEEGqc palette: deep navy + cyan with mint accents.
+   ===================================================================== */
+
+/* ---------- Palette tokens ---------- */
+:root,
+[data-theme="dark"] {
+  --bg: #0c1018;
+  --bg-elev: #141a26;
+  --bg-elev-2: #1b2230;
+  --card: #161d2b;
+  --card-hover: #1d2638;
+  --border: #232c40;
+  --border-strong: #2e3a55;
+
+  --text: #e7eef9;
+  --text-strong: #ffffff;
+  --muted: #98a4ba;
+  --muted-strong: #b5c0d3;
+
+  --accent: #4fc3f7;       /* cyan, matches the Qt highlight */
+  --accent-strong: #7fd5ff;
+  --accent-soft: rgba(79, 195, 247, 0.16);
+  --title-blue: #2da3e8;   /* deeper blue from the hero title gradient */
+  --mint: #66d9a8;         /* "quality" green */
+  --mint-soft: rgba(102, 217, 168, 0.18);
+  --warn: #ffb454;
+  --danger: #ff7a7a;
+
+  --code-bg: #0b121e;
+  --code-text: #d9e4f5;
+  --code-border: var(--border);
+
+  --shadow-1: 0 4px 14px rgba(0, 0, 0, 0.32);
+  --shadow-2: 0 10px 32px rgba(0, 0, 0, 0.45);
+
+  /* Glass + glow tokens (BIDS Manager pattern) */
+  --panel-glass:        rgba(22, 30, 44, 0.58);
+  --panel-glass-strong: rgba(22, 30, 44, 0.78);
+  --border-glass:       rgba(255, 255, 255, 0.10);
+  --glow-accent:        rgba(79, 195, 247, 0.48);
+  --glow-mint:          rgba(102, 217, 168, 0.45);
+
+  /* Aliases used by ported BIDS Manager components */
+  --bg-soft: var(--bg-elev-2);
+  --panel:   var(--card);
+  --radius:  14px;
+  --shadow:  var(--shadow-1);
+  --success: var(--mint);
+  --warning: var(--warn);
+
+  /* Seven-step palette for the install-pipeline visualizer */
+  --step1: #4fc3f7;  --step1-glow: rgba(79,195,247,0.40);
+  --step2: #66d9a8;  --step2-glow: rgba(102,217,168,0.40);
+  --step3: #8aefb6;  --step3-glow: rgba(138,239,182,0.36);
+  --step4: #6fd6ff;  --step4-glow: rgba(111,214,255,0.40);
+  --step5: #b8c4ff;  --step5-glow: rgba(184,196,255,0.36);
+  --step6: #ffb454;  --step6-glow: rgba(255,180,84,0.36);
+  --step7: #ff7a7a;  --step7-glow: rgba(255,122,122,0.36);
+}
+
+[data-theme="light"] {
+  --bg: #f5f8fc;
+  --bg-elev: #ffffff;
+  --bg-elev-2: #f0f4fa;
+  --card: #ffffff;
+  --card-hover: #f4f8fd;
+  --border: #d9e2ee;
+  --border-strong: #b8c6da;
+
+  --text: #1a2233;
+  --text-strong: #0c1320;
+  --muted: #5b6779;
+  --muted-strong: #3c4659;
+
+  --accent: #0a7fc4;
+  --accent-strong: #075a8c;
+  --accent-soft: rgba(10, 127, 196, 0.12);
+  --title-blue: #0a7fc4;   /* deep blue from the hero title gradient */
+  --mint: #1f9971;
+  --mint-soft: rgba(31, 153, 113, 0.15);
+  --warn: #b97400;
+  --danger: #b73a3a;
+
+  --code-bg: #eef3fa;
+  --code-text: #0c1320;
+  --code-border: #cfdaea;
+
+  --shadow-1: 0 4px 14px rgba(15, 25, 40, 0.08);
+  --shadow-2: 0 12px 32px rgba(15, 25, 40, 0.14);
+
+  /* Glass + glow tokens (light variants) */
+  --panel-glass:        rgba(255, 255, 255, 0.68);
+  --panel-glass-strong: rgba(255, 255, 255, 0.88);
+  --border-glass:       rgba(15, 25, 40, 0.08);
+  --glow-accent:        rgba(10, 127, 196, 0.32);
+  --glow-mint:          rgba(31, 153, 113, 0.28);
+
+  --bg-soft: var(--bg-elev-2);
+  --panel:   var(--card);
+  --radius:  14px;
+  --shadow:  var(--shadow-1);
+  --success: var(--mint);
+  --warning: var(--warn);
+
+  --step1: #0a7fc4;  --step1-glow: rgba(10,127,196,0.28);
+  --step2: #1f9971;  --step2-glow: rgba(31,153,113,0.26);
+  --step3: #2da870;  --step3-glow: rgba(45,168,112,0.24);
+  --step4: #0a90c4;  --step4-glow: rgba(10,144,196,0.26);
+  --step5: #5567c8;  --step5-glow: rgba(85,103,200,0.24);
+  --step6: #b97400;  --step6-glow: rgba(185,116,0,0.22);
+  --step7: #b73a3a;  --step7-glow: rgba(183,58,58,0.22);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto,
+               Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { color: var(--accent); text-decoration: none; transition: color .15s ease; }
+a:hover, a:focus-visible { color: var(--accent-strong); text-decoration: underline; }
+
+h1, h2, h3, h4 { color: var(--text-strong); line-height: 1.2; margin: 0 0 .6em; }
+h1 { font-size: 2.4rem; letter-spacing: -0.01em; }
+h2 { font-size: 1.85rem; letter-spacing: -0.005em; }
+h3 { font-size: 1.35rem; }
+h4 { font-size: 1.1rem; }
+p  { margin: 0 0 1em; color: var(--text); }
+
+ul, ol { padding-left: 1.4em; }
+li     { margin: 0.25em 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2.5rem 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+/* ---------- Container ---------- */
+.container         { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+.container-narrow  { max-width: 900px;  margin: 0 auto; padding: 0 24px; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 12px 28px;
+  background: rgba(12, 16, 24, 0.86);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+}
+
+[data-theme="light"] .site-header {
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: var(--text-strong);
+  text-decoration: none;
+  font-size: 1.05rem;
+}
+
+.brand:hover { color: var(--accent); text-decoration: none; }
+
+.brand img {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.brand-name em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+}
+
+.nav-links a {
+  color: var(--muted-strong);
+  font-size: 0.93rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background .15s ease, color .15s ease;
+}
+
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  text-decoration: none;
+}
+
+.nav-links a.active {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  border-color: var(--accent);
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 80px 24px 96px;
+  background: radial-gradient(ellipse at top, var(--bg-elev) 0%, var(--bg) 70%);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Hero collage: absolutely-positioned screenshots that pulse in and out
+   on a staggered 18s cycle. 2-3 are visible at any moment. Patterned
+   after the BIDS Manager docs hero. */
+.hero-media {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+@keyframes hero-pulse {
+  0%   { opacity: 0;    transform: var(--hero-rest) scale(0.99); }
+  16%  { opacity: 0.85; transform: var(--hero-rest) scale(1);    }
+  50%  { opacity: 0.85; transform: var(--hero-rest) scale(1);    }
+  64%  { opacity: 0;    transform: var(--hero-rest) scale(0.99); }
+  100% { opacity: 0;    transform: var(--hero-rest) scale(0.99); }
+}
+
+.hero-shot {
+  position: absolute;
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+  object-fit: cover;
+  opacity: 0;
+  animation: hero-pulse 18s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+[data-theme="light"] .hero-shot {
+  box-shadow: 0 18px 48px rgba(15, 25, 40, 0.18);
+}
+
+.shot-a { animation-delay:  0s; top: -4%; left: -6%; width: min(46vw, 580px); --hero-rest: rotate(-3deg);   }
+.shot-b { animation-delay:  3s; top:  4%; right: -6%; width: min(46vw, 580px); --hero-rest: rotate(2.6deg); }
+.shot-c { animation-delay:  6s; bottom: -8%; left: 14%; width: min(36vw, 440px); --hero-rest: rotate(-1.6deg); }
+.shot-d { animation-delay:  9s; bottom: -2%; right: 16%; width: min(34vw, 420px); --hero-rest: rotate(3deg); }
+.shot-e { animation-delay: 12s; top: 42%; left: 28%; width: min(26vw, 320px); --hero-rest: rotate(-2.2deg); }
+.shot-f { animation-delay: 15s; top: 40%; right: 26%; width: min(26vw, 320px); --hero-rest: rotate(2.2deg); }
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgba(12, 16, 24, 0.6) 65%,
+    var(--bg) 100%);
+  pointer-events: none;
+}
+
+[data-theme="light"] .hero-overlay {
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgba(245, 248, 252, 0.7) 65%,
+    var(--bg) 100%);
+}
+
+.hero-content {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  z-index: 1;
+}
+
+.hero-title {
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  margin: 12px 0 8px;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+}
+
+.hero-title em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+/* MEEGqc title: green upper half + blue lower half + pulsing glow */
+.hero-title-meeg {
+  font-size: clamp(3.2rem, 8vw, 6rem);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  margin: 4px 0 6px;
+  display: inline-block;
+  background: linear-gradient(
+    180deg,
+    #8aefb6 0%,
+    #66d9a8 46%,
+    #4fc3f7 54%,
+    #2da3e8 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter:
+    drop-shadow(0 0 8px  rgba(102, 217, 168, 0.55))
+    drop-shadow(0 0 18px rgba(79, 195, 247, 0.48))
+    drop-shadow(0 0 32px rgba(102, 217, 168, 0.28));
+  animation: meeg-glow-pulse 3.6s ease-in-out infinite;
+}
+
+@keyframes meeg-glow-pulse {
+  0%, 100% {
+    filter:
+      drop-shadow(0 0 8px  rgba(102, 217, 168, 0.55))
+      drop-shadow(0 0 18px rgba(79, 195, 247, 0.48))
+      drop-shadow(0 0 32px rgba(102, 217, 168, 0.28));
+  }
+  50% {
+    filter:
+      drop-shadow(0 0 12px rgba(102, 217, 168, 0.78))
+      drop-shadow(0 0 26px rgba(79, 195, 247, 0.65))
+      drop-shadow(0 0 44px rgba(102, 217, 168, 0.42));
+  }
+}
+
+[data-theme="light"] .hero-title-meeg {
+  background: linear-gradient(
+    180deg,
+    #1f9971 0%,
+    #1f9971 46%,
+    #0a7fc4 54%,
+    #0a7fc4 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter:
+    drop-shadow(0 0 6px  rgba(31, 153, 113, 0.45))
+    drop-shadow(0 0 14px rgba(10, 127, 196, 0.38))
+    drop-shadow(0 0 24px rgba(31, 153, 113, 0.22));
+}
+
+/* 3D MEG helmet canvas wrapper. Sized to leave room for title + actions
+   below; transparent background so the hero collage shows through. */
+.meeg-3d-canvas {
+  width: 100%;
+  max-width: 460px;
+  height: 360px;
+  margin: 0 auto 18px;
+  display: block;
+  position: relative;
+}
+
+.meeg-3d-canvas canvas { display: block; width: 100% !important; height: 100% !important; }
+
+/* Glass pill in the top-right corner of the 3D stage that swaps between
+   the MEG sensor layout and the 64-channel EEG cap. Sits above the WebGL
+   canvas via position: absolute on the relatively-positioned wrapper. */
+.cap-toggle {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  z-index: 2;
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 999px;
+  border: 1px solid var(--border-glass);
+  background: rgba(10, 16, 26, 0.55);
+  backdrop-filter: blur(8px) saturate(140%);
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+}
+[data-theme="light"] .cap-toggle {
+  background: rgba(255, 255, 255, 0.65);
+  box-shadow: 0 4px 14px rgba(15, 25, 40, 0.10);
+}
+.cap-toggle-btn {
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--muted-strong);
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color .15s ease, background .15s ease;
+}
+.cap-toggle-btn:hover { color: var(--accent-strong); }
+.cap-toggle-btn.is-active {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* Scrolling EEG signal trace under the 3D cap. Looks like a multi-lane
+   monitor that refreshes left-to-right (sweep-cursor style). */
+.meeg-signal {
+  display: block;
+  width: 100%;
+  max-width: 540px;
+  height: 110px;
+  margin: -22px auto 24px;
+  border-radius: 10px;
+  background: rgba(8, 14, 22, 0.78);
+  border: 1px solid var(--border);
+  box-shadow:
+    inset 0 0 24px rgba(0, 0, 0, 0.35),
+    0 6px 18px rgba(0, 0, 0, 0.32);
+}
+
+[data-theme="light"] .meeg-signal {
+  background: rgba(240, 244, 250, 0.95);
+  border-color: var(--border);
+  box-shadow:
+    inset 0 0 24px rgba(15, 25, 40, 0.06),
+    0 6px 18px rgba(15, 25, 40, 0.10);
+}
+
+@media (max-width: 600px) {
+  .meeg-3d-canvas { height: 280px; max-width: 100%; }
+  .meeg-signal    { max-width: 100%; height: 90px; }
+}
+
+.hero-tagline {
+  font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+  color: var(--mint);
+  font-weight: 600;
+  margin: 0 0 18px;
+}
+
+.hero-lead {
+  font-size: 1.05rem;
+  color: var(--muted-strong);
+  max-width: 760px;
+  margin: 0 auto 28px;
+  line-height: 1.7;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.97rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s ease;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #08131e;
+  border-color: var(--accent);
+}
+
+.btn-primary:hover {
+  background: var(--accent-strong);
+  color: #08131e;
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(79, 195, 247, 0.28);
+}
+
+[data-theme="light"] .btn-primary { color: #ffffff; }
+[data-theme="light"] .btn-primary:hover { color: #ffffff; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.btn-ghost:hover {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  border-color: var(--accent);
+  text-decoration: none;
+}
+
+.btn + .btn { margin-left: 0; }
+
+/* ---------- Sections ---------- */
+main { display: block; }
+
+.section {
+  padding: clamp(56px, 9vw, 110px) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.section:last-of-type { border-bottom: none; }
+
+.section-header {
+  margin-bottom: 36px;
+  text-align: center;
+}
+
+.section-title {
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  margin: 0 0 12px;
+  letter-spacing: -0.01em;
+}
+
+.section-lead {
+  font-size: 1.08rem;
+  color: var(--muted-strong);
+  max-width: 760px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.section-cta { padding: 56px 0; background: var(--bg-elev); }
+.cta-strip { text-align: center; }
+
+/* ---------- "Points" (feature blocks on landing) ---------- */
+.points {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+  margin-top: 28px;
+}
+
+.point {
+  background: var(--panel-glass);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  padding: 22px 22px 20px;
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+.point:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.30), 0 0 0 1px var(--glow-accent);
+}
+
+[data-theme="light"] .point:hover {
+  box-shadow: 0 14px 32px rgba(15, 25, 40, 0.12), 0 0 0 1px var(--glow-accent);
+}
+
+.point h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: var(--accent);
+}
+
+.point p { margin: 0; color: var(--muted-strong); font-size: 0.97rem; }
+
+/* ---------- Generic cards & grids used across pages ---------- */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin: 24px 0;
+}
+
+.card {
+  background: var(--panel-glass);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  padding: 22px;
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+.card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.30), 0 0 0 1px var(--glow-accent);
+}
+
+[data-theme="light"] .card:hover {
+  box-shadow: 0 14px 32px rgba(15, 25, 40, 0.12), 0 0 0 1px var(--glow-accent);
+}
+
+.card h3 { margin-top: 0; color: var(--text-strong); }
+.card h3 .pill { font-size: .72rem; vertical-align: middle; margin-left: 8px; }
+.card p { color: var(--muted-strong); }
+.card ul, .card ol { color: var(--muted-strong); }
+
+.card-accent { border-left: 4px solid var(--accent); padding-left: 24px; }
+.card-mint   { border-left: 4px solid var(--mint);   padding-left: 24px; }
+.card-warn   { border-left: 4px solid var(--warn);   padding-left: 24px; }
+
+/* ---------- Pills, callouts, badges ---------- */
+.pill {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 600;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  letter-spacing: 0.02em;
+}
+.pill-mint   { background: var(--mint-soft);   color: var(--mint); }
+.pill-warn   { background: rgba(255, 180, 84, 0.18); color: var(--warn); }
+
+.callout {
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 22px 0;
+  color: var(--muted-strong);
+}
+
+.callout-mint { border-left-color: var(--mint); }
+.callout-warn { border-left-color: var(--warn); }
+.callout-tip  { border-left-color: var(--mint); }
+.callout-new  { border-left-color: var(--mint); background: var(--mint-soft); }
+.callout p:last-child { margin-bottom: 0; }
+.callout strong { color: var(--text-strong); }
+.callout-title {
+  display: block;
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-bottom: 4px;
+}
+
+/* Callout with a glyph on the left (BIDS Manager pattern). Use:
+   <div class="callout has-icon callout-tip">
+     <span class="callout-icon">[svg or character]</span>
+     <div class="callout-body">...</div>
+   </div> */
+.callout.has-icon {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.callout-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: 0 0 0 1px var(--glow-accent);
+  flex-shrink: 0;
+}
+.callout-tip  .callout-icon { background: var(--mint-soft); color: var(--mint); box-shadow: 0 0 0 1px var(--glow-mint); }
+.callout-warn .callout-icon { background: rgba(255, 180, 84, 0.18); color: var(--warn); box-shadow: 0 0 0 1px rgba(255, 180, 84, 0.35); }
+
+/* ---------- Code blocks ---------- */
+code, pre, .mono {
+  font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", Menlo,
+               Consolas, "Courier New", monospace;
+  font-size: 0.92em;
+}
+
+p code, li code, td code, th code, h2 code, h3 code, h4 code, a code {
+  background: var(--code-bg);
+  color: var(--code-text);
+  padding: 1.5px 6px;
+  border-radius: 4px;
+  font-size: 0.86em;
+  border: 1px solid var(--code-border);
+}
+
+pre {
+  position: relative;
+  background: var(--code-bg);
+  color: var(--code-text);
+  padding: 16px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--code-border);
+  overflow-x: auto;
+  line-height: 1.55;
+  margin: 16px 0 22px;
+  box-shadow: var(--shadow-1);
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.92em;
+}
+
+/* --- Copy-to-clipboard button on every <pre>. Ported verbatim from
+ * the BIDS Manager docs (script.js initCodeCopy + styles.css .code-copy).
+ * Frosted-glass chip in the top-right corner; flashes "Copied!" for
+ * 1.5 s on success and "Failed" otherwise. */
+.code-copy {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: var(--panel-glass-strong);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  border: 1px solid var(--border-glass);
+  color: var(--muted);
+  border-radius: 8px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0.7;
+  transition: opacity 180ms ease, color 160ms ease,
+              border-color 160ms ease, transform 160ms ease;
+}
+.code-copy svg {
+  width: 13px;
+  height: 13px;
+  stroke-width: 2;
+  fill: none;
+  stroke: currentColor;
+}
+pre:hover .code-copy,
+.code-copy:focus-visible {
+  opacity: 1;
+}
+.code-copy:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+.code-copy.is-copied {
+  color: var(--mint, var(--accent));
+  border-color: var(--mint, var(--accent));
+  opacity: 1;
+}
+.code-copy.is-failed {
+  color: var(--danger, #ff6b6b);
+  border-color: var(--danger, #ff6b6b);
+  opacity: 1;
+}
+
+/* --- Dataset / directory tree (replaces file-tree <pre><code> blocks).
+ * Ported from BIDS Manager docs (`.dataset-tree-row`). Folder rows get
+ * `.is-folder` (accent-coloured, bold name + optional chev). Depth is
+ * controlled by `.d1` / `.d2` / `.d3` / `.d4` classes. Optional `.meta`
+ * pill at the right for sizes / counts. */
+.dataset-tree {
+  padding: 14px 18px;
+  margin: 16px 0;
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 10px;
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--code-text);
+  overflow-x: auto;
+}
+.dataset-tree-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 4px;
+  white-space: nowrap;
+  flex-wrap: wrap;
+}
+.dataset-tree-row.d1 { padding-left: 22px; }
+.dataset-tree-row.d2 { padding-left: 44px; }
+.dataset-tree-row.d3 { padding-left: 66px; }
+.dataset-tree-row.d4 { padding-left: 88px; }
+.dataset-tree-row .chev {
+  display: inline-block;
+  width: 14px;
+  text-align: center;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.dataset-tree-row .name { color: var(--code-text); }
+.dataset-tree-row.is-folder .name {
+  color: var(--accent);
+  font-weight: 600;
+}
+.dataset-tree-row .note {
+  color: var(--muted);
+  font-style: italic;
+  margin-left: 8px;
+}
+.dataset-tree-row.is-blank { height: 8px; padding: 0; }
+.dataset-tree-row.is-heading {
+  color: var(--muted);
+  font-weight: 600;
+  margin-top: 6px;
+  padding: 4px;
+}
+
+/* --- Autoplay looping videos (used across the docs for short report
+ *     and GUI clips). All <video class="media-loop"> elements ship with
+ *     `autoplay muted loop playsinline` so they behave like GIFs. */
+video.media-loop,
+.media-figure video.media-loop {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+}
+
+/* Figure wrapper for screenshots + clips: rounds corners, subtle border,
+ * matches the look of inline code blocks. */
+.media-figure {
+  margin: 22px 0 18px;
+  text-align: center;
+}
+.media-figure img,
+.media-figure video {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.media-figure figcaption {
+  margin-top: 10px;
+  font-size: 0.88rem;
+  color: var(--muted);
+  text-align: center;
+}
+/* Side-by-side rows of two figures. */
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 18px;
+  margin: 22px 0 18px;
+}
+.media-grid .media-figure { margin: 0; }
+
+.code-label {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 18px 0 6px;
+}
+
+/* ---------- Tables ---------- */
+.table-wrap {
+  overflow-x: auto;
+  margin: 18px 0 24px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.94rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+thead th {
+  background: var(--bg-elev-2);
+  color: var(--text-strong);
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+}
+
+tbody tr:hover { background: var(--card-hover); }
+tbody tr:last-child td { border-bottom: none; }
+
+/* ---------- Figures and screenshots ---------- */
+.figure {
+  margin: 22px auto 32px;
+  text-align: center;
+  /* Cap solo figures so they don't dominate the prose column. Inside
+     `.figure-row` the row sets its own grid columns and overrides this. */
+  max-width: 600px;
+  cursor: zoom-in;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.figure:hover,
+.figure:focus-visible {
+  transform: translateY(-2px) scale(1.005);
+  outline: none;
+}
+/* Inside a grid row, each cell takes the column's width. */
+.figure-row > .figure { max-width: none; margin: 0; }
+
+.figure img,
+.figure video {
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev-2);
+  box-shadow: var(--shadow-1);
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: auto;
+  /* Cap the tallest dimension too so portrait-ish PNGs don't tower
+     over wide screenshots in the same column. */
+  max-height: 60vh;
+  object-fit: contain;
+  max-width: 100%;
+}
+
+.figure figcaption {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-top: 10px;
+  font-style: italic;
+}
+
+.figure-row {
+  display: grid;
+  /* Bumped from 280px so 3-up rows wrap to 2+1 inside the narrow prose
+     column instead of squeezing every cell. */
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 18px;
+  margin: 22px 0 28px;
+}
+
+.figure-row .figure { margin: 0; }
+
+/* ---------- Page header (non-landing pages) ---------- */
+.page-hero {
+  padding: 56px 24px 36px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--bg-elev) 0%, var(--bg) 100%);
+}
+
+.page-hero .container { max-width: 980px; }
+
+.page-hero .eyebrow {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.page-hero h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0 0 16px;
+}
+
+.page-hero p {
+  font-size: 1.05rem;
+  color: var(--muted-strong);
+  max-width: 780px;
+  margin: 0;
+}
+
+/* ---------- Prose typography (used by content pages) ---------- */
+/* Applied to `.prose` wrappers inside `.section` blocks. The previous
+   `.article` rules lived here; they were retargeted to `.prose` when
+   the content pages were split into one `<section>` per `<h2>` block. */
+.prose h2 { margin-top: 2.4em; font-size: 1.8rem; }
+.prose h3 {
+  margin-top: 2em;
+  margin-bottom: 0.55em;
+  font-size: 1.32rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  /* Pulled from the hero title gradient (the bottom blue stop), not
+     from `--accent` (which is the cyan used by the eyebrow "bubbles"
+     on the index page). */
+  color: var(--title-blue);
+}
+.prose h4 { margin-top: 1.4em; }
+.prose ul, .prose ol { color: var(--text); }
+.prose li { margin-bottom: 0.35em; }
+.prose > h2:first-child,
+.prose > h3:first-child,
+.prose > h4:first-child { margin-top: 0; }
+
+.anchor-jumplist {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 20px 0 32px;
+}
+
+.anchor-jumplist h4 {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.anchor-jumplist ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 4px 14px;
+}
+
+.anchor-jumplist a {
+  display: block;
+  padding: 4px 0;
+  font-size: 0.92rem;
+}
+
+/* ---------- Workflow animation hero ---------- */
+.workflow-animation {
+  width: 100%;
+  max-width: 880px;
+  margin: 8px auto 30px;
+  display: block;
+  height: auto;
+  cursor: pointer;
+}
+
+.workflow-node .node-disc {
+  fill: var(--card);
+  stroke: var(--border-strong);
+  stroke-width: 1.5;
+  transition: fill .3s ease, stroke .3s ease;
+}
+
+.workflow-node .node-icon { color: var(--text); transition: color .3s ease; }
+.workflow-node text {
+  fill: var(--muted-strong);
+  font-size: 11px;
+  text-anchor: middle;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  font-weight: 600;
+  transition: fill .3s ease;
+}
+
+.workflow-node.active .node-disc {
+  fill: var(--accent);
+  stroke: var(--accent-strong);
+}
+.workflow-node.active .node-icon { color: #08131e; }
+.workflow-node.active text { fill: var(--accent); }
+
+.workflow-line {
+  fill: none;
+  stroke: var(--border-strong);
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: 0.6;
+}
+
+.travel-dot {
+  fill: var(--accent);
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+
+.workflow-animation.playing .travel-dot { opacity: 1; }
+
+.workflow-click-hint {
+  text-align: center;
+  font-size: 0.86rem;
+  color: var(--muted);
+  margin: -8px 0 16px;
+}
+
+/* ---------- Quality score reveal (hero finale) ---------- */
+.gqi-reveal {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--mint-soft);
+  border: 1px solid var(--mint);
+  color: var(--mint);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+.gqi-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gqi-reveal .dot {
+  width: 8px;
+  height: 8px;
+  background: var(--mint);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(102, 217, 168, 0.7);
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background: var(--bg-elev);
+  border-top: 1px solid var(--border);
+  padding: 32px 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.site-footer .container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.site-footer strong { color: var(--text-strong); }
+.site-footer a { color: var(--muted-strong); }
+.site-footer a:hover { color: var(--accent); }
+
+/* ---------- Step blocks (tutorial pages) ---------- */
+.step {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 22px;
+  align-items: flex-start;
+  margin: 36px 0;
+}
+
+.step-num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  border-right: 2px solid var(--border);
+  padding-right: 16px;
+  text-align: center;
+}
+
+.step-body { padding-top: 4px; }
+.step-body h3 { margin-top: 0; color: var(--text-strong); }
+
+.split-cli-gui {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin: 18px 0 24px;
+}
+
+.split-cli-gui > div {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+
+.split-cli-gui h4 {
+  margin: 0 0 10px;
+  font-size: 0.95rem;
+  color: var(--accent);
+}
+
+.split-cli-gui pre { margin: 0; font-size: 0.85rem; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .site-header { flex-wrap: wrap; padding: 12px 18px; }
+  .nav-links { margin: 6px 0 0; width: 100%; justify-content: flex-start; }
+  .site-footer .container { grid-template-columns: 1fr; }
+  .step { grid-template-columns: 1fr; gap: 6px; }
+  .step-num { border-right: none; border-bottom: 2px solid var(--border); padding: 0 0 6px; text-align: left; }
+  .split-cli-gui { grid-template-columns: 1fr; }
+  .hero { padding: 56px 18px 72px; }
+  .hero-media { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr); }
+}
+
+@media (max-width: 600px) {
+  body { font-size: 15px; }
+  .section { padding: 48px 0; }
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .btn { justify-content: center; }
+}
+
+/* ====================================================================
+   Glassmorphism + glow + scroll-reveal + sticky page-TOC. These rules
+   are layered on top of the base styles above and mirror the BIDS
+   Manager docs pattern (page-toc panel, IntersectionObserver reveals).
+   ==================================================================== */
+
+/* Centered content readability constraint for prose sections. */
+.prose {
+  max-width: 78ch;
+  margin: 0 auto;
+  text-align: left;
+}
+.prose > .figure,
+.prose > .figure-row { text-align: center; }
+
+/* Section eyebrows (small uppercase label above a section h2) */
+.section-eyebrow {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+/* Article sections should center their content too */
+.article > h2,
+.article > h3,
+.article > h4,
+.article > p,
+.article > ul,
+.article > ol,
+.prose > pre,
+.prose > .figure,
+.prose > .figure-row,
+.prose > .table-wrap,
+.prose > .card-grid,
+.prose > .callout,
+.prose > .anchor-jumplist {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 78ch;
+}
+.prose > pre { max-width: 82ch; }
+.article > .figure,
+.article > .figure-row,
+.article > .table-wrap,
+.article > .card-grid { max-width: 1000px; }
+
+/* Special override: the workflow figure breaks out of the prose
+   column. The article is centered with max-width 900px; this trick
+   recentres the figure at viewport center and lets it grow up to
+   1100px (or full viewport minus 48px of gutter). */
+/* The workflow figure lives inside `.prose` at the narrow prose width;
+   the "Expand" button opens a modal with a much larger version. The old
+   article-breakout rule is gone with the section refactor. */
+
+/* Scroll-reveal: sections fade up when scrolled into view.
+   Verbatim port of the BIDS Manager docs rule. */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 600ms ease, transform 600ms ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-shot { animation: none; opacity: 0.65; }
+}
+
+/* Hero title gets a soft multi-layer glow so it reads against the
+   pulsing collage in the background. */
+.hero-title-meeg {
+  text-shadow:
+    0 0 6px  var(--glow-mint),
+    0 0 18px var(--glow-accent);
+}
+
+/* =====================================================================
+   Sticky per-page TOC, floats on the left of every long content page.
+   Mirrors the BIDS Manager pattern: a 42x42 hamburger toggle that
+   reveals a glass panel listing the page's section anchors. The active
+   link auto-highlights as the matching section scrolls into view.
+   ===================================================================== */
+.page-toc {
+  position: fixed;
+  left: clamp(10px, 1.6vw, 22px);
+  top: 92px;
+  z-index: 25;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.page-toc-toggle {
+  pointer-events: auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--panel-glass-strong);
+  border: 1px solid var(--border-glass);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s ease, border-color .2s ease;
+}
+.page-toc-toggle:hover,
+.page-toc-toggle:focus-visible {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  outline: none;
+}
+
+.toc-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 18px;
+}
+.toc-bars span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--text);
+  border-radius: 1px;
+  transition: transform .25s ease, opacity .2s ease;
+}
+.page-toc.is-open .toc-bars span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.page-toc.is-open .toc-bars span:nth-child(2) { opacity: 0; }
+.page-toc.is-open .toc-bars span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+.page-toc-panel {
+  width: 244px;
+  background: var(--panel-glass-strong);
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  padding: 14px 10px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  transform: translateX(-12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .28s ease, opacity .22s ease;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+.page-toc.is-open .page-toc-panel {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.page-toc-title {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 6px 12px 10px;
+}
+.page-toc-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  color: var(--muted-strong);
+  text-decoration: none;
+  transition: background .15s ease, color .15s ease;
+  line-height: 1.35;
+}
+.page-toc-link:hover {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  text-decoration: none;
+}
+.page-toc-link.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+.page-toc-dot {
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+.page-toc-link.is-active .page-toc-dot {
+  background: var(--accent);
+  transform: scale(1.4);
+  box-shadow: 0 0 10px var(--glow-accent);
+}
+
+@media (max-width: 1100px) {
+  .page-toc { top: 78px; }
+  .page-toc-panel { width: 220px; }
+}
+
+@media (max-width: 760px) {
+  .page-toc { display: none; }  /* hide on narrow phones */
+}
+
+/* =====================================================================
+   Workflow diagram (intro.html). Interactive SVG with hoverable stages.
+   The explanation for each stage appears as a floating popover anchored
+   next to the hovered cluster instead of a fixed side panel.
+   ===================================================================== */
+.workflow-figure {
+  display: block;
+  margin: 24px auto 32px;
+  max-width: 1100px;
+  width: 100%;
+  position: relative;
+}
+
+/* Expand button anchored in the figure's top-right corner. Opens the
+   modal that re-hosts the same figure node so popover JS keeps working. */
+.workflow-expand-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel-glass);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(8px) saturate(140%);
+  transition: border-color 150ms ease, color 150ms ease, background 150ms ease;
+}
+.workflow-expand-btn:hover,
+.workflow-expand-btn:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  outline: none;
+}
+.workflow-expand-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Workflow modal. Fullscreen overlay with a dark backdrop; the same
+   .workflow-figure node is moved into .workflow-modal-body on open
+   and moved back to its original position on close (via a placeholder
+   comment marker), so the popover JS keeps working untouched. */
+.workflow-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.workflow-modal[hidden] { display: none; }
+
+.workflow-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+.workflow-modal-shell {
+  position: relative;
+  z-index: 1;
+  width: min(96vw, 1600px);
+  max-height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+
+.workflow-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+}
+.workflow-modal-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+.workflow-modal-close {
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  font-size: 26px;
+  line-height: 1;
+  padding: 4px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 150ms ease, background 150ms ease;
+}
+.workflow-modal-close:hover,
+.workflow-modal-close:focus-visible {
+  color: var(--accent);
+  background: var(--panel-glass);
+  outline: none;
+}
+
+.workflow-modal-body {
+  padding: 24px;
+  overflow: auto;
+  flex: 1;
+}
+.workflow-modal-body .workflow-figure {
+  margin: 0;
+  max-width: none;
+  width: 100%;
+}
+/* Hide the expand button while the figure is inside the modal. */
+.workflow-modal-body .workflow-expand-btn { display: none; }
+
+/* --- Generic media modal: click any .figure to expand it. The same
+ * shell as the workflow modal but the media node is CLONED rather than
+ * moved (so the original keeps playing in the page) and the caption
+ * text doubles as the explanation. */
+.media-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.media-modal[hidden] { display: none; }
+.media-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+.media-modal-shell {
+  position: relative;
+  z-index: 1;
+  width: min(96vw, 1500px);
+  max-height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+.media-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  z-index: 2;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  font-size: 28px;
+  line-height: 1;
+  padding: 4px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 150ms ease, background 150ms ease;
+}
+.media-modal-close:hover,
+.media-modal-close:focus-visible {
+  color: var(--accent);
+  background: var(--panel-glass);
+  outline: none;
+}
+.media-modal-body {
+  padding: 28px 28px 18px;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-height: 0;
+}
+.media-modal-body img,
+.media-modal-body video {
+  max-width: 100%;
+  max-height: 78vh;
+  height: auto;
+  width: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev-2);
+  box-shadow: var(--shadow-2);
+}
+.media-modal-caption {
+  padding: 14px 28px 22px;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.96rem;
+  line-height: 1.55;
+  text-align: center;
+}
+.media-modal-caption[hidden] { display: none; }
+
+/* =====================================================================
+ * Glass-bubble + shatter effect for report-section figures.
+ * Scoped to <body class="page-reports">.
+ *
+ * Idle:  every figure's media sits inside a `.media-frame` wrapper
+ *        with a top-light glass highlight, a subtle inner ring, and
+ *        a soft outer glow.
+ * Click: JS injects 6 clip-path shards inside the frame, adds
+ *        `.is-shattering`, and waits ~380 ms for the animation
+ *        before the existing media modal opens.
+ * ===================================================================== */
+
+.page-reports .media-frame {
+  position: relative;
+  display: inline-block;
+  border-radius: 12px;
+  overflow: hidden;
+  vertical-align: top;
+  max-width: 100%;
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.32),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+  transition: box-shadow 220ms ease, transform 220ms ease;
+}
+.page-reports .figure:hover .media-frame,
+.page-reports .figure:focus-visible .media-frame {
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 0 28px rgba(79, 195, 247, 0.22);
+}
+[data-theme="light"] .page-reports .media-frame {
+  box-shadow:
+    0 12px 28px rgba(15, 25, 40, 0.14),
+    0 0 0 1px rgba(15, 25, 40, 0.06);
+}
+[data-theme="light"] .page-reports .figure:hover .media-frame,
+[data-theme="light"] .page-reports .figure:focus-visible .media-frame {
+  box-shadow:
+    0 18px 42px rgba(15, 25, 40, 0.18),
+    0 0 0 1px rgba(15, 25, 40, 0.10),
+    0 0 28px rgba(10, 127, 196, 0.18);
+}
+
+/* Media inside the frame: drop the per-element border so the frame's
+   own ring shows cleanly. */
+.page-reports .media-frame > img,
+.page-reports .media-frame > video {
+  display: block;
+  border: 0;
+  border-radius: inherit;
+  box-shadow: none;
+  margin: 0;
+  width: 100%;
+  height: auto;
+  background: var(--bg-elev-2);
+  transition: transform 380ms cubic-bezier(.2,.7,.2,1),
+              opacity   380ms cubic-bezier(.2,.7,.2,1),
+              filter    380ms cubic-bezier(.2,.7,.2,1);
+}
+
+/* Top-light highlight: the "glass surface" sheen. */
+.page-reports .media-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(180deg,
+      rgba(255, 255, 255, 0.18) 0%,
+      rgba(255, 255, 255, 0.04) 28%,
+      rgba(255, 255, 255, 0)    55%),
+    radial-gradient(ellipse 60% 35% at 22% 0%,
+      rgba(255, 255, 255, 0.28),
+      rgba(255, 255, 255, 0) 65%);
+  z-index: 3;
+  transition: opacity 220ms ease;
+  mix-blend-mode: screen;
+}
+
+/* Inner ring + bottom-edge bloom: more depth. */
+.page-reports .media-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+    inset 0 -28px 48px -28px rgba(255, 255, 255, 0.08);
+  z-index: 3;
+  transition: opacity 220ms ease;
+}
+[data-theme="light"] .page-reports .media-frame::after {
+  box-shadow:
+    inset 0 0 0 1px rgba(15, 25, 40, 0.12),
+    inset 0 -28px 48px -28px rgba(15, 25, 40, 0.05);
+}
+
+.page-reports .figure:hover .media-frame::before,
+.page-reports .figure:focus-visible .media-frame::before {
+  background:
+    linear-gradient(180deg,
+      rgba(255, 255, 255, 0.26) 0%,
+      rgba(255, 255, 255, 0.06) 28%,
+      rgba(255, 255, 255, 0)    55%),
+    radial-gradient(ellipse 60% 35% at 22% 0%,
+      rgba(255, 255, 255, 0.38),
+      rgba(255, 255, 255, 0) 65%);
+}
+
+/* Shatter shards injected on click. */
+.page-reports .media-frame .glass-shards {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.page-reports .media-frame .shard {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.65),
+    rgba(255, 255, 255, 0.15));
+  opacity: 0;
+  will-change: transform, opacity;
+  mix-blend-mode: screen;
+}
+.page-reports .media-frame .shard.s1 { clip-path: polygon(0   0,   55% 0,    48% 50%, 0    42%); }
+.page-reports .media-frame .shard.s2 { clip-path: polygon(55% 0,   100% 0,   100% 36%, 48% 50%); }
+.page-reports .media-frame .shard.s3 { clip-path: polygon(100% 36%, 100% 100%, 62% 100%, 48% 50%); }
+.page-reports .media-frame .shard.s4 { clip-path: polygon(62% 100%, 0   100%, 0   72%,  48% 50%); }
+.page-reports .media-frame .shard.s5 { clip-path: polygon(0   72%, 0   42%,  48% 50%); }
+.page-reports .media-frame .shard.s6 { clip-path: polygon(30% 25%, 70% 35%,  60% 65%,  35% 60%); }
+
+/* Default outward trajectory per shard (overridden per-shard below). */
+.page-reports .media-frame.is-shattering .shard {
+  animation: shard-fly 380ms cubic-bezier(.4, 0, .2, 1) forwards;
+}
+.page-reports .media-frame.is-shattering .shard.s1 { --tx: -60px; --ty: -48px; --rot: -22deg; animation-delay:   0ms; }
+.page-reports .media-frame.is-shattering .shard.s2 { --tx:  64px; --ty: -54px; --rot:  18deg; animation-delay:  20ms; }
+.page-reports .media-frame.is-shattering .shard.s3 { --tx:  72px; --ty:  56px; --rot:  24deg; animation-delay:  40ms; }
+.page-reports .media-frame.is-shattering .shard.s4 { --tx: -68px; --ty:  60px; --rot: -20deg; animation-delay:  10ms; }
+.page-reports .media-frame.is-shattering .shard.s5 { --tx: -30px; --ty: -24px; --rot: -10deg; animation-delay:  60ms; }
+.page-reports .media-frame.is-shattering .shard.s6 { --tx:  18px; --ty:  10px; --rot:   8deg; animation-delay:  30ms; }
+
+@keyframes shard-fly {
+  0%   { opacity: 0;    transform: translate(0, 0) rotate(0deg); }
+  18%  { opacity: 0.95; }
+  100% { opacity: 0;    transform: translate(var(--tx, 0), var(--ty, 0)) rotate(var(--rot, 0)); }
+}
+
+/* Media itself: flash brighter then fade behind the shards. */
+.page-reports .media-frame.is-shattering > img,
+.page-reports .media-frame.is-shattering > video {
+  animation: media-burst 380ms cubic-bezier(.4, 0, .2, 1) forwards;
+}
+@keyframes media-burst {
+  0%   { transform: scale(1);    opacity: 1; filter: brightness(1); }
+  35%  { transform: scale(1.04); opacity: 1; filter: brightness(1.4); }
+  100% { transform: scale(0.94); opacity: 0; filter: brightness(1); }
+}
+
+/* Glass highlight collapses as the shatter starts. */
+.page-reports .media-frame.is-shattering::before,
+.page-reports .media-frame.is-shattering::after {
+  opacity: 0;
+  transition: opacity 120ms ease-out;
+}
+
+/* Reduced-motion: no shards, no burst, just open the modal. */
+@media (prefers-reduced-motion: reduce) {
+  .page-reports .media-frame.is-shattering .shard { animation: none; opacity: 0; }
+  .page-reports .media-frame.is-shattering > img,
+  .page-reports .media-frame.is-shattering > video { animation: none; opacity: 1; }
+}
+
+/* Small accent-tinted block at the bottom of each report tab panel
+ * pointing at the matching metric explanation on metrics.html. */
+.deep-dive-link {
+  margin: 22px 0 4px;
+  padding: 12px 16px;
+  background: var(--accent-soft);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  font-size: 0.94rem;
+}
+.deep-dive-link a {
+  font-weight: 600;
+  text-decoration: none;
+}
+.deep-dive-link a:hover { text-decoration: underline; }
+
+.workflow-diagram {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--panel-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  padding: 18px;
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.20);
+}
+
+[data-theme="light"] .workflow-diagram {
+  box-shadow: 0 14px 32px rgba(15, 25, 40, 0.10);
+}
+
+/* Floating popover anchored inside the figure. Position is set by JS
+   in coordinates relative to .workflow-figure (which is
+   position: relative), so it overlays the diagram and stays with it
+   as the page scrolls. */
+.workflow-popover {
+  position: absolute;
+  width: min(300px, calc(100% - 36px));
+  background: var(--panel-glass-strong);
+  border: 1px solid var(--border-glass);
+  border-left: 4px solid var(--accent);
+  border-radius: 12px;
+  padding: 14px 16px 12px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity .15s ease, transform .15s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+.workflow-popover.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+[data-theme="light"] .workflow-popover {
+  box-shadow: 0 18px 40px rgba(15, 25, 40, 0.18);
+}
+
+.workflow-popover h3 {
+  margin: 4px 0 6px;
+  font-size: 1rem;
+  color: var(--text-strong);
+}
+.workflow-popover p  {
+  color: var(--muted-strong);
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.workflow-popover-eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+
+/* Column labels above each cluster */
+.wf-col-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-anchor: middle;
+  fill: var(--muted);
+}
+
+/* Box base style: rect + label text inside a <g> */
+.wf-box rect {
+  fill: var(--card);
+  stroke: var(--border-strong);
+  stroke-width: 1.2;
+  transition: fill .25s ease, stroke .25s ease;
+}
+.wf-box text {
+  text-anchor: middle;
+  fill: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  pointer-events: none;
+}
+.wf-box .wf-emph { font-weight: 700; fill: var(--text-strong); }
+
+/* Compact metric boxes use a slightly smaller font */
+.wf-box-small text,
+.wf-box-metric text { font-size: 12px; }
+
+/* Tag chips inside the output boxes */
+.wf-tag {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-anchor: middle;
+}
+.wf-tag-mint   { fill: var(--mint); }
+.wf-tag-accent { fill: var(--accent); }
+
+/* Stage-specific border colours so the diagram reads like the
+   colour-coded reference figure. */
+.wf-box-input  rect { stroke: var(--accent);    stroke-width: 1.6; }
+.wf-box-bids   rect { stroke: var(--mint);      stroke-width: 1.6; }
+.wf-box-calc   rect { stroke: var(--accent);    stroke-width: 1.4; }
+.wf-box-metric rect { stroke: var(--warn);      stroke-width: 1.4; }
+.wf-box-plot   rect { stroke: var(--accent);    stroke-width: 1.6; }
+.wf-box-out    rect { stroke: var(--mint);      stroke-width: 1.6; }
+
+/* Active highlight: cluster the user is inspecting glows; the rest dim */
+.workflow-diagram.has-active .wf-group { opacity: 0.45; transition: opacity .25s ease; }
+.workflow-diagram.has-active .wf-group.is-active { opacity: 1; filter: url(#wf-glow); }
+.workflow-diagram.has-active .wf-group.is-active .wf-box rect {
+  fill: var(--accent-soft);
+  stroke: var(--accent);
+}
+.workflow-diagram .wf-group { cursor: pointer; }
+
+/* Connector arrows */
+.wf-arrows { color: var(--muted); }
+.wf-arrow {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  marker-end: url(#wf-arrow);
+  opacity: 0.7;
+}
+.wf-arrow-dim { stroke-dasharray: 4 4; opacity: 0.5; }
+
+@media (max-width: 900px) {
+  .workflow-diagram  { padding: 12px; }
+  .workflow-popover  { width: min(280px, calc(100vw - 24px)); }
+}
+
+/* =====================================================================
+   Tabs (used by installation, tutorial, reports). Buttons swap panels.
+   ===================================================================== */
+.tabs { margin: 18px 0 24px; }
+
+.tab-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-elev-2);
+  margin-bottom: 14px;
+}
+
+.tab-btn {
+  flex: 1 1 auto;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted-strong);
+  border-radius: 7px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.tab-btn:hover {
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+}
+.tab-btn.is-active {
+  background: var(--card);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.tab-panel { display: none; }
+.tab-panel.is-active { display: block; }
+
+/* =====================================================================
+   Method cards (installation): two big "choose your install" cards.
+   ===================================================================== */
+.method-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin: 26px 0;
+}
+
+.method-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--panel-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  padding: 22px;
+  text-decoration: none;
+  color: var(--text);
+  position: relative;
+  backdrop-filter: blur(18px) saturate(140%);
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.method-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px var(--glow-accent), 0 12px 28px rgba(0,0,0,0.25);
+  text-decoration: none;
+}
+.method-card h3 { margin: 0; color: var(--text-strong); font-size: 1.1rem; }
+.method-card p  { margin: 0; color: var(--muted-strong); font-size: 0.94rem; }
+.method-card .method-go {
+  display: inline-block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: auto;
+}
+
+/* Big circular icon in the top-left of each method card */
+.method-card .method-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+  box-shadow: 0 0 0 1px var(--glow-accent);
+}
+.method-card .method-icon svg { width: 28px; height: 28px; display: block; }
+.method-card.is-mint .method-icon { background: var(--mint-soft); color: var(--mint); box-shadow: 0 0 0 1px var(--glow-mint); }
+.method-card.is-warn .method-icon { background: rgba(255, 180, 84, 0.18); color: var(--warn); box-shadow: 0 0 0 1px rgba(255, 180, 84, 0.35); }
+.method-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 3px 9px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  background: var(--mint-soft);
+  color: var(--mint);
+}
+.method-badge.is-adv {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* =====================================================================
+   Steps list (numbered, big circle on the left). Uses absolute
+   positioning for the number so the body can flow as normal block
+   text - grid would split every inline child into its own column.
+   ===================================================================== */
+.steps-list {
+  list-style: none;
+  counter-reset: step;
+  padding: 0;
+  margin: 20px 0 28px;
+}
+.steps-list > li {
+  counter-increment: step;
+  position: relative;
+  padding: 20px 0 20px 60px;
+  border-top: 1px solid var(--border);
+  line-height: 1.65;
+}
+.steps-list > li:first-child {
+  border-top: none;
+  padding-top: 6px;
+}
+.steps-list > li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 22px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1.02rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 1px var(--glow-accent);
+}
+.steps-list > li:first-child::before { top: 8px; }
+.steps-list > li > p:first-of-type { margin-top: 0; }
+.steps-list pre, .steps-list code { font-size: 0.9rem; }
+.steps-list pre { margin: 12px 0 6px; }
+.steps-list strong { color: var(--text-strong); }
+
+/* =====================================================================
+   Disclosure (HTML <details>) styled for our palette.
+   ===================================================================== */
+details.disclosure {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  margin: 12px 0;
+  padding: 0 16px;
+}
+details.disclosure summary {
+  padding: 12px 0;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-strong);
+  list-style: none;
+}
+details.disclosure summary::-webkit-details-marker { display: none; }
+details.disclosure summary::before {
+  content: "▸";
+  display: inline-block;
+  width: 14px;
+  margin-right: 6px;
+  color: var(--accent);
+  transition: transform .2s ease;
+}
+details.disclosure[open] summary::before { transform: rotate(90deg); }
+details.disclosure[open] { padding-bottom: 14px; }
+
+/* =====================================================================
+   Modality / dataset picker cards (tutorial).
+   ===================================================================== */
+.modality-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin: 24px 0 28px;
+}
+.modality-card {
+  position: relative;
+  background: var(--panel-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  padding: 20px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  backdrop-filter: blur(18px) saturate(140%);
+  overflow: hidden;
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.modality-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--mint));
+  opacity: 0.85;
+}
+.modality-card.mod-meg::before { background: linear-gradient(90deg, var(--accent), var(--accent-strong)); }
+.modality-card.mod-eeg::before { background: linear-gradient(90deg, var(--mint),   #b3edcd); }
+.modality-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.30), 0 0 0 1px var(--glow-accent);
+}
+[data-theme="light"] .modality-card:hover {
+  box-shadow: 0 14px 32px rgba(15, 25, 40, 0.12), 0 0 0 1px var(--glow-accent);
+}
+.modality-card h3 { margin: 0; color: var(--text-strong); font-size: 1.05rem; }
+.modality-card p  { margin: 0; color: var(--muted-strong); font-size: 0.92rem; line-height: 1.5; }
+.modality-badge {
+  display: inline-block;
+  padding: 3px 9px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  align-self: flex-start;
+}
+.modality-card.mod-meg .modality-badge { background: var(--accent-soft); color: var(--accent); }
+.modality-card.mod-eeg .modality-badge { background: var(--mint-soft);   color: var(--mint); }
+.modality-meta {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-style: italic;
+}
+.modality-actions { margin-top: auto; display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* =====================================================================
+   Compact spec table for CLI references etc.
+   ===================================================================== */
+.spec-table th, .spec-table td { font-size: 0.88rem; padding: 8px 12px; }
+.spec-table th:first-child, .spec-table td:first-child {
+  white-space: nowrap;
+}
+
+/* =====================================================================
+   Helper classes used by the BIDS Manager pattern (installation page)
+   ===================================================================== */
+.lead {
+  font-size: 1.08rem;
+  color: var(--muted-strong);
+  margin-top: 0;
+}
+.muted { color: var(--muted); }
+code.inline {
+  background: var(--code-bg);
+  color: var(--code-text);
+  padding: 1.5px 6px;
+  border-radius: 4px;
+  font-size: 0.86em;
+  border: 1px solid var(--code-border);
+}
+pre.code {
+  background: var(--code-bg);
+  color: var(--code-text);
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--code-border);
+  overflow-x: auto;
+  line-height: 1.55;
+  margin: 12px 0 16px;
+  font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", Menlo,
+               Consolas, "Courier New", monospace;
+  font-size: 0.88rem;
+}
+pre.code .cmt { color: var(--muted); font-style: italic; }
+
+/* Numbered <ol class="steps">, matching the BIDS Manager pattern */
+ol.steps {
+  list-style: none;
+  counter-reset: step;
+  padding: 0;
+  margin: 14px 0 18px;
+}
+ol.steps > li {
+  counter-increment: step;
+  position: relative;
+  padding: 16px 0 16px 56px;
+  border-top: 1px solid var(--border);
+  line-height: 1.65;
+}
+ol.steps > li:first-child { border-top: none; padding-top: 4px; }
+ol.steps > li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 1px var(--glow-accent);
+}
+ol.steps > li:first-child::before { top: 4px; }
+ol.steps > li > p:first-of-type { margin-top: 0; }
+ol.steps pre, ol.steps pre.code { margin: 10px 0 6px; }
+ol.steps strong { color: var(--text-strong); }
+
+/* Recolour the callout variants to look like the BIDS Manager pattern */
+.callout-warning {
+  border-left-color: var(--warn);
+  background: rgba(255, 180, 84, 0.08);
+}
+.callout-tip {
+  border-left-color: var(--mint);
+  background: var(--mint-soft);
+}
+.callout-warning > .callout-icon {
+  background: rgba(255, 180, 84, 0.22);
+  color: var(--warn);
+  box-shadow: 0 0 0 1px rgba(255, 180, 84, 0.35);
+}
+
+/* Container with breathing room used by the pipeline section */
+.section-header { text-align: center; margin-bottom: 36px; }
+.section-header .section-eyebrow { display: inline-block; margin-bottom: 10px; }
+
+/* =====================================================================
+   install-pipeline (interactive visualiser). Ported from BIDS Manager
+   docs, adapted to MEEGqc colour tokens.
+   ===================================================================== */
+.install-pipeline {
+  margin: 0;
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  background: var(--panel-glass);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  padding: clamp(22px, 3vw, 36px);
+  box-shadow: var(--shadow);
+  --current-step-color: var(--step1);
+  --current-step-glow:  var(--step1-glow);
+}
+
+.pipeline-chip[data-step="1"], .stage-layer[data-layer="1"] { --step-color: var(--step1); --step-glow: var(--step1-glow); }
+.pipeline-chip[data-step="2"], .stage-layer[data-layer="2"] { --step-color: var(--step2); --step-glow: var(--step2-glow); }
+.pipeline-chip[data-step="3"], .stage-layer[data-layer="3"] { --step-color: var(--step3); --step-glow: var(--step3-glow); }
+.pipeline-chip[data-step="4"], .stage-layer[data-layer="4"] { --step-color: var(--step4); --step-glow: var(--step4-glow); }
+.pipeline-chip[data-step="5"], .stage-layer[data-layer="5"] { --step-color: var(--step5); --step-glow: var(--step5-glow); }
+.pipeline-chip[data-step="6"], .stage-layer[data-layer="6"] { --step-color: var(--step6); --step-glow: var(--step6-glow); }
+.pipeline-chip[data-step="7"], .stage-layer[data-layer="7"] { --step-color: var(--step7); --step-glow: var(--step7-glow); }
+
+.pipeline-track {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+  align-items: stretch;
+  position: relative;
+}
+.pipeline-track::before {
+  content: "";
+  position: absolute;
+  top: 34px;
+  left: 8%;
+  right: 8%;
+  height: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+.pipeline-track li { position: relative; z-index: 1; min-width: 0; }
+
+.pipeline-chip {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 8px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-align: center;
+  transition: color 180ms ease, border-color 180ms ease,
+              background 180ms ease, box-shadow 220ms ease,
+              transform 160ms ease;
+}
+.pipeline-chip:hover {
+  border-color: var(--step-color, var(--accent));
+  color: var(--step-color, var(--text));
+  transform: translateY(-2px);
+}
+.pipeline-chip.is-active {
+  border-color: var(--step-color);
+  background: color-mix(in srgb, var(--step-color) 18%, var(--panel));
+  color: var(--step-color);
+  box-shadow: 0 0 0 1px var(--step-color), 0 14px 38px var(--step-glow);
+  animation: chip-breathe 2.4s ease-in-out infinite;
+}
+@keyframes chip-breathe {
+  0%, 100% { box-shadow: 0 0 0 1px var(--step-color), 0 12px 30px var(--step-glow); }
+  50%      { box-shadow: 0 0 0 1px var(--step-color), 0 20px 46px var(--step-glow); }
+}
+@media (prefers-reduced-motion: reduce) { .pipeline-chip.is-active { animation: none; } }
+
+.pipeline-chip svg {
+  width: 32px; height: 32px;
+  stroke: currentColor; fill: none;
+  stroke-width: 1.7;
+  transition: transform 200ms ease;
+}
+.pipeline-chip.is-active svg { transform: scale(1.08); }
+
+.pipeline-chip .chip-num {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+.pipeline-chip.is-active .chip-num { color: var(--step-color); }
+.pipeline-chip .chip-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+
+@media (max-width: 720px) {
+  .pipeline-chip .chip-label { display: none; }
+  .pipeline-chip svg { width: 28px; height: 28px; }
+}
+
+.pipeline-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+@media (max-width: 760px) { .pipeline-stage { grid-template-columns: 1fr; } }
+
+.stage-illustration {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(120% 80% at 30% 20%, color-mix(in srgb, var(--current-step-color) 18%, transparent), transparent 60%),
+    radial-gradient(80% 70% at 78% 82%, color-mix(in srgb, var(--current-step-color) 12%, transparent), transparent 60%),
+    var(--bg-soft);
+  padding: 16px;
+  width: 100%;
+  max-height: 320px;
+  aspect-ratio: 720 / 380;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  transition: background 400ms ease;
+}
+@media (max-width: 760px) { .stage-illustration { max-height: 240px; } }
+.stage-illustration .stage-svg { width: 100%; height: 100%; display: block; }
+
+.stage-layer {
+  color: var(--step-color, var(--accent));
+  opacity: 0;
+  transition: opacity 500ms ease, filter 400ms ease;
+}
+.stage-layer.is-shown   { opacity: 0.55; }
+.stage-layer.is-current {
+  opacity: 1;
+  filter: drop-shadow(0 0 10px var(--step-glow));
+  animation: pipeline-pulse 1.8s ease-in-out infinite;
+}
+.stage-layer.is-current path,
+.stage-layer.is-current rect,
+.stage-layer.is-current line,
+.stage-layer.is-current circle { stroke-width: 2.8; }
+@keyframes pipeline-pulse {
+  0%, 100% { filter: drop-shadow(0 0 8px  var(--step-glow)); }
+  50%      { filter: drop-shadow(0 0 18px var(--step-glow)); }
+}
+@media (prefers-reduced-motion: reduce) { .stage-layer.is-current { animation: none; } }
+
+.pipeline-detail h3 {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 16px;
+}
+.pipeline-detail .detail-step {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--current-step-color);
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-weight: 700;
+  transition: color 250ms ease;
+}
+.pipeline-detail .detail-title {
+  font-size: 1.45rem;
+  line-height: 1.22;
+  letter-spacing: -0.012em;
+  color: var(--text-strong);
+}
+.pipeline-detail p { color: var(--text); font-size: 0.98rem; margin: 0 0 0.6em; }
+.pipeline-detail p:last-child { margin-bottom: 0; }
+.pipeline-detail code.inline { font-size: 0.85em; }
+
+.pipeline-progress {
+  margin-top: 24px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+  position: relative;
+}
+.pipeline-progress::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: var(--progress, 0%);
+  background: linear-gradient(90deg,
+    var(--current-step-color),
+    color-mix(in srgb, var(--current-step-color) 60%, #ffffff));
+  box-shadow: 0 0 12px var(--current-step-glow);
+  transition: width 90ms linear, background 300ms ease;
+  border-radius: 999px;
+}
+
+.pipeline-controls {
+  display: flex;
+  gap: 14px;
+  margin-top: 14px;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+}
+.pipeline-controls button {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 5px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: border-color 150ms ease, color 150ms ease;
+}
+.pipeline-controls button:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ---------- Print ---------- */
+@media print {
+  .site-header, .site-footer, .theme-toggle, .hero-actions,
+  .page-toc, .hero-media { display: none; }
+  body { background: #fff; color: #000; }
+  a { color: #000; text-decoration: underline; }
+  .reveal { opacity: 1; transform: none; }
+}

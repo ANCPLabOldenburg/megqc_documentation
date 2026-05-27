@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="What MEEGqc is: the signal-quality problem in MEG / EEG, supported modalities and formats, the dependency stack, the workflow, and analysis profiles.">
+  <title>How MEEGqc works &middot; MEEGqc</title>
+  <link rel="icon" href="favicon.ico?v=2" sizes="any">
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-256.png?v=2" sizes="256x256">
+  <link rel="apple-touch-icon" href="assets/brand/app-icon-256.png?v=2">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div data-include="header"></div>
+
+  <main>
+    <!-- Sticky left-side page index. Toggle reveals a glass
+         panel; the active section auto-highlights as you scroll. -->
+    <aside class="page-toc" data-toc aria-label="Page navigation">
+      <button class="page-toc-toggle" type="button"
+              aria-expanded="false" aria-controls="page-toc-panel"
+              aria-label="Toggle page navigation">
+        <span class="toc-bars" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+      <nav id="page-toc-panel" class="page-toc-panel" aria-label="Sections">
+        <span class="page-toc-title">On this page</span>
+        <a class="page-toc-link" href="#problem">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          The signal-quality problem
+        </a>
+        <a class="page-toc-link" href="#what">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          What MEEGqc is
+        </a>
+        <a class="page-toc-link" href="#modality">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          Modalities and formats
+        </a>
+        <a class="page-toc-link" href="#deps">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          Main dependencies
+        </a>
+        <a class="page-toc-link" href="#workflow">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          How it works
+        </a>
+        <a class="page-toc-link" href="#profiles">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          Analysis profiles
+        </a>
+        <a class="page-toc-link" href="#bids">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          BIDS-aligned outputs
+        </a>
+      </nav>
+    </aside>
+
+    <header class="page-hero">
+      <div class="container">
+        <span class="eyebrow">How it works</span>
+        <h1>From a BIDS dataset to a quality verdict.</h1>
+        <p>
+          MEEGqc turns raw MEG and EEG recordings into auditable
+          quality information at three nested scopes: subject-level,
+          dataset-level, and multi-dataset-level. This page is the
+          conceptual tour. For hands-on commands, jump to the
+          <a href="tutorial.html">tutorial</a>.
+        </p>
+      </div>
+    </header>
+
+    <!-- =================================================================
+         1. The signal-quality problem
+         ================================================================= -->
+    <section class="section reveal" id="problem">
+      <div class="container container-narrow prose">
+      <h2>The signal-quality problem</h2>
+      <p>
+        MEG and EEG capture millisecond-scale neural dynamics, but the
+        signals they record are tiny relative to a long list of
+        non-neural sources. Even with well-shielded rooms and good
+        acquisition protocols, every recording arrives with some
+        amount of:
+      </p>
+
+      <div class="card-grid">
+        <div class="card">
+          <h3>Physiological contamination</h3>
+          <p>Cardiac activity (ECG), eye movements and blinks (EOG),
+             and muscle activity (jaw clenches, neck tension)
+             routinely leak into the recording.</p>
+        </div>
+        <div class="card">
+          <h3>Environmental interference</h3>
+          <p>Mains harmonics (50 / 60 Hz and multiples), site-specific
+             magnetic noise, and ground vibrations show up as
+             narrowband and broadband contamination.</p>
+        </div>
+        <div class="card">
+          <h3>Hardware variability</h3>
+          <p>Sensor instability, drifts, and calibration issues
+             produce noisy or flat channels that need to be flagged
+             before downstream analysis.</p>
+        </div>
+        <div class="card">
+          <h3>Head motion</h3>
+          <p>Even small head movements relative to the dewar (MEG) or
+             cap (EEG) can bias source localisation and add structured
+             residual artifacts after compensation.</p>
+        </div>
+      </div>
+
+      <p>
+        Reviewing all of this visually, one recording at a time, does
+        not scale. Once a research group starts automating the
+        review, conventions diverge between laboratories, parameter
+        choices drift between recording sessions and between
+        acquisition sites, and the quality decisions that get made
+        rarely travel with the data: they live inside someone's
+        preprocessing pipeline rather than as standalone, queryable
+        annotations. This is the gap MEEGqc closes.
+      </p>
+
+      </div>
+    </section>
+
+    <!-- =================================================================
+         2. What MEEGqc is
+         ================================================================= -->
+    <section class="section reveal" id="what">
+      <div class="container container-narrow prose">
+      <h2>What MEEGqc is</h2>
+      <p>
+        MEEGqc is an open-source, BIDS-aligned Python toolbox that
+        puts <strong>quality assessment (QA)</strong> at the front of
+        the workflow, then layers <strong>quality control
+        (QC)</strong> decisions on top of the QA layer with full
+        traceability between the two.
+      </p>
+
+      <div class="callout callout-tip">
+        <span class="callout-title">Why "MEEGqc" and not "MEGqc"?</span>
+        The tool started as MEG-only and has since grown first-class
+        EEG support. The extra "E" reflects that. A few legacy
+        artefacts (the Python package <code>meg_qc</code>, the
+        <code>meg-qc</code> distribution on PyPI, the original
+        <code>run-megqc</code> family of CLI commands) keep the old
+        name so existing scripts and pipelines keep working.
+      </div>
+      <ul>
+        <li>
+          <strong>QA = systematic measurement.</strong> Continuous,
+          unthresholded descriptors of the signal: per-channel and
+          per-epoch distributions, power spectral density (PSD),
+          temporal patterns, spatial patterns, ECG / EOG correlations,
+          muscle-band noise, head-movement traces.
+        </li>
+        <li>
+          <strong>QC = criterion-based decisions on top of QA.</strong>
+          Two layers: (1) per-metric flags, i.e. thresholds applied
+          to the QA outputs to mark noisy / flat channels,
+          high-correlation channels, muscle-event count, etc.; and
+          (2) the <strong>Global Quality Index (GQI)</strong>, a
+          single 0&ndash;100 composite score per recording with a
+          transparent penalty breakdown across four families.
+        </li>
+      </ul>
+      <p>
+        Both layers ship two output streams:
+        <strong>machine-readable BIDS derivatives</strong> (TSV + JSON
+        sidecars) for programmatic re-use and aggregation, and
+        <strong>interactive HTML reports</strong> for human
+        inspection. The GQI is additionally versioned: each
+        recomputation writes a new attempt file alongside the exact
+        parameters used, so threshold sweeps stay reproducible.
+      </p>
+      <p>
+        The toolbox is designed to be accessible across user profiles.
+        A graphical interface drives point-and-click operation, a
+        command-line interface enables scripted and automated
+        workflows, and a programmatic Python API lets developers wire
+        MEEGqc into their own pipelines. All three modes route to the
+        same dispatchers, so they behave identically.
+      </p>
+
+      </div>
+    </section>
+
+    <!-- =================================================================
+         3. Modalities and formats
+         ================================================================= -->
+    <section class="section reveal" id="modality">
+      <div class="container container-narrow prose">
+      <h2>Modalities and formats</h2>
+      <p>
+        MEEGqc auto-detects the modality at file load time and routes
+        each recording through the right pipeline. There is nothing
+        to configure beyond <code>ch_types</code> in
+        <a href="tutorial.html#settings"><code>settings.ini</code></a>.
+        EEG-only datasets in native formats and MEG recordings with
+        embedded EEG channels are both handled.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Recording</th><th>System label</th><th>Channels processed</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Neuromag / Elekta / MEGIN <code>.fif</code> (incl. OPM exports)</td><td><code>Triux</code></td><td>mag, grad (+ embedded eeg)</td></tr>
+            <tr><td>CTF / VSM MedTech <code>.ds</code></td><td><code>CTF</code></td><td>grad (+ embedded eeg)</td></tr>
+            <tr><td>EDF, BDF, BrainVision, EEGLAB, EGI, Neuroscan, FIF</td><td><code>EEG</code></td><td>eeg</td></tr>
+            <tr><td><code>_eeg.fif</code> (auto-discovered as EEG)</td><td><code>EEG</code></td><td>eeg</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <span class="callout-title">Supported vendors</span>
+        Data ingestion is currently validated for FIF
+        (<code>.fif</code>, covers MEGIN / Elekta systems and
+        optically pumped magnetometer (OPM) exports) and CTF
+        (<code>.ds</code>, CTF / VSM MedTech).
+        Yokogawa / KIT (<code>.con</code> / <code>.sqd</code>), Ricoh
+        (<code>.con</code>), and BTi / 4D Neuroimaging
+        (<code>.pdf</code>) are not yet supported. Users with those
+        formats should convert to one of the supported formats first.
+      </div>
+
+      <p>
+        For EEG, MEEGqc applies a small set of EEG-specific
+        preparations when the modality is detected: re-referencing
+        (default common average, REST or none also available),
+        electrode-montage assignment (auto-detected from channel
+        names or set explicitly), and a dedicated 20-100 Hz muscle
+        band (vs 110-140 Hz for MEG). All of this is driven from
+        <code>settings.ini</code>; see the
+        <a href="tutorial.html#settings">settings reference</a> in
+        the tutorial.
+      </p>
+
+      </div>
+    </section>
+
+    <!-- =================================================================
+         4. Main dependencies
+         ================================================================= -->
+    <section class="section reveal" id="deps">
+      <div class="container container-narrow prose">
+      <h2>Main dependencies</h2>
+      <p>
+        MEEGqc builds on the established scientific-Python
+        neuroscience stack. All dependencies are resolved
+        automatically by <code>pip install meg-qc</code> or by the
+        bootstrap installer. The headline pieces:
+      </p>
+
+      <div class="card-grid">
+        <div class="card card-accent">
+          <h3>MNE-Python</h3>
+          <p>Reads every supported MEG and EEG file format and
+             provides the signal-processing primitives MEEGqc applies
+             during preprocessing and metric computation.</p>
+        </div>
+        <div class="card card-mint">
+          <h3>ancpBIDS</h3>
+          <p>Walks BIDS datasets lazily, picks up MEG and EEG files
+             by suffix, reads sidecars, and writes derivatives back in
+             a BIDS-compliant layout.</p>
+        </div>
+        <div class="card">
+          <h3>Plotly</h3>
+          <p>Powers the interactive HTML reports: zoomable topomaps,
+             distribution plots, channel x epoch heatmaps, and the
+             rest of the visual grammar.</p>
+        </div>
+        <div class="card card-accent">
+          <h3>NumPy + pandas + SciPy</h3>
+          <p>Carry the vectorized numerical work for metric
+             computation and the tabular layer for the
+             machine-readable derivatives.</p>
+        </div>
+        <div class="card card-mint">
+          <h3>Numba + joblib</h3>
+          <p>JIT-compile the peak-to-peak metric for speed and
+             parallelize the calculation and plotting stages across
+             subjects (controlled by <code>n_jobs</code>).</p>
+        </div>
+        <div class="card">
+          <h3>PyQt6</h3>
+          <p>Renders the desktop GUI shell that exposes the same
+             dispatchers used by the CLI and the Python API.</p>
+        </div>
+      </div>
+
+      </div>
+    </section>
+
+    <!-- =================================================================
+         5. How it works: interactive workflow diagram
+         ================================================================= -->
+    <section class="section reveal" id="workflow">
+      <div class="container container-narrow prose">
+      <h2>How it works</h2>
+      <p>
+        MEEGqc follows a modular layered architecture that explicitly
+        decouples data computation from report rendering. Hover over
+        any stage of the diagram below to see what happens at that
+        step. The traversal moves from BIDS inputs on the left
+        through metric computation and report rendering to the two
+        output families on the right.
+      </p>
+
+      <div class="workflow-figure" data-workflow>
+        <button class="workflow-expand-btn" type="button"
+                data-workflow-expand
+                aria-label="Open the workflow diagram in a larger view">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M14 4h6v6 M10 20H4v-6 M20 4l-7 7 M4 20l7-7"/>
+          </svg>
+          Expand
+        </button>
+        <svg class="workflow-diagram"
+             viewBox="0 0 960 540"
+             role="img"
+             aria-label="MEEGqc workflow diagram">
+
+          <defs>
+            <!-- Soft cyan / mint glow for the active stage -->
+            <filter id="wf-glow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            <marker id="wf-arrow" viewBox="0 0 10 10" refX="9" refY="5"
+                    markerWidth="8" markerHeight="8" orient="auto">
+              <path d="M0,0 L10,5 L0,10 Z" fill="currentColor"/>
+            </marker>
+          </defs>
+
+          <!-- ============ INPUTS column ============ -->
+          <g class="wf-group" data-wf-stage="inputs">
+            <text class="wf-col-label" x="100" y="40">INPUTS</text>
+            <g class="wf-box wf-box-input">
+              <rect x="20" y="60" width="180" height="60" rx="10"/>
+              <text x="110" y="84">MEG / EEG BIDS</text>
+              <text x="110" y="104">dataset</text>
+            </g>
+            <g class="wf-box wf-box-input">
+              <rect x="20" y="150" width="180" height="60" rx="10"/>
+              <text x="110" y="174">Config file</text>
+              <text x="110" y="194">(settings.ini)</text>
+            </g>
+          </g>
+
+          <!-- ============ BIDS INTERFACE ============ -->
+          <g class="wf-group" data-wf-stage="bids">
+            <text class="wf-col-label" x="370" y="40">BIDS INTERFACE</text>
+            <g class="wf-box wf-box-bids">
+              <rect x="260" y="60" width="220" height="60" rx="10"/>
+              <text x="370" y="86" class="wf-emph">ancpBIDS</text>
+              <text x="370" y="106">lazy traversal + sidecars</text>
+            </g>
+          </g>
+
+          <!-- ============ CALCULATION MODULE ============ -->
+          <g class="wf-group" data-wf-stage="calc">
+            <text class="wf-col-label" x="370" y="170">CALCULATION MODULE</text>
+            <g class="wf-box wf-box-calc">
+              <rect x="260" y="190" width="220" height="50" rx="10"/>
+              <text x="370" y="220">Minimal preprocessing</text>
+            </g>
+            <g class="wf-box wf-box-calc wf-box-small">
+              <rect x="260" y="260" width="65" height="36" rx="6"/>
+              <text x="293" y="282">Crop</text>
+            </g>
+            <g class="wf-box wf-box-calc wf-box-small">
+              <rect x="338" y="260" width="65" height="36" rx="6"/>
+              <text x="370" y="282">Filter</text>
+            </g>
+            <g class="wf-box wf-box-calc wf-box-small">
+              <rect x="416" y="260" width="65" height="36" rx="6"/>
+              <text x="449" y="282">Resample</text>
+            </g>
+            <g class="wf-box wf-box-calc">
+              <rect x="260" y="310" width="220" height="36" rx="6"/>
+              <text x="370" y="332">Epoching</text>
+            </g>
+            <g class="wf-box wf-box-metric">
+              <rect x="260" y="360" width="100" height="36" rx="6"/>
+              <text x="310" y="383">STD &middot; PtP</text>
+            </g>
+            <g class="wf-box wf-box-metric">
+              <rect x="380" y="360" width="100" height="36" rx="6"/>
+              <text x="430" y="383">PSD &middot; Muscle</text>
+            </g>
+            <g class="wf-box wf-box-metric">
+              <rect x="260" y="410" width="100" height="36" rx="6"/>
+              <text x="310" y="433">ECG &middot; EOG</text>
+            </g>
+            <g class="wf-box wf-box-metric">
+              <rect x="380" y="410" width="100" height="36" rx="6"/>
+              <text x="430" y="433">Head motion</text>
+            </g>
+          </g>
+
+          <!-- ============ DERIVATIVES (machine output) ============ -->
+          <g class="wf-group" data-wf-stage="derivatives">
+            <text class="wf-col-label" x="630" y="170">DERIVATIVES</text>
+            <g class="wf-box wf-box-out">
+              <rect x="540" y="190" width="200" height="80" rx="10"/>
+              <text x="640" y="218">Machine-readable</text>
+              <text x="640" y="240" class="wf-tag wf-tag-mint">JSON</text>
+              <text x="640" y="260" class="wf-tag wf-tag-accent">TSV</text>
+            </g>
+          </g>
+
+          <!-- ============ PLOTTING MODULE ============ -->
+          <g class="wf-group" data-wf-stage="plot">
+            <text class="wf-col-label" x="800" y="40">PLOTTING MODULE</text>
+            <g class="wf-box wf-box-plot">
+              <rect x="770" y="60" width="170" height="50" rx="10"/>
+              <text x="855" y="90">Plotting module</text>
+            </g>
+            <g class="wf-box wf-box-plot">
+              <rect x="770" y="130" width="170" height="40" rx="8"/>
+              <text x="855" y="155">Subject-level</text>
+            </g>
+            <g class="wf-box wf-box-plot">
+              <rect x="770" y="180" width="170" height="40" rx="8"/>
+              <text x="855" y="205">Dataset-level</text>
+            </g>
+            <g class="wf-box wf-box-plot">
+              <rect x="770" y="230" width="170" height="40" rx="8"/>
+              <text x="855" y="255">Multi-dataset-level</text>
+            </g>
+          </g>
+
+          <!-- ============ REPORTS (human output) ============ -->
+          <g class="wf-group" data-wf-stage="reports">
+            <text class="wf-col-label" x="800" y="305">REPORTS</text>
+            <g class="wf-box wf-box-out">
+              <rect x="770" y="325" width="170" height="80" rx="10"/>
+              <text x="855" y="353">Human-readable</text>
+              <text x="855" y="378" class="wf-tag wf-tag-accent">HTML</text>
+            </g>
+          </g>
+
+          <!-- ============ Arrows (data flow) ============ -->
+          <g class="wf-arrows" color="currentColor">
+            <!-- Inputs -> BIDS interface -->
+            <path d="M 200 90  L 260 90"            class="wf-arrow"/>
+            <path d="M 200 180 L 240 180 L 240 100 L 260 100" class="wf-arrow"/>
+            <!-- BIDS -> Calculation -->
+            <path d="M 370 120 L 370 190"           class="wf-arrow"/>
+            <!-- Calculation epoching -> metric blocks (visual) -->
+            <path d="M 370 346 L 370 360" class="wf-arrow"/>
+            <!-- Metrics -> Derivatives -->
+            <path d="M 480 380 L 540 230"           class="wf-arrow"/>
+            <!-- BIDS -> Plotting -->
+            <path d="M 480 90  L 770 85"            class="wf-arrow"/>
+            <!-- Derivatives -> Plotting (feedback) -->
+            <path d="M 640 190 L 640 130 L 770 130" class="wf-arrow wf-arrow-dim"/>
+            <!-- Plotting -> Reports -->
+            <path d="M 855 270 L 855 325"           class="wf-arrow"/>
+          </g>
+        </svg>
+
+        <!-- Floating popover, positioned by JS next to the hovered
+             stage. Hidden until first hover; uses position: fixed so
+             the coordinates can use getBoundingClientRect directly. -->
+        <div class="workflow-popover" data-workflow-popover
+             role="tooltip" aria-live="polite">
+          <span class="workflow-popover-eyebrow" data-popover-eyebrow></span>
+          <h3 data-popover-title></h3>
+          <p  data-popover-body></p>
+        </div>
+      </div>
+
+      <!-- Hidden detail content, indexed by stage key -->
+      <script type="application/json" id="workflow-stages">
+      {
+        "inputs": {
+          "eyebrow": "Inputs",
+          "title": "A BIDS dataset and a settings file.",
+          "body": "MEEGqc reads BIDS-organized MEG or EEG datasets. The settings.ini file controls which metrics run, which channel types are processed, the preprocessing operations (crop, filter, resample, epoch), and the QC parameterization (GQI thresholds and weights)."
+        },
+        "bids": {
+          "eyebrow": "BIDS interface",
+          "title": "ancpBIDS does the dataset walk.",
+          "body": "MEEGqc uses ancpBIDS to traverse the dataset lazily, picking up MEG / EEG files by suffix and reading the sidecars (channels.tsv, events.tsv, etc.) without eagerly loading data. This is what makes large multi-subject datasets practical."
+        },
+        "calc": {
+          "eyebrow": "Calculation module",
+          "title": "Preprocess, then compute the seven QA metrics.",
+          "body": "After optional crop / filter / resample / epoching, the calculation module runs the QA metrics in module-specific signal variants. STD (standard deviation) and PtP (peak-to-peak amplitude) target amplitude dispersion, PSD (power spectral density) targets frequency-domain noise, ECG and EOG target physiological correlation, Muscle targets high-frequency muscle noise, and Head motion uses continuous head localisation (cHPI) data when available (MEG only)."
+        },
+        "derivatives": {
+          "eyebrow": "Derivatives",
+          "title": "Machine-readable QA + QC outputs.",
+          "body": "Each subject and task produces metric-specific TSV files plus JSON summaries under derivatives/Meg_QC/calculation/{meg,eeg}/sub-XXX/. These are the primary, machine-readable output. Anything visual is regenerated from them; nothing forces you to recompute when you change a plotting choice."
+        },
+        "plot": {
+          "eyebrow": "Plotting module",
+          "title": "Render reports at three nested levels.",
+          "body": "The plotting module consumes the derivatives and builds interactive HTML reports at subject-level (one recording), dataset-level (all subjects in one dataset, QA + QC variants), and multi-dataset-level (cross-dataset comparison). Re-rendering does not require recomputation."
+        },
+        "reports": {
+          "eyebrow": "Reports",
+          "title": "Human-readable HTML reports.",
+          "body": "Self-contained HTML files with Plotly figures, sensor maps, distribution panels, and per-recording GQI summaries. Each report travels with the data and can be opened offline by anyone, with or without MEEGqc installed."
+        }
+      }
+      </script>
+
+      </div>
+    </section>
+
+    <!-- =================================================================
+         6. Analysis profiles
+         ================================================================= -->
+    <section class="section reveal" id="profiles">
+      <div class="container container-narrow prose">
+      <h2>Analysis profiles</h2>
+      <p>
+        Analysis profiles are how MEEGqc keeps multiple parameter
+        configurations side by side on the same dataset without
+        overwriting each other. They are the unit of reproducibility
+        for sensitivity analyses, threshold sweeps, and parameter
+        comparisons across research groups.
+      </p>
+
+      <p>By specifying an analysis mode, you control where
+         derivatives are written and whether prior runs are reused:</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Mode</th><th>Behaviour</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>legacy</code></td>
+              <td>Classic non-profile layout under
+                  <code>derivatives/Meg_QC/</code>. No namespacing.</td>
+            </tr>
+            <tr>
+              <td><code>new</code></td>
+              <td>Create or use a profile. With no
+                  <code>analysis_id</code>, MEEGqc auto-generates one;
+                  passing it explicitly is recommended for
+                  reproducibility.</td>
+            </tr>
+            <tr>
+              <td><code>reuse</code></td>
+              <td>Use an existing profile. Requires an explicit
+                  <code>analysis_id</code>. Useful when a calculation
+                  pass has finished and you only want to re-render or
+                  recompute GQI.</td>
+            </tr>
+            <tr>
+              <td><code>latest</code></td>
+              <td>Resolve the most recently modified profile
+                  automatically.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>In profile mode, derivatives live under:</p>
+<div class="dataset-tree" role="img"
+     aria-label="Profile-mode derivatives layout">
+  <div class="dataset-tree-row is-folder">
+    <span class="chev">&#9662;</span>
+    <span class="name">&lt;dataset&gt;/derivatives/Meg_QC/profiles/&lt;analysis_id&gt;/</span>
+  </div>
+  <div class="dataset-tree-row d1 is-folder">
+    <span class="chev">&#9656;</span>
+    <span class="name">calculation/...</span>
+    <span class="note">per-subject metric TSVs + JSON</span>
+  </div>
+  <div class="dataset-tree-row d1 is-folder">
+    <span class="chev">&#9656;</span>
+    <span class="name">reports/...</span>
+    <span class="note">per-subject HTML</span>
+  </div>
+  <div class="dataset-tree-row d1 is-folder">
+    <span class="chev">&#9656;</span>
+    <span class="name">summary_reports/...</span>
+    <span class="note">dataset-level HTML + group metrics</span>
+  </div>
+</div>
+
+      <p>
+        On top of profiles, the GQI score is independently versioned
+        by attempt: every <code>globalqualityindex</code> run writes a
+        new
+        <code>Global_Quality_Index_attempt_&lt;n&gt;_{meg,eeg}.tsv</code>
+        alongside a frozen
+        <code>global_quality_index_&lt;n&gt;.ini</code> snapshot, so
+        threshold sweeps within a single profile are also auditable.
+      </p>
+
+      </div>
+    </section>
+
+    <!-- =================================================================
+         7. BIDS-aligned outputs
+         ================================================================= -->
+    <section class="section reveal" id="bids">
+      <div class="container container-narrow prose">
+      <h2>BIDS-aligned outputs</h2>
+      <p>
+        MEEGqc is BIDS native end to end. Inputs follow BIDS / MEG-BIDS
+        conventions; outputs land under
+        <code>derivatives/Meg_QC/</code> in a layout that downstream
+        analysis frameworks (MNE-Python, FieldTrip, Brainstorm) can
+        consume directly. In legacy mode, the tree looks like:
+      </p>
+
+<div class="dataset-tree" role="img"
+     aria-label="Legacy-mode BIDS derivatives layout">
+  <div class="dataset-tree-row is-folder">
+    <span class="chev">&#9662;</span>
+    <span class="name">&lt;dataset&gt;/derivatives/Meg_QC/</span>
+  </div>
+  <div class="dataset-tree-row d1 is-folder">
+    <span class="chev">&#9662;</span>
+    <span class="name">calculation/</span>
+  </div>
+  <div class="dataset-tree-row d2 is-folder">
+    <span class="chev">&#9656;</span>
+    <span class="name">meg/sub-XXX/...</span>
+    <span class="note">MEG metric TSVs + JSON</span>
+  </div>
+  <div class="dataset-tree-row d2 is-folder">
+    <span class="chev">&#9656;</span>
+    <span class="name">eeg/sub-XXX/...</span>
+    <span class="note">EEG metric TSVs + JSON</span>
+  </div>
+  <div class="dataset-tree-row d1 is-folder">
+    <span class="chev">&#9662;</span>
+    <span class="name">reports/</span>
+  </div>
+  <div class="dataset-tree-row d2 is-folder">
+    <span class="chev">&#9656;</span>
+    <span class="name">meg/sub-XXX/...</span>
+    <span class="note">per-subject HTML (MEG)</span>
+  </div>
+  <div class="dataset-tree-row d2 is-folder">
+    <span class="chev">&#9656;</span>
+    <span class="name">eeg/sub-XXX/...</span>
+    <span class="note">per-subject HTML (EEG)</span>
+  </div>
+  <div class="dataset-tree-row d1 is-folder">
+    <span class="chev">&#9662;</span>
+    <span class="name">summary_reports/</span>
+  </div>
+  <div class="dataset-tree-row d2 is-folder">
+    <span class="chev">&#9662;</span>
+    <span class="name">group_metrics/</span>
+  </div>
+  <div class="dataset-tree-row d3">
+    <span class="chev">&#8226;</span>
+    <span class="name">meg/Global_Quality_Index_attempt_&lt;n&gt;_meg.tsv</span>
+  </div>
+  <div class="dataset-tree-row d3">
+    <span class="chev">&#8226;</span>
+    <span class="name">eeg/Global_Quality_Index_attempt_&lt;n&gt;_eeg.tsv</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">config/global_quality_index_&lt;n&gt;.ini</span>
+    <span class="note">GQI parameter snapshot</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">...</span>
+    <span class="note">dataset-level QA / QC HTML</span>
+  </div>
+</div>
+
+      <p>A BIDS-organized dataset is a precondition. If your data
+         isn't in BIDS yet, tools like
+         <a href="https://github.com/karellopez/BIDS-Manager"
+            target="_blank" rel="noopener">BIDS Manager</a> can convert
+         it.</p>
+
+      <hr>
+      <p>
+        Next: <a href="installation.html">installation</a>, the
+        <a href="tutorial.html">tutorial</a>, or the
+        <a href="reports.html">reports tour</a>.
+      </p>
+      </div>
+    </section>
+
+    <!-- Workflow modal. Hidden by default; clicking the Expand button in
+         the workflow figure moves the figure into .workflow-modal-body
+         and reveals the overlay. Close via the X button, backdrop click,
+         or Esc key. -->
+    <div class="workflow-modal" data-workflow-modal hidden
+         role="dialog" aria-modal="true"
+         aria-labelledby="workflow-modal-title">
+      <div class="workflow-modal-backdrop" data-workflow-close></div>
+      <div class="workflow-modal-shell">
+        <div class="workflow-modal-header">
+          <span class="workflow-modal-title" id="workflow-modal-title">
+            Workflow diagram
+          </span>
+          <button class="workflow-modal-close" type="button"
+                  data-workflow-close aria-label="Close workflow diagram">
+            &times;
+          </button>
+        </div>
+        <div class="workflow-modal-body" data-workflow-modal-host></div>
+      </div>
+    </div>
+  </main>
+
+  <div data-include="footer"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>
