@@ -331,6 +331,13 @@
     // (x=right, y=up, z=front). See assets/sensor-positions.js.
     import { VECTORVIEW_MAG } from './assets/sensor-positions.js';
 
+    // Shared interaction state: the cap drag handler writes intensity
+    // here, and the EEG signal sampler below reads it to inject a
+    // high-frequency motion artifact that tracks how fast the user is
+    // whipping the helmet around. Lives at module scope so the EEG
+    // block can see it even if the WebGL helmet failed to mount.
+    const motion = { intensity: 0 };
+
     const container = document.getElementById('meeg-3d');
     if (container) {
       const W = () => container.clientWidth;
@@ -408,7 +415,19 @@
       const ledMatCyan = new THREE.MeshBasicMaterial({ color: 0x6fd6ff });
       const ledMatMint = new THREE.MeshBasicMaterial({ color: 0x8aefb6 });
 
-      const sensorUp = new THREE.Vector3(0, 0, 1);   // BoxGeometry's outward face
+      // Build a full orthonormal basis for each tile so all squares share
+      // a consistent in-plane orientation. Mapping only sensorUp -> normal
+      // (the two-vector quaternion) leaves the roll around the normal axis
+      // arbitrary, which is what made adjacent tiles point their vertices
+      // in random directions. We anchor the tile's local +Y to world up,
+      // projected onto the tile's tangent plane; near the crown of the
+      // helmet where normal is nearly parallel to world up the projection
+      // is degenerate, so we fall back to projecting world -Z (back of
+      // the head) onto the tangent plane.
+      const worldUp = new THREE.Vector3(0, 1, 0);
+      const tileUp    = new THREE.Vector3();
+      const tileRight = new THREE.Vector3();
+      const tileBasis = new THREE.Matrix4();
 
       // Sensors are placed at the real Vectorview-mag positions, with
       // each tile oriented along the actual MEG coil normal. The cap is
@@ -425,10 +444,23 @@
           s.normal[0], s.normal[1], s.normal[2],
         ).normalize();
 
+        // Project world up onto the tile's tangent plane to get the
+        // tile's local +Y. Fall back to world -Z when degenerate.
+        tileUp.copy(worldUp).addScaledVector(normal, -worldUp.dot(normal));
+        if (tileUp.lengthSq() < 1e-6) {
+          tileUp.set(0, 0, -1).addScaledVector(normal, -(-normal.z));
+        }
+        tileUp.normalize();
+        tileRight.crossVectors(tileUp, normal).normalize();
+        // BoxGeometry's outward face is +Z, so the basis columns are
+        // (right, up, normal). Three.js Matrix4.makeBasis builds a
+        // column-major basis matrix from these axes.
+        tileBasis.makeBasis(tileRight, tileUp, normal);
+
         // Outer sensor body
         const sensor = new THREE.Mesh(sensorOuterGeo, sensorOuterMat);
         sensor.position.set(px, py, pz);
-        sensor.quaternion.setFromUnitVectors(sensorUp, normal);
+        sensor.quaternion.setFromRotationMatrix(tileBasis);
         rig.add(sensor);
 
         // Inner detail panel sitting flush against the outward face
@@ -456,9 +488,84 @@
         sensorIdx++;
       }
 
+      // ----- Pointer interaction --------------------------------------
+      // Click-and-drag horizontally to spin the cap; release to let the
+      // auto rotation ease back in. Fast drags raise motion.intensity,
+      // which the EEG signal block reads to inject a high-frequency
+      // motion artifact across all five lanes.
+      const AUTO_SPEED  = 0.0042;     // radians per frame at rest
+      const DRAG_GAIN   = (Math.PI * 2) / 280;  // 280 px = full revolution
+      const EASE_BACK   = 0.045;      // how fast rotSpeed eases back to AUTO_SPEED
+      const VEL_SMOOTH  = 0.55;       // EMA factor for drag angular velocity
+      const SAT_OMEGA   = 8;          // |omega| in rad/s that saturates intensity
+      const DECAY       = 0.92;       // per-frame motion intensity decay
+
+      let rotSpeed = AUTO_SPEED;
+      let dragging = false;
+      let lastPx   = 0;
+      let lastTs   = 0;
+      let velEMA   = 0;
+
+      container.style.cursor     = 'grab';
+      container.style.touchAction = 'pan-y';
+
+      function onPointerDown(e) {
+        dragging = true;
+        lastPx   = e.clientX;
+        lastTs   = e.timeStamp || performance.now();
+        velEMA   = 0;
+        if (container.setPointerCapture) {
+          try { container.setPointerCapture(e.pointerId); } catch (_) {}
+        }
+        container.style.cursor = 'grabbing';
+        e.preventDefault();
+      }
+
+      function onPointerMove(e) {
+        if (!dragging) return;
+        const now    = e.timeStamp || performance.now();
+        const dx     = e.clientX - lastPx;
+        const dt     = Math.max(1, now - lastTs);
+        const dTheta = dx * DRAG_GAIN;
+        rig.rotation.y += dTheta;
+        // Angular velocity in rad/s, smoothed so a single jittery frame
+        // doesn't whip the artifact intensity to its ceiling.
+        const omega = dTheta / (dt / 1000);
+        velEMA = velEMA * VEL_SMOOTH + omega * (1 - VEL_SMOOTH);
+        const speedNorm = Math.min(1, Math.abs(velEMA) / SAT_OMEGA);
+        // Take the max so a brief flick stays visible for a few frames
+        // even as the EEG block decays it.
+        if (speedNorm > motion.intensity) motion.intensity = speedNorm;
+        lastPx = e.clientX;
+        lastTs = now;
+      }
+
+      function onPointerUp(e) {
+        if (!dragging) return;
+        dragging = false;
+        if (container.releasePointerCapture && e.pointerId != null) {
+          try { container.releasePointerCapture(e.pointerId); } catch (_) {}
+        }
+        container.style.cursor = 'grab';
+        velEMA = 0;
+      }
+
+      container.addEventListener('pointerdown', onPointerDown);
+      window.addEventListener('pointermove',   onPointerMove);
+      window.addEventListener('pointerup',     onPointerUp);
+      window.addEventListener('pointercancel', onPointerUp);
+
       // ----- Animation loop -------------------------------------------
       function tick() {
-        rig.rotation.y += 0.0042;
+        if (!dragging) {
+          // Ease rotSpeed back toward the resting auto-rotation rate.
+          rotSpeed += (AUTO_SPEED - rotSpeed) * EASE_BACK;
+          rig.rotation.y += rotSpeed;
+        }
+        // Motion artifact intensity decays smoothly between drag events.
+        motion.intensity *= DECAY;
+        if (motion.intensity < 1e-4) motion.intensity = 0;
+
         renderer.render(scene, camera);
         requestAnimationFrame(tick);
       }
@@ -643,6 +750,23 @@
         // Rare eye-blink-like negative spike
         if (Math.random() < o.blinkProb) {
           v += -0.9 * o.blinkScale * (0.5 + Math.random() * 0.6);
+        }
+        // Motion artifact, written by the cap drag handler. A normalized
+        // intensity in [0, 1] tracks how fast the user is whipping the
+        // helmet around. The artifact is two stacked high-frequency
+        // oscillators with per-channel phase offsets, broadband jitter
+        // proportional to intensity, and occasional spike bursts at
+        // high intensity. This is the visual signature MEEGqc flags
+        // under the muscle / motion families.
+        const mi = motion.intensity;
+        if (mi > 0) {
+          const hf = Math.sin(t * 0.90 + chan * 1.7)
+                   + 0.65 * Math.sin(t * 1.55 + chan * 2.3);
+          v += hf * mi * 1.4;
+          v += (Math.random() - 0.5) * mi * 1.9;
+          if (mi > 0.40 && Math.random() < 0.14 * mi) {
+            v += (Math.random() - 0.5) * 2.8 * mi;
+          }
         }
         return v;
       }
