@@ -154,68 +154,40 @@
       </p>
 
       <div class="callout callout-tip">
-        <span class="callout-title">A note on the name: MEGqc &rarr; MEEGqc</span>
-        The tool was originally developed for MEG only, which is
-        where the legacy "MEG" naming on the source repo, the Python
-        package, and most CLI commands comes from. EEG support is
-        now first-class in the codebase, so the project rebranded to
-        <strong>MEEGqc</strong> (MEG + EEG QC). The rename has
-        propagated to almost every surface a user touches:
-        <ul style="margin: 8px 0 0;">
-          <li>GitHub repo:
-            <code>ANCPLabOldenburg/MEEGqc</code> (the old
-            <code>/MEGqc</code> URL still 301-redirects).</li>
-          <li>Installer scripts:
-            <code>install_MEEGqc.{command,sh,bat}</code>.</li>
-          <li>Install root: <code>~/MEEGqc/</code>.</li>
-          <li>Launcher / app bundle:
-            <code>MEEGqc.app</code> on macOS,
-            <code>MEEGqc.desktop</code> on Linux.</li>
-          <li>GUI window title, menus, log prefix, version label.</li>
-        </ul>
-        <p style="margin: 12px 0 0;">
-          The legacy <strong>"MEG"</strong> names stay <em>in
-          addition</em> to the new ones, never instead, so existing
-          user scripts and CI keep working:
-        </p>
-        <ul style="margin: 6px 0 0;">
-          <li>Python import is still <code>import meg_qc</code> (no
-            <code>meeg_qc</code> module).</li>
-          <li>PyPI distribution is still <code>meg-qc</code>; the new
-            <code>meeg-qc</code> wrapper just declares
-            <code>meg-qc</code> as its only dependency.</li>
-          <li>Every CLI command got a <code>meeg*</code> sibling that
-            dispatches to the same Python function:
-            <code>meegqc</code> + <code>megqc</code>,
-            <code>run-meegqc</code> + <code>run-megqc</code>,
-            <code>run-meegqc-plotting</code> + <code>run-megqc-plotting</code>,
-            <code>get-meegqc-config</code> + <code>get-megqc-config</code>.
-            <code>globalqualityindex</code> stays as-is (no
-            <code>megqc</code> in its name).</li>
-        </ul>
-        <p style="margin: 12px 0 0;">
-          The docs use the new <code>meeg*</code> names everywhere.
-          Anything you typed under the old names still works.
-        </p>
+        <span class="callout-title">Why "MEEGqc" and not "MEGqc"?</span>
+        The tool started as MEG-only and has since grown first-class
+        EEG support. The extra "E" reflects that. A few legacy
+        artefacts (the Python package <code>meg_qc</code>, the
+        <code>meg-qc</code> distribution on PyPI, the original
+        <code>run-megqc</code> family of CLI commands) keep the old
+        name so existing scripts and pipelines keep working.
       </div>
       <ul>
         <li>
-          <strong>QA = systematic measurement.</strong> Distributions,
-          spectra, temporal footprints, spatial patterns. Continuous,
-          unthresholded, descriptive.
+          <strong>QA = systematic measurement.</strong> Continuous,
+          unthresholded descriptors of the signal: per-channel and
+          per-epoch distributions, power spectra, temporal footprints,
+          spatial patterns, ECG / EOG correlations, muscle-band
+          burden, head-movement traces.
         </li>
         <li>
-          <strong>QC = criterion-based decisions.</strong>
-          Threshold-derived flags (noisy / flat channels, high-correlation
-          channels, muscle event burden, etc.) plus the aggregated
-          Global Quality Index (GQI) per recording.
+          <strong>QC = criterion-based decisions on top of QA.</strong>
+          Two layers: (1) per-metric flags &mdash; thresholds applied
+          to the QA outputs to mark noisy / flat channels,
+          high-correlation channels, muscle-event burden, etc.; and
+          (2) the <strong>Global Quality Index (GQI)</strong>, a
+          single 0&ndash;100 composite score per recording with a
+          transparent penalty breakdown across four families.
         </li>
       </ul>
       <p>
-        QA outputs are persistent, machine-readable BIDS derivatives.
-        QC outputs are versioned: each GQI recomputation produces a
-        new attempt file alongside the exact parameters used, so
-        threshold sweeps stay reproducible.
+        Both layers ship two output streams:
+        <strong>machine-readable BIDS derivatives</strong> (TSV + JSON
+        sidecars) for programmatic re-use and aggregation, and
+        <strong>interactive HTML reports</strong> for human
+        inspection. The GQI is additionally versioned: each
+        recomputation writes a new attempt file alongside the exact
+        parameters used, so threshold sweeps stay reproducible.
       </p>
       <p>
         The toolbox is designed to be accessible across user profiles.
