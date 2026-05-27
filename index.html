@@ -57,13 +57,21 @@
       <div class="hero-overlay"></div>
 
       <div class="hero-content">
-        <!-- 3D EEG cap with MEG-style sensor modules, built with Three.js
-             below in an inline module script. Slowly rotates on its
-             vertical axis. Decorative; aria-hidden so screen readers
-             skip it. The signal canvas underneath shows a wrap-around
-             multi-channel trace (left-to-right sweep cursor) just like
-             a real EEG monitor. -->
-        <div id="meeg-3d" class="meeg-3d-canvas" aria-hidden="true"></div>
+        <!-- 3D sensor cap, built with Three.js below in an inline module
+             script. The MEG view uses real Neuromag Vectorview-mag
+             positions + outward normals; the EEG view uses BIOSEMI 64
+             standard-montage positions with circular electrodes and
+             cables arcing to a back-of-neck junction. Click and drag
+             horizontally to spin (signals below pick up a motion
+             artifact). The pill toggle in the corner swaps caps. -->
+        <div id="meeg-3d" class="meeg-3d-canvas">
+          <div class="cap-toggle" data-cap-toggle role="group" aria-label="Sensor cap">
+            <button class="cap-toggle-btn is-active" type="button"
+                    data-cap="meg" aria-pressed="true">MEG</button>
+            <button class="cap-toggle-btn" type="button"
+                    data-cap="eeg" aria-pressed="false">EEG</button>
+          </div>
+        </div>
         <canvas id="meeg-signal" class="meeg-signal" aria-hidden="true"></canvas>
 
         <h1 id="hero-title" class="hero-title hero-title-meeg">MEEGqc</h1>
@@ -329,7 +337,7 @@
     //   both the sensor centre and its outward-facing normal.
     // The generator script remaps axes from MNE device coords to Three.js
     // (x=right, y=up, z=front). See assets/sensor-positions.js.
-    import { VECTORVIEW_MAG } from './assets/sensor-positions.js';
+    import { VECTORVIEW_MAG, BIOSEMI64 } from './assets/sensor-positions.js';
 
     // Shared interaction state: the cap drag handler writes intensity
     // here, and the EEG signal sampler below reads it to inject a
@@ -380,11 +388,21 @@
       scene.add(rig);
 
       // ============================================================
-      // Vectorview-mag MEG sensors only. No cap shell underneath - just
-      // the 102 magnetometer modules floating in space with their real
-      // positions and outward orientations from MNE.
+      // Two caps live as sibling groups under the rotating rig:
+      //   - megRig: 102 Vectorview-mag MEG tiles with real positions
+      //     and outward coil normals from MNE.
+      //   - eegRig: 64 BIOSEMI standard-montage circular electrodes
+      //     with cables arcing along the cap surface to a junction at
+      //     the back of the neck.
+      // The pill toggle in the corner flips .visible between them.
       // ============================================================
       const SENSOR_SCALE = 11.5;   // MNE meters -> scene units
+
+      const megRig = new THREE.Group();
+      const eegRig = new THREE.Group();
+      rig.add(megRig);
+      rig.add(eegRig);
+      eegRig.visible = false;
 
       // =================================================================
       // Sensors arranged in staggered rows on the cap surface.
@@ -461,14 +479,14 @@
         const sensor = new THREE.Mesh(sensorOuterGeo, sensorOuterMat);
         sensor.position.set(px, py, pz);
         sensor.quaternion.setFromRotationMatrix(tileBasis);
-        rig.add(sensor);
+        megRig.add(sensor);
 
         // Inner detail panel sitting flush against the outward face
         const inner = new THREE.Mesh(sensorInnerGeo, sensorInnerMat);
         inner.position.copy(sensor.position)
              .add(normal.clone().multiplyScalar(0.022));
         inner.quaternion.copy(sensor.quaternion);
-        rig.add(inner);
+        megRig.add(inner);
 
         // Crisp edge outline so each tile reads clearly
         const edges = new THREE.LineSegments(
@@ -476,16 +494,343 @@
         );
         edges.position.copy(sensor.position);
         edges.quaternion.copy(sensor.quaternion);
-        rig.add(edges);
+        megRig.add(edges);
 
         // Tiny LED centred on the outward face of the sensor.
         const ledMat = (sensorIdx % 2 === 0) ? ledMatCyan : ledMatMint;
         const led    = new THREE.Mesh(ledGeo, ledMat);
         led.position.copy(sensor.position)
            .add(normal.clone().multiplyScalar(0.034));
-        rig.add(led);
+        megRig.add(led);
 
         sensorIdx++;
+      }
+
+      // ============================================================
+      // EEG cap: 64 standard-montage electrodes (mne.channels
+      // .make_standard_montage('biosemi64')) as flat circular disks
+      // oriented outward, each carrying a tiny LED. A per-electrode
+      // cable arcs along the cap surface to a junction box at the
+      // back of the neck. Cables are TubeGeometry along a CatmullRom
+      // curve built by spherical interpolation between the electrode
+      // and the gather point so they hug the cap surface naturally.
+      // ============================================================
+      const ELECTRODE_R   = 0.135;   // disk radius
+      const ELECTRODE_H   = 0.030;   // disk thickness
+      const electrodeGeo  = new THREE.CylinderGeometry(
+        ELECTRODE_R, ELECTRODE_R, ELECTRODE_H, 28
+      );
+      const electrodeInnerGeo = new THREE.CylinderGeometry(
+        ELECTRODE_R * 0.60, ELECTRODE_R * 0.60, ELECTRODE_H * 1.06, 24
+      );
+      // Reuse the MEG materials so the two caps share the visual language.
+      const electrodeOuterMat = sensorOuterMat;
+      const electrodeInnerMat = sensorInnerMat;
+      // Three cable colours, like the red / blue / white twisted-pair
+      // wiring on real EEG caps. Channels cycle through them so the
+      // bundle reads as a mixed rope at distance.
+      const cableMats = [
+        new THREE.MeshStandardMaterial({
+          color: 0xc4424a, roughness: 0.55, metalness: 0.15,
+        }),
+        new THREE.MeshStandardMaterial({
+          color: 0x3d6ec9, roughness: 0.55, metalness: 0.15,
+        }),
+        new THREE.MeshStandardMaterial({
+          color: 0xe5e6ea, roughness: 0.50, metalness: 0.10,
+        }),
+      ];
+      const junctionMat = new THREE.MeshStandardMaterial({
+        color: 0x0b121e, roughness: 0.50, metalness: 0.35,
+        emissive: 0x06090f, emissiveIntensity: 0.30,
+      });
+
+      const yAxis = new THREE.Vector3(0, 1, 0);
+
+      // Compute the average cap radius so cables sit just above it.
+      let capRadius = 0;
+      for (const e of BIOSEMI64) {
+        capRadius += Math.hypot(e.pos[0], e.pos[1], e.pos[2]) * SENSOR_SCALE;
+      }
+      capRadius /= BIOSEMI64.length;
+
+      // Cable geometry constants.
+      // STRAIGHT_UP is the climb every cable does off the electrode
+      // face before it starts curving. 2 cm in MNE coords (0.020 m)
+      // maps to 0.020 * SENSOR_SCALE = 0.23 scene units. Used only for
+      // the climb apex height; after the climb the cable descends to
+      // the lifted shell so it hugs the cap surface.
+      const STRAIGHT_UP = 0.020 * SENSOR_SCALE;
+      // Lifted shell for the rest of the cable path. Just 1 cm above
+      // the cap surface so cables hug the head instead of forming a
+      // tall dome above it.
+      const liftedR = capRadius + 0.10;
+
+      // Multi-anchor bundling. Real EEG caps don't gather all cables at
+      // a single point; cables run to one of several "channel rails" on
+      // the cap, and those rails merge into the main rope. We mimic
+      // that with N anchors spread across the back hemisphere of the
+      // cap. Each electrode picks the nearest anchor (smallest angular
+      // distance), so its cable arc is SHORT instead of a 160-degree
+      // sweep around the cap.
+      const N_ANCHORS = 4;
+      const anchorDirs = [];
+      const anchorPositions = [];
+      for (let i = 0; i < N_ANCHORS; i++) {
+        // Distribute around the back half of the cap in the xz plane,
+        // lifted slightly above the equator so the anchor sits on the
+        // back of the cap rather than under it.
+        const u = (i + 0.5) / N_ANCHORS;          // 0.125, 0.375, ...
+        const azim = -Math.PI + u * Math.PI;       // -π .. 0 (back arc)
+        const dir = new THREE.Vector3(
+          Math.cos(azim),
+          0.18,                                    // small lift
+          Math.sin(azim),
+        ).normalize();
+        anchorDirs.push(dir);
+        anchorPositions.push(dir.clone().multiplyScalar(capRadius + 0.06));
+      }
+
+      // Per-electrode nearest-anchor lookup: largest dot product wins.
+      function nearestAnchorIdx(ePosUnit) {
+        let bestIdx = 0;
+        let bestDot = ePosUnit.dot(anchorDirs[0]);
+        for (let i = 1; i < anchorDirs.length; i++) {
+          const d = ePosUnit.dot(anchorDirs[i]);
+          if (d > bestDot) { bestIdx = i; bestDot = d; }
+        }
+        return bestIdx;
+      }
+
+      // Sub-gather: where the N anchors merge into the main bundle.
+      // Sits behind the back rim of the cap, slightly below the equator.
+      const gatherInSpace = new THREE.Vector3(
+        0, -capRadius * 0.30, -capRadius * 1.30,
+      );
+
+      // Amplifier well below and just behind the gather. Bundle drops
+      // mostly vertical from gather to amp with a small gravity bow.
+      const ampPos = new THREE.Vector3(
+        0, -capRadius * 1.40, -capRadius * 1.45,
+      );
+
+      function slerpUnit(a, b, t) {
+        const dot   = THREE.MathUtils.clamp(a.dot(b), -1, 1);
+        const omega = Math.acos(dot);
+        if (omega < 1e-5) return a.clone();
+        const sinO  = Math.sin(omega);
+        const w0    = Math.sin((1 - t) * omega) / sinO;
+        const w1    = Math.sin(t * omega) / sinO;
+        return a.clone().multiplyScalar(w0).addScaledVector(b, w1);
+      }
+
+      // Per-electrode cable curve. Routes each cable from its electrode
+      // to the NEAREST of the N back-hemisphere anchors, so cable arcs
+      // are short. Stages:
+      //   0. cable exits the back of the disk
+      //   1. climb apex 2 cm out (clearance from neighbors) biased
+      //      toward the anchor in the tangent plane, so the arc through
+      //      stage 0 -> 1 -> 2 is one smooth curve
+      //   2. great-circle slerp along the lifted shell to the anchor.
+      // A small tangent jitter at the mid-slerp spreads adjacent cables
+      // so the anchor reads as a bundle of separate wires.
+      function buildEegCableCurve(ePos, normal, anchorDir, anchorPos, jitterSeed) {
+        const points = [];
+
+        // In-plane direction toward the anchor (projected onto tangent
+        // plane at the electrode). Lets the climb arc lean toward the
+        // anchor from the first segment.
+        const toAnchor  = anchorPos.clone().sub(ePos);
+        const lateral   = toAnchor.clone()
+          .addScaledVector(normal, -toAnchor.dot(normal))
+          .normalize();
+
+        // Stage 0
+        points.push(ePos.clone().addScaledVector(normal, 0.012));
+
+        // Stage 1: climb apex (normal lift + lateral lean)
+        const climbApex = ePos.clone()
+          .addScaledVector(normal,  STRAIGHT_UP * 0.95)
+          .addScaledVector(lateral, STRAIGHT_UP * 0.40);
+        points.push(climbApex);
+
+        // Stage 2: slerp to the anchor along the lifted shell. Only a
+        // single intermediate waypoint at t=0.55 is needed because the
+        // total angular span to the nearest anchor is small.
+        const upEndU = climbApex.clone().normalize();
+        const mid    = slerpUnit(upEndU, anchorDir, 0.55)
+          .multiplyScalar(liftedR);
+        // Tangent jitter so cables don't perfectly overlap into the
+        // anchor (gives the bundle visible thickness from separate wires)
+        const tangent = new THREE.Vector3(0, 1, 0).cross(mid).normalize();
+        const jitter  = (Math.sin(jitterSeed * 7.1) * 0.5
+                       + Math.sin(jitterSeed * 13.3) * 0.5) * 0.04;
+        mid.addScaledVector(tangent, jitter);
+        points.push(mid);
+
+        // Final anchor position
+        points.push(anchorPos.clone());
+
+        return new THREE.CatmullRomCurve3(points, false, 'centripetal', 0.5);
+      }
+
+      let eegIdx = 0;
+      for (const e of BIOSEMI64) {
+        const ePos = new THREE.Vector3(
+          e.pos[0] * SENSOR_SCALE,
+          e.pos[1] * SENSOR_SCALE,
+          e.pos[2] * SENSOR_SCALE,
+        );
+        // BIOSEMI64 has no normals; assume radial (cap roughly spherical).
+        const normal = ePos.clone().normalize();
+
+        // Outer disk (CylinderGeometry axis is +Y, so align +Y to normal)
+        const disk = new THREE.Mesh(electrodeGeo, electrodeOuterMat);
+        disk.position.copy(ePos);
+        disk.quaternion.setFromUnitVectors(yAxis, normal);
+        eegRig.add(disk);
+
+        // Inner contact pad sitting just above the outward face
+        const pad = new THREE.Mesh(electrodeInnerGeo, electrodeInnerMat);
+        pad.position.copy(ePos).addScaledVector(normal, ELECTRODE_H * 0.04);
+        pad.quaternion.copy(disk.quaternion);
+        eegRig.add(pad);
+
+        // LED on the outward face
+        const ledMat = (eegIdx % 2 === 0) ? ledMatCyan : ledMatMint;
+        const led    = new THREE.Mesh(ledGeo, ledMat);
+        led.position.copy(ePos)
+           .addScaledVector(normal, ELECTRODE_H * 0.5 + 0.022);
+        eegRig.add(led);
+
+        // Cable: a thin great-circle tube from this electrode to its
+        // nearest anchor on the back of the cap. Colour cycles through
+        // the red / blue / white palette so the bundle reads as mixed
+        // twisted-pair wiring.
+        const ePosU     = ePos.clone().normalize();
+        const anchorIdx = nearestAnchorIdx(ePosU);
+        const curve     = buildEegCableCurve(
+          ePos, normal,
+          anchorDirs[anchorIdx],
+          anchorPositions[anchorIdx],
+          eegIdx + 1,
+        );
+        const tubeGeo  = new THREE.TubeGeometry(curve, 24, 0.007, 6, false);
+        const cableMat = cableMats[eegIdx % cableMats.length];
+        eegRig.add(new THREE.Mesh(tubeGeo, cableMat));
+
+        eegIdx++;
+      }
+
+      // Sub-bundles: from each anchor down to the shared gatherInSpace.
+      // These read as medium-thick ropes carrying the channels for
+      // their region of the cap. They all converge into the main bundle
+      // tube below.
+      const subBundleMat = new THREE.MeshStandardMaterial({
+        color: 0x232932, roughness: 0.55, metalness: 0.20,
+      });
+      for (let i = 0; i < anchorPositions.length; i++) {
+        const a = anchorPositions[i];
+        const subCurve = new THREE.CatmullRomCurve3([
+          a.clone(),
+          new THREE.Vector3(
+            a.x * 0.55,
+            a.y + (gatherInSpace.y - a.y) * 0.35,
+            a.z + (gatherInSpace.z - a.z) * 0.40 - 0.04,
+          ),
+          new THREE.Vector3(
+            a.x * 0.20,
+            a.y + (gatherInSpace.y - a.y) * 0.75,
+            a.z + (gatherInSpace.z - a.z) * 0.80 - 0.06,
+          ),
+          gatherInSpace.clone(),
+        ], false, 'centripetal', 0.5);
+        const subGeo = new THREE.TubeGeometry(subCurve, 32, 0.030, 8, false);
+        eegRig.add(new THREE.Mesh(subGeo, subBundleMat));
+      }
+
+      // Bundle: a single thick cable tube descending from gatherInSpace
+      // (where the per-electrode cables converge behind the back rim of
+      // the cap) down to the amplifier. Five CatmullRom control points
+      // (instead of two) give a smooth draping curve: cable peels off
+      // the gather, falls under gravity with a slight outward bow at
+      // the midpoint, and meets the amp from above with a soft S.
+      const dy = ampPos.y - gatherInSpace.y;
+      const dz = ampPos.z - gatherInSpace.z;
+      const bundleCurve = new THREE.CatmullRomCurve3([
+        gatherInSpace.clone(),
+        // Just below the gather, slightly back so the rope visibly
+        // peels off the cap rather than kinking.
+        new THREE.Vector3(
+          0,
+          gatherInSpace.y + dy * 0.18,
+          gatherInSpace.z + dz * 0.20 - 0.05,
+        ),
+        // Midpoint, bowed outward (more negative z) under gravity.
+        new THREE.Vector3(
+          0,
+          gatherInSpace.y + dy * 0.50,
+          gatherInSpace.z + dz * 0.50 - 0.12,
+        ),
+        // Approaching the amp, swinging back toward its top face.
+        new THREE.Vector3(
+          0,
+          gatherInSpace.y + dy * 0.82,
+          gatherInSpace.z + dz * 0.85 - 0.04,
+        ),
+        ampPos.clone(),
+      ], false, 'centripetal', 0.5);
+      const bundleMat = new THREE.MeshStandardMaterial({
+        color: 0x2a313d, roughness: 0.55, metalness: 0.20,
+      });
+      const bundleGeo = new THREE.TubeGeometry(
+        bundleCurve, 48, 0.070, 12, false,
+      );
+      eegRig.add(new THREE.Mesh(bundleGeo, bundleMat));
+
+      // Amplifier: a chunkier dark box positioned well below and behind
+      // the cap. Tilted so its top face points back toward the cap (the
+      // bundle visually plugs into the top). A pair of indicator LEDs on
+      // the front face hint that it's a powered device.
+      const ampBoxGeo = new THREE.BoxGeometry(0.95, 0.55, 0.40);
+      const amp = new THREE.Mesh(ampBoxGeo, junctionMat);
+      amp.position.copy(ampPos);
+      amp.quaternion.setFromUnitVectors(
+        yAxis, ampPos.clone().sub(gatherInSpace).normalize().negate(),
+      );
+      eegRig.add(amp);
+
+      // Two tiny status LEDs on the amplifier front face, in the local
+      // +Z direction relative to the amp's tilt.
+      const ampForward = new THREE.Vector3(0, 0, 1).applyQuaternion(amp.quaternion);
+      const ampRight   = new THREE.Vector3(1, 0, 0).applyQuaternion(amp.quaternion);
+      const ampLedGeo  = new THREE.SphereGeometry(0.030, 10, 8);
+      for (let i = 0; i < 2; i++) {
+        const offsetR = (i === 0 ? -0.18 : 0.18);
+        const ledMat = (i === 0) ? ledMatCyan : ledMatMint;
+        const led = new THREE.Mesh(ampLedGeo, ledMat);
+        led.position.copy(ampPos)
+           .addScaledVector(ampForward, 0.22)
+           .addScaledVector(ampRight, offsetR);
+        eegRig.add(led);
+      }
+
+      // ----- Cap toggle (MEG <-> EEG pill in the corner) -------------
+      const capToggle = container.querySelector('[data-cap-toggle]');
+      if (capToggle) {
+        capToggle.addEventListener('click', (ev) => {
+          const btn = ev.target.closest('.cap-toggle-btn');
+          if (!btn) return;
+          const cap = btn.dataset.cap;
+          if (cap !== 'meg' && cap !== 'eeg') return;
+          megRig.visible = (cap === 'meg');
+          eegRig.visible = (cap === 'eeg');
+          capToggle.querySelectorAll('.cap-toggle-btn').forEach((b) => {
+            const active = b.dataset.cap === cap;
+            b.classList.toggle('is-active', active);
+            b.setAttribute('aria-pressed', active ? 'true' : 'false');
+          });
+        });
       }
 
       // ----- Pointer interaction --------------------------------------
@@ -510,6 +855,8 @@
       container.style.touchAction = 'pan-y';
 
       function onPointerDown(e) {
+        // Clicks on the MEG/EEG toggle pill must not start a cap drag.
+        if (e.target.closest && e.target.closest('[data-cap-toggle]')) return;
         dragging = true;
         lastPx   = e.clientX;
         lastTs   = e.timeStamp || performance.now();

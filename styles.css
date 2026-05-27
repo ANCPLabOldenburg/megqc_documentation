@@ -400,6 +400,46 @@ img { max-width: 100%; height: auto; }
 
 .meeg-3d-canvas canvas { display: block; width: 100% !important; height: 100% !important; }
 
+/* Glass pill in the top-right corner of the 3D stage that swaps between
+   the MEG sensor layout and the 64-channel EEG cap. Sits above the WebGL
+   canvas via position: absolute on the relatively-positioned wrapper. */
+.cap-toggle {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  z-index: 2;
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 999px;
+  border: 1px solid var(--border-glass);
+  background: rgba(10, 16, 26, 0.55);
+  backdrop-filter: blur(8px) saturate(140%);
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+}
+[data-theme="light"] .cap-toggle {
+  background: rgba(255, 255, 255, 0.65);
+  box-shadow: 0 4px 14px rgba(15, 25, 40, 0.10);
+}
+.cap-toggle-btn {
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--muted-strong);
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color .15s ease, background .15s ease;
+}
+.cap-toggle-btn:hover { color: var(--accent-strong); }
+.cap-toggle-btn.is-active {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
 /* Scrolling EEG signal trace under the 3D cap. Looks like a multi-lane
    monitor that refreshes left-to-right (sweep-cursor style). */
 .meeg-signal {
