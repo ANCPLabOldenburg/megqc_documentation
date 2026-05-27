@@ -396,17 +396,17 @@
 
     const STEPS = [
       { title: "Create the install folder",
-        body:  "A new <code class=\"inline\">~/MEGqc/</code> directory is created in your home. Everything MEEGqc needs lives inside it, fully isolated from the rest of your system." },
+        body:  "A new <code class=\"inline\">~/MEEGqc/</code> directory is created in your home. Everything MEEGqc needs lives inside it, fully isolated from the rest of your system." },
       { title: "Download portable Python 3.10",
         body:  "The installer downloads a portable Python 3.10 build matched to your OS and architecture (Apple Silicon, x86_64 Linux, or Windows embeddable). Your system Python is untouched." },
       { title: "Extract the runtime",
-        body:  "The archive is unpacked under <code class=\"inline\">~/MEGqc/</code> and <code class=\"inline\">pip</code> is bootstrapped. The runtime is now fully self-contained." },
+        body:  "The archive is unpacked under <code class=\"inline\">~/MEEGqc/</code> and <code class=\"inline\">pip</code> is bootstrapped. The runtime is now fully self-contained." },
       { title: "Create the virtual environment",
-        body:  "A virtual environment is built at <code class=\"inline\">~/MEGqc/env/</code>. MEEGqc and its dependencies will live here, separated from any other Python tools you have." },
+        body:  "A virtual environment is built at <code class=\"inline\">~/MEEGqc/env/</code>. MEEGqc and its dependencies will live here, separated from any other Python tools you have." },
       { title: "pip install meg-qc",
         body:  "<code class=\"inline\">pip install meg-qc</code> runs inside the venv. MNE-Python, ancpBIDS, Plotly, PyQt6, NumPy, pandas, SciPy, Numba, joblib, and the rest of the dependency tree are pulled in here." },
       { title: "Register a native launcher",
-        body:  "A native launcher is registered. macOS: <code class=\"inline\">~/Applications/MEGqc.app</code> bundle with icon. Linux: application-menu entry under <code class=\"inline\">~/.local/share/applications/</code>. Windows: Desktop shortcut + Start Menu entry." },
+        body:  "A native launcher is registered. macOS: <code class=\"inline\">~/Applications/MEEGqc.app</code> bundle with icon. Linux: application-menu entry under <code class=\"inline\">~/.local/share/applications/</code>. Windows: Desktop shortcut + Start Menu entry." },
       { title: "Write the uninstaller",
         body:  "An uninstall script is placed alongside the launcher. One double-click later, every file, the venv, every shortcut, all goes away. No leftover system changes." },
     ];

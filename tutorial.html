@@ -141,7 +141,7 @@ datalad get sub-009/</code></pre>
       <h2>GUI walkthrough</h2>
       <p>
         Launch MEEGqc by double-clicking the desktop shortcut the
-        installer created, or by running <code>megqc</code> in an
+        installer created, or by running <code>meegqc</code> in an
         activated environment. The main window has two top tabs
         (<em>QA/QC calculation</em> and <em>QA/QC plotting</em>),
         plus collapsible <em>Inputs</em>, <em>Output folder</em>, and
@@ -314,11 +314,11 @@ datalad get sub-009/</code></pre>
 
       <div class="code-label">Step 0. Export an editable settings.ini</div>
 <pre><code class="lang-bash">mkdir -p ./config
-get-megqc-config --target_directory ./config --filename settings.ini
+get-meegqc-config --target_directory ./config --filename settings.ini
 </code></pre>
 
       <div class="code-label">Step 1. Calculation (compute the QA metrics)</div>
-<pre><code class="lang-bash">run-megqc \
+<pre><code class="lang-bash">run-meegqc \
   --inputdata /path/to/bids_dataset \
   --config ./config/settings.ini \
   --n_jobs 4
@@ -326,12 +326,12 @@ get-megqc-config --target_directory ./config --filename settings.ini
 
       <div class="code-label">Step 2. Plotting (render the reports)</div>
 <pre><code class="lang-bash"># Subject + dataset-level QA from one dataset
-run-megqc-plotting \
+run-meegqc-plotting \
   --inputdata /path/to/bids_dataset \
   --qa-subject --qa-group
 
 # Cross-dataset comparison; --njobs (no underscore) for plotting
-run-megqc-plotting \
+run-meegqc-plotting \
   --inputdata /path/ds1 /path/ds2 \
   --qa-multisample --qc-multisample --njobs 4
 </code></pre>
@@ -343,20 +343,20 @@ run-megqc-plotting \
   --analysis_id qa_pass_01
 
 # Then re-render the QC Group report against the new attempt
-run-megqc-plotting \
+run-meegqc-plotting \
   --inputdata /path/to/bids_dataset \
   --qc-group --attempt 2
 </code></pre>
 
       <div class="code-label">One-shot: compute + plot in one command</div>
-<pre><code class="lang-bash">run-megqc \
+<pre><code class="lang-bash">run-meegqc \
   --inputdata /path/ds1 /path/ds2 \
   --config ./config/settings.ini \
   --run-all --all
 </code></pre>
 
       <h3>Multi-dataset with per-dataset overrides</h3>
-<pre><code class="lang-bash">run-megqc \
+<pre><code class="lang-bash">run-meegqc \
   --inputdata /path/ds1 /path/ds2 \
   --subs_per_dataset \
     "/path/ds1::001,002,003" \
@@ -377,7 +377,7 @@ run-megqc-plotting \
       <p>Every flag, grouped by command. Use <code>--help</code> on any
          command for the runtime version.</p>
 
-      <h3 id="cli-run-megqc"><code>run-megqc</code> (calculation)</h3>
+      <h3 id="cli-run-meegqc"><code>run-meegqc</code> (calculation)</h3>
       <div class="table-wrap">
         <table class="spec-table">
           <thead><tr><th>Flag</th><th>Type</th><th>Description</th></tr></thead>
@@ -401,7 +401,7 @@ run-megqc-plotting \
         </table>
       </div>
 
-      <h3 id="cli-plotting"><code>run-megqc-plotting</code> (reports)</h3>
+      <h3 id="cli-plotting"><code>run-meegqc-plotting</code> (reports)</h3>
       <div class="table-wrap">
         <table class="spec-table">
           <thead><tr><th>Flag</th><th>Type</th><th>Description</th></tr></thead>
@@ -415,7 +415,7 @@ run-megqc-plotting \
             <tr><td><code>--qa-all</code> / <code>--qc-all</code> / <code>--all</code></td><td>flag</td><td>Convenience presets.</td></tr>
             <tr><td><code>--attempt</code></td><td>int</td><td>QC Group / QC Multi-dataset: GQI attempt to render. Defaults to the latest.</td></tr>
             <tr><td><code>--input_tsv</code></td><td>path</td><td>QC Group: explicit GQI TSV path.</td></tr>
-            <tr><td><code>--analysis_mode</code> / <code>--analysis_id</code></td><td></td><td>Profile selection (same semantics as <code>run-megqc</code>).</td></tr>
+            <tr><td><code>--analysis_mode</code> / <code>--analysis_id</code></td><td></td><td>Profile selection (same semantics as <code>run-meegqc</code>).</td></tr>
             <tr><td><code>--njobs</code></td><td>int</td><td>Parallel subject workers (note: no underscore on the plotting command).</td></tr>
           </tbody>
         </table>
@@ -432,7 +432,7 @@ run-megqc-plotting \
         </table>
       </div>
 
-      <h3 id="cli-getconfig"><code>get-megqc-config</code> (export settings.ini)</h3>
+      <h3 id="cli-getconfig"><code>get-meegqc-config</code> (export settings.ini)</h3>
       <div class="table-wrap">
         <table class="spec-table">
           <thead><tr><th>Flag</th><th>Type</th><th>Description</th></tr></thead>
@@ -459,7 +459,7 @@ run-megqc-plotting \
 
       <div class="code-label">Setup: export an editable config (once)</div>
 <pre><code class="lang-bash">mkdir -p ./config
-get-megqc-config --target_directory ./config --filename settings.ini
+get-meegqc-config --target_directory ./config --filename settings.ini
 </code></pre>
 
       <div class="code-label">Resolve the internal config path</div>
@@ -556,7 +556,7 @@ run_calculation_dispatch(
       <p>
         Every behaviour knob in MEEGqc is controlled through
         <code>settings.ini</code>. Export the defaults with
-        <code>get-megqc-config</code>, edit the copy, and pass it via
+        <code>get-meegqc-config</code>, edit the copy, and pass it via
         <code>--config</code> or load it in the GUI.
       </p>
 

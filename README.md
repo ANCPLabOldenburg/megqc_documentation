@@ -1,6 +1,6 @@
 # MEEGqc documentation
 
-Static HTML documentation for [MEEGqc](https://github.com/ANCPLabOldenburg/MEGqc),
+Static HTML documentation for [MEEGqc](https://github.com/ANCPLabOldenburg/MEEGqc),
 the BIDS-aligned MEG and EEG quality assessment toolbox. The repo, the
 Python package (`meg_qc`), the PyPI distribution (`meg-qc`), and every
 CLI command still carry the original "MEG" naming for backwards
@@ -44,5 +44,5 @@ the site.
 ## Questions
 
 If you have questions or run into issues with MEEGqc, please open a
-[GitHub issue](https://github.com/ANCPLabOldenburg/MEGqc/issues) or
+[GitHub issue](https://github.com/ANCPLabOldenburg/MEEGqc/issues) or
 email <karel.mauricio.lopez.vilaret@uni-oldenburg.de>.

@@ -78,7 +78,9 @@
             <p>
               Install Python yourself, create a virtual environment
               (venv, conda, or uv), and
-              <code class="inline">pip install meg-qc</code>. Useful if
+              <code class="inline">pip install meg-qc</code> (or
+              <code class="inline">pip install meeg-qc</code>, the
+              rebrand-aligned wrapper). Useful if
               you already manage Python environments or want to keep
               everything inside your existing toolchain.
             </p>
@@ -125,7 +127,7 @@
 
         <p>
           <a class="btn btn-primary"
-             href="https://github.com/ANCPLabOldenburg/MEGqc/raw/main/installers/installers.zip">
+             href="https://github.com/ANCPLabOldenburg/MEEGqc/raw/main/installers/installers.zip">
             Download installers.zip
           </a>
         </p>
@@ -154,7 +156,7 @@
             <ol class="steps">
               <li>
                 <strong>Double-click</strong>
-                <code class="inline">install_MEGqc.command</code>
+                <code class="inline">install_MEEGqc.command</code>
                 inside the <code class="inline">MacOS/</code> folder.
               </li>
               <li>
@@ -175,7 +177,7 @@
               <li>
                 Launch MEEGqc from <strong>Applications</strong>,
                 Launchpad, or Spotlight. The app icon lives at
-                <code class="inline">~/Applications/MEGqc.app</code>.
+                <code class="inline">~/Applications/MEEGqc.app</code>.
               </li>
             </ol>
             <div class="callout callout-tip has-icon">
@@ -184,7 +186,7 @@
                 <strong>Prefer the terminal?</strong>
                 <p>
                   Run
-                  <code class="inline">./install_MEGqc.command</code>
+                  <code class="inline">./install_MEEGqc.command</code>
                   directly. Same result, no Gatekeeper dialog.
                 </p>
               </div>
@@ -204,12 +206,12 @@
               </li>
               <li>
                 Make the script executable.
-<pre class="code">chmod +x install_MEGqc.sh
+<pre class="code">chmod +x install_MEEGqc.sh
 </pre>
               </li>
               <li>
                 Run it.
-<pre class="code">./install_MEGqc.sh
+<pre class="code">./install_MEEGqc.sh
 </pre>
               </li>
               <li>
@@ -224,25 +226,25 @@
                 <strong>Using the terminal on Linux.</strong>
                 <p>
                   The bootstrap installer keeps Python and MEEGqc inside
-                  <code class="inline">~/MEGqc/env/</code>, so a fresh
-                  shell does not see the <code class="inline">megqc</code>
+                  <code class="inline">~/MEEGqc/env/</code>, so a fresh
+                  shell does not see the <code class="inline">meegqc</code>
                   command on its <code class="inline">PATH</code>.
                   Activate the venv first, then call it:
                 </p>
-<pre class="code">source ~/MEGqc/env/bin/activate
-megqc
+<pre class="code">source ~/MEEGqc/env/bin/activate
+meegqc
 </pre>
                 <p style="margin: 0;">
                   Same applies to the CLI verbs
-                  <code class="inline">run-megqc</code>,
-                  <code class="inline">run-megqc-plotting</code>,
+                  <code class="inline">run-meegqc</code>,
+                  <code class="inline">run-meegqc-plotting</code>,
                   <code class="inline">globalqualityindex</code>, and
-                  <code class="inline">get-megqc-config</code>. If you
+                  <code class="inline">get-meegqc-config</code>. If you
                   want them always on <code class="inline">PATH</code>,
                   append the activation line to your
                   <code class="inline">~/.bashrc</code> /
                   <code class="inline">~/.zshrc</code>, or symlink the
-                  scripts in <code class="inline">~/MEGqc/env/bin/</code>
+                  scripts in <code class="inline">~/MEEGqc/env/bin/</code>
                   into <code class="inline">~/.local/bin/</code>.
                 </p>
               </div>
@@ -274,7 +276,7 @@ megqc
               <li>
                 Inside the <code class="inline">Windows/</code> folder,
                 <strong>double-click</strong>
-                <code class="inline">install_MEGqc.bat</code>.
+                <code class="inline">install_MEEGqc.bat</code>.
               </li>
               <li>
                 If SmartScreen shows
@@ -283,7 +285,7 @@ megqc
               </li>
               <li>
                 A console opens and the install runs. A
-                <strong>MEGqc</strong> shortcut appears on your Desktop
+                <strong>MEEGqc</strong> shortcut appears on your Desktop
                 and in the Start Menu when finished.
               </li>
               <li>
@@ -316,7 +318,7 @@ megqc
           <p class="section-lead">
             Seven steps, fully automated. Hover a step or let it
             auto-play to see what the installer is building inside
-            <code class="inline">~/MEGqc/</code>.
+            <code class="inline">~/MEEGqc/</code>.
           </p>
         </div>
 
@@ -406,7 +408,7 @@ megqc
                         fill="url(#folderGrad)" stroke="currentColor" stroke-width="2"/>
                   <text x="360" y="295" text-anchor="middle"
                         font-size="13" fill="currentColor"
-                        font-family="ui-monospace, monospace">~/MEGqc/</text>
+                        font-family="ui-monospace, monospace">~/MEEGqc/</text>
                 </g>
 
                 <!-- L2: cloud + python download -->
@@ -494,22 +496,22 @@ megqc
           <tbody>
             <tr>
               <td><strong>macOS</strong></td>
-              <td><code class="inline">~/Applications/MEGqc.app</code></td>
+              <td><code class="inline">~/Applications/MEEGqc.app</code></td>
               <td>Drag the <code class="inline">.app</code> to Trash, then run
-                <code class="inline">~/MEGqc/uninstall_MEGqc.command</code></td>
+                <code class="inline">~/MEEGqc/uninstall_MEEGqc.command</code></td>
             </tr>
             <tr>
               <td><strong>Linux</strong></td>
-              <td><em>MEGqc</em> in the application menu (the entry
+              <td><em>MEEGqc</em> in the application menu (the entry
                 sources the bundled venv for you). For terminal use,
                 see the <em>Using the terminal on Linux</em> note above.</td>
-              <td><code class="inline">~/MEGqc/uninstall_MEGqc.sh</code></td>
+              <td><code class="inline">~/MEEGqc/uninstall_MEEGqc.sh</code></td>
             </tr>
             <tr>
               <td><strong>Windows</strong></td>
-              <td>Desktop shortcut or Start Menu entry <em>MEGqc</em></td>
-              <td>Desktop shortcut <em>Uninstall MEGqc</em>, or
-                <code class="inline">%USERPROFILE%\MEGqc\uninstall_MEGqc.bat</code></td>
+              <td>Desktop shortcut or Start Menu entry <em>MEEGqc</em></td>
+              <td>Desktop shortcut <em>Uninstall MEEGqc</em>, or
+                <code class="inline">%USERPROFILE%\MEEGqc\uninstall_MEEGqc.bat</code></td>
             </tr>
           </tbody>
         </table>
@@ -521,11 +523,11 @@ megqc
           </thead>
           <tbody>
             <tr><td><strong>macOS</strong></td>
-                <td><code class="inline">/Users/&lt;you&gt;/MEGqc/</code></td></tr>
+                <td><code class="inline">/Users/&lt;you&gt;/MEEGqc/</code></td></tr>
             <tr><td><strong>Linux</strong></td>
-                <td><code class="inline">/home/&lt;you&gt;/MEGqc/</code></td></tr>
+                <td><code class="inline">/home/&lt;you&gt;/MEEGqc/</code></td></tr>
             <tr><td><strong>Windows</strong></td>
-                <td><code class="inline">C:\Users\&lt;you&gt;\MEGqc\</code></td></tr>
+                <td><code class="inline">C:\Users\&lt;you&gt;\MEEGqc\</code></td></tr>
           </tbody>
         </table>
         <p class="muted">
@@ -633,17 +635,17 @@ sudo apt install python3 python3-venv python3-pip
             <p>The <code class="inline">venv</code> module ships with
                every Python 3.3+, so no extra install needed.</p>
 <pre class="code"><span class="cmt"># create the environment</span>
-python3 -m venv ~/megqc-env
+python3 -m venv ~/meegqc-env
 
 <span class="cmt"># activate it (macOS / Linux)</span>
-source ~/megqc-env/bin/activate
+source ~/meegqc-env/bin/activate
 
 <span class="cmt"># activate it (Windows, PowerShell)</span>
-~/megqc-env/Scripts/Activate.ps1
+~/meegqc-env/Scripts/Activate.ps1
 </pre>
             <p class="muted">
               After activation your shell prompt is prefixed with
-              <code class="inline">(megqc-env)</code>. Run
+              <code class="inline">(meegqc-env)</code>. Run
               <code class="inline">deactivate</code> when you're done.
             </p>
           </div>
@@ -657,8 +659,8 @@ source ~/megqc-env/bin/activate
               <a href="https://docs.conda.io/projects/miniforge/" target="_blank" rel="noopener">Miniforge</a>:
             </p>
 <pre class="code"><span class="cmt"># create + activate</span>
-conda create -n megqc python=3.12 -y
-conda activate megqc
+conda create -n meegqc python=3.12 -y
+conda activate meegqc
 </pre>
             <p class="muted">
               <code class="inline">conda activate</code> works in
@@ -675,10 +677,10 @@ conda activate megqc
               versions and venvs in one tool.
             </p>
 <pre class="code"><span class="cmt"># create a venv pinned to Python 3.12</span>
-uv venv ~/megqc-env --python 3.12
+uv venv ~/meegqc-env --python 3.12
 
 <span class="cmt"># activate it</span>
-source ~/megqc-env/bin/activate
+source ~/meegqc-env/bin/activate
 </pre>
             <p class="muted">
               You can also skip the activation step and prefix every
@@ -689,40 +691,56 @@ source ~/megqc-env/bin/activate
           </div>
         </div>
 
-        <!-- ----- Step 3: install meg-qc ----- -->
-        <h3 id="install-megqc">Step 3. Install MEEGqc</h3>
-        <p>With the environment active:</p>
-<pre class="code">pip install meg-qc
+        <!-- ----- Step 3: install meg-qc / meeg-qc ----- -->
+        <h3 id="install-meegqc">Step 3. Install MEEGqc</h3>
+        <p>With the environment active, either of these works:</p>
+<pre class="code"><span class="cmt"># canonical, long-standing PyPI name (recommended for upgrades)</span>
+pip install meg-qc
+
+<span class="cmt"># rebrand-aligned wrapper (pulls in meg-qc as its only dependency)</span>
+pip install meeg-qc
 </pre>
         <p class="muted">
-          The package on PyPI is named
-          <code class="inline">meg-qc</code>. The Python import name
-          is <code class="inline">meg_qc</code> (same pattern as
+          Two PyPI distributions ship in lockstep at the same version:
+          <a href="https://pypi.org/project/meg-qc/" target="_blank" rel="noopener"><code>meg-qc</code></a>
+          is the main package &mdash; every line of code lives here,
+          existing users / CI pipelines / pinned
+          <code class="inline">requirements.txt</code> files continue
+          working unchanged. <a href="https://pypi.org/project/meeg-qc/"
+          target="_blank" rel="noopener"><code>meeg-qc</code></a>
+          is a thin meta-package that declares
+          <code class="inline">meg-qc</code> as its only dependency, so
+          installing it pulls in the main wheel. End state is identical;
+          the wrapper exists so new users can discover the tool under
+          the current branding. The Python import name stays
+          <code class="inline">meg_qc</code> either way (same pattern as
           <code class="inline">pip install scikit-learn</code> /
           <code class="inline">import sklearn</code>).
-          <a href="https://pypi.org/project/meg-qc/" target="_blank" rel="noopener">PyPI page</a>.
         </p>
 
         <!-- ----- Step 4: run ----- -->
         <h3 id="run">Step 4. Run MEEGqc</h3>
         <p>Launch the GUI:</p>
-<pre class="code">megqc
+<pre class="code">meegqc
 </pre>
 
-        <p>Or use the CLI directly. Four commands are installed:</p>
-        <ul>
-          <li><code class="inline">megqc</code>. GUI.</li>
-          <li><code class="inline">run-megqc</code>. Compute the QA
-            metrics for one or more BIDS datasets.</li>
-          <li><code class="inline">run-megqc-plotting</code>. Render
-            interactive HTML reports from existing derivatives.</li>
-          <li><code class="inline">globalqualityindex</code>.
-            Recompute the GQI from existing derivatives without
-            re-running the raw-signal metrics.</li>
-          <li><code class="inline">get-megqc-config</code>. Export an
-            editable <code class="inline">settings.ini</code> to a
-            target directory.</li>
-        </ul>
+        <p>Or use the CLI directly. Each command ships with two
+           interchangeable names &mdash; the rebrand-aligned
+           <code class="inline">meeg*</code> form and the legacy
+           <code class="inline">meg*</code> form. Both dispatch to
+           the same Python function; use whichever you prefer.</p>
+        <div class="table-wrap">
+          <table class="spec-table">
+            <thead><tr><th>Rebrand-aligned (new)</th><th>Legacy (still works)</th><th>What it does</th></tr></thead>
+            <tbody>
+              <tr><td><code>meegqc</code></td><td><code>megqc</code></td><td>Launch the GUI.</td></tr>
+              <tr><td><code>run-meegqc</code></td><td><code>run-megqc</code></td><td>Compute QA metrics for one or more BIDS datasets.</td></tr>
+              <tr><td><code>run-meegqc-plotting</code></td><td><code>run-megqc-plotting</code></td><td>Render interactive HTML reports from existing derivatives.</td></tr>
+              <tr><td><code>get-meegqc-config</code></td><td><code>get-megqc-config</code></td><td>Export an editable <code>settings.ini</code>.</td></tr>
+              <tr><td colspan="2"><code>globalqualityindex</code></td><td>Recompute the GQI from existing derivatives (no alias &mdash; the name has no <code>megqc</code> in it).</td></tr>
+            </tbody>
+          </table>
+        </div>
 
         <div class="callout callout-tip has-icon">
           <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
@@ -731,9 +749,9 @@ source ~/megqc-env/bin/activate
             <p>
               Every new shell session needs the environment activated
               again. For venv / uv:
-              <code class="inline">source ~/megqc-env/bin/activate</code>.
+              <code class="inline">source ~/meegqc-env/bin/activate</code>.
               For conda:
-              <code class="inline">conda activate megqc</code>.
+              <code class="inline">conda activate meegqc</code>.
             </p>
           </div>
         </div>
@@ -930,9 +948,9 @@ source ~/megqc-env/bin/activate
           <summary>Any OS: install log</summary>
           <p>
             The bootstrap installer writes
-            <code class="inline">~/MEGqc/install.log</code>. Paste it
+            <code class="inline">~/MEEGqc/install.log</code>. Paste it
             into a
-            <a href="https://github.com/ANCPLabOldenburg/MEGqc/issues" target="_blank" rel="noopener">GitHub issue</a>
+            <a href="https://github.com/ANCPLabOldenburg/MEEGqc/issues" target="_blank" rel="noopener">GitHub issue</a>
             if you need help.
           </p>
         </details>
@@ -952,7 +970,7 @@ source ~/megqc-env/bin/activate
           <li><a href="intro.html#workflow">See the workflow</a>: how
               MEEGqc moves from a BIDS dataset to interactive QA / QC
               reports.</li>
-          <li><a href="https://github.com/ANCPLabOldenburg/MEGqc" target="_blank" rel="noopener">Source on GitHub</a>.</li>
+          <li><a href="https://github.com/ANCPLabOldenburg/MEEGqc" target="_blank" rel="noopener">Source on GitHub</a>.</li>
         </ul>
       </div>
     </section>

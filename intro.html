@@ -155,19 +155,48 @@
 
       <div class="callout callout-tip">
         <span class="callout-title">A note on the name: MEGqc &rarr; MEEGqc</span>
-        The tool was originally developed for MEG only, which is where
-        the "MEG" in the name (and in every CLI command, package, and
-        install path) comes from. EEG support has since landed in the
-        codebase, so the user-facing brand is migrating to
-        <strong>MEEGqc</strong> &mdash; the extra "E" stands for EEG.
-        That transition takes time: the GitHub repo is still
-        <code>ANCPLabOldenburg/MEGqc</code>, the PyPI package is still
-        <code>meg-qc</code>, the Python import is still
-        <code>meg_qc</code>, the CLI commands still start with
-        <code>run-megqc</code> / <code>get-megqc-config</code> /
-        <code>globalqualityindex</code>, and the installer still puts
-        things in <code>~/MEGqc/</code>. The functionality for both
-        MEG and EEG is already there; only the prose has caught up.
+        The tool was originally developed for MEG only, which is
+        where the legacy "MEG" naming on the source repo, the Python
+        package, and most CLI commands comes from. EEG support is
+        now first-class in the codebase, so the project rebranded to
+        <strong>MEEGqc</strong> (MEG + EEG QC). The rename has
+        propagated to almost every surface a user touches:
+        <ul style="margin: 8px 0 0;">
+          <li>GitHub repo:
+            <code>ANCPLabOldenburg/MEEGqc</code> (the old
+            <code>/MEGqc</code> URL still 301-redirects).</li>
+          <li>Installer scripts:
+            <code>install_MEEGqc.{command,sh,bat}</code>.</li>
+          <li>Install root: <code>~/MEEGqc/</code>.</li>
+          <li>Launcher / app bundle:
+            <code>MEEGqc.app</code> on macOS,
+            <code>MEEGqc.desktop</code> on Linux.</li>
+          <li>GUI window title, menus, log prefix, version label.</li>
+        </ul>
+        <p style="margin: 12px 0 0;">
+          The legacy <strong>"MEG"</strong> names stay <em>in
+          addition</em> to the new ones, never instead, so existing
+          user scripts and CI keep working:
+        </p>
+        <ul style="margin: 6px 0 0;">
+          <li>Python import is still <code>import meg_qc</code> (no
+            <code>meeg_qc</code> module).</li>
+          <li>PyPI distribution is still <code>meg-qc</code>; the new
+            <code>meeg-qc</code> wrapper just declares
+            <code>meg-qc</code> as its only dependency.</li>
+          <li>Every CLI command got a <code>meeg*</code> sibling that
+            dispatches to the same Python function:
+            <code>meegqc</code> + <code>megqc</code>,
+            <code>run-meegqc</code> + <code>run-megqc</code>,
+            <code>run-meegqc-plotting</code> + <code>run-megqc-plotting</code>,
+            <code>get-meegqc-config</code> + <code>get-megqc-config</code>.
+            <code>globalqualityindex</code> stays as-is (no
+            <code>megqc</code> in its name).</li>
+        </ul>
+        <p style="margin: 12px 0 0;">
+          The docs use the new <code>meeg*</code> names everywhere.
+          Anything you typed under the old names still works.
+        </p>
       </div>
       <ul>
         <li>
