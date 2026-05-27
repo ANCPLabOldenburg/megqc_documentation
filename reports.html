@@ -515,7 +515,7 @@
 
         <div class="tab-panel" data-panel="sub-muscle" role="tabpanel">
           <p>
-            High-frequency muscle burden. 110-140 Hz for MEG, 20-100
+            High-frequency muscle noise. 110-140 Hz for MEG, 20-100
             Hz for EEG. Burst-driven by jaw clenches, neck tension,
             and similar artifacts. The plot shows z-scored
             high-frequency power across time.
@@ -633,7 +633,8 @@
             <figure class="figure">
               <video class="media-loop" autoplay muted loop playsinline
                      src="assets/reports/subject/qc_summary_tab_psd.mp4"></video>
-              <figcaption>PSD QC summary: noise-band burden %.</figcaption>
+              <figcaption>PSD QC summary: percentage of total spectral
+                power concentrated at mains and its harmonics.</figcaption>
             </figure>
           </div>
           <div class="figure-row">
@@ -839,12 +840,12 @@
           <figure class="figure">
             <video class="media-loop" autoplay muted loop playsinline
                    src="assets/reports/group-qa/dataset_overview_tab_ranking_table.mp4"></video>
-            <figcaption>Subject ranking table, sorted by aggregated
-              quality footprint (a normalised composite of every
-              metric). Worst recordings at the top. Click any row to
-              jump to that subject's subject-level QA report; this
-              is the canonical entry point for "which recordings
-              should I look at first?".</figcaption>
+            <figcaption>Subject ranking table, sorted by an
+              aggregated quality summary (a normalised composite
+              across every metric). Worst recordings at the top.
+              Click any row to jump to that subject's subject-level
+              QA report; this is the primary entry point for "which
+              recordings should I look at first?".</figcaption>
           </figure>
           <figure class="figure">
             <video class="media-loop" autoplay muted loop playsinline
@@ -980,7 +981,7 @@
             <figure class="figure">
               <img src="assets/reports/group-qa/dataset_cummulative_distributions_tab_psd.png"
                    alt="PSD ECDF">
-              <figcaption>PSD-noise-burden ECDF. A pronounced "knee"
+              <figcaption>PSD-noise ECDF. A pronounced "knee"
                 far to the right typically reflects a subset of
                 recordings with strong mains or environmental
                 contamination.
@@ -1011,7 +1012,7 @@
             <figure class="figure">
               <img src="assets/reports/group-qa/dataset_cummulative_distributions_tab_muscle.png"
                    alt="Muscle ECDF">
-              <figcaption>Muscle-burden ECDF. X axis is the
+              <figcaption>Muscle-noise ECDF. X axis is the
                 per-recording muscle event ratio; recordings far to
                 the right are the ones with the most jaw / neck
                 artifacts.
@@ -1172,7 +1173,7 @@
           <figcaption>Per-metric QC distributions (first group).
             These are the components that feed the GQI: noisy /
             flat channel %, high-correlation channel %, muscle
-            event ratio, PSD noise burden %. The dotted line on each
+            event ratio, PSD noise %. The dotted line on each
             shows the threshold the current attempt is using; bars
             beyond it are the recordings being penalised.</figcaption>
         </figure>
@@ -1237,7 +1238,7 @@
             <tbody>
               <tr><td>90-100 %</td><td>Excellent. Minimal artifacts.</td></tr>
               <tr><td>70-89 %</td><td>Good. Some artifacts present.</td></tr>
-              <tr><td>50-69 %</td><td>Moderate. Notable artifact burden.</td></tr>
+              <tr><td>50-69 %</td><td>Moderate. Notable artifact contamination.</td></tr>
               <tr><td>Below 50 %</td><td>Poor. Significant issues.</td></tr>
             </tbody>
           </table></div>
@@ -1304,8 +1305,9 @@
           </p>
         </div>
         <div class="tab-panel" data-panel="qc-psd" role="tabpanel">
-          <p>PSD noise burden % per recording, distribution + ranking
-             per task.</p>
+          <p>PSD noise percentage per recording (fraction of total
+             spectral power at mains and its harmonics), distribution
+             + ranking per task.</p>
           <figure class="figure">
             <video class="media-loop" autoplay muted loop playsinline
                    src="assets/reports/group-qc/dataset_qc_metric_details_per_task_psd.mp4"></video>

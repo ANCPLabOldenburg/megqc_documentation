@@ -64,7 +64,7 @@
         <div class="card card-mint">
           <h3>QA &middot; the measurement</h3>
           <p>Continuous, unthresholded descriptors of the signal:
-             distributions, spectra, temporal footprints, spatial
+             distributions, power spectra, time courses, spatial
              patterns. Stored as per-subject TSV and JSON derivatives
              and surfaced in the subject- and dataset-level QA
              reports.</p>
@@ -205,7 +205,7 @@
       <div class="container container-narrow prose">
       <h2>PSD &middot; Power Spectral Density</h2>
       <p>Welch periodogram per channel. The most direct view of
-         frequency-domain burden: mains harmonics (50 / 60 Hz and
+         frequency-domain noise: mains harmonics (50 / 60 Hz and
          multiples), broadband contamination, movement-related
          spectral broadening.</p>
 
@@ -220,9 +220,10 @@
       </ul>
 
       <h3>QC</h3>
-      <p>MEEGqc estimates a <strong>PSD noise burden percentage</strong>
-         per recording. This is the <code>psd</code> family of the
-         GQI.</p>
+      <p>MEEGqc estimates a <strong>PSD noise percentage</strong>
+         per recording (the fraction of total spectral power
+         concentrated at mains frequencies and their harmonics).
+         This feeds the <code>psd</code> family of the GQI.</p>
 
       <h3>Settings</h3>
       <p>See <a href="tutorial.html#settings-psd"><code>[PSD]</code></a>:
@@ -514,7 +515,7 @@
 
     <section class="section reveal" id="muscle">
       <div class="container container-narrow prose">
-      <h2>Muscle &middot; High-frequency burden</h2>
+      <h2>Muscle &middot; High-frequency muscle noise</h2>
       <p>Power in the muscle band tracks jaw clenches, neck
          tension, and similar movement artifacts.</p>
 
@@ -687,9 +688,10 @@
          both are enabled.</p>
 
       <h3 id="gqi-transform">Per-family quality transform</h3>
-      <p>For a burden value <code>M</code> with <code>start</code>
-         and <code>end</code> thresholds, the per-family quality is
-         piecewise linear:</p>
+      <p>For a per-family raw measurement <code>M</code> (e.g. noisy
+         channel %, high-correlation channel %, muscle event count,
+         PSD noise %) with <code>start</code> and <code>end</code>
+         thresholds, the per-family quality is piecewise linear:</p>
 <pre><code>if M &lt;= start:  q(M) = 1.0
 if M &gt;= end:    q(M) = 0.0
 otherwise:      q(M) = 1 - (M - start) / (end - start)

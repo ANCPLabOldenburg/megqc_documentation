@@ -169,15 +169,15 @@
         <li>
           <strong>QA = systematic measurement.</strong> Continuous,
           unthresholded descriptors of the signal: per-channel and
-          per-epoch distributions, power spectra, temporal footprints,
-          spatial patterns, ECG / EOG correlations, muscle-band
-          burden, head-movement traces.
+          per-epoch distributions, power spectral density (PSD),
+          temporal patterns, spatial patterns, ECG / EOG correlations,
+          muscle-band noise, head-movement traces.
         </li>
         <li>
           <strong>QC = criterion-based decisions on top of QA.</strong>
           Two layers: (1) per-metric flags &mdash; thresholds applied
           to the QA outputs to mark noisy / flat channels,
-          high-correlation channels, muscle-event burden, etc.; and
+          high-correlation channels, muscle-event count, etc.; and
           (2) the <strong>Global Quality Index (GQI)</strong>, a
           single 0&ndash;100 composite score per recording with a
           transparent penalty breakdown across four families.
@@ -512,12 +512,12 @@
         "calc": {
           "eyebrow": "Calculation module",
           "title": "Preprocess, then compute the seven QA metrics.",
-          "body": "After optional crop / filter / resample / epoching, the calculation module runs the QA metrics in module-specific signal variants. STD and PtP target amplitude dispersion, PSD targets spectral content, ECG and EOG target physiological correlation, Muscle targets high-frequency burden, and Head motion uses cHPI when available (MEG only)."
+          "body": "After optional crop / filter / resample / epoching, the calculation module runs the QA metrics in module-specific signal variants. STD and PtP target amplitude dispersion, PSD (power spectral density) targets frequency-domain noise, ECG and EOG target physiological correlation, Muscle targets high-frequency muscle noise, and Head motion uses cHPI when available (MEG only)."
         },
         "derivatives": {
           "eyebrow": "Derivatives",
           "title": "Machine-readable QA + QC outputs.",
-          "body": "Each subject and task produces metric-specific TSV files plus JSON summaries under derivatives/Meg_QC/calculation/{meg,eeg}/sub-XXX/. These are the canonical substrate. Anything visual is regenerated from them; nothing forces you to recompute when you change a plotting choice."
+          "body": "Each subject and task produces metric-specific TSV files plus JSON summaries under derivatives/Meg_QC/calculation/{meg,eeg}/sub-XXX/. These are the primary, machine-readable output. Anything visual is regenerated from them; nothing forces you to recompute when you change a plotting choice."
         },
         "plot": {
           "eyebrow": "Plotting module",
