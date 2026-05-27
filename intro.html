@@ -123,7 +123,7 @@
         <div class="card">
           <h3>Head motion</h3>
           <p>Even small head movements relative to the dewar (MEG) or
-             cap (EEG) can bias source localization and add structured
+             cap (EEG) can bias source localisation and add structured
              residual artifacts after compensation.</p>
         </div>
       </div>
@@ -175,7 +175,7 @@
         </li>
         <li>
           <strong>QC = criterion-based decisions on top of QA.</strong>
-          Two layers: (1) per-metric flags &mdash; thresholds applied
+          Two layers: (1) per-metric flags, i.e. thresholds applied
           to the QA outputs to mark noisy / flat channels,
           high-correlation channels, muscle-event count, etc.; and
           (2) the <strong>Global Quality Index (GQI)</strong>, a
@@ -236,8 +236,9 @@
       <div class="callout">
         <span class="callout-title">Supported vendors</span>
         Data ingestion is currently validated for FIF
-        (<code>.fif</code>, covers MEGIN / Elekta systems and OPM
-        exports) and CTF (<code>.ds</code>, CTF / VSM MedTech).
+        (<code>.fif</code>, covers MEGIN / Elekta systems and
+        optically pumped magnetometer (OPM) exports) and CTF
+        (<code>.ds</code>, CTF / VSM MedTech).
         Yokogawa / KIT (<code>.con</code> / <code>.sqd</code>), Ricoh
         (<code>.con</code>), and BTi / 4D Neuroimaging
         (<code>.pdf</code>) are not yet supported. Users with those
@@ -512,7 +513,7 @@
         "calc": {
           "eyebrow": "Calculation module",
           "title": "Preprocess, then compute the seven QA metrics.",
-          "body": "After optional crop / filter / resample / epoching, the calculation module runs the QA metrics in module-specific signal variants. STD and PtP target amplitude dispersion, PSD (power spectral density) targets frequency-domain noise, ECG and EOG target physiological correlation, Muscle targets high-frequency muscle noise, and Head motion uses cHPI when available (MEG only)."
+          "body": "After optional crop / filter / resample / epoching, the calculation module runs the QA metrics in module-specific signal variants. STD (standard deviation) and PtP (peak-to-peak amplitude) target amplitude dispersion, PSD (power spectral density) targets frequency-domain noise, ECG and EOG target physiological correlation, Muscle targets high-frequency muscle noise, and Head motion uses continuous head localisation (cHPI) data when available (MEG only)."
         },
         "derivatives": {
           "eyebrow": "Derivatives",

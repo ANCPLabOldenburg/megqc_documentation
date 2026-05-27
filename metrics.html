@@ -315,7 +315,7 @@
           ranked-and-grouped panels:
           <em>most affected</em>,
           <em>moderately affected</em>, and
-          <em>least affected</em> &mdash; channels sorted by
+          <em>least affected</em>. Channels are sorted by
           <code>abs(corr_coef)</code> and split into equal thirds
           (<code>split_correlated_artifacts_into_3_groups</code>).
           Each panel overlays the per-channel average artifact on the
@@ -412,7 +412,7 @@
             <li><em>No long breaks</em>: gaps between blinks must
               stay below ~10 s (lowest plausible blink rate ~6/min).</li>
             <li><em>No bursts</em>: gaps must stay above ~1 s (ceiling
-              of ~60 blinks/min &mdash; high, but real in some
+              of ~60 blinks/min, which is high but real in some
               recordings).</li>
           </ul>
           If the channel fails any condition the QC layer uses the
@@ -551,10 +551,11 @@
     <section class="section reveal" id="head">
       <div class="container container-narrow prose">
       <h2>Head movement</h2>
-      <p>MEG-only metric. Uses cHPI data to quantify movement
-         across the recording in six directions
-         (<code>x</code>, <code>q1</code>, <code>y</code>,
-         <code>q2</code>, <code>z</code>, <code>q3</code>). Off by
+      <p>MEG-only metric. Uses continuous head localisation (cHPI)
+         data to quantify movement across the recording in six
+         directions (<code>x</code>, <code>y</code>, <code>z</code>
+         translations; <code>q1</code>, <code>q2</code>,
+         <code>q3</code> rotation quaternion components). Off by
          default; enable with <code>Head = True</code> in
          <code>[GENERAL]</code>.</p>
 

@@ -107,7 +107,7 @@
         <span class="callout-title">Open a live example report</span>
         Real subject-level QA + QC reports rendered from the two
         tutorial datasets. Download, unzip, then open the
-        <code>.html</code> file in any browser &mdash; the report is
+        <code>.html</code> file in any browser. The report is
         self-contained, no MEEGqc install needed.
         <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px;">
           <a class="btn btn-primary"
@@ -177,7 +177,7 @@
                 name, subject ID (<code>sub-XXX</code>), number of
                 recordings (runs) included in this report, and how
                 many QA metrics actually produced figures for the
-                subject. No thresholding happens here &mdash; this is
+                subject. No thresholding happens here; this is
                 a build-time summary of what made it into the report.</figcaption>
             </figure>
             <figure class="figure">
@@ -538,8 +538,9 @@
         <div class="tab-panel" data-panel="sub-head" role="tabpanel">
           <p>
             MEG-only. Movement across the recording derived from
-            cHPI data: six motion parameters (three translations,
-            three rotations) plus a derived summary.
+            continuous head localisation (cHPI) data: six motion
+            parameters (three translations and three rotation
+            quaternion components) plus a derived summary.
             EEG recordings show a banner explaining that the metric
             is skipped because cHPI is MEG-specific.
           </p>
@@ -699,7 +700,7 @@
           <code>QA group report: &lt;dataset_name&gt;</code> title,
           the timestamp when the report was generated, the MEGqc
           version that produced it, the epoch label, and a full
-          <strong>Settings snapshot</strong> &mdash; the exact
+          <strong>Settings snapshot</strong>: the exact
           <code>settings.ini</code> block used for this build (every
           metric's parameters, channel-type selection, epoching, plot
           flags). The closing <em>Important</em> note reminds the
@@ -1275,8 +1276,8 @@
               subject. Y axis is the noisy / flat channel percentage.
               A sustained shift up at a particular task (across many
               subjects) typically means the task induces a specific
-              artifact &mdash; jaw movement during speech, eye
-              motion during reading, etc. &mdash; rather than
+              artifact (jaw movement during speech, eye motion
+              during reading, etc.) rather than
               hardware drift.</figcaption>
           </figure>
           <p class="deep-dive-link">
