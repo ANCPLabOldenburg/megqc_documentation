@@ -157,46 +157,61 @@
           </p>
           <figure class="figure">
             <img src="assets/reports/subject/overview_tab_header_information.png"
-                 alt="Subject report header information">
-            <figcaption>Recording header: subject ID, task, acquisition
-              date, sampling rate, hardware filters, channel counts per
-              type. Use this to confirm you are looking at the recording
-              you expect before drilling into any metric tab.</figcaption>
+                 alt="Subject report recording header">
+            <figcaption>Recording header for the selected run. The
+              chips at the top (e.g. <code>deduction (run-1)</code>,
+              <code>induction (run-1)</code>) switch between this
+              subject's runs. The panel below is the MNE raw-info dump
+              for that run: measurement date, experimenter, digitised
+              points, good / bad channel counts per type
+              (Gradiometers, Magnetometers, EEG, EOG, ECG, Stimulus,
+              CHPI...), sampling frequency, and the online hardware
+              high-pass / low-pass filters that were already applied
+              at acquisition time.</figcaption>
           </figure>
           <div class="figure-row">
             <figure class="figure">
               <img src="assets/reports/subject/overview_tab_subject_summary.png"
                    alt="Subject summary card">
-              <figcaption>Per-subject quality summary: traffic-light
-                flags for each metric this subject ran. Green = nothing
-                tripped a threshold; orange / red = check the matching
-                metric tab.</figcaption>
+              <figcaption>Subject summary card. Four facts: dataset
+                name, subject ID (<code>sub-XXX</code>), number of
+                recordings (runs) included in this report, and how
+                many QA metrics actually produced figures for the
+                subject. No thresholding happens here &mdash; this is
+                a build-time summary of what made it into the report.</figcaption>
             </figure>
             <figure class="figure">
               <img src="assets/reports/subject/overview_tab_recording_per_metric_availability.png"
                    alt="Recording x metric availability">
-              <figcaption>Run x metric availability matrix: rows are
-                this subject's runs, columns are QA metrics. Blank
-                cells flag a metric that did not compute (e.g. Head on
-                EEG-only data, ECG when the reference channel was
-                rejected by the sanity check).</figcaption>
+              <figcaption>Recording x metric availability table. Rows
+                are this subject's runs, columns are the QA metrics.
+                Each cell is <code>Yes</code> when the metric ran for
+                that run, <code>No</code> otherwise. A <code>No</code>
+                flags a metric the calculation step skipped or could
+                not produce figures for (e.g. Head on EEG-only data,
+                ECG when the reference channel failed the sanity
+                check, or a metric you disabled in
+                <code>settings.ini</code>).</figcaption>
             </figure>
           </div>
           <div class="figure-row">
             <figure class="figure">
               <video class="media-loop" autoplay muted loop playsinline
                      src="assets/reports/subject/overview_tab_sensor_locations_rotate_ans_hover.mp4"></video>
-              <figcaption>3D sensor layout colour-coded by lobe. Drag
-                to rotate; hover for the channel ID. Use it to confirm
-                expected sensor positions and lobe assignments before
-                reading any topomap.</figcaption>
+              <figcaption>3D sensor positions for the selected run,
+                rendered from the raw file's channel coordinates and
+                colour-coded by lobe. Drag to rotate; hover any sensor
+                to see its channel name. The geometry is shown once
+                here in Overview so it's not repeated under every
+                metric tab.</figcaption>
             </figure>
             <figure class="figure">
               <video class="media-loop" autoplay muted loop playsinline
                      src="assets/reports/subject/overview_tab_sensor_location_active_labels.mp4"></video>
-              <figcaption>Click a lobe in the legend to toggle it
-                off, double-click to isolate a single lobe. Identical
-                interaction model to every other topomap in the
+              <figcaption>Lobe legend interaction: single-click a lobe
+                to toggle its sensors off / on, double-click to
+                isolate just that lobe. Identical interaction model to
+                every other topomap and lobe-coloured plot in the
                 report.</figcaption>
             </figure>
           </div>
@@ -308,45 +323,52 @@
           <figure class="figure">
             <img src="assets/reports/subject/psd_tab_subtabs.png"
                  alt="PSD tab subtabs">
-            <figcaption>PSD subtabs: SNR triage, Welch curves,
-              relative-band amplitude, and a frequency-selectable
-              topomap.</figcaption>
+            <figcaption>The four PSD subtabs, as labelled in the
+              report: <em>Channel-wise PSD topomap (3D)</em>,
+              <em>PSD curves by channel</em>,
+              <em>Relative power (noise frequencies)</em>, and
+              <em>Relative power (canonical bands)</em>.</figcaption>
           </figure>
           <div class="figure-row">
             <figure class="figure">
               <img src="assets/reports/subject/psd_tab_psd_snr_all_channels.png"
-                   alt="PSD SNR by channel">
-              <figcaption>SNR by channel for quick triage. A row of
-                bars sitting low across the spectrum points at a
-                broadband-noisy channel.</figcaption>
+                   alt="PSD relative power at noise frequencies">
+              <figcaption><em>Relative power (noise frequencies)</em>
+                subtab: per-channel share of total spectral power
+                concentrated at mains and its harmonics
+                (50&nbsp;/&nbsp;60&nbsp;Hz and multiples). Channels
+                stacked at the top of the bar plot are the ones most
+                contaminated by line noise.</figcaption>
             </figure>
             <figure class="figure">
               <img src="assets/reports/subject/psd_tab_relative_band_amplitude_spectrum.png"
-                   alt="Relative band amplitude spectrum">
-              <figcaption>Relative-band amplitude per channel: a quick
-                stacked-bar view of how spectral energy splits across
-                bands. Useful to spot channels with abnormal band
-                distributions.</figcaption>
+                   alt="Relative power per canonical band">
+              <figcaption><em>Relative power (canonical bands)</em>
+                subtab: per-channel share of total power in the
+                classical EEG / MEG bands (delta, theta, alpha, beta,
+                gamma). Useful to spot channels with an abnormal band
+                distribution relative to the rest of the recording.</figcaption>
             </figure>
           </div>
           <div class="figure-row">
             <figure class="figure">
               <video class="media-loop" autoplay muted loop playsinline
                      src="assets/reports/subject/psd_tab_psd_curves_by_channel.mp4"></video>
-              <figcaption>Welch PSD curves, one line per channel.
-                <strong>Narrow tall peaks</strong> at 50 / 60 Hz and
-                multiples = mains contamination;
+              <figcaption><em>PSD curves by channel</em> subtab: the
+                Welch PSD estimate for every channel overlaid as one
+                line. <strong>Narrow tall peaks</strong> at 50&nbsp;/
+                60&nbsp;Hz and multiples = mains contamination;
                 <strong>broad elevation</strong> across many channels
-                = environmental broadening or motion-related
-                noise.</figcaption>
+                = environmental broadening or motion-related noise.</figcaption>
             </figure>
             <figure class="figure">
               <video class="media-loop" autoplay muted loop playsinline
                      src="assets/reports/subject/psd_tab_channel-wise-topomap.mp4"></video>
-              <figcaption>PSD topomap at the frequency you pick on
-                the slider. Hot spots at a mains harmonic frequency
-                indicate where the noise is geographically
-                concentrated.</figcaption>
+              <figcaption><em>Channel-wise PSD topomap (3D)</em>
+                subtab: PSD at the frequency you pick on the slider,
+                drawn on the sensor layout. Hot spots at a mains
+                harmonic frequency tell you where the noise is
+                geographically concentrated on the cap / dewar.</figcaption>
             </figure>
           </div>
           <p class="deep-dive-link">
@@ -669,12 +691,22 @@
 
       <figure class="figure">
         <img src="assets/reports/group-qa/dataset_qa_header.png"
-             alt="Dataset-level QA report header">
-        <figcaption>Header of the dataset-level QA report:
-          dataset name, number of subjects / recordings included in
-          the aggregation, sensor systems present, and the analysis
-          profile / attempt used. Use it to confirm you are looking
-          at the right cohort before reading any distribution.</figcaption>
+             alt="Dataset-level QA report provenance header">
+        <figcaption>Report-provenance block at the top of every
+          dataset-level QA report:
+          <code>QA group report: &lt;dataset_name&gt;</code> title,
+          the timestamp when the report was generated, the MEGqc
+          version that produced it, the epoch label, and a full
+          <strong>Settings snapshot</strong> &mdash; the exact
+          <code>settings.ini</code> block used for this build (every
+          metric's parameters, channel-type selection, epoching, plot
+          flags). The closing <em>Important</em> note reminds the
+          reader that the Cohort QA overview combines global cohort
+          footprints with subject-aware summaries; metric-level
+          panels keep recording identity in their hover text.
+          Use this header to confirm exactly which build of the
+          report you're looking at before drawing any
+          conclusion.</figcaption>
       </figure>
 
       <h3>Tab hierarchy</h3>
@@ -783,13 +815,24 @@
           </p>
           <figure class="figure">
             <img src="assets/reports/group-qa/dataset_overview_tab_general_information.png"
-                 alt="Dataset general information">
-            <figcaption>General dataset metadata: number of subjects
-              and recordings, the list of distinct tasks present,
-              sampling rate range, and the channel-type breakdown.
-              Use it as a sanity check that you're aggregating the
-              cohort you think you are (e.g. only the resting-state
-              runs).</figcaption>
+                 alt="Cohort general information tiles">
+            <figcaption>Three-tile cohort overview at the top of the
+              section. <strong>Dataset summary</strong>: total subject
+              count, total task-level row count, and the list of
+              distinct task labels present. <strong>Subjects per task
+              / condition</strong>: per-task breakdown of how many
+              subjects and how many derivative rows contributed to
+              each task. <strong>Column availability</strong>: for
+              every metric column written into the per-task TSVs
+              (<code>GQI_*</code>, <code>STD_*</code>, <code>PTP_*</code>,
+              <code>PSD_noise_*</code>, <code>ECG_*</code>,
+              <code>EOG_*</code>, <code>Muscle_*</code>), how many of
+              those rows have a non-missing value vs how many are
+              missing. A non-zero <em>Missing n</em> on a single
+              column points at a metric that did not compute for some
+              recordings; non-zero across many columns usually
+              indicates a calculation step that crashed or was
+              skipped for a subset of the cohort.</figcaption>
           </figure>
           <figure class="figure">
             <video class="media-loop" autoplay muted loop playsinline
