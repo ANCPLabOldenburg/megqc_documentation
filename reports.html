@@ -673,8 +673,9 @@
       <h2>Dataset-level QA</h2>
       <p>
         The dataset-level QA report aggregates quality assessment
-        across all subjects in one dataset. Use it to identify cohort
-        patterns, outliers, and task-dependent shifts.
+        across all subjects in one dataset. Use it to identify
+        patterns shared across the subjects, outlier subjects, and
+        task-dependent shifts.
       </p>
 
       <div class="callout callout-tip">
@@ -781,7 +782,8 @@
                 metric across all recordings in the dataset; each dot
                 inside is one recording (hover for subject + run
                 identity). Long thin tails point at a few outlier
-                recordings dragging the cohort down.</figcaption>
+                recordings dragging the dataset-level summaries
+                down.</figcaption>
             </figure>
             <figure class="figure">
               <video class="media-loop" autoplay muted loop playsinline
@@ -795,10 +797,10 @@
           <figure class="figure">
             <video class="media-loop" autoplay muted loop playsinline
                    src="assets/reports/group-qa/summary_distibutions_tab_3d_topomaps.mp4"></video>
-            <figcaption>Pooled 3D topomaps across the cohort: where
-              each metric concentrates spatially. Hotspots in the
-              same location across metrics often point at a
-              consistently bad sensor.</figcaption>
+            <figcaption>Pooled 3D topomaps across all subjects in the
+              dataset: where each metric concentrates spatially.
+              Hotspots in the same location across metrics often
+              point at a consistently bad sensor.</figcaption>
           </figure>
           <p class="deep-dive-link">
             &rarr; Reference: the
@@ -816,13 +818,13 @@
           <figure class="figure">
             <img src="assets/reports/group-qa/dataset_overview_tab_general_information.png"
                  alt="Cohort general information tiles">
-            <figcaption>Three-tile cohort overview at the top of the
-              section. <strong>Dataset summary</strong>: total subject
-              count, total task-level row count, and the list of
-              distinct task labels present. <strong>Subjects per task
-              / condition</strong>: per-task breakdown of how many
-              subjects and how many derivative rows contributed to
-              each task. <strong>Column availability</strong>: for
+            <figcaption>Three-tile dataset-level overview at the top
+              of the section. <strong>Dataset summary</strong>: total
+              subject count, total task-level row count, and the list
+              of distinct task labels present. <strong>Subjects per
+              task / condition</strong>: per-task breakdown of how
+              many subjects and how many derivative rows contributed
+              to each task. <strong>Column availability</strong>: for
               every metric column written into the per-task TSVs
               (<code>GQI_*</code>, <code>STD_*</code>, <code>PTP_*</code>,
               <code>PSD_noise_*</code>, <code>ECG_*</code>,
@@ -832,7 +834,7 @@
               column points at a metric that did not compute for some
               recordings; non-zero across many columns usually
               indicates a calculation step that crashed or was
-              skipped for a subset of the cohort.</figcaption>
+              skipped for a subset of the subjects.</figcaption>
           </figure>
           <figure class="figure">
             <video class="media-loop" autoplay muted loop playsinline
@@ -853,8 +855,9 @@
               of bright cells = one bad recording dragging multiple
               metrics down; <strong>horizontal stripe</strong> = a
               specific metric that is systematically degraded across
-              the cohort (often a site-wide issue like mains or
-              shielding).</figcaption>
+              every subject in the dataset (often an
+              acquisition-site-wide issue like mains contamination
+              or shielding problems).</figcaption>
           </figure>
           <p class="deep-dive-link">
             &rarr; Reference: the
@@ -866,7 +869,7 @@
         <div class="tab-panel" data-panel="ds-tasks" role="tabpanel">
           <p>
             Line plots: one line per subject, dark line for the
-            cohort median. Reveals task-dependent shifts.
+            median across subjects. Reveals task-dependent shifts.
           </p>
           <figure class="figure">
             <video class="media-loop" autoplay muted loop playsinline
@@ -991,8 +994,9 @@
               <figcaption>ECG-correlation ECDF. The X axis is the
                 fraction of channels with
                 <code>abs(corr_coef)</code> above the operational
-                threshold; the curve answers "how much of the cohort
-                has more than X % cardiac-affected channels?".
+                threshold; the curve answers "what fraction of
+                subjects have more than X % cardiac-affected
+                channels?".
                 <a href="metrics.html#ecg">ECG metric reference.</a></figcaption>
             </figure>
             <figure class="figure">
@@ -1064,8 +1068,9 @@
         <figure class="figure">
           <img src="assets/reports/group-qc/dataset_overview_tab_general_information.png"
                alt="QC dataset general information">
-          <figcaption>General cohort information: subject count,
-            recording count, tasks, channel-type breakdown. The QC
+          <figcaption>General dataset-level information: subject
+            count, recording count, tasks, channel-type breakdown.
+            The QC
             view also surfaces the GQI parameter snapshot
             (<code>global_quality_index_&lt;n&gt;.ini</code>) tied
             to the current attempt, so the decision criteria are
@@ -1136,8 +1141,9 @@
 
       <h3>Summary distributions</h3>
       <p>The summary distribution tab shows box / violin plots for
-         every QC metric across the cohort, so a single glance shows
-         where the dataset sits relative to the configured thresholds.</p>
+         every QC metric across all subjects in the dataset, so a
+         single glance shows where the dataset sits relative to the
+         configured thresholds.</p>
       <figure class="figure">
         <img src="assets/reports/group-qc/dataset_qc_box_violin_plots_controls.png"
              alt="QC box / violin plot controls">
@@ -1151,13 +1157,13 @@
       <figure class="figure">
         <video class="media-loop" autoplay muted loop playsinline
                src="assets/reports/group-qc/dataset_qc_summary_distribution_tab_GQI.mp4"></video>
-        <figcaption>GQI score distribution across the cohort. Each
-          dot is a recording; hover for subject + task. The shape of
-          the violin tells you whether the dataset is uniformly
-          good (a tight pile near 100), bimodal (two clusters
-          suggest a subgroup with consistent problems), or has a
-          long low-quality tail (a few bad recordings dragging the
-          mean down).</figcaption>
+        <figcaption>GQI score distribution across all recordings in
+          the dataset. Each dot is a recording; hover for subject +
+          task. The shape of the violin tells you whether the dataset
+          is uniformly good (a tight pile near 100), bimodal (two
+          clusters suggest a subset of subjects with consistent
+          problems), or has a long low-quality tail (a few bad
+          recordings dragging the mean down).</figcaption>
       </figure>
       <div class="figure-row">
         <figure class="figure">
@@ -1189,11 +1195,11 @@
         <video class="media-loop" autoplay muted loop playsinline
                src="assets/reports/group-qc/dataset_qc_metric_details_tab_metrics_across_tasks.mp4"></video>
         <figcaption>QC metric trajectories across tasks: one line
-          per subject, dark line for the cohort median. Use it to
-          decide whether a metric should have a different threshold
-          for different tasks (e.g. muscle artifacts naturally
-          higher in a speech production task than in resting
-          state).</figcaption>
+          per subject, dark line for the median across subjects.
+          Use it to decide whether a metric should have a different
+          threshold for different tasks (e.g. muscle artifacts
+          naturally higher in a speech production task than in
+          resting state).</figcaption>
       </figure>
       <figure class="figure">
         <img src="assets/reports/group-qc/dataset_qc_metric_details_per_task-metric_subject_ranking.png"
@@ -1245,8 +1251,8 @@
               condition-driven issue: same brain, different quality).
               <strong>Flat low lines</strong> = consistently
               low-quality recordings to consider dropping entirely.
-              <strong>Wide spread</strong> at one task = the cohort
-              is heterogeneous on that task and may need its own
+              <strong>Wide spread</strong> at one task = subjects
+              are heterogeneous on that task and may need its own
               threshold.</figcaption>
           </figure>
           <p class="deep-dive-link">

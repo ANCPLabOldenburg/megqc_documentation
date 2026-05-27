@@ -129,11 +129,14 @@
       </div>
 
       <p>
-        Reviewing all of this visually, one recording at a time,
-        does not scale. And once a lab does start automating the
-        review, conventions diverge between groups, parameters drift
-        between sessions, and the quality decisions that get made
-        rarely travel with the data. This is the gap MEEGqc closes.
+        Reviewing all of this visually, one recording at a time, does
+        not scale. Once a research group starts automating the
+        review, conventions diverge between laboratories, parameter
+        choices drift between recording sessions and between
+        acquisition sites, and the quality decisions that get made
+        rarely travel with the data: they live inside someone's
+        preprocessing pipeline rather than as standalone, queryable
+        annotations. This is the gap MEEGqc closes.
       </p>
 
       </div>
@@ -504,7 +507,7 @@
         "bids": {
           "eyebrow": "BIDS interface",
           "title": "ancpBIDS does the dataset walk.",
-          "body": "MEEGqc uses ancpBIDS to traverse the dataset lazily, picking up MEG / EEG files by suffix and reading the sidecars (channels.tsv, events.tsv, etc.) without eagerly loading data. This is what makes large cohorts practical."
+          "body": "MEEGqc uses ancpBIDS to traverse the dataset lazily, picking up MEG / EEG files by suffix and reading the sidecars (channels.tsv, events.tsv, etc.) without eagerly loading data. This is what makes large multi-subject datasets practical."
         },
         "calc": {
           "eyebrow": "Calculation module",
@@ -541,9 +544,9 @@
       <p>
         Analysis profiles are how MEEGqc keeps multiple parameter
         configurations side by side on the same dataset without
-        clobbering. They are the unit of reproducibility for
-        sensitivity analyses, threshold sweeps, and parameter
-        comparisons across teams.
+        overwriting each other. They are the unit of reproducibility
+        for sensitivity analyses, threshold sweeps, and parameter
+        comparisons across research groups.
       </p>
 
       <p>By specifying an analysis mode, you control where
