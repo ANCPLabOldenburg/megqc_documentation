@@ -152,6 +152,23 @@
         (QC)</strong> decisions on top of the QA layer with full
         traceability between the two.
       </p>
+
+      <div class="callout callout-tip">
+        <span class="callout-title">A note on the name: MEGqc &rarr; MEEGqc</span>
+        The tool was originally developed for MEG only, which is where
+        the "MEG" in the name (and in every CLI command, package, and
+        install path) comes from. EEG support has since landed in the
+        codebase, so the user-facing brand is migrating to
+        <strong>MEEGqc</strong> &mdash; the extra "E" stands for EEG.
+        That transition takes time: the GitHub repo is still
+        <code>ANCPLabOldenburg/MEGqc</code>, the PyPI package is still
+        <code>meg-qc</code>, the Python import is still
+        <code>meg_qc</code>, the CLI commands still start with
+        <code>run-megqc</code> / <code>get-megqc-config</code> /
+        <code>globalqualityindex</code>, and the installer still puts
+        things in <code>~/MEGqc/</code>. The functionality for both
+        MEG and EEG is already there; only the prose has caught up.
+      </div>
       <ul>
         <li>
           <strong>QA = systematic measurement.</strong> Distributions,

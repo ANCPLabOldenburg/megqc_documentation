@@ -1,5 +1,5 @@
 /* =====================================================================
-   MEGqc documentation: shared client behavior
+   MEEGqc documentation: shared client behavior
    - HTML partial includes (header / footer)
    - Theme toggle (dark <-> light), persisted to localStorage
    - Current-page highlight in the header nav
