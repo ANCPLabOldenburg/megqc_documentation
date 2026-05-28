@@ -1456,7 +1456,16 @@ tbody tr:last-child td { border-bottom: none; }
 }
 
 @media (max-width: 760px) {
-  .page-toc { display: none; }  /* hide on narrow phones */
+  /* On phones the site header wraps to two rows (brand + theme toggle
+     on row 1, nav links full-width on row 2), so push the hamburger
+     down past it. Cap the panel width so it never overflows the
+     viewport and trim its height to leave the bottom of the screen
+     usable. */
+  .page-toc { top: 120px; left: 8px; }
+  .page-toc-panel {
+    width: min(280px, calc(100vw - 28px));
+    max-height: calc(100vh - 140px);
+  }
 }
 
 /* =====================================================================
