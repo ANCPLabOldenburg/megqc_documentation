@@ -92,19 +92,23 @@
             Computational Neuroscience Lab (UPM&ndash;UCM, Madrid).
             Recorded on an <strong>Elekta / Neuromag Vectorview</strong>
             306-channel system (102 magnetometers + 204 planar
-            gradiometers) at 1&nbsp;kHz sampling, 50&nbsp;Hz line
-            frequency, with continuous head localisation (cHPI) on.
-            The two subjects (<code>sub-009</code>, <code>sub-012</code>)
-            give just enough multi-subject material to exercise both
+            gradiometers) plus dedicated <strong>ECG</strong> and
+            <strong>EOG</strong> reference channels, at 1&nbsp;kHz
+            sampling, 50&nbsp;Hz line frequency, with continuous head
+            localisation (cHPI) on. The two subjects
+            (<code>sub-009</code>, <code>sub-012</code>) give just
+            enough multi-subject material to exercise both
             subject-level reports and the dataset-level QA / QC
             views; the two tasks per subject also drive the per-task
             trajectory plots.
           </p>
           <p>
-            Pure MEG (no EEG / ECG / EOG channels), so this dataset
-            shows the standard MEG path: MAG + GRAD calculation,
-            Head-motion metric enabled via cHPI, ECG / EOG metrics
-            reconstructed from magnetometers (no reference channel).
+            MEG with dedicated cardiac and ocular reference channels
+            (no EEG), so this dataset shows the standard MEG path:
+            MAG + GRAD calculation, Head-motion metric enabled via
+            cHPI, and ECG / EOG correlations computed directly from
+            the reference channels rather than reconstructed from
+            magnetometers.
           </p>
           <div class="modality-actions">
             <a class="btn btn-primary"
@@ -126,20 +130,22 @@
             <a href="https://openneuro.org/datasets/ds007353" target="_blank" rel="noopener">OpenNeuro ds007353</a>
             ("HAD-MEEG") from Beijing Normal University. Recorded on a
             <strong>Neuroscan</strong> cap with the extended 10/20
-            scheme: 62&nbsp;EEG + 2&nbsp;EOG channels at 1&nbsp;kHz
-            sampling, 50&nbsp;Hz line frequency. Files are in EEGLAB
-            <code>.set</code> format. Participants watched short video
-            clips and classified each as "sports" or not using the
-            left / right hand. The 8 runs per subject give
-            enough event-rich material to exercise the Stimulus and
-            ECG / EOG views.
+            scheme: 62&nbsp;EEG + 2 dedicated <strong>EOG</strong>
+            channels at 1&nbsp;kHz sampling, 50&nbsp;Hz line frequency.
+            No ECG channel. Files are in EEGLAB <code>.set</code>
+            format. Participants watched short video clips and
+            classified each as "sports" or not using the left / right
+            hand. The 8 runs per subject give enough event-rich
+            material to exercise the Stimulus and EOG views.
           </p>
           <p>
-            Pure EEG, so this dataset shows the EEG path: auto-detected
+            EEG with dedicated ocular reference channels (no ECG, no
+            MEG), so this dataset shows the EEG path: auto-detected
             10/20 montage, average reference, the EEG-specific 20&ndash;100&nbsp;Hz
             muscle band, Head-motion metric skipped (cHPI is
-            MEG-only), and EOG-correlation reconstructed from the two
-            dedicated EOG channels.
+            MEG-only), EOG correlation computed directly from the two
+            EOG channels, and the ECG metric skipped (no reference
+            channel available).
           </p>
           <div class="modality-actions">
             <a class="btn btn-primary"
