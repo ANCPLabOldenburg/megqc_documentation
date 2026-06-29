@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="MEEGqc tutorial: pick a dataset, walk the GUI, run from the CLI, drive it from Python, and look up every settings.ini knob.">
+  <meta name="description" content="MEEGqc tutorial: pick a dataset, walk the GUI, run from the CLI, drive it from Python, look up every settings.ini knob, and map every output file MEEGqc produces.">
   <title>Tutorial &middot; MEEGqc</title>
   <link rel="icon" href="favicon.ico?v=2" sizes="any">
   <link rel="icon" type="image/png" href="assets/brand/app-icon-256.png?v=2" sizes="256x256">
@@ -47,6 +47,10 @@
         <a class="page-toc-link" href="#settings">
           <span class="page-toc-dot" aria-hidden="true"></span>
           settings.ini reference
+        </a>
+        <a class="page-toc-link" href="#outputs">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          Output files
         </a>
       </nav>
     </aside>
@@ -265,6 +269,12 @@ cd ds007353 && datalad get sub-01/</code></pre>
                   <code>settings.ini</code> editor: navigation,
                   typing thresholds, applying overrides.</figcaption>
               </figure>
+              Whichever <code>settings.ini</code> a run uses is saved
+              back as a snapshot and shown in a dedicated
+              <strong>Settings</strong> tab inside every report, so the
+              parameters that produced a figure travel with it. Numeric
+              fields such as <code>epoch_tmax</code> accept decimal
+              values.
             </li>
           </ul>
         </li>
@@ -296,9 +306,10 @@ cd ds007353 && datalad get sub-01/</code></pre>
         <li>
           <strong>Switch to the QA/QC plotting tab</strong> to render
           reports independently. Tick the scopes you want
-          (<em>QA Subject</em>, <em>QA Group</em>,
-          <em>QA Multi-dataset</em>, <em>QC Group</em>,
-          <em>QC Multi-dataset</em>) and click <strong>Run Plotting</strong>.
+          (<em>QA subject reports</em>, <em>QA dataset reports</em>,
+          <em>QA multi-dataset report</em>, <em>QC dataset report(s)</em>,
+          <em>QC multi-dataset report</em>) and click
+          <strong>Run Plotting</strong>.
           <figure class="figure">
             <img src="assets/gui/plotting_section_dark.png"
                  data-light="assets/gui/plotting_section_light.png"
@@ -316,7 +327,7 @@ cd ds007353 && datalad get sub-01/</code></pre>
           <strong>Point at an output folder</strong> (the
           <em>Output folder</em> panel). By default MEEGqc writes
           derivatives under
-          <code>&lt;dataset&gt;/derivatives/Meg_QC/</code>; the
+          <code>&lt;dataset&gt;/derivatives/MEEGqc/</code>; the
           <em>Output folder</em> override redirects them to a custom
           root.
           <div class="figure-row">
@@ -366,12 +377,12 @@ get-meegqc-config --target_directory ./config --filename settings.ini
 <pre><code class="lang-bash"># Subject + dataset-level QA from one dataset
 run-meegqc-plotting \
   --inputdata /path/to/bids_dataset \
-  --qa-subject --qa-group
+  --qa-subject --qa-dataset
 
 # Cross-dataset comparison; --njobs (no underscore) for plotting
 run-meegqc-plotting \
   --inputdata /path/ds1 /path/ds2 \
-  --qa-multisample --qc-multisample --njobs 4
+  --qa-multi-dataset --qc-multi-dataset --njobs 4
 </code></pre>
 
       <div class="code-label">Step 3. (Optional) GQI recomputation</div>
@@ -380,11 +391,27 @@ run-meegqc-plotting \
   --analysis_mode reuse \
   --analysis_id qa_pass_01
 
-# Then re-render the QC Group report against the new attempt
+# Then re-render the QC dataset report against the new attempt
 run-meegqc-plotting \
   --inputdata /path/to/bids_dataset \
-  --qc-group --attempt 2
+  --qc-dataset --attempt 2
 </code></pre>
+
+      <div class="callout callout-warning">
+        <span class="callout-title">Re-run calculation after upgrading</span>
+        Derivative file names and the derivatives folder
+        (<code>derivatives/MEEGqc/</code>, was <code>derivatives/Meg_QC/</code>)
+        are now BIDS-compliant. Derivatives written by older MEEGqc
+        versions are not compatible with this version's reports. If you
+        point plotting or <code>globalqualityindex</code> at a dataset
+        that still only has an old <code>derivatives/Meg_QC/</code>
+        folder, the run is refused with a clear message asking you to
+        re-run the calculation module first. The CLI flags also changed:
+        <code>--qa-group</code> / <code>--qc-group</code> are now
+        <code>--qa-dataset</code> / <code>--qc-dataset</code>, and
+        <code>--qa-multisample</code> / <code>--qc-multisample</code> are
+        now <code>--qa-multi-dataset</code> / <code>--qc-multi-dataset</code>.
+      </div>
 
       <div class="code-label">One-shot: compute + plot in one command</div>
 <pre><code class="lang-bash">run-meegqc \
@@ -426,15 +453,15 @@ run-meegqc-plotting \
             <tr><td><code>--subs</code></td><td>list</td><td>Subject IDs to process (default: <code>all</code>).</td></tr>
             <tr><td><code>--subs_per_dataset</code></td><td>list</td><td>Per-dataset subject lists as <code>"&lt;path&gt;::&lt;ids&gt;"</code> pairs.</td></tr>
             <tr><td><code>--n_jobs</code></td><td>int</td><td>Parallel subject workers.</td></tr>
-            <tr><td><code>--derivatives_output</code></td><td>path</td><td>Write derivatives to a custom root instead of <code>&lt;dataset&gt;/derivatives/Meg_QC/</code>.</td></tr>
+            <tr><td><code>--derivatives_output</code></td><td>path</td><td>Write derivatives to a custom root instead of <code>&lt;dataset&gt;/derivatives/MEEGqc/</code>.</td></tr>
             <tr><td><code>--analysis_mode</code></td><td>enum</td><td><code>legacy</code> | <code>new</code> | <code>reuse</code> | <code>latest</code>.</td></tr>
             <tr><td><code>--analysis_id</code></td><td>str</td><td>Profile identifier. Required with <code>reuse</code>; recommended with <code>new</code>.</td></tr>
             <tr><td><code>--existing_config_policy</code></td><td>enum</td><td><code>provided</code> | <code>latest_saved</code> | <code>fail</code> when a settings file already exists in the profile.</td></tr>
             <tr><td><code>--processed_subjects_policy</code></td><td>enum</td><td><code>skip</code> | <code>rerun</code> | <code>fail</code> for subjects already processed.</td></tr>
             <tr><td><code>--run-all</code></td><td>flag</td><td>After calculation, automatically run plotting.</td></tr>
             <tr><td><code>--all</code> / <code>--qa-all</code> / <code>--qc-all</code></td><td>flag</td><td>With <code>--run-all</code>, choose which plotting scopes to render.</td></tr>
-            <tr><td><code>--qa-subject</code> / <code>--qa-group</code> / <code>--qa-multisample</code></td><td>flag</td><td>Selective QA scopes (with <code>--run-all</code>).</td></tr>
-            <tr><td><code>--qc-group</code> / <code>--qc-multisample</code></td><td>flag</td><td>Selective QC scopes (with <code>--run-all</code>).</td></tr>
+            <tr><td><code>--qa-subject</code> / <code>--qa-dataset</code> / <code>--qa-multi-dataset</code></td><td>flag</td><td>Selective QA scopes (with <code>--run-all</code>).</td></tr>
+            <tr><td><code>--qc-dataset</code> / <code>--qc-multi-dataset</code></td><td>flag</td><td>Selective QC scopes (with <code>--run-all</code>).</td></tr>
           </tbody>
         </table>
       </div>
@@ -446,13 +473,13 @@ run-meegqc-plotting \
           <tbody>
             <tr><td><code>--inputdata</code></td><td>path(s)</td><td>One or more BIDS dataset roots.</td></tr>
             <tr><td><code>--qa-subject</code></td><td>flag</td><td>Render subject-level QA reports.</td></tr>
-            <tr><td><code>--qa-group</code></td><td>flag</td><td>Render dataset-level QA report.</td></tr>
-            <tr><td><code>--qa-multisample</code></td><td>flag</td><td>Render multi-dataset-level QA report (&ge; 2 datasets).</td></tr>
-            <tr><td><code>--qc-group</code></td><td>flag</td><td>Render dataset-level QC report.</td></tr>
-            <tr><td><code>--qc-multisample</code></td><td>flag</td><td>Render multi-dataset-level QC report (&ge; 2 datasets).</td></tr>
+            <tr><td><code>--qa-dataset</code></td><td>flag</td><td>Render dataset-level QA report.</td></tr>
+            <tr><td><code>--qa-multi-dataset</code></td><td>flag</td><td>Render multi-dataset-level QA report (&ge; 2 datasets).</td></tr>
+            <tr><td><code>--qc-dataset</code></td><td>flag</td><td>Render dataset-level QC report.</td></tr>
+            <tr><td><code>--qc-multi-dataset</code></td><td>flag</td><td>Render multi-dataset-level QC report (&ge; 2 datasets).</td></tr>
             <tr><td><code>--qa-all</code> / <code>--qc-all</code> / <code>--all</code></td><td>flag</td><td>Convenience presets.</td></tr>
-            <tr><td><code>--attempt</code></td><td>int</td><td>QC Group / QC Multi-dataset: GQI attempt to render. Defaults to the latest.</td></tr>
-            <tr><td><code>--input_tsv</code></td><td>path</td><td>QC Group: explicit GQI TSV path.</td></tr>
+            <tr><td><code>--attempt</code></td><td>int</td><td>QC dataset / QC multi-dataset: GQI attempt to render. Defaults to the latest.</td></tr>
+            <tr><td><code>--input_tsv</code></td><td>path</td><td>QC dataset: explicit GQI TSV path.</td></tr>
             <tr><td><code>--analysis_mode</code> / <code>--analysis_id</code></td><td></td><td>Profile selection (same semantics as <code>run-meegqc</code>).</td></tr>
             <tr><td><code>--njobs</code></td><td>int</td><td>Parallel subject workers (note: no underscore on the plotting command).</td></tr>
           </tbody>
@@ -533,10 +560,10 @@ run_calculation_dispatch(
 <pre><code class="lang-python">run_plotting_dispatch(
     dataset_paths=["/path/ds1", "/path/ds2"],
     qa_subject=True,
-    qa_group=True,
-    qa_multisample=True,
-    qc_group=True,
-    qc_multisample=True,
+    qa_dataset=True,
+    qa_multi_dataset=True,
+    qc_dataset=True,
+    qc_multi_dataset=True,
     analysis_mode="reuse",
     analysis_id="qa_pass_01",
     njobs=4,
@@ -563,10 +590,10 @@ run_calculation_dispatch(
     analysis_mode="new",
     analysis_id="qa_pass_02",
     qa_subject=True,
-    qa_group=True,
-    qa_multisample=True,
-    qc_group=True,
-    qc_multisample=True,
+    qa_dataset=True,
+    qa_multi_dataset=True,
+    qc_dataset=True,
+    qc_multi_dataset=True,
 )
 </code></pre>
 
@@ -575,8 +602,8 @@ run_calculation_dispatch(
         <ul style="margin-bottom: 0;">
           <li><code>analysis_mode='reuse'</code> requires
               <code>analysis_id</code>.</li>
-          <li>Multi-dataset modes (<code>qa_multisample</code>,
-              <code>qc_multisample</code>) need at least two
+          <li>Multi-dataset modes (<code>qa_multi_dataset</code>,
+              <code>qc_multi_dataset</code>) need at least two
               datasets.</li>
           <li>The dispatchers print to standard stdout / stderr, so
               you can capture output with
@@ -758,6 +785,476 @@ run_calculation_dispatch(
           <tr><td><code>psd_noise_weight</code></td><td><code>20</code></td><td>int</td><td>PSD weight.</td></tr>
         </tbody>
       </table></div>
+
+      <hr>
+      <p>
+        Next: a complete map of
+        <a href="#outputs">every file MEEGqc produces</a> below.
+      </p>
+      </div>
+    </section>
+
+    <!-- ============ OUTPUT FILES REFERENCE ============ -->
+    <section class="section reveal" id="outputs">
+      <div class="container container-narrow prose">
+      <h2>Every file MEEGqc produces</h2>
+      <p>
+        A run leaves behind a single, self-describing tree under
+        <code>derivatives/MEEGqc/</code>. Every file name is
+        BIDS-compliant: an alphanumeric
+        <code>desc-&lt;Label&gt;</code> entity followed by the modality
+        suffix (<code>_meg</code> or <code>_eeg</code>) and an
+        extension. This section lists every output, where it lands, and
+        what it holds, so you can read or post-process any of them
+        without opening MEEGqc.
+      </p>
+      <p>
+        Three writers populate the tree. The
+        <strong>calculation module</strong> writes the per-recording QA
+        and QC derivatives (TSV + JSON) plus a settings snapshot. The
+        <strong>Global Quality Index (GQI)</strong> step writes the
+        dataset-level scores. The <strong>plotting module</strong>
+        writes the interactive HTML reports. Nothing visual is required
+        to keep the data: every report is regenerated from the
+        derivatives.
+      </p>
+
+      <div class="callout callout-mint">
+        <span class="callout-title">Legacy mode vs profile mode</span>
+        In legacy mode (the default) outputs sit directly under
+        <code>derivatives/MEEGqc/</code>. In profile mode
+        (<code>--analysis_mode new|reuse|latest</code>) the exact same
+        subtree is nested one level deeper under
+        <code>derivatives/MEEGqc/profiles/&lt;analysis_id&gt;/</code>, so
+        several parameter configurations can coexist on one dataset
+        without overwriting each other. Per-modality files split into
+        <code>meg/</code> and <code>eeg/</code> subfolders; a multimodal
+        subject produces both.
+      </div>
+
+      <h3 id="outputs-tree">The derivatives tree</h3>
+      <p>Legacy-mode layout for a dataset that contains MEG recordings
+         (an EEG dataset mirrors this with <code>eeg/</code> subfolders
+         and <code>_eeg</code> suffixes):</p>
+<div class="dataset-tree" role="img"
+     aria-label="Complete MEEGqc derivatives layout, legacy mode">
+  <div class="dataset-tree-row is-folder">
+    <span class="chev">&#9662;</span>
+    <span class="name">&lt;dataset&gt;/derivatives/MEEGqc/</span>
+  </div>
+
+  <div class="dataset-tree-row d1 is-folder">
+    <span class="chev">&#9662;</span>
+    <span class="name">calculation/meg/sub-XX/</span>
+    <span class="note">per-recording QA + QC derivatives</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">sub-XX_..._desc-STDs_meg.tsv</span>
+    <span class="note">per-channel standard deviation</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">sub-XX_..._desc-PtPsManual_meg.tsv</span>
+    <span class="note">per-channel peak-to-peak</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">sub-XX_..._desc-PSDs_meg.tsv</span>
+    <span class="note">per-channel power spectral density</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">sub-XX_..._desc-ECGs_meg.tsv</span>
+    <span class="note">cardiac contamination ranking</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">sub-XX_..._desc-EOGs_meg.tsv</span>
+    <span class="note">ocular contamination ranking</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">sub-XX_..._desc-Muscle_meg.tsv</span>
+    <span class="note">muscle z-score time course + events</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">sub-XX_..._desc-Head_meg.tsv</span>
+    <span class="note">continuous head position (MEG, cHPI)</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">sub-XX_..._desc-SimpleMetrics_meg.json</span>
+    <span class="note">consolidated per-recording QC roll-up</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">sub-XX_..._desc-EventSummary_meg.json</span>
+    <span class="note">event + epoching summary</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">sub-XX_..._desc-RawInfo_meg.fif</span>
+    <span class="note">recording header snapshot (+ companion tables)</span>
+  </div>
+
+  <div class="dataset-tree-row d1 is-folder">
+    <span class="chev">&#9662;</span>
+    <span class="name">config/</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">*_desc-UsedSettings_meg.ini</span>
+    <span class="note">settings.ini snapshot for the run (+ .json manifest)</span>
+  </div>
+
+  <div class="dataset-tree-row d1 is-folder">
+    <span class="chev">&#9662;</span>
+    <span class="name">reports/meg/</span>
+    <span class="note">interactive HTML reports</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">sub-XX/sub-XX_desc-subjectQaReport_meg.html</span>
+    <span class="note">subject-level QA</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">desc-datasetQaReport_meg.html</span>
+    <span class="note">dataset-level QA</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">desc-datasetQcReportAttempt&lt;N&gt;_meg.html</span>
+    <span class="note">dataset-level QC</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">desc-multiDatasetQaReportDate&lt;...&gt;Time&lt;...&gt;_meg.html</span>
+    <span class="note">multi-dataset QA</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">desc-multiDatasetQcReportAttempt&lt;N&gt;Date&lt;...&gt;Time&lt;...&gt;_meg.html</span>
+    <span class="note">multi-dataset QC</span>
+  </div>
+
+  <div class="dataset-tree-row d1 is-folder">
+    <span class="chev">&#9662;</span>
+    <span class="name">summary_reports/</span>
+    <span class="note">Global Quality Index outputs</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">group_metrics/meg/desc-GlobalQualityIndexAttempt&lt;N&gt;_meg.tsv</span>
+    <span class="note">GQI attempt table (one row per recording)</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">global_quality_index_&lt;N&gt;/sub-XX/..._desc-GlobalSummaryReportAttempt&lt;N&gt;_meg.json</span>
+    <span class="note">per-recording GQI summary</span>
+  </div>
+  <div class="dataset-tree-row d2">
+    <span class="chev">&#8226;</span>
+    <span class="name">config/desc-GlobalQualityIndexAttempt&lt;N&gt;_settings.ini</span>
+    <span class="note">GQI parameter snapshot for the attempt</span>
+  </div>
+
+  <div class="dataset-tree-row d1">
+    <span class="chev">&#8226;</span>
+    <span class="name">profile_manifest.json</span>
+    <span class="note">run metadata: mode, id, config hash, version</span>
+  </div>
+  <div class="dataset-tree-row d1">
+    <span class="chev">&#8226;</span>
+    <span class="name">excluded_subjects, excluded_subjects_errors.json</span>
+    <span class="note">subjects that failed, with the error trace</span>
+  </div>
+</div>
+
+      <p>
+        In profile mode the same tree is written under
+        <code>derivatives/MEEGqc/profiles/&lt;analysis_id&gt;/</code>:
+      </p>
+<div class="dataset-tree" role="img"
+     aria-label="Profile-mode derivatives layout">
+  <div class="dataset-tree-row is-folder">
+    <span class="chev">&#9662;</span>
+    <span class="name">&lt;dataset&gt;/derivatives/MEEGqc/profiles/&lt;analysis_id&gt;/</span>
+  </div>
+  <div class="dataset-tree-row d1 is-folder">
+    <span class="chev">&#9656;</span>
+    <span class="name">calculation/ &middot; config/ &middot; reports/ &middot; summary_reports/</span>
+    <span class="note">identical contents to the legacy tree above</span>
+  </div>
+</div>
+
+      <h3 id="outputs-metric">Metric output dictionary</h3>
+      <p>
+        Each metric module writes one headline machine-readable table
+        per recording under
+        <code>calculation/{meg,eeg}/sub-XX/</code>. The
+        <code>{Mag,Grad,Eeg}</code> placeholder means one file is
+        written per analysed channel type (for example
+        <code>desc-STDs</code> covers all channel types in one table,
+        while the per-epoch flag tables are split by channel type).
+      </p>
+      <div class="table-wrap"><table class="spec-table">
+        <thead><tr>
+          <th>Metric module</th>
+          <th>Representative output file</th>
+          <th>Key columns</th>
+          <th>Aggregation level</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td>STD</td>
+            <td><code>*_desc-STDs_meg.tsv</code></td>
+            <td>channel name + identity, overall STD, per-epoch STD (<code>STD epoch_0..N</code>)</td>
+            <td>channel x epoch</td>
+          </tr>
+          <tr>
+            <td>PtP (manual)</td>
+            <td><code>*_desc-PtPsManual_meg.tsv</code></td>
+            <td>channel name + identity, overall peak-to-peak, per-epoch PtP</td>
+            <td>channel x epoch</td>
+          </tr>
+          <tr>
+            <td>PSD</td>
+            <td><code>*_desc-PSDs_meg.tsv</code></td>
+            <td>channel name + identity, amplitude at each frequency step</td>
+            <td>channel x frequency</td>
+          </tr>
+          <tr>
+            <td>ECG</td>
+            <td><code>*_desc-ECGs_meg.tsv</code></td>
+            <td>channel name, correlation coefficient, p-value and amplitude ratio against the mean R-wave</td>
+            <td>channel</td>
+          </tr>
+          <tr>
+            <td>EOG</td>
+            <td><code>*_desc-EOGs_meg.tsv</code></td>
+            <td>channel name, correlation coefficient, p-value and amplitude ratio against the mean blink</td>
+            <td>channel</td>
+          </tr>
+          <tr>
+            <td>Muscle</td>
+            <td><code>*_desc-Muscle_meg.tsv</code></td>
+            <td>time index, muscle z-score, detected high-score event times, channel type</td>
+            <td>recording time series + events</td>
+          </tr>
+          <tr>
+            <td>Head motion</td>
+            <td><code>*_desc-Head_meg.tsv</code></td>
+            <td>time, translation x / y / z, rotation quaternions q1 / q2 / q3, goodness-of-fit, error, velocity</td>
+            <td>time series (MEG only)</td>
+          </tr>
+          <tr>
+            <td>Event summary</td>
+            <td><code>*_desc-EventSummary_meg.json</code></td>
+            <td>per-event-id counts, epoch onset times, sfreq, stim-channel event counts, BIDS <code>events.tsv</code> comparison</td>
+            <td>recording</td>
+          </tr>
+          <tr>
+            <td>Consolidated QC</td>
+            <td><code>*_desc-SimpleMetrics_meg.json</code></td>
+            <td>per-recording roll-up of every metric (global / local noisy + flat counts, PSD noise, ECG / EOG ranking, head, muscle)</td>
+            <td>recording</td>
+          </tr>
+          <tr>
+            <td>GQI</td>
+            <td><code>desc-GlobalQualityIndexAttempt&lt;N&gt;_meg.tsv</code></td>
+            <td>subject, task, composite GQI score, per-metric percentages, penalty terms, parameters</td>
+            <td>recording (one row each)</td>
+          </tr>
+        </tbody>
+      </table></div>
+
+      <details class="disclosure">
+        <summary>Companion derivatives written next to the headline tables</summary>
+        <p>
+          Alongside each headline table the calculation module writes
+          the intermediate tables the reports draw from. All live in the
+          same <code>calculation/{meg,eeg}/sub-XX/</code> folder.
+        </p>
+        <div class="table-wrap"><table class="spec-table">
+          <thead><tr><th>File</th><th>What it holds</th></tr></thead>
+          <tbody>
+            <tr><td><code>*_desc-Sensors_meg.tsv</code></td><td>Baseline channel directory: name, type, lobe, colour, system, 3-D sensor location.</td></tr>
+            <tr><td><code>*_desc-stimulus_meg.tsv</code></td><td>Raw stimulus / trigger channel time series (one column per stim channel).</td></tr>
+            <tr><td><code>*_desc-STDPerEpochVsMeanRatio{Mag,Grad,Eeg}_meg.tsv</code></td><td>Per channel and epoch, the STD-to-mean ratio used to flag epochs.</td></tr>
+            <tr><td><code>*_desc-NoisyEpochsOnSTDBase{Mag,Grad,Eeg}_meg.tsv</code></td><td>Boolean noisy-epoch flags (STD basis) plus per-epoch summary rows.</td></tr>
+            <tr><td><code>*_desc-FlatEpochsOnSTDBase{Mag,Grad,Eeg}_meg.tsv</code></td><td>Boolean flat-epoch flags (STD basis) plus per-epoch summary rows.</td></tr>
+            <tr><td><code>*_desc-PtPPerEpochVsMeanRatio{Mag,Grad,Eeg}_meg.tsv</code></td><td>Per channel and epoch, the PtP-to-mean ratio.</td></tr>
+            <tr><td><code>*_desc-NoisyEpochsOnPtPBase{Mag,Grad,Eeg}_meg.tsv</code></td><td>Boolean noisy-epoch flags (PtP basis) plus summary rows.</td></tr>
+            <tr><td><code>*_desc-FlatEpochsOnPtPBase{Mag,Grad,Eeg}_meg.tsv</code></td><td>Boolean flat-epoch flags (PtP basis) plus summary rows.</td></tr>
+            <tr><td><code>*_desc-AbsAmpl{Mag,Grad,Eeg}_meg.tsv</code></td><td>Absolute amplitude (area under the PSD) per functional frequency band, per channel.</td></tr>
+            <tr><td><code>*_desc-RelativeAmpl{Mag,Grad,Eeg}_meg.tsv</code></td><td>Each band's amplitude as a fraction of the channel's total amplitude.</td></tr>
+            <tr><td><code>*_desc-AmplByNfreq{Mag,Grad,Eeg}_meg.tsv</code></td><td>Each band's amplitude divided by the number of frequency bins in the band.</td></tr>
+            <tr><td><code>*_desc-PSDwaves{Mag,Grad,Eeg}_meg.tsv</code></td><td>Mean absolute and relative band amplitudes averaged across all channels of the type.</td></tr>
+            <tr><td><code>*_desc-PSDnoise{Mag,Grad,Eeg}_meg.tsv</code></td><td>Detected noise frequencies on the average PSD, with absolute and relative noise amplitudes.</td></tr>
+            <tr><td><code>*_desc-ECGchannel_meg.tsv</code></td><td>The ECG reference channel time series with detected R-wave events and the mean R-wave.</td></tr>
+            <tr><td><code>*_desc-EOGchannel_meg.tsv</code></td><td>The EOG reference channel time series with detected blink events and the mean blink.</td></tr>
+          </tbody>
+        </table></div>
+        <p>
+          The <code>PerEpochVsMeanRatio</code>, <code>NoisyEpochsOn</code>
+          and <code>FlatEpochsOn</code> tables are written only when the
+          recording was epoched (BIDS events present, or fixed-length
+          epoching enabled).
+        </p>
+      </details>
+
+      <h3 id="outputs-classes">Output classes and paths</h3>
+      <p>
+        Grouped by output class, with the legacy-mode path and its
+        profile-mode equivalent. <code>&lt;label&gt;</code> is a subject
+        label, <code>&lt;N&gt;</code> a GQI attempt number,
+        <code>&lt;id&gt;</code> an analysis profile id.
+      </p>
+      <div class="table-wrap"><table class="spec-table">
+        <thead><tr>
+          <th>Output class</th>
+          <th>Scope</th>
+          <th>Format</th>
+          <th>Typical path (legacy mode)</th>
+          <th>Typical path (profile mode)</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td>QA / QC metric derivatives</td>
+            <td>recording / module</td>
+            <td>TSV + JSON</td>
+            <td><code>derivatives/MEEGqc/calculation/{meg,eeg}/sub-&lt;label&gt;/*_desc-&lt;Metric&gt;_&lt;modality&gt;.tsv</code></td>
+            <td><code>derivatives/MEEGqc/profiles/&lt;id&gt;/calculation/...</code></td>
+          </tr>
+          <tr>
+            <td>Recording info snapshot</td>
+            <td>recording</td>
+            <td>FIF</td>
+            <td><code>calculation/{meg,eeg}/sub-&lt;label&gt;/*_desc-RawInfo_&lt;modality&gt;.fif</code></td>
+            <td>Same, under <code>profiles/&lt;id&gt;/</code></td>
+          </tr>
+          <tr>
+            <td>Run settings snapshot</td>
+            <td>run</td>
+            <td>INI + JSON</td>
+            <td><code>derivatives/MEEGqc/config/*_desc-UsedSettings_&lt;modality&gt;.ini</code></td>
+            <td><code>derivatives/MEEGqc/profiles/&lt;id&gt;/config/...</code></td>
+          </tr>
+          <tr>
+            <td>GQI attempt table</td>
+            <td>dataset / attempt</td>
+            <td>TSV</td>
+            <td><code>summary_reports/group_metrics/{meg,eeg}/desc-GlobalQualityIndexAttempt&lt;N&gt;_&lt;modality&gt;.tsv</code></td>
+            <td>Same, under <code>profiles/&lt;id&gt;/</code></td>
+          </tr>
+          <tr>
+            <td>Per-subject GQI summary</td>
+            <td>recording</td>
+            <td>JSON</td>
+            <td><code>summary_reports/global_quality_index_&lt;N&gt;/sub-&lt;label&gt;/*_desc-GlobalSummaryReportAttempt&lt;N&gt;_&lt;modality&gt;.json</code></td>
+            <td>Same, under <code>profiles/&lt;id&gt;/</code></td>
+          </tr>
+          <tr>
+            <td>GQI settings snapshot</td>
+            <td>dataset / attempt</td>
+            <td>INI</td>
+            <td><code>summary_reports/config/desc-GlobalQualityIndexAttempt&lt;N&gt;_settings.ini</code></td>
+            <td>Same, under <code>profiles/&lt;id&gt;/</code></td>
+          </tr>
+          <tr>
+            <td>Subject QA report</td>
+            <td>subject</td>
+            <td>HTML</td>
+            <td><code>reports/{meg,eeg}/sub-&lt;label&gt;/sub-&lt;label&gt;_desc-subjectQaReport_&lt;modality&gt;.html</code></td>
+            <td><code>profiles/&lt;id&gt;/reports/{meg,eeg}/sub-&lt;label&gt;/...</code></td>
+          </tr>
+          <tr>
+            <td>Dataset QA report</td>
+            <td>dataset</td>
+            <td>HTML</td>
+            <td><code>reports/{meg,eeg}/desc-datasetQaReport_&lt;modality&gt;.html</code></td>
+            <td>Same, under <code>profiles/&lt;id&gt;/</code></td>
+          </tr>
+          <tr>
+            <td>Dataset QC report</td>
+            <td>dataset / attempt</td>
+            <td>HTML</td>
+            <td><code>reports/{meg,eeg}/desc-datasetQcReport[Attempt&lt;N&gt;]_&lt;modality&gt;.html</code></td>
+            <td>Same, under <code>profiles/&lt;id&gt;/</code></td>
+          </tr>
+          <tr>
+            <td>Multi-dataset QA report</td>
+            <td>multi-dataset</td>
+            <td>HTML</td>
+            <td><code>reports/{meg,eeg}/desc-multiDatasetQaReportDate&lt;...&gt;Time&lt;...&gt;_&lt;modality&gt;.html</code></td>
+            <td>Same, or an explicit <code>--output_report</code> path</td>
+          </tr>
+          <tr>
+            <td>Multi-dataset QC report</td>
+            <td>multi-dataset / attempt</td>
+            <td>HTML</td>
+            <td><code>reports/{meg,eeg}/desc-multiDatasetQcReport[Attempt&lt;N&gt;]Date&lt;...&gt;Time&lt;...&gt;_&lt;modality&gt;.html</code></td>
+            <td>Same, or an explicit <code>--output_report</code> path</td>
+          </tr>
+          <tr>
+            <td>Run manifest + error logs</td>
+            <td>run</td>
+            <td>JSON / text</td>
+            <td><code>derivatives/MEEGqc/{profile_manifest.json, excluded_subjects, excluded_subjects_errors.json}</code></td>
+            <td>Same, under <code>profiles/&lt;id&gt;/</code></td>
+          </tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="outputs-reports">The four HTML reports</h3>
+      <p>
+        The plotting module renders four report families. All are
+        self-contained: open them in any browser, no MEEGqc install
+        required. Single-dataset reports drop the dataset name from the
+        file name (it is implied by the folder); multi-dataset reports
+        carry a unique run id so repeated runs never collide.
+      </p>
+      <div class="table-wrap"><table class="spec-table">
+        <thead><tr><th>Report</th><th>File name</th><th>What it shows</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Subject QA</td>
+            <td><code>sub-&lt;label&gt;_desc-subjectQaReport_&lt;modality&gt;.html</code></td>
+            <td>Every QA metric for one subject, in tabs: Overview, STD, PtP (manual), PtP (auto), PSD, ECG, EOG, Muscle, Head, Stimulus, QC summary, and a Settings tab. Topomaps appear as adjacent 2D and 3D views.</td>
+          </tr>
+          <tr>
+            <td>Dataset QA</td>
+            <td><code>desc-datasetQaReport_&lt;modality&gt;.html</code></td>
+            <td>QA derivatives pooled across every recording in the dataset, in channel-type tabs (Combined / MAG / GRAD / EEG) plus a Settings tab.</td>
+          </tr>
+          <tr>
+            <td>Dataset QC</td>
+            <td><code>desc-datasetQcReport[Attempt&lt;N&gt;]_&lt;modality&gt;.html</code></td>
+            <td>The GQI attempt table for the dataset: per-subject scores, penalty decomposition and the thresholds used. The <code>Attempt&lt;N&gt;</code> token appears once an attempt is resolved.</td>
+          </tr>
+          <tr>
+            <td>Multi-dataset QA / QC</td>
+            <td><code>desc-multiDatasetQaReportDate&lt;...&gt;Time&lt;...&gt;_&lt;modality&gt;.html</code><br><code>desc-multiDatasetQcReport[Attempt&lt;N&gt;]Date&lt;...&gt;Time&lt;...&gt;_&lt;modality&gt;.html</code></td>
+            <td>The dataset-level QA or QC views overlaid across two or more datasets for side-by-side comparison. Written next to the first dataset (or an explicit <code>--output_report</code> path).</td>
+          </tr>
+        </tbody>
+      </table></div>
+
+      <div class="callout">
+        <span class="callout-title">Provenance travels with the data</span>
+        Three artefacts make any result reproducible: the
+        <code>*_desc-UsedSettings_&lt;modality&gt;.ini</code> snapshot of
+        the exact <code>settings.ini</code> used (with a JSON manifest of
+        the files processed), the
+        <code>desc-GlobalQualityIndexAttempt&lt;N&gt;_settings.ini</code>
+        snapshot of the GQI thresholds for each attempt, and the
+        <code>profile_manifest.json</code> recording the analysis mode,
+        profile id, config hash and MEEGqc version. Each GQI re-run adds
+        a new numbered attempt rather than overwriting the previous one.
+      </div>
 
       <hr>
       <p>

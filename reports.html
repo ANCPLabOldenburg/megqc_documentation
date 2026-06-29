@@ -57,7 +57,9 @@
         <li><strong>Hover</strong>: subject / recording IDs and exact metric values.</li>
         <li><strong>Zoom</strong>: click-drag to zoom, double-click to reset.</li>
         <li><strong>Lobe legend</strong>: click an item to toggle, double-click to isolate.</li>
+        <li><strong>2D / 3D topomaps</strong>: every sensor topomap has adjacent <code>(2D)</code> and <code>(3D)</code> tabs. The 2D view is an MNE-style flattened azimuthal projection that works across MEG manufacturers and EEG montages. Each carries a View control (flattened round / field shape / fitted to head) and a Colour map switcher (Red-Blue default, plus Turbo, Jet, Viridis, Plasma, Reds).</li>
         <li><strong>Cap on / off</strong> on 3D topomaps adds a solid head model behind the sensors.</li>
+        <li><strong>Unified units</strong>: amplitudes use femtotesla (fT) for magnetometers, fT/cm for planar gradiometers, fT for axial gradiometers, and microvolts for EEG / ECG / EOG.</li>
         <li><strong>Line / point / text size</strong> controls for printable export.</li>
         <li><strong>Export</strong> each plot to PNG via the Plotly toolbar.</li>
       </ul>
@@ -125,10 +127,10 @@
       <div class="table-wrap"><table>
         <thead><tr><th>Level</th><th>Content</th></tr></thead>
         <tbody>
-          <tr><td>1</td><td>Top tabs: <code>Overview</code>, <code>STD</code>, <code>PtP (manual)</code>, <code>PtP (auto)</code>, <code>PSD</code>, <code>ECG</code>, <code>EOG</code>, <code>Muscle</code>, <code>Head</code>, <code>Stimulus</code>, <code>QC summary</code>.</td></tr>
+          <tr><td>1</td><td>Top tabs: <code>Overview</code>, <code>STD</code>, <code>PtP (manual)</code>, <code>PtP (auto)</code>, <code>PSD</code>, <code>ECG</code>, <code>EOG</code>, <code>Muscle</code>, <code>Head</code>, <code>Stimulus</code>, <code>QC summary</code>, <code>Settings</code>.</td></tr>
           <tr><td>2</td><td>Run / task subtabs within each metric tab.</td></tr>
           <tr><td>3</td><td>Channel-type subtabs: <code>MAG</code>, <code>GRAD</code>, <code>EEG</code>, plus <code>General</code> for ECG / EOG signal views.</td></tr>
-          <tr><td>4</td><td>Plot subtabs (3D topomap, distribution, channel x epoch heatmap, profile, etc.).</td></tr>
+          <tr><td>4</td><td>Plot subtabs (topomap with adjacent <code>(2D)</code> / <code>(3D)</code> tabs, distribution, channel x epoch heatmap, profile, etc.).</td></tr>
         </tbody>
       </table></div>
 
@@ -699,17 +701,19 @@
              alt="Dataset-level QA report provenance header">
         <figcaption>Report-provenance block at the top of every
           dataset-level QA report:
-          <code>QA group report: &lt;dataset_name&gt;</code> title,
-          the timestamp when the report was generated, the MEGqc
-          version that produced it, the epoch label, and a full
+          <code>MEEGqc QA dataset report: &lt;dataset_name&gt;</code>
+          title, the timestamp when the report was generated, the
+          MEEGqc version that produced it, the epoch label, and a full
           <strong>Settings snapshot</strong>: the exact
           <code>settings.ini</code> block used for this build (every
           metric's parameters, channel-type selection, epoching, plot
-          flags). The closing <em>Important</em> note reminds the
-          reader that the Cohort QA overview combines global cohort
-          footprints with subject-aware summaries; metric-level
-          panels keep recording identity in their hover text.
-          Use this header to confirm exactly which build of the
+          flags), now collected in a dedicated <strong>Settings</strong>
+          tab with elegant key / value cards and a "Machine-readable
+          input" subsection. The closing <em>Important</em> note
+          reminds the reader that the Cohort QA overview combines
+          dataset-level summaries with subject-aware detail;
+          metric-level panels keep recording identity in their hover
+          text. Use this header to confirm exactly which build of the
           report you're looking at before drawing any
           conclusion.</figcaption>
       </figure>
@@ -1076,8 +1080,8 @@
             count, recording count, tasks, channel-type breakdown.
             The QC
             view also surfaces the GQI parameter snapshot
-            (<code>global_quality_index_&lt;n&gt;.ini</code>) tied
-            to the current attempt, so the decision criteria are
+            (<code>desc-GlobalQualityIndexAttempt&lt;N&gt;_settings.ini</code>)
+            tied to the current attempt, so the decision criteria are
             visible alongside the data.</figcaption>
         </figure>
         <figure class="figure">
@@ -1094,17 +1098,17 @@
       </div>
 
       <h3>Inputs and attempts</h3>
-      <p>QC Group reads GQI results from attempt-indexed,
-         per-modality TSVs:</p>
+      <p>The dataset-level QC report reads GQI results from
+         attempt-indexed, per-modality TSVs:</p>
 <div class="dataset-tree" role="img"
-     aria-label="QC Group input TSVs">
+     aria-label="Dataset-level QC input TSVs">
   <div class="dataset-tree-row">
     <span class="chev">&#8226;</span>
-    <span class="name">summary_reports/group_metrics/meg/Global_Quality_Index_attempt_&lt;n&gt;_meg.tsv</span>
+    <span class="name">summary_reports/group_metrics/meg/desc-GlobalQualityIndexAttempt&lt;N&gt;_meg.tsv</span>
   </div>
   <div class="dataset-tree-row">
     <span class="chev">&#8226;</span>
-    <span class="name">summary_reports/group_metrics/eeg/Global_Quality_Index_attempt_&lt;n&gt;_eeg.tsv</span>
+    <span class="name">summary_reports/group_metrics/eeg/desc-GlobalQualityIndexAttempt&lt;N&gt;_eeg.tsv</span>
   </div>
 </div>
       <p>Attempt resolution order:</p>
@@ -1418,7 +1422,7 @@
       </div>
 
       <div class="card-grid">
-        <div class="card"><h3>Multi-site studies</h3><p>Compare data quality across acquisition sites; spot systematic shifts.</p></div>
+        <div class="card"><h3>Studies across sites</h3><p>Compare data quality across acquisition sites; spot systematic shifts.</p></div>
         <div class="card"><h3>Longitudinal waves</h3><p>Track quality changes across collection waves; detect equipment degradation and protocol drift.</p></div>
         <div class="card"><h3>Harmonization</h3><p>Decide whether datasets can be pooled, or whether each needs its own QC threshold.</p></div>
         <div class="card"><h3>Benchmarking</h3><p>Compare a new dataset against a reference to validate collection procedures.</p></div>
@@ -1465,7 +1469,7 @@ QC Multi-dataset
         <li>Open the <strong>dataset-level QA</strong> report's
             task-wise view to check if problems concentrate in one
             condition.</li>
-        <li>For multi-site studies, finish with the
+        <li>For studies spanning acquisition sites, finish with the
             <strong>multi-dataset-level</strong> report to inform
             harmonisation decisions.</li>
       </ol>
