@@ -1000,7 +1000,11 @@ run_calculation_dispatch(
         <code>desc-STDs</code> covers all channel types in one table,
         while the per-epoch flag tables are split by channel type).
       </p>
-      <div class="table-wrap"><table class="spec-table">
+      <div class="table-wrap"><table class="spec-table file-table">
+        <colgroup>
+          <col style="width: 14%"><col style="width: 27%">
+          <col style="width: 43%"><col style="width: 16%">
+        </colgroup>
         <thead><tr>
           <th>Metric module</th>
           <th>Representative output file</th>
@@ -1078,7 +1082,8 @@ run_calculation_dispatch(
           the intermediate tables the reports draw from. All live in the
           same <code>calculation/{meg,eeg}/sub-XX/</code> folder.
         </p>
-        <div class="table-wrap"><table class="spec-table">
+        <div class="table-wrap"><table class="spec-table file-table">
+          <colgroup><col style="width: 42%"><col style="width: 58%"></colgroup>
           <thead><tr><th>File</th><th>What it holds</th></tr></thead>
           <tbody>
             <tr><td><code>*_desc-Sensors_meg.tsv</code></td><td>Baseline channel directory: name, type, lobe, colour, system, 3-D sensor location.</td></tr>
@@ -1113,7 +1118,11 @@ run_calculation_dispatch(
         label, <code>&lt;N&gt;</code> a GQI attempt number,
         <code>&lt;id&gt;</code> an analysis profile id.
       </p>
-      <div class="table-wrap"><table class="spec-table">
+      <div class="table-wrap"><table class="spec-table file-table">
+        <colgroup>
+          <col style="width: 16%"><col style="width: 12%"><col style="width: 9%">
+          <col style="width: 34%"><col style="width: 29%">
+        </colgroup>
         <thead><tr>
           <th>Output class</th>
           <th>Scope</th>
@@ -1217,7 +1226,10 @@ run_calculation_dispatch(
         file name (it is implied by the folder); multi-dataset reports
         carry a unique run id so repeated runs never collide.
       </p>
-      <div class="table-wrap"><table class="spec-table">
+      <div class="table-wrap"><table class="spec-table file-table">
+        <colgroup>
+          <col style="width: 15%"><col style="width: 40%"><col style="width: 45%">
+        </colgroup>
         <thead><tr><th>Report</th><th>File name</th><th>What it shows</th></tr></thead>
         <tbody>
           <tr>

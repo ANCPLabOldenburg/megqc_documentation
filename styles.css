@@ -2282,6 +2282,94 @@ details.disclosure[open] { padding-bottom: 14px; }
   white-space: nowrap;
 }
 
+/* File-catalogue tables: long BIDS derivative names would otherwise blow
+   out one column and squeeze the rest. A fixed layout with explicit
+   column widths keeps them balanced, and long code names wrap on any
+   character instead of forcing horizontal scroll. */
+.spec-table.file-table { table-layout: fixed; }
+.spec-table.file-table th,
+.spec-table.file-table td,
+.spec-table.file-table th:first-child,
+.spec-table.file-table td:first-child { white-space: normal; }
+.spec-table.file-table code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* =====================================================================
+   Update notes / release history (updates.html)
+   Each version is a clearly separated card with a header band and
+   colour-coded New / Fixed / Notes labels.
+   ===================================================================== */
+.page-updates .release {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 26px 12px;
+  margin: 0 0 22px;
+  box-shadow: var(--shadow-1);
+  scroll-margin-top: 84px;
+}
+.page-updates .release.is-latest {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-soft), var(--shadow-1);
+}
+.page-updates .release.is-landmark {
+  border-color: var(--mint);
+  box-shadow: 0 0 0 1px var(--mint-soft), var(--shadow-1);
+}
+.page-updates .release-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px 14px;
+  flex-wrap: wrap;
+  margin: 0 0 6px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.page-updates .release-head h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--title-blue);
+  scroll-margin-top: 84px;
+}
+.page-updates .release-date {
+  font-size: 0.86rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.page-updates .release-badge {
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--border);
+}
+.page-updates .release-badge.badge-landmark {
+  background: var(--mint-soft);
+  color: var(--mint);
+}
+.page-updates .rel-kind {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 11px;
+  border-radius: 999px;
+  margin: 18px 0 4px;
+}
+.page-updates .rel-kind.k-new  { color: var(--mint);   background: var(--mint-soft); }
+.page-updates .rel-kind.k-fix  { color: var(--accent); background: var(--accent-soft); }
+.page-updates .rel-kind.k-note { color: var(--muted);  background: var(--card-hover); border: 1px solid var(--border); }
+.page-updates .release ul { margin-top: 2px; }
+.page-updates .release ul li { margin: 5px 0; }
+
 /* =====================================================================
    Helper classes used by the BIDS Manager pattern (installation page)
    ===================================================================== */
