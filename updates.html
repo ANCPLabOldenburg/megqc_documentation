@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Plain-language release notes for every MEEGqc / meg-qc version: new features, bug fixes and important changes, newest first.">
+  <title>Update notes &middot; MEEGqc</title>
+  <link rel="icon" href="favicon.ico?v=2" sizes="any">
+  <link rel="icon" type="image/png" href="assets/brand/app-icon-256.png?v=2" sizes="256x256">
+  <link rel="apple-touch-icon" href="assets/brand/app-icon-256.png?v=2">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-updates">
+  <div data-include="header"></div>
+
+  <main>
+    <aside class="page-toc" data-toc aria-label="Version navigation">
+      <button class="page-toc-toggle" type="button"
+              aria-expanded="false" aria-controls="page-toc-panel"
+              aria-label="Toggle version navigation">
+        <span class="toc-bars" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+      <nav id="page-toc-panel" class="page-toc-panel" aria-label="Versions">
+        <span class="page-toc-title">Jump to a version</span>
+        <a class="page-toc-link" href="#v108">
+          <span class="page-toc-dot" aria-hidden="true"></span>1.0.8</a>
+        <a class="page-toc-link" href="#v107">
+          <span class="page-toc-dot" aria-hidden="true"></span>1.0.7</a>
+        <a class="page-toc-link" href="#v106">
+          <span class="page-toc-dot" aria-hidden="true"></span>1.0.6</a>
+        <a class="page-toc-link" href="#v100">
+          <span class="page-toc-dot" aria-hidden="true"></span>1.0.0 &ndash; 1.0.5</a>
+        <a class="page-toc-link" href="#v098">
+          <span class="page-toc-dot" aria-hidden="true"></span>0.9.8</a>
+        <a class="page-toc-link" href="#v095">
+          <span class="page-toc-dot" aria-hidden="true"></span>0.9.5 &ndash; 0.9.7</a>
+        <a class="page-toc-link" href="#v090">
+          <span class="page-toc-dot" aria-hidden="true"></span>0.9.0 &ndash; 0.9.4</a>
+        <a class="page-toc-link" href="#v079">
+          <span class="page-toc-dot" aria-hidden="true"></span>0.7.9</a>
+        <a class="page-toc-link" href="#v075">
+          <span class="page-toc-dot" aria-hidden="true"></span>0.7.5 &ndash; 0.7.8</a>
+        <a class="page-toc-link" href="#v070">
+          <span class="page-toc-dot" aria-hidden="true"></span>0.7.0 &ndash; 0.7.4</a>
+        <a class="page-toc-link" href="#v061">
+          <span class="page-toc-dot" aria-hidden="true"></span>0.6.1 &ndash; 0.6.8</a>
+        <a class="page-toc-link" href="#v060">
+          <span class="page-toc-dot" aria-hidden="true"></span>0.6.0 (landmark)</a>
+        <a class="page-toc-link" href="#early">
+          <span class="page-toc-dot" aria-hidden="true"></span>Early releases</a>
+      </nav>
+    </aside>
+
+    <header class="page-hero">
+      <div class="container">
+        <span class="eyebrow">Update notes</span>
+        <h1>What changed in each release.</h1>
+        <p>
+          A plain-language history of every MEEGqc release on PyPI,
+          newest first. Each card lists the new features, the bug fixes,
+          and anything worth knowing before you upgrade. Use the menu on
+          the left to jump straight to a version.
+        </p>
+      </div>
+    </header>
+
+    <section class="section" id="notes">
+      <div class="container container-narrow prose">
+
+        <div class="callout callout-tip has-icon">
+          <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+          <div>
+            <strong>Package names and how to read these notes</strong>
+            <p>
+              The tool is published on PyPI as <code>meg-qc</code> and
+              imported in Python as <code>meg_qc</code>. Since version
+              1.0.0 a thin <code>meeg-qc</code> package installs exactly
+              the same thing under the MEEGqc name. Upgrade any time with
+              <code>pip install --upgrade meg-qc</code> (or
+              <code>meeg-qc</code>). Version numbers match the PyPI
+              release history. Labels are colour-coded:
+              <span class="rel-kind k-new">New</span>
+              <span class="rel-kind k-fix">Fixed</span>
+              <span class="rel-kind k-note">Notes</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- ============ 1.0.8 ============ -->
+        <div class="release reveal is-latest" id="v108">
+          <div class="release-head">
+            <h2>1.0.8</h2>
+            <span class="release-date">8 July 2026</span>
+            <span class="release-badge">Latest</span>
+          </div>
+          <p>
+            A large clean-up release that makes every file MEEGqc writes
+            follow the BIDS naming rules, unifies the units on all
+            figures, and renames a few things for clarity.
+          </p>
+          <p class="rel-kind k-new">New</p>
+          <ul>
+            <li>
+              <strong>BIDS-valid file names everywhere.</strong> Result
+              files now use plain letters-and-numbers labels (for
+              example <code>desc-STDs</code>, <code>desc-PSDs</code>,
+              <code>desc-NoisyEpochsOnSTDBaseMag</code>) so any BIDS tool
+              can read them. Reports and Global Quality Index (GQI) files
+              were renamed the same way. The names are now written
+              correctly from the start, with no behind-the-scenes
+              renaming step.
+            </li>
+            <li>
+              <strong>The derivatives folder is now
+              <code>derivatives/MEEGqc/</code></strong> (it used to be
+              <code>Meg_QC</code>), because the tool handles MEG and EEG.
+            </li>
+            <li>
+              <strong>Clearer report names.</strong> "group" reports are
+              now "dataset" reports and "multisample" is now
+              "multi-dataset". This shows up in the command-line flags
+              (<code>--qa-dataset</code>, <code>--qc-dataset</code>,
+              <code>--qa-multi-dataset</code>,
+              <code>--qc-multi-dataset</code>), the GUI checkboxes, the
+              Python function names, and the report file names.
+            </li>
+            <li>
+              <strong>The same physical units on every figure.</strong>
+              Magnetometers are shown in femtotesla (fT), planar
+              gradiometers in fT/cm, axial gradiometers in fT, and EEG,
+              ECG and EOG in microvolts (uV). Power spectra use amplitude
+              spectral density (for example fT per square-root Hz). This
+              also fixed EEG being scaled wrongly while still labelled in
+              microvolts.
+            </li>
+            <li>
+              <strong>Colour-map controls on the dataset and
+              multi-dataset reports too.</strong> Their 3D sensor maps
+              now get the same colour-map switcher (Red-Blue by default,
+              plus Turbo, Jet, Viridis, Plasma, Reds) that the subject
+              report already had.
+            </li>
+            <li>
+              <strong>A Settings tab in the dataset and multi-dataset
+              reports</strong>, showing the exact settings that produced
+              each report, with a tidy "machine-readable input" box.
+            </li>
+            <li>
+              Multi-dataset report titles now list only the datasets that
+              are actually in that report.
+            </li>
+          </ul>
+          <p class="rel-kind k-fix">Fixed</p>
+          <ul>
+            <li>
+              Dataset and multi-dataset report file names are now
+              readable by BIDS tools (no dataset names or timestamps
+              glued together with underscores).
+            </li>
+          </ul>
+          <div class="callout callout-warning has-icon">
+            <div class="callout-icon" aria-hidden="true">&#x25c6;</div>
+            <div>
+              <strong>Upgrading from an older version</strong>
+              <p>
+                This is a breaking change. Reports made by this version
+                cannot read result files produced by older versions.
+                Re-run the calculation step to regenerate them. MEEGqc
+                detects an old <code>Meg_QC</code> folder and tells you
+                to re-run rather than failing silently.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ 1.0.7 ============ -->
+        <div class="release reveal" id="v107">
+          <div class="release-head">
+            <h2>1.0.7</h2>
+            <span class="release-date">24 June 2026</span>
+          </div>
+          <p class="rel-kind k-new">New</p>
+          <ul>
+            <li>
+              <strong>Interactive 2D sensor maps.</strong> A new way of
+              drawing sensor maps, flattened onto a 2D head outline (with
+              nose and ears), shown next to the existing 3D maps as
+              side-by-side (2D) and (3D) tabs. It works for any MEG system
+              and any EEG montage, and covers the STD, PtP, PSD, ECG and
+              EOG metrics, plus a plain 2D sensor-layout view.
+            </li>
+            <li>
+              <strong>Per-figure controls</strong>: a View control to
+              change the map shape (flattened round, field shape, or
+              fitted to head), and a colour-map switcher (Red-Blue by
+              default with high in red and low in blue, plus Turbo, Jet,
+              Viridis, Plasma, Reds).
+            </li>
+            <li>
+              <strong>A Settings tab in the subject report</strong>
+              listing the exact settings used, and the software version
+              stamped on the report.
+            </li>
+          </ul>
+          <p class="rel-kind k-note">Notes</p>
+          <ul>
+            <li>
+              The reports now show the MEEGqc name instead of MEGqc.
+            </li>
+          </ul>
+        </div>
+
+        <!-- ============ 1.0.6 ============ -->
+        <div class="release reveal" id="v106">
+          <div class="release-head">
+            <h2>1.0.6</h2>
+            <span class="release-date">23 June 2026</span>
+          </div>
+          <p class="rel-kind k-fix">Fixed</p>
+          <ul>
+            <li>
+              The settings editor now accepts decimal numbers for
+              <code>epoch_tmax</code> (for example <code>0.8</code>), not
+              only whole numbers.
+            </li>
+          </ul>
+        </div>
+
+        <!-- ============ 1.0.0 - 1.0.5 ============ -->
+        <div class="release reveal" id="v100">
+          <div class="release-head">
+            <h2>1.0.0 &ndash; 1.0.5</h2>
+            <span class="release-date">27 May 2026</span>
+          </div>
+          <p class="rel-kind k-new">New</p>
+          <ul>
+            <li>
+              <strong>Rebrand to MEEGqc</strong>, to reflect that the
+              tool now handles both MEG and EEG. A new
+              <code>meeg-qc</code> package on PyPI installs the same code
+              (it pins the exact matching <code>meg-qc</code> version), so
+              <code>pip install meeg-qc</code> and
+              <code>pip install meg-qc</code> give you the same thing.
+              Every original command keeps working, and matching
+              <code>meeg*</code> names were added alongside them.
+            </li>
+            <li>
+              The graphical interface, window titles, About dialog and log
+              messages were rebranded to MEEGqc, with a one-time settings
+              migration so your preferences carry over on first launch.
+            </li>
+            <li>
+              The in-app updater was modernised: it only offers stable
+              releases, is safe on Windows (where files can be locked
+              while in use), and knows whether you installed
+              <code>meg-qc</code> or <code>meeg-qc</code>.
+            </li>
+            <li>
+              Linux application icons shipped, the README was rewritten
+              for MEEGqc, and a citation file (<code>CITATION.cff</code>)
+              was added.
+            </li>
+          </ul>
+          <p class="rel-kind k-note">Notes</p>
+          <ul>
+            <li>
+              Versions 1.0.1 to 1.0.5 were same-day packaging and
+              metadata fixes for the 1.0 release.
+            </li>
+          </ul>
+        </div>
+
+        <!-- ============ 0.9.8 ============ -->
+        <div class="release reveal" id="v098">
+          <div class="release-head">
+            <h2>0.9.8</h2>
+            <span class="release-date">15 April 2026</span>
+          </div>
+          <p class="rel-kind k-new">New</p>
+          <ul>
+            <li>
+              <strong>Runs on Python 3.10 through 3.14.</strong> The
+              install now picks the newest version of each dependency that
+              works with your Python, instead of pinning one exact set.
+            </li>
+            <li>
+              <code>numba</code> (used to speed up one metric) is now
+              optional: if it is not installed, MEEGqc falls back to a
+              slower but working path instead of crashing.
+            </li>
+          </ul>
+          <p class="rel-kind k-fix">Fixed</p>
+          <ul>
+            <li>
+              The built-in report viewer handles very large interactive
+              reports (it serves reports over 5 MB through a small local
+              web server) and can read local files correctly.
+            </li>
+            <li>
+              Compatibility fixes for newer pandas and Plotly, plus a fix
+              for maps where every value is identical.
+            </li>
+            <li>
+              On Linux, the app now auto-resolves a common missing system
+              library (<code>libxcb-cursor0</code>) and works around
+              graphics-driver failures in the built-in report viewer.
+            </li>
+          </ul>
+        </div>
+
+        <!-- ============ 0.9.5 - 0.9.7 ============ -->
+        <div class="release reveal" id="v095">
+          <div class="release-head">
+            <h2>0.9.5 &ndash; 0.9.7</h2>
+            <span class="release-date">10 April 2026</span>
+          </div>
+          <p class="rel-kind k-new">New</p>
+          <ul>
+            <li>EEG channels are now processed by default.</li>
+            <li>
+              The built-in report viewer uses a web engine, with an
+              automatic fallback to your normal browser if that fails.
+            </li>
+          </ul>
+          <p class="rel-kind k-fix">Fixed</p>
+          <ul>
+            <li>
+              Removed the old automatic Peak-to-Peak metric; only the
+              manual Peak-to-Peak (PtP) remains.
+            </li>
+            <li>Windows text-encoding (UTF-8) fix.</li>
+            <li>
+              Windows: worked around a crash caused by empty or
+              unreadable JSON sidecar files.
+            </li>
+          </ul>
+        </div>
+
+        <!-- ============ 0.9.0 - 0.9.4 ============ -->
+        <div class="release reveal" id="v090">
+          <div class="release-head">
+            <h2>0.9.0 &ndash; 0.9.4</h2>
+            <span class="release-date">2 &ndash; 8 April 2026</span>
+          </div>
+          <p class="rel-kind k-new">New</p>
+          <ul>
+            <li>
+              <strong>Full EEG support.</strong> MEEGqc now reads the
+              common EEG formats (EDF, BDF, BrainVision, EEGLAB, EGI/MFF,
+              Neuroscan) and every quality metric works on EEG channels.
+              It detects the modality from the BIDS file, auto-detects the
+              EEG montage, standardises the reference, corrects channel
+              types from <code>channels.tsv</code>, and uses
+              EEG-specific thresholds and frequency bands.
+            </li>
+            <li>
+              <strong>A new QC Viewer</strong>: an interactive
+              signal viewer built into the app for looking at the raw
+              recording and the quality results.
+            </li>
+            <li>
+              New GUI tools: open a command-line window and a live
+              terminal from inside the app; select several dataset folders
+              at once.
+            </li>
+            <li>
+              Improved one-click installers for macOS, Linux and Windows,
+              and new icons.
+            </li>
+          </ul>
+          <p class="rel-kind k-note">Notes</p>
+          <ul>
+            <li>
+              Because MEG and EEG are now both supported, derivatives are
+              organised into <code>meg/</code> and <code>eeg/</code>
+              subfolders and the settings-snapshot file was renamed. Two
+              new dependencies were added for the viewer
+              (<code>pyqtgraph</code> and <code>PyQt6-WebEngine</code>).
+            </li>
+          </ul>
+        </div>
+
+        <!-- ============ 0.7.9 ============ -->
+        <div class="release reveal" id="v079">
+          <div class="release-head">
+            <h2>0.7.9</h2>
+            <span class="release-date">25 March 2026</span>
+          </div>
+          <p class="rel-kind k-new">New</p>
+          <ul>
+            <li>
+              <strong>Configurable filtering and resampling.</strong> You
+              can now turn filtering off (<code>apply_filtering = False</code>)
+              and turn resampling off (<code>downsample_to_hz = False</code>).
+            </li>
+            <li>
+              <strong>Choose your own trigger channels.</strong> The
+              stimulus channels are no longer hardcoded; set
+              <code>preferred_stim_channels</code> and
+              <code>noisy_stim_channels</code> in the settings, keeping
+              spaces in names like <code>STI 101</code>.
+            </li>
+            <li>
+              <strong>Transparent event detection.</strong> The report now
+              shows where events came from (the BIDS events file, trigger
+              detection, or fixed-length windows) and how many events were
+              found and used, with a per-event-type table.
+            </li>
+            <li>
+              A new <strong>Event summary</strong> file per recording that
+              records the detected events and compares them with the BIDS
+              events file.
+            </li>
+            <li>
+              A toggle to keep heatmap channels in their natural order.
+            </li>
+          </ul>
+          <p class="rel-kind k-note">Notes</p>
+          <ul>
+            <li>
+              Version 0.7.9b1 (24 March 2026) was the test pre-release of
+              the same changes.
+            </li>
+          </ul>
+        </div>
+
+        <!-- ============ 0.7.5 - 0.7.8 ============ -->
+        <div class="release reveal" id="v075">
+          <div class="release-head">
+            <h2>0.7.5 &ndash; 0.7.8</h2>
+            <span class="release-date">12 &ndash; 20 March 2026</span>
+          </div>
+          <p class="rel-kind k-fix">Fixed</p>
+          <ul>
+            <li>
+              A series of quick follow-up releases that hardened
+              output-path handling across Windows, macOS and Linux so
+              reports and derivatives always land in the right place.
+            </li>
+          </ul>
+          <p class="rel-kind k-note">Notes</p>
+          <ul>
+            <li>
+              Added documentation for running MEEGqc on high-performance
+              computing (HPC) clusters through CBRAIN.
+            </li>
+          </ul>
+        </div>
+
+        <!-- ============ 0.7.0 - 0.7.4 ============ -->
+        <div class="release reveal" id="v070">
+          <div class="release-head">
+            <h2>0.7.0 &ndash; 0.7.4</h2>
+            <span class="release-date">6 &ndash; 12 March 2026</span>
+          </div>
+          <p class="rel-kind k-new">New</p>
+          <ul>
+            <li>
+              <strong>One consistent way to run MEEGqc</strong> from the
+              command line, the GUI and Python. All three now go through
+              the same code, so they behave identically.
+            </li>
+            <li>
+              <strong>Analysis profiles for reproducible re-runs.</strong>
+              A mode control (<code>legacy</code>, <code>new</code>,
+              <code>reuse</code>, <code>latest</code>) with a profile name
+              lets you re-run the same dataset with different settings and
+              keep the results side by side, instead of overwriting them.
+              Good for checking how sensitive your results are to a
+              threshold.
+            </li>
+            <li>
+              <strong>Run everything in one command.</strong> A single
+              <code>run-megqc-plotting</code> command can render every
+              report scope (subject, dataset and multi-dataset, both QA
+              and QC), and a "run all" path does calculation and every
+              report in one go. Per-dataset overrides let you use
+              different settings, subjects or worker counts for each
+              dataset.
+            </li>
+            <li>
+              Redesigned subject reports, a new dataset-level QC report,
+              on-page controls (font size, dot size, line thickness) on
+              every report, a summary-distribution tab, faster loading of
+              large reports, and a GUI auto-update feature.
+            </li>
+          </ul>
+          <p class="rel-kind k-fix">Fixed</p>
+          <ul>
+            <li>
+              Reports are now aware of separate runs, with a safe fallback
+              when a BIDS dataset has no
+              <code>dataset_description.json</code>.
+            </li>
+            <li>
+              Per-subject, per-metric error reporting, so one problematic
+              recording or one failing metric no longer stops the whole
+              run.
+            </li>
+            <li>
+              Output-path handling fixed for locked-down "corporate"
+              computers.
+            </li>
+          </ul>
+        </div>
+
+        <!-- ============ 0.6.1 - 0.6.8 ============ -->
+        <div class="release reveal" id="v061">
+          <div class="release-head">
+            <h2>0.6.1 &ndash; 0.6.8</h2>
+            <span class="release-date">August 2025 &ndash; March 2026</span>
+          </div>
+          <p>
+            The follow-up series that steadily polished the reports and
+            broadened platform support after the 0.6.0 rework.
+          </p>
+          <ul>
+            <li>
+              <strong>0.6.1</strong>: revamped summary QC report with
+              interactive tables, and a lighter, configurable report
+              back-end; ECG channel plotting fix.
+            </li>
+            <li>
+              <strong>0.6.2</strong>: plotting-module fix.
+            </li>
+            <li>
+              <strong>0.6.3</strong>: more reliable report generation
+              (better handling when result files lack task or run labels)
+              and sturdier background workers in the GUI.
+            </li>
+            <li>
+              <strong>0.6.4</strong>: maintenance release.
+            </li>
+            <li>
+              <strong>0.6.5</strong>: macOS support, an automated test for
+              the MEG pipeline, and PyQt6 dependency fixes.
+            </li>
+            <li>
+              <strong>0.6.6</strong>: you can now send derivatives to a
+              custom output folder instead of inside the dataset.
+            </li>
+            <li>
+              <strong>0.6.7</strong>: handles split FIF files, logs
+              recording duration, resolves external derivative paths for
+              plotting and GQI, supports CTF gradiometer-only GQI
+              summaries, and adds a task column to the GQI table.
+            </li>
+            <li>
+              <strong>0.6.8</strong>: final checkpoint of the 0.6 series,
+              just before the 0.7.0 overhaul.
+            </li>
+          </ul>
+        </div>
+
+        <!-- ============ 0.6.0 (landmark) ============ -->
+        <div class="release reveal is-landmark" id="v060">
+          <div class="release-head">
+            <h2>0.6.0</h2>
+            <span class="release-date">4 August 2025</span>
+            <span class="release-badge badge-landmark">Landmark release</span>
+          </div>
+
+          <div class="callout callout-tip has-icon">
+            <div class="callout-icon" aria-hidden="true">&#x25b8;</div>
+            <div>
+              <strong>The release that made MEEGqc usable on a normal
+              computer</strong>
+              <p>
+                Up to and including 0.5.12, MEEGqc loaded whole recordings
+                into memory and processed them one after another. On an
+                ordinary laptop that meant it often ran out of memory or
+                was simply too slow to use. Version 0.6.0 reworked the
+                engine to write intermediate results to disk instead of
+                holding everything in memory, and to process subjects in
+                parallel across the computer's CPU cores. The result was a
+                large drop in memory use and a large jump in speed, so the
+                tool finally ran comfortably on everyday machines. This is
+                the single most important release in the project's
+                history.
+              </p>
+            </div>
+          </div>
+
+          <p class="rel-kind k-new">New</p>
+          <ul>
+            <li>
+              <strong>Parallel processing and on-disk memory
+              management.</strong> Subjects are processed in parallel and
+              heavy intermediate data is written to disk, so MEEGqc no
+              longer needs to hold an entire recording in memory. This is
+              what made it fast and usable on normal computers.
+            </li>
+            <li>
+              <strong>The first graphical interface (GUI).</strong> A
+              desktop app to choose datasets, edit settings, run the
+              analysis and open the reports, so you no longer need the
+              command line.
+            </li>
+            <li>
+              <strong>The first Global Quality Index (GQI).</strong> A
+              single, configurable quality score per recording built from
+              the individual metrics, with adjustable penalty weights, an
+              option to turn it off, a dataset-level summary table, and the
+              ability to recompute it on its own without redoing the whole
+              analysis.
+            </li>
+            <li>
+              <strong>Dataset-level reports with lazy loading</strong> so
+              large group reports open quickly, plus the first
+              cross-dataset comparison tools.
+            </li>
+            <li>
+              Support for CTF recordings in the new optimised pipeline,
+              temporary-file support for Windows machines, and saved
+              configuration files that work with the parallel-processing
+              approach.
+            </li>
+          </ul>
+          <p class="rel-kind k-note">Notes</p>
+          <ul>
+            <li>
+              This release gathered roughly eight months of work (there
+              were no PyPI releases between 0.5.12 in December 2024 and
+              0.6.0 in August 2025). Everything above first reached users
+              here.
+            </li>
+          </ul>
+        </div>
+
+        <!-- ============ Early releases ============ -->
+        <div class="release reveal" id="early">
+          <div class="release-head">
+            <h2>Early releases</h2>
+            <span class="release-date">0.0.3 &ndash; 0.5.12, May 2023 &ndash; December 2024</span>
+          </div>
+          <p>
+            The foundational years. MEGqc began as a research toolbox and
+            was first published to PyPI in May 2023 (0.0.3). Across the
+            0.0.x to 0.5.x series it grew the core quality metrics
+            (standard deviation, peak-to-peak amplitude, power spectral
+            density, ECG and EOG correlation, muscle noise and head
+            movement), the first automatic HTML reports, and a
+            command-line workflow. At this stage the tool ran on a single
+            CPU core and kept whole recordings in memory, which is exactly
+            what the 0.6.0 rework above fixed. There was no graphical
+            interface and no Global Quality Index yet. These releases were
+            rapid and experimental; systematic, per-version notes begin at
+            0.6.0.
+          </p>
+          <div class="table-wrap"><table class="spec-table file-table">
+            <colgroup><col style="width: 22%"><col style="width: 30%"><col style="width: 48%"></colgroup>
+            <thead><tr><th>Series</th><th>Dates</th><th>Focus</th></tr></thead>
+            <tbody>
+              <tr><td>0.0.x</td><td>May 2023 &ndash; March 2024</td><td>First PyPI publication and the core metric calculations.</td></tr>
+              <tr><td>0.1.x</td><td>March &ndash; May 2024</td><td>Metric and report improvements.</td></tr>
+              <tr><td>0.2.x</td><td>May &ndash; November 2024</td><td>Reporting and stability work.</td></tr>
+              <tr><td>0.3.x</td><td>November 2024</td><td>Rapid iteration on the HTML reports.</td></tr>
+              <tr><td>0.4.x</td><td>November 2024</td><td>Packaging and report fixes.</td></tr>
+              <tr><td>0.5.x</td><td>November &ndash; December 2024</td><td>Refinements leading up to the 0.6 rework.</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <hr>
+        <p>
+          Want the technical detail behind a change? The full commit
+          history lives on
+          <a href="https://github.com/ANCPLabOldenburg/MEEGqc" target="_blank" rel="noopener">GitHub</a>.
+          For how to use the current version, see the
+          <a href="tutorial.html">tutorial</a> or the
+          <a href="installation.html">installation guide</a>.
+        </p>
+
+      </div>
+    </section>
+  </main>
+
+  <div data-include="footer"></div>
+  <script src="script.js" defer></script>
+</body>
+</html>

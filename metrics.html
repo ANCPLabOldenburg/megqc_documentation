@@ -91,6 +91,23 @@
         decision trail is auditable.
       </div>
 
+      <div class="callout callout-mint">
+        <span class="callout-title">How the figures are rendered</span>
+        Two report conventions apply to every metric below. First,
+        each sensor topomap is shown as adjacent <strong>2D and 3D
+        tabs</strong>: the 2D view is an MNE-style flattened azimuthal
+        projection that works across MEG manufacturers and EEG
+        montages, with per-figure View controls (flattened round /
+        field shape / fitted to head) and a Colour map switcher
+        (Red-Blue by default, plus Turbo, Jet, Viridis, Plasma, Reds).
+        Second, amplitudes use <strong>unified physical units</strong>:
+        magnetometers in femtotesla (fT), planar gradiometers
+        (Neuromag / Elekta) in fT/cm, axial gradiometers (CTF / 4D /
+        KIT) in fT, and EEG / ECG / EOG in microvolts; power spectral
+        density is reported as amplitude spectral density (for example
+        fT/&radic;Hz for magnetometers).
+      </div>
+
       </div>
     </section>
 
@@ -107,7 +124,7 @@
          on the preprocessed signal. The subject-level QA report
          shows three panels per channel type:</p>
       <ul>
-        <li>3D topomap with sensors colour-coded by STD.</li>
+        <li>2D and 3D topomap with sensors colour-coded by STD.</li>
         <li>Distribution boxplot with one dot per channel.</li>
         <li>Channel x epoch heatmap with marginal profiles.
             Horizontal bands = persistent issues (bad channel);
@@ -125,8 +142,8 @@
             epochs are in the same state (default 70 %).</li>
       </ul>
       <p>The resulting noisy / flat channel percentages feed both
-         the QC Group report and the <code>ch</code> family of the
-         GQI.</p>
+         the dataset-level QC report and the <code>ch</code> family of
+         the GQI.</p>
 
       <h3>Settings</h3>
       <p>See <a href="tutorial.html#settings-std"><code>[STD]</code></a>:
@@ -742,19 +759,23 @@ otherwise:      q(M) = 1 - (M - start) / (end - start)
   </div>
   <div class="dataset-tree-row is-folder">
     <span class="chev">&#9662;</span>
-    <span class="name">&lt;dataset&gt;/derivatives/Meg_QC/summary_reports/</span>
+    <span class="name">&lt;dataset&gt;/derivatives/MEEGqc/summary_reports/</span>
   </div>
   <div class="dataset-tree-row d1">
     <span class="chev">&#8226;</span>
-    <span class="name">group_metrics/meg/Global_Quality_Index_attempt_&lt;n&gt;_meg.tsv</span>
+    <span class="name">group_metrics/meg/desc-GlobalQualityIndexAttempt&lt;N&gt;_meg.tsv</span>
   </div>
   <div class="dataset-tree-row d1">
     <span class="chev">&#8226;</span>
-    <span class="name">group_metrics/eeg/Global_Quality_Index_attempt_&lt;n&gt;_eeg.tsv</span>
+    <span class="name">group_metrics/eeg/desc-GlobalQualityIndexAttempt&lt;N&gt;_eeg.tsv</span>
   </div>
   <div class="dataset-tree-row d1">
     <span class="chev">&#8226;</span>
-    <span class="name">config/global_quality_index_&lt;n&gt;.ini</span>
+    <span class="name">config/desc-GlobalQualityIndexAttempt&lt;N&gt;_settings.ini</span>
+  </div>
+  <div class="dataset-tree-row d1">
+    <span class="chev">&#8226;</span>
+    <span class="name">global_quality_index_&lt;N&gt;/sub-XXX/sub-XXX_desc-GlobalSummaryReportAttempt&lt;N&gt;_meg.json</span>
   </div>
   <div class="dataset-tree-row is-blank"></div>
   <div class="dataset-tree-row is-heading">
@@ -762,7 +783,7 @@ otherwise:      q(M) = 1 - (M - start) / (end - start)
   </div>
   <div class="dataset-tree-row is-folder">
     <span class="chev">&#9656;</span>
-    <span class="name">&lt;dataset&gt;/derivatives/Meg_QC/profiles/&lt;analysis_id&gt;/summary_reports/...</span>
+    <span class="name">&lt;dataset&gt;/derivatives/MEEGqc/profiles/&lt;analysis_id&gt;/summary_reports/...</span>
   </div>
 </div>
 
@@ -774,7 +795,7 @@ otherwise:      q(M) = 1 - (M - start) / (end - start)
           <tr><td>Global score</td><td><code>GQI</code></td></tr>
           <tr><td>Penalty terms</td><td><code>GQI_penalty_ch</code>, <code>GQI_penalty_corr</code>, <code>GQI_penalty_mus</code>, <code>GQI_penalty_psd</code></td></tr>
           <tr><td>Component percentages</td><td><code>GQI_bad_pct</code>, <code>GQI_std_pct</code>, <code>GQI_ptp_pct</code>, <code>GQI_ecg_pct</code>, <code>GQI_eog_pct</code>, <code>GQI_muscle_pct</code>, <code>GQI_psd_noise_pct</code></td></tr>
-          <tr><td>Burden columns</td><td><code>STD_ts_*</code>, <code>STD_ep_*</code>, <code>PTP_ts_*</code>, <code>PTP_ep_*</code>, <code>ECG_*_high_corr_*</code>, <code>EOG_*_high_corr_*</code>, <code>PSD_noise_*_percentage</code>, <code>Muscle_events_num</code></td></tr>
+          <tr><td>Sub-metric counts</td><td><code>STD_ts_*</code>, <code>STD_ep_*</code>, <code>PTP_ts_*</code>, <code>PTP_ep_*</code>, <code>ECG_*_high_corr_*</code>, <code>EOG_*_high_corr_*</code>, <code>PSD_noise_*_percentage</code>, <code>Muscle_events_num</code></td></tr>
           <tr><td>Parameters</td><td><code>param_*</code>: the exact GQI thresholds and weights for the attempt</td></tr>
         </tbody>
       </table></div>
