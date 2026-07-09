@@ -281,9 +281,11 @@ cd ds007353 && datalad get sub-01/</code></pre>
         <li>
           <strong>Pick an analysis profile</strong> (optional). The
           <em>Mode</em> control switches between
-          <code>legacy</code> / <code>new</code> / <code>reuse</code> /
-          <code>latest</code>. For sensitivity sweeps, choose
-          <code>new</code> and give the profile an explicit ID.
+          <code>Non-profile</code> / <code>New profile</code> /
+          <code>Reuse profile</code> / <code>Latest profile</code>. For
+          sensitivity sweeps, choose <em>New profile</em> and give it an
+          explicit ID. Selecting <em>Non-profile</em> greys out the
+          profile controls.
         </li>
         <li>
           <strong>Set parallelism</strong> with <em>n_jobs</em> in the
@@ -388,7 +390,7 @@ run-meegqc-plotting \
       <div class="code-label">Step 3. (Optional) GQI recomputation</div>
 <pre><code class="lang-bash">globalqualityindex \
   --inputdata /path/to/bids_dataset \
-  --analysis_mode reuse \
+  --analysis_mode reuse-profile \
   --analysis_id qa_pass_01
 
 # Then re-render the QC dataset report against the new attempt
@@ -454,8 +456,8 @@ run-meegqc-plotting \
             <tr><td><code>--subs_per_dataset</code></td><td>list</td><td>Per-dataset subject lists as <code>"&lt;path&gt;::&lt;ids&gt;"</code> pairs.</td></tr>
             <tr><td><code>--n_jobs</code></td><td>int</td><td>Parallel subject workers.</td></tr>
             <tr><td><code>--derivatives_output</code></td><td>path</td><td>Write derivatives to a custom root instead of <code>&lt;dataset&gt;/derivatives/MEEGqc/</code>.</td></tr>
-            <tr><td><code>--analysis_mode</code></td><td>enum</td><td><code>legacy</code> | <code>new</code> | <code>reuse</code> | <code>latest</code>.</td></tr>
-            <tr><td><code>--analysis_id</code></td><td>str</td><td>Profile identifier. Required with <code>reuse</code>; recommended with <code>new</code>.</td></tr>
+            <tr><td><code>--analysis_mode</code></td><td>enum</td><td><code>non-profile</code> | <code>new-profile</code> | <code>reuse-profile</code> | <code>latest-profile</code> (old names <code>legacy</code>/<code>new</code>/<code>reuse</code>/<code>latest</code> still accepted).</td></tr>
+            <tr><td><code>--analysis_id</code></td><td>str</td><td>Profile identifier. Required with <code>reuse-profile</code>; recommended with <code>new-profile</code>.</td></tr>
             <tr><td><code>--existing_config_policy</code></td><td>enum</td><td><code>provided</code> | <code>latest_saved</code> | <code>fail</code> when a settings file already exists in the profile.</td></tr>
             <tr><td><code>--processed_subjects_policy</code></td><td>enum</td><td><code>skip</code> | <code>rerun</code> | <code>fail</code> for subjects already processed.</td></tr>
             <tr><td><code>--run-all</code></td><td>flag</td><td>After calculation, automatically run plotting.</td></tr>
@@ -549,7 +551,7 @@ run_calculation_dispatch(
     internal_config_file_path=internal_cfg,
     sub_list="all",
     n_jobs=4,
-    analysis_mode="new",
+    analysis_mode="new-profile",
     analysis_id="qa_pass_01",
     existing_config_policy="provided",
     processed_subjects_policy="skip",
@@ -564,7 +566,7 @@ run_calculation_dispatch(
     qa_multi_dataset=True,
     qc_dataset=True,
     qc_multi_dataset=True,
-    analysis_mode="reuse",
+    analysis_mode="reuse-profile",
     analysis_id="qa_pass_01",
     njobs=4,
 )
@@ -574,7 +576,7 @@ run_calculation_dispatch(
 <pre><code class="lang-python">run_gqi_dispatch(
     dataset_paths=["/path/ds1", "/path/ds2"],
     default_config_file_path="./config/settings.ini",
-    analysis_mode="reuse",
+    analysis_mode="reuse-profile",
     analysis_id="qa_pass_01",
 )
 </code></pre>
@@ -587,7 +589,7 @@ run_calculation_dispatch(
     sub_list="all",
     calc_n_jobs=4,
     plot_njobs=4,
-    analysis_mode="new",
+    analysis_mode="new-profile",
     analysis_id="qa_pass_02",
     qa_subject=True,
     qa_dataset=True,
@@ -600,7 +602,7 @@ run_calculation_dispatch(
       <div class="callout">
         <span class="callout-title">Notes</span>
         <ul style="margin-bottom: 0;">
-          <li><code>analysis_mode='reuse'</code> requires
+          <li><code>analysis_mode='reuse-profile'</code> requires
               <code>analysis_id</code>.</li>
           <li>Multi-dataset modes (<code>qa_multi_dataset</code>,
               <code>qc_multi_dataset</code>) need at least two
@@ -823,7 +825,7 @@ run_calculation_dispatch(
         <span class="callout-title">Legacy mode vs profile mode</span>
         In legacy mode (the default) outputs sit directly under
         <code>derivatives/MEEGqc/</code>. In profile mode
-        (<code>--analysis_mode new|reuse|latest</code>) the exact same
+        (<code>--analysis_mode new-profile|reuse-profile|latest-profile</code>) the exact same
         subtree is nested one level deeper under
         <code>derivatives/MEEGqc/profiles/&lt;analysis_id&gt;/</code>, so
         several parameter configurations can coexist on one dataset

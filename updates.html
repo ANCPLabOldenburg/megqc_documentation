@@ -24,6 +24,8 @@
       </button>
       <nav id="page-toc-panel" class="page-toc-panel" aria-label="Versions">
         <span class="page-toc-title">Jump to a version</span>
+        <a class="page-toc-link" href="#v110">
+          <span class="page-toc-dot" aria-hidden="true"></span>1.1.0</a>
         <a class="page-toc-link" href="#v109">
           <span class="page-toc-dot" aria-hidden="true"></span>1.0.9</a>
         <a class="page-toc-link" href="#v108">
@@ -90,12 +92,47 @@
           </div>
         </div>
 
+        <!-- ============ 1.1.0 ============ -->
+        <div class="release reveal is-latest" id="v110">
+          <div class="release-head">
+            <h2>1.1.0</h2>
+            <span class="release-date">9 July 2026</span>
+            <span class="release-badge">Latest</span>
+          </div>
+          <p class="rel-kind k-new">New</p>
+          <ul>
+            <li>
+              <strong>Clearer analysis-mode names.</strong> The analysis
+              modes are now <code>non-profile</code>, <code>new-profile</code>,
+              <code>reuse-profile</code> and <code>latest-profile</code>, so
+              the top-level choice (a plain single run vs a versioned profile
+              run) is obvious. The old names
+              (<code>legacy</code>/<code>new</code>/<code>reuse</code>/<code>latest</code>)
+              still work, so existing scripts do not break. In the app, the
+              profile controls are greyed out when <em>Non-profile</em> is
+              selected.
+            </li>
+          </ul>
+          <p class="rel-kind k-fix">Fixed</p>
+          <ul>
+            <li>
+              <strong>"Skip already-processed subjects" now works.</strong>
+              Re-running a dataset correctly skips the subjects that were
+              already computed instead of recomputing everything.
+            </li>
+            <li>
+              <strong>Recomputing a dataset no longer crashes.</strong> An
+              intentional re-run (choose "rerun") now overwrites the previous
+              results cleanly instead of failing with a file-exists error.
+            </li>
+          </ul>
+        </div>
+
         <!-- ============ 1.0.9 ============ -->
-        <div class="release reveal is-latest" id="v109">
+        <div class="release reveal" id="v109">
           <div class="release-head">
             <h2>1.0.9</h2>
             <span class="release-date">8 July 2026</span>
-            <span class="release-badge">Latest</span>
           </div>
           <p class="rel-kind k-new">New</p>
           <ul>

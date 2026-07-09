@@ -544,32 +544,36 @@
           </thead>
           <tbody>
             <tr>
-              <td><code>legacy</code></td>
-              <td>Classic non-profile layout under
+              <td><code>non-profile</code></td>
+              <td>Classic single-run layout under
                   <code>derivatives/MEEGqc/</code>. No namespacing.</td>
             </tr>
             <tr>
-              <td><code>new</code></td>
+              <td><code>new-profile</code></td>
               <td>Create or use a profile. With no
                   <code>analysis_id</code>, MEEGqc auto-generates one;
                   passing it explicitly is recommended for
                   reproducibility.</td>
             </tr>
             <tr>
-              <td><code>reuse</code></td>
+              <td><code>reuse-profile</code></td>
               <td>Use an existing profile. Requires an explicit
                   <code>analysis_id</code>. Useful when a calculation
                   pass has finished and you only want to re-render or
                   recompute GQI.</td>
             </tr>
             <tr>
-              <td><code>latest</code></td>
+              <td><code>latest-profile</code></td>
               <td>Resolve the most recently modified profile
                   automatically.</td>
             </tr>
           </tbody>
         </table>
       </div>
+      <p class="muted" style="margin-top: 6px;">
+        The earlier names <code>legacy</code> / <code>new</code> /
+        <code>reuse</code> / <code>latest</code> still work as aliases.
+      </p>
 
       <p>In profile mode, derivatives live under:</p>
 <div class="dataset-tree" role="img"
@@ -628,11 +632,11 @@
         analysis frameworks (MNE-Python, FieldTrip, Brainstorm) can
         consume directly. Every derivative, report, and snapshot carries
         a BIDS-compliant <code>desc-&lt;Label&gt;_&lt;modality&gt;</code>
-        name. In legacy mode, the tree looks like:
+        name. In non-profile mode, the tree looks like:
       </p>
 
 <div class="dataset-tree" role="img"
-     aria-label="Legacy-mode BIDS derivatives layout">
+     aria-label="Non-profile-mode BIDS derivatives layout">
   <div class="dataset-tree-row is-folder">
     <span class="chev">&#9662;</span>
     <span class="name">&lt;dataset&gt;/derivatives/MEEGqc/</span>

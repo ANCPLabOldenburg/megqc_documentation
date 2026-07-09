@@ -753,9 +753,9 @@ otherwise:      q(M) = 1 - (M - start) / (end - start)
          <code>globalqualityindex</code> writes a new per-modality
          TSV plus a frozen configuration snapshot:</p>
 <div class="dataset-tree" role="img"
-     aria-label="GQI attempt files in legacy and profile modes">
+     aria-label="GQI attempt files in non-profile and profile modes">
   <div class="dataset-tree-row is-heading">
-    <span class="name"># Legacy mode</span>
+    <span class="name"># Non-profile mode</span>
   </div>
   <div class="dataset-tree-row is-folder">
     <span class="chev">&#9662;</span>
@@ -817,7 +817,7 @@ otherwise:      q(M) = 1 - (M - start) / (end - start)
       <div class="code-label">CLI</div>
 <pre><code class="lang-bash">globalqualityindex --inputdata /path/to/dataset
 globalqualityindex --inputdata /path/to/dataset \
-                   --analysis_mode reuse \
+                   --analysis_mode reuse-profile \
                    --analysis_id qa_pass_01
 </code></pre>
       <div class="code-label">GUI</div>
@@ -829,7 +829,7 @@ globalqualityindex --inputdata /path/to/dataset \
 run_gqi_dispatch(
     dataset_paths=["/path/ds1", "/path/ds2"],
     default_config_file_path="./config/settings.ini",
-    analysis_mode="reuse",
+    analysis_mode="reuse-profile",
     analysis_id="qa_pass_01",
 )
 </code></pre>
