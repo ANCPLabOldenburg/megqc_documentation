@@ -456,10 +456,10 @@ run-meegqc-plotting \
             <tr><td><code>--subs_per_dataset</code></td><td>list</td><td>Per-dataset subject lists as <code>"&lt;path&gt;::&lt;ids&gt;"</code> pairs.</td></tr>
             <tr><td><code>--n_jobs</code></td><td>int</td><td>Parallel subject workers.</td></tr>
             <tr><td><code>--derivatives_output</code></td><td>path</td><td>Write derivatives to a custom root instead of <code>&lt;dataset&gt;/derivatives/MEEGqc/</code>.</td></tr>
-            <tr><td><code>--analysis_mode</code></td><td>enum</td><td><code>non-profile</code> | <code>new-profile</code> | <code>reuse-profile</code> | <code>latest-profile</code> (old names <code>legacy</code>/<code>new</code>/<code>reuse</code>/<code>latest</code> still accepted).</td></tr>
+            <tr><td><code>--analysis_mode</code></td><td>enum</td><td><code>non-profile</code> | <code>new-profile</code> | <code>reuse-profile</code> | <code>latest-profile</code>.</td></tr>
             <tr><td><code>--analysis_id</code></td><td>str</td><td>Profile identifier. Required with <code>reuse-profile</code>; recommended with <code>new-profile</code>.</td></tr>
-            <tr><td><code>--existing_config_policy</code></td><td>enum</td><td><code>provided</code> | <code>latest_saved</code> | <code>fail</code> when a settings file already exists in the profile.</td></tr>
-            <tr><td><code>--processed_subjects_policy</code></td><td>enum</td><td><code>skip</code> | <code>rerun</code> | <code>fail</code> for subjects already processed.</td></tr>
+            <tr><td><code>--existing_config_policy</code></td><td>enum</td><td><code>provided</code> | <code>latest_saved</code> | <code>stop</code> when a settings file already exists in the profile.</td></tr>
+            <tr><td><code>--processed_subjects_policy</code></td><td>enum</td><td><code>skip</code> | <code>rerun</code> | <code>stop</code> for subjects already processed.</td></tr>
             <tr><td><code>--run-all</code></td><td>flag</td><td>After calculation, automatically run plotting.</td></tr>
             <tr><td><code>--all</code> / <code>--qa-all</code> / <code>--qc-all</code></td><td>flag</td><td>With <code>--run-all</code>, choose which plotting scopes to render.</td></tr>
             <tr><td><code>--qa-subject</code> / <code>--qa-dataset</code> / <code>--qa-multi-dataset</code></td><td>flag</td><td>Selective QA scopes (with <code>--run-all</code>).</td></tr>
@@ -660,6 +660,7 @@ run_calculation_dispatch(
       <div class="table-wrap"><table class="spec-table">
         <thead><tr><th>Variable</th><th>Default</th><th>Type</th><th>Description</th></tr></thead>
         <tbody>
+          <tr><td><code>epoching_strategy</code></td><td><code>auto</code></td><td>string</td><td>How to segment the recording. <code>auto</code>: use events, fall back to fixed-length windows when too few events are found. <code>events</code>: use events only, skip epoched metrics when there are too few. <code>fixed</code>: force fixed-length windows regardless of any events (useful for resting-state).</td></tr>
           <tr><td><code>event_dur</code></td><td><code>0.002</code></td><td>float</td><td>Minimum trigger pulse duration (only used when no BIDS <code>_events.tsv</code> is found).</td></tr>
           <tr><td><code>epoch_tmin</code></td><td><code>-0.2</code></td><td>float</td><td>Epoch start relative to event (s).</td></tr>
           <tr><td><code>epoch_tmax</code></td><td><code>1</code></td><td>float</td><td>Epoch end relative to event (s).</td></tr>
@@ -667,8 +668,7 @@ run_calculation_dispatch(
           <tr><td><code>preferred_stim_channels</code></td><td>see config</td><td>string list</td><td>Combined trigger channels (STI101 / STI 014 / UPPT00x / STATUS).</td></tr>
           <tr><td><code>noisy_stim_channels</code></td><td><code>STI301, STI 301</code></td><td>string list</td><td>Stim channels excluded from auto detection.</td></tr>
           <tr><td><code>event_repeated</code></td><td><code>merge</code></td><td>string</td><td>Duplicate-event handling: <code>error</code> / <code>drop</code> / <code>merge</code>.</td></tr>
-          <tr><td><code>use_fixed_length_epochs</code></td><td><code>True</code></td><td>bool</td><td>Fallback to fixed-length epochs when no events are available.</td></tr>
-          <tr><td><code>fixed_epoch_duration</code></td><td><code>2.0</code></td><td>float</td><td>Fixed-length epoch size (s).</td></tr>
+          <tr><td><code>fixed_epoch_duration</code></td><td><code>2.0</code></td><td>float</td><td>Fixed-length epoch size (s), used by the <code>auto</code> and <code>fixed</code> strategies.</td></tr>
           <tr><td><code>fixed_epoch_overlap</code></td><td><code>0.0</code></td><td>float</td><td>Overlap between consecutive fixed epochs (s).</td></tr>
         </tbody>
       </table></div>

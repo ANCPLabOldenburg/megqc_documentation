@@ -24,6 +24,8 @@
       </button>
       <nav id="page-toc-panel" class="page-toc-panel" aria-label="Versions">
         <span class="page-toc-title">Jump to a version</span>
+        <a class="page-toc-link" href="#v111">
+          <span class="page-toc-dot" aria-hidden="true"></span>1.1.1</a>
         <a class="page-toc-link" href="#v110">
           <span class="page-toc-dot" aria-hidden="true"></span>1.1.0</a>
         <a class="page-toc-link" href="#v109">
@@ -92,12 +94,67 @@
           </div>
         </div>
 
+        <!-- ============ 1.1.1 ============ -->
+        <div class="release reveal is-latest" id="v111">
+          <div class="release-head">
+            <h2>1.1.1</h2>
+            <span class="release-date">10 July 2026</span>
+            <span class="release-badge">Latest</span>
+          </div>
+          <p class="rel-kind k-new">New</p>
+          <ul>
+            <li>
+              <strong>Choose how recordings are cut into epochs.</strong> A new
+              <code>epoching_strategy</code> setting in <code>[Epoching]</code>
+              offers three choices: <code>auto</code> (use events, fall back to
+              fixed-length windows when too few events are found),
+              <code>events</code> (use events only) and <code>fixed</code> (force
+              fixed-length windows regardless of any events, ideal for
+              resting-state recordings). This replaces the old
+              <code>use_fixed_length_epochs</code> switch.
+            </li>
+            <li>
+              <strong>Derivatives mirror BIDS sessions.</strong> For datasets
+              with sessions, the per-recording outputs are now written under
+              <code>calculation/&lt;modality&gt;/sub-XXX/ses-YYY/</code> so the
+              result tree matches the raw layout. Single-session datasets are
+              unchanged.
+            </li>
+            <li>
+              <strong>Clearer settings dialog.</strong> Turning a metric off
+              (or picking an epoching strategy, or switching filtering off) now
+              greys out the settings that no longer apply, so it is obvious
+              which fields still matter.
+            </li>
+          </ul>
+          <p class="rel-kind k-fix">Fixed</p>
+          <ul>
+            <li>
+              <strong>Zero-padded run numbers are preserved.</strong> A
+              recording named <code>run-01</code> now keeps <code>run-01</code>
+              in its derivative filenames instead of being shortened to
+              <code>run-1</code>.
+            </li>
+          </ul>
+          <p class="rel-kind k-note">Notes</p>
+          <ul>
+            <li>
+              <strong>Two small renames.</strong> The "raise an error" option
+              for the config and processed-subject policies is now called
+              <code>stop</code> (previously <code>fail</code>), and the old
+              analysis-mode aliases (<code>legacy</code>/<code>new</code>/<code>reuse</code>/<code>latest</code>)
+              have been retired in favour of the clear
+              <code>non-profile</code>/<code>new-profile</code>/<code>reuse-profile</code>/<code>latest-profile</code>
+              names introduced in 1.1.0.
+            </li>
+          </ul>
+        </div>
+
         <!-- ============ 1.1.0 ============ -->
-        <div class="release reveal is-latest" id="v110">
+        <div class="release reveal" id="v110">
           <div class="release-head">
             <h2>1.1.0</h2>
             <span class="release-date">9 July 2026</span>
-            <span class="release-badge">Latest</span>
           </div>
           <p class="rel-kind k-new">New</p>
           <ul>
