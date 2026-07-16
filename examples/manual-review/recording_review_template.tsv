@@ -1,0 +1,17 @@
+review_id	review_iteration	subject	session	task	run	reviewer	review_date	checklist_version	meegqc_version	analysis_id	reference	filter_description	display_page_seconds	display_scale	raw_loaded	duration_plausible	expected_channels_present	channel_types_correct	montage_available	events_plausible	pages_reviewed	pages_with_global_artifact	global_artifact_fraction	flat_channel_count	noisy_channel_count	suspect_channels	bad_channels	clipping_or_saturation	slow_drift_pattern	line_noise_pattern	muscle_pattern	ocular_pattern	segments_to_exclude_seconds	usability	manual_burden_score	confidence	review_completed_before_gqi	evidence_timepoints_seconds	notes
+primary_sub-01_run-01	primary	sub-01	ses-eeg	action	run-01			0.1					20																										Not reviewed
+primary_sub-01_run-02	primary	sub-01	ses-eeg	action	run-02			0.1					20																										Not reviewed
+primary_sub-01_run-03	primary	sub-01	ses-eeg	action	run-03			0.1					20																										Not reviewed
+primary_sub-01_run-04	primary	sub-01	ses-eeg	action	run-04			0.1					20																										Not reviewed
+primary_sub-01_run-05	primary	sub-01	ses-eeg	action	run-05			0.1					20																										Not reviewed
+primary_sub-01_run-06	primary	sub-01	ses-eeg	action	run-06			0.1					20																										Not reviewed
+primary_sub-01_run-07	primary	sub-01	ses-eeg	action	run-07			0.1					20																										Not reviewed
+primary_sub-01_run-08	primary	sub-01	ses-eeg	action	run-08			0.1					20																										Not reviewed
+primary_sub-02_run-01	primary	sub-02	ses-eeg	action	run-01			0.1					20																										Not reviewed
+primary_sub-02_run-02	primary	sub-02	ses-eeg	action	run-02			0.1					20																										Not reviewed
+primary_sub-02_run-03	primary	sub-02	ses-eeg	action	run-03			0.1					20																										Not reviewed
+primary_sub-02_run-04	primary	sub-02	ses-eeg	action	run-04			0.1					20																										Not reviewed
+primary_sub-02_run-05	primary	sub-02	ses-eeg	action	run-05			0.1					20																										Not reviewed
+primary_sub-02_run-06	primary	sub-02	ses-eeg	action	run-06			0.1					20																										Not reviewed
+primary_sub-02_run-07	primary	sub-02	ses-eeg	action	run-07			0.1					20																										Not reviewed
+primary_sub-02_run-08	primary	sub-02	ses-eeg	action	run-08			0.1					20																										Not reviewed

@@ -31,6 +31,10 @@
           <span class="page-toc-dot" aria-hidden="true"></span>
           Pick a dataset
         </a>
+        <a class="page-toc-link" href="#manual-review">
+          <span class="page-toc-dot" aria-hidden="true"></span>
+          Manual review before GQI
+        </a>
         <a class="page-toc-link" href="#gui">
           <span class="page-toc-dot" aria-hidden="true"></span>
           GUI walkthrough
@@ -181,6 +185,188 @@ datalad install https://github.com/OpenNeuroDatasets/ds007353.git
 cd ds007353 && datalad get sub-01/</code></pre>
       </div>
 
+      </div>
+    </section>
+
+    <!-- ============ MANUAL REVIEW BEFORE GQI ============ -->
+    <section class="section reveal" id="manual-review">
+      <div class="container container-narrow prose">
+      <h2>Review the EEG recordings before opening the GQI</h2>
+      <p>
+        The Global Quality Index is a configurable screening and ranking
+        tool, not a validated good / bad label. If you want to compare it
+        with human review, record the manual assessment first. This avoids
+        letting the GQI score or its penalty breakdown influence the review.
+      </p>
+
+      <div class="callout callout-mint">
+        <span class="callout-title">Worked-example scope</span>
+        This checklist uses the EEG tutorial dataset above: 2 subjects,
+        8 runs per subject, 62 EEG + 2 EOG channels, and about 5 minutes per
+        run. The manual review is a comparison point, not ground truth or a
+        validation study.
+      </div>
+
+      <p>Download the two review tables before you begin:</p>
+      <div class="modality-actions">
+        <a class="btn btn-primary"
+           href="examples/manual-review/recording_review_template.tsv"
+           download>Recording review table &darr;</a>
+        <a class="btn btn-primary"
+           href="examples/manual-review/channel_review_template.tsv"
+           download>Channel review table &darr;</a>
+      </div>
+
+      <h3>Keep these views hidden</h3>
+      <p>
+        During the manual pass, do not open the <strong>QC summary</strong>
+        tab, the dataset-level QC report, the GQI score or rank, the penalty
+        breakdown, or threshold-derived noisy / flat channel flags. You may
+        use the QA views in <strong>Overview</strong>,
+        <strong>Stimulus</strong>, <strong>STD</strong>,
+        <strong>PtP</strong>, <strong>PSD</strong>,
+        <strong>EOG</strong>, and <strong>Muscle</strong>.
+      </p>
+
+      <h3>Before each recording</h3>
+      <ol>
+        <li>Open the raw recording in the same viewer used for every run.</li>
+        <li>Use 20-second pages and keep the display scale fixed across runs.</li>
+        <li>Open the matching subject-level QA report, but leave its QC summary closed.</li>
+        <li>Record the MEEGqc version, analysis ID, reference, filters, page length, and display scale.</li>
+        <li>Do not interpolate channels, remove segments, or otherwise change the data during review.</li>
+      </ol>
+
+      <h3>Review one recording</h3>
+      <ol class="steps-list">
+        <li>
+          <strong>Check that the recording is reviewable.</strong>
+          Confirm that the file loads, the duration is plausible, all expected
+          channels are present and typed correctly, the montage is available,
+          and the event timeline makes sense. Also check for clipping,
+          saturation, long constant sections, and data gaps. If an integrity
+          problem prevents review, set <code>usability</code> to
+          <code>unusable</code>, explain why, and stop.
+        </li>
+        <li>
+          <strong>Read the complete raw recording.</strong>
+          Scan every 20-second page from start to finish. Look for flat or
+          nearly flat channels, persistent channel noise, step-like changes,
+          slow drift, electrode pops, widespread high-frequency activity, and
+          ocular activity extending well beyond the frontal channels. Count
+          the pages reviewed and the pages with a global artifact. Record useful
+          time ranges in seconds.
+        </li>
+        <li>
+          <strong>Check STD and PtP.</strong>
+          Use the distributions and channel × epoch heatmaps to verify the raw
+          impression. A bright horizontal row suggests a persistent channel
+          problem; a short horizontal patch suggests an intermittent problem;
+          a vertical stripe suggests a brief event affecting many channels.
+          Do not copy a threshold-derived flag into the manual assessment.
+        </li>
+        <li>
+          <strong>Check PSD.</strong>
+          Look for a narrow 50 Hz peak or harmonics, broadband elevation, and
+          spectral problems limited to one or a few channels. Classify the
+          line-noise pattern as <code>none_visible</code>,
+          <code>localised</code>, <code>widespread</code>, or
+          <code>unclear</code>.
+        </li>
+        <li>
+          <strong>Check EOG.</strong>
+          Blinks and eye movements are expected, especially in frontal EEG
+          channels. Classify the pattern as <code>expected_frontal</code>,
+          <code>widespread</code>, <code>unclear</code>, or
+          <code>not_assessable</code>. Expected frontal EOG correlation is not,
+          by itself, a bad-channel finding; return to the raw trace and check
+          that the spatial pattern is plausible.
+        </li>
+        <li>
+          <strong>Check Muscle.</strong>
+          Inspect the continuous 20&ndash;100 Hz muscle trace and return to the
+          matching raw intervals. Classify the pattern as
+          <code>none_visible</code>, <code>localised</code>,
+          <code>widespread</code>, or <code>unclear</code>. Use the trace, not
+          the event count or its GQI contribution.
+        </li>
+        <li>
+          <strong>Classify channels.</strong>
+          Use <code>good</code> when no clear problem is visible,
+          <code>suspect</code> when a local or intermittent problem needs
+          attention, and <code>bad</code> when persistent hardware-like failure
+          or noise would normally require exclusion or interpolation. Add each
+          suspect or bad channel to the channel review table with a timestamp or
+          QA observation. Interpret mastoid and reference-adjacent channels in
+          the context of the recorded reference; if the reference is unclear,
+          record the limitation and avoid an automatic bad label.
+        </li>
+        <li>
+          <strong>Make the recording-level decision.</strong>
+          Choose one usability category, add an artifact-burden score from 1 to
+          4, and record confidence as <code>high</code>, <code>medium</code>, or
+          <code>low</code>. Complete the row before moving to the next run.
+        </li>
+      </ol>
+
+      <h3>Channel labels</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Label</th><th>Use when</th></tr></thead>
+        <tbody>
+          <tr><td><code>good</code></td><td>No clear problem is visible.</td></tr>
+          <tr><td><code>suspect</code></td><td>A local or intermittent problem needs attention, but exclusion is not clearly justified.</td></tr>
+          <tr><td><code>bad</code></td><td>A persistent hardware-like failure or noise would normally require exclusion or interpolation.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Recording usability</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Value</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>usable</code></td><td>Routine preprocessing is enough.</td></tr>
+          <tr><td><code>usable_with_channel_exclusion</code></td><td>Interpretable after excluding or interpolating listed channels.</td></tr>
+          <tr><td><code>usable_with_segment_exclusion</code></td><td>Interpretable after excluding listed intervals.</td></tr>
+          <tr><td><code>usable_with_both</code></td><td>Both channel and segment exclusions are needed.</td></tr>
+          <tr><td><code>uncertain</code></td><td>A second review is needed.</td></tr>
+          <tr><td><code>unusable</code></td><td>A global or integrity problem prevents the intended analysis.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Artifact-burden score</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Score</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>1</code></td><td>Minimal observed burden.</td></tr>
+          <tr><td><code>2</code></td><td>Limited or localised burden.</td></tr>
+          <tr><td><code>3</code></td><td>Substantial burden, but the recording remains interpretable after a clear intervention.</td></tr>
+          <tr><td><code>4</code></td><td>Severe burden or loss of interpretability.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Lock the review before comparison</h3>
+      <p>
+        After all 16 runs are complete, check that every listed suspect or bad
+        channel has a channel-level row. Save a read-only copy or commit of both
+        tables, record the review date and checklist version, and only then open
+        the GQI results.
+      </p>
+
+      <div class="callout callout-warn">
+        <span class="callout-title">Compare, do not tune to agreement</span>
+        Start with the default configuration. Compare the manual burden score,
+        usability decision, channel findings, flags, and GQI ranking. Then make
+        one documented adjustment justified by the dataset-level QA
+        distributions and save the exact settings for both attempts. Do not
+        keep changing thresholds until the rankings look convenient.
+      </div>
+
+      <p>
+        Report the default and adjusted settings, clear manual&ndash;GQI
+        disagreements, the penalty family behind each disagreement, and the
+        minimum intervention needed for each recording. This demonstrates how
+        to inspect and audit a configuration; it does not propose universal or
+        validated thresholds.
+      </p>
       </div>
     </section>
 
