@@ -27,6 +27,8 @@
       </button>
       <nav id="page-toc-panel" class="page-toc-panel" aria-label="Versions">
         <span class="page-toc-title">Jump to a version</span>
+        <a class="page-toc-link" href="#v112">
+          <span class="page-toc-dot" aria-hidden="true"></span>1.1.2</a>
         <a class="page-toc-link" href="#v111">
           <span class="page-toc-dot" aria-hidden="true"></span>1.1.1</a>
         <a class="page-toc-link" href="#v110">
@@ -97,12 +99,56 @@
           </div>
         </div>
 
+        <!-- ============ 1.1.2 ============ -->
+        <div class="release reveal is-latest" id="v112">
+          <div class="release-head">
+            <h2>1.1.2</h2>
+            <span class="release-date">16 July 2026</span>
+            <span class="release-badge">Latest</span>
+          </div>
+          <p class="rel-kind k-new">New</p>
+          <ul>
+            <li>
+              <strong>Set a display option once and apply it to many plots.</strong>
+              Every interactive report gains a "Plot settings" panel. Open it,
+              choose a scope ("All plots" or a specific plot type), then pick a
+              value (colour map, marker and line sizes, axis label size, linear
+              or logarithmic axes, and more). The choice is applied to every
+              matching plot at once and remembered the next time you open the
+              report. Available in the subject, dataset, multi-dataset and
+              quality-control reports.
+            </li>
+            <li>
+              <strong>Safer parallel processing.</strong> The calculation and
+              plotting job counts now default to a single core instead of every
+              core. An "All cores" checkbox opts in to using them all (with a
+              per-dataset override), your choices persist between sessions, and a
+              "Reset defaults" button restores the safe settings.
+            </li>
+          </ul>
+          <p class="rel-kind k-fix">Fixed</p>
+          <ul>
+            <li>
+              <strong>Global Quality Index for datasets with sessions.</strong>
+              The group Global Quality Index (GQI) table is now produced for
+              datasets that use BIDS sessions. Previously it was silently missing
+              whenever recordings were nested under
+              <code>sub-XXX/ses-YYY/</code>.
+            </li>
+            <li>
+              <strong>Dots stay visible in the summary distributions.</strong> In
+              the dataset and multi-dataset reports, moving the dot-displacement
+              control on a summary distribution used to make the dots disappear.
+              They now stay on screen and simply shift sideways.
+            </li>
+          </ul>
+        </div>
+
         <!-- ============ 1.1.1 ============ -->
-        <div class="release reveal is-latest" id="v111">
+        <div class="release reveal" id="v111">
           <div class="release-head">
             <h2>1.1.1</h2>
             <span class="release-date">10 July 2026</span>
-            <span class="release-badge">Latest</span>
           </div>
           <p class="rel-kind k-new">New</p>
           <ul>
