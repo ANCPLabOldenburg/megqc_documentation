@@ -936,6 +936,107 @@ thead th {
 tbody tr:hover { background: var(--card-hover); }
 tbody tr:last-child td { border-bottom: none; }
 
+/* ---------- Interactive GQI / STD demo ---------- */
+.gqi-demo {
+  margin: 22px 0 28px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 18px 8px;
+  background: var(--bg-elev-1, var(--bg));
+}
+.gqi-demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+.gqi-panel h4 {
+  margin: 0 0 12px;
+  font-size: 0.9rem;
+  color: var(--text-strong);
+}
+.gqi-field {
+  display: block;
+  margin: 12px 0;
+}
+.gqi-field span {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--muted-strong);
+}
+.gqi-field span em {
+  font-style: normal;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+.gqi-field output {
+  font-weight: 700;
+  color: var(--text-strong);
+  font-variant-numeric: tabular-nums;
+}
+.gqi-field input[type="range"] {
+  width: 100%;
+  margin-top: 4px;
+  accent-color: var(--accent);
+}
+.gqi-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 12px;
+  margin: 18px 0 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.gqi-metric {
+  text-align: center;
+  padding: 10px 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-elev-2, var(--bg));
+}
+.gqi-metric .gqi-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.gqi-metric .gqi-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-strong);
+  font-variant-numeric: tabular-nums;
+}
+.gqi-total {
+  border-color: var(--accent);
+  background: var(--accent-soft, var(--bg-elev-2));
+}
+.gqi-total .gqi-value { color: var(--accent); }
+.gqi-note {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 8px 0 14px;
+}
+.gqi-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 4px 0 2px;
+}
+.gqi-reset {
+  font-size: 0.82rem;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-elev-2, var(--bg));
+  color: var(--text-strong);
+  cursor: pointer;
+}
+.gqi-reset:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 /* ---------- Figures and screenshots ---------- */
 .figure {
   margin: 22px auto 32px;
