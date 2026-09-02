@@ -797,6 +797,100 @@
     });
   }
 
+  // -------------------------------------------------------------------
+  // Interactive GQI / STD demo. Drag the [STD] and [GlobalQualityIndex]
+  // sliders to see how the reported noisy / flat %, q_ch, and final GQI
+  // move together. The slider -> noisy-% mapping is illustrative; the
+  // mapping to q_ch and the GQI uses the piecewise-linear math from the
+  // metrics page.
+  // -------------------------------------------------------------------
+  function initGqiDemo() {
+    const root = document.getElementById("gqi-demo");
+    if (!root) return;
+
+    // Fixed contribution (in GQI points) of the corr / mus / psd families,
+    // chosen so the default recording sums to GQI = 78. Weights add to 65.
+    const OTHER_POINTS = 47.9;
+    const OTHER_WEIGHT = 65;
+
+    const inputs = {};
+    root.querySelectorAll("[data-gqi-input]").forEach((el) => {
+      inputs[el.getAttribute("data-gqi-input")] = el;
+    });
+
+    function setVal(key, text) {
+      const out = root.querySelector(`[data-gqi="${key}"]`);
+      if (out) out.textContent = text;
+    }
+
+    function clamp(x, lo, hi) { return Math.min(hi, Math.max(lo, x)); }
+
+    function read(name, fallback) {
+      const el = inputs[name];
+      return el ? parseFloat(el.value) : fallback;
+    }
+
+    function render() {
+      // Show the current value of every slider next to its label, so the
+      // numbers on the controls themselves change as they are dragged.
+      Object.keys(inputs).forEach((name) => {
+        setVal(name, parseFloat(inputs[name].value).toFixed(
+          inputs[name].step.indexOf(".") !== -1 ? 1 : 0));
+      });
+
+      const stdLvl   = read("std_lvl", 1);
+      const noisyMult = read("noisy_channel_multiplier", 1.2);
+      const flatMult  = read("flat_multiplier", 0.5);
+      const allow     = read("allow_percent_noisy_flat_epochs", 70);
+      const badStart  = read("bad_ch_start", 0);
+      const badEnd    = read("bad_ch_end", 100);
+      const badWeight = read("bad_ch_weight", 35);
+
+      // Illustrative: stricter detection -> fewer flagged channels.
+      const stdScale = clamp((70 / allow) * (1 / stdLvl), 0, 2);
+      const noisy = clamp(12 * (1.2 / noisyMult) * stdScale, 0, 100);
+      const flat  = clamp(2  * (flatMult / 0.5) * stdScale, 0, 100);
+      const bad   = clamp(noisy + flat, 0, 100);
+
+      // Piecewise-linear ch-family quality (metrics.html#gqi).
+      let qCh;
+      if (bad <= badStart) qCh = 1;
+      else if (bad >= badEnd) qCh = 0;
+      else qCh = 1 - (bad - badStart) / (badEnd - badStart);
+
+      const chPoints = badWeight * qCh;
+      const gqi = Math.round(100 * (chPoints + OTHER_POINTS) / (badWeight + OTHER_WEIGHT));
+
+      setVal("noisy_pct", noisy.toFixed(0) + "%");
+      setVal("flat_pct",  flat.toFixed(0) + "%");
+      setVal("bad_pct",   bad.toFixed(0) + "%");
+      setVal("q_ch",      qCh.toFixed(2));
+      setVal("gqi",       String(gqi));
+    }
+
+    ["std_lvl", "noisy_channel_multiplier", "flat_multiplier",
+     "allow_percent_noisy_flat_epochs", "bad_ch_start", "bad_ch_end",
+     "bad_ch_weight"].forEach((name) => {
+      const el = inputs[name];
+      if (el) {
+        el.addEventListener("input", render);
+        el.addEventListener("change", render);
+      }
+    });
+
+    const resetBtn = root.querySelector("[data-gqi-reset]");
+    if (resetBtn) {
+      resetBtn.addEventListener("click", () => {
+        Object.keys(inputs).forEach((name) => {
+          inputs[name].value = inputs[name].defaultValue;
+        });
+        render();
+      });
+    }
+
+    render();
+  }
+
   ready(() => {
     loadPartials().then(() => {
       initThemeToggle();
@@ -811,6 +905,7 @@
       initCodeCopy();
       initGlassFrames();
       initMediaModal();
+      initGqiDemo();
     });
   });
 })();

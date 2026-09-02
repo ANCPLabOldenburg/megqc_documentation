@@ -677,6 +677,153 @@
         </div>
       </div>
 
+      <h3>QA vs QC report workflow</h3>
+      <p>MEEGqc produces two kinds of output for each recording:
+         <strong>QA</strong> (Quality Assessment) and
+         <strong>QC</strong> (Quality Control). QA describes the data
+         as it is. It gives detailed, metric-by-metric measurements
+         of the raw signal and applies no judgement. QC goes one step
+         further. It evaluates those measurements against
+         configurable thresholds to reach a decision. In short, QA
+         reports <em>what</em> is in the data, and QC reports
+         <em>whether it matters</em>.</p>
+      <p>Two numbers capture that divide. The <strong>noisy and flat
+         channel percentages</strong> (in the metric tabs and the QC
+         summary) form a QA-style measurement. They say
+         <em>how much of this recording is contaminated</em>. The
+         <strong>GQI score</strong> (0-100, in the QC summary) is the
+         QC-style verdict. It says <em>how usable the recording
+         is</em> as a single decision. The first reports what is
+         wrong; the second decides whether it matters.</p>
+
+      <p>Here is that contrast on the STD metric from a real report.
+         On the left is the subject-level <strong>QA</strong> STD
+         plot: the measured per-channel standard deviation, shown
+         as-is. On the right is the <strong>QC</strong> summary for
+         the same metric. It holds the noisy and flat channel
+         percentages that the QC layer reads from that distribution
+         and passes into the GQI.</p>
+      <div class="figure-row">
+        <figure class="figure">
+          <img src="assets/reports/std_tab_distribution_boxplot.png"
+               alt="Subject-level QA STD distribution plot">
+          <figcaption><strong>QA</strong>: the STD distribution for
+            the subject, one dot per channel. It only describes how
+            the signal variance is spread.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/reports/qc_summary_tab_std_table.png"
+               alt="STD table in the QC summary">
+          <figcaption><strong>QC</strong>: the STD row of the QC
+            summary. It shows the noisy and flat channel percentages,
+            which is what feeds the <code>ch</code> penalty family of
+            the GQI.</figcaption>
+        </figure>
+      </div>
+
+      <p>Take one illustrative recording, <code>sub-012</code>. Its
+         STD tab reports <strong>12&nbsp;% noisy channels</strong>
+         and <strong>2&nbsp;% flat channels</strong>, and its QC
+         summary shows a <strong>GQI of 78</strong>. The widget below
+         reproduces that recording. You can drag the
+         <a href="tutorial.html#settings-std"><code>[STD]</code></a>
+         and
+         <a href="tutorial.html#settings-gqi"><code>[GlobalQualityIndex]</code></a>
+         settings to watch how those numbers change. The slider
+         &rarr; noisy-% mapping is <em>illustrative</em> (the real
+         mapping depends on the per-epoch distribution of that
+         specific recording), but the relationship to the GQI is the
+         exact piecewise-linear math from
+         <a href="metrics.html#gqi">the metrics page</a>.</p>
+
+      <div class="gqi-demo" id="gqi-demo">
+        <div class="gqi-demo-grid">
+          <div class="gqi-panel">
+            <h4><code>[STD]</code> &rarr; noisy / flat %</h4>
+            <label class="gqi-field">
+              <span><code>std_lvl</code> <em>(std from mean)</em> <output data-gqi="std_lvl">1.0</output></span>
+              <input type="range" data-gqi-input="std_lvl" min="0.5" max="3" step="0.1" value="1">
+            </label>
+            <label class="gqi-field">
+              <span><code>noisy_channel_multiplier</code> <output data-gqi="noisy_channel_multiplier">1.2</output></span>
+              <input type="range" data-gqi-input="noisy_channel_multiplier" min="0.8" max="2.5" step="0.1" value="1.2">
+            </label>
+            <label class="gqi-field">
+              <span><code>flat_multiplier</code> <output data-gqi="flat_multiplier">0.5</output></span>
+              <input type="range" data-gqi-input="flat_multiplier" min="0.2" max="1" step="0.05" value="0.5">
+            </label>
+            <label class="gqi-field">
+              <span><code>allow_percent_noisy_flat_epochs</code> <output data-gqi="allow_percent_noisy_flat_epochs">70</output></span>
+              <input type="range" data-gqi-input="allow_percent_noisy_flat_epochs" min="40" max="100" step="1" value="70">
+            </label>
+          </div>
+
+          <div class="gqi-panel">
+            <h4><code>[GlobalQualityIndex]</code> &rarr; GQI</h4>
+            <label class="gqi-field">
+              <span><code>bad_ch_start</code> <em>(% no penalty)</em> <output data-gqi="bad_ch_start">0</output></span>
+              <input type="range" data-gqi-input="bad_ch_start" min="0" max="100" step="1" value="0">
+            </label>
+            <label class="gqi-field">
+              <span><code>bad_ch_end</code> <em>(% max penalty)</em> <output data-gqi="bad_ch_end">100</output></span>
+              <input type="range" data-gqi-input="bad_ch_end" min="1" max="100" step="1" value="100">
+            </label>
+            <label class="gqi-field">
+              <span><code>bad_ch_weight</code> <output data-gqi="bad_ch_weight">35</output></span>
+              <input type="range" data-gqi-input="bad_ch_weight" min="0" max="100" step="1" value="35">
+            </label>
+          </div>
+        </div>
+
+        <div class="gqi-results">
+          <div class="gqi-metric">
+            <span class="gqi-label">Noisy</span>
+            <span class="gqi-value" data-gqi="noisy_pct">12%</span>
+          </div>
+          <div class="gqi-metric">
+            <span class="gqi-label">Flat</span>
+            <span class="gqi-value" data-gqi="flat_pct">2%</span>
+          </div>
+          <div class="gqi-metric">
+            <span class="gqi-label">Bad total</span>
+            <span class="gqi-value" data-gqi="bad_pct">14%</span>
+          </div>
+          <div class="gqi-metric">
+            <span class="gqi-label"><code>ch</code> quality</span>
+            <span class="gqi-value" data-gqi="q_ch">0.86</span>
+          </div>
+          <div class="gqi-metric gqi-total">
+            <span class="gqi-label">GQI</span>
+            <span class="gqi-value" data-gqi="gqi">78</span>
+          </div>
+        </div>
+
+        <div class="gqi-toolbar">
+          <button type="button" class="gqi-reset" data-gqi-reset>Reset to defaults</button>
+        </div>
+
+        <p class="gqi-note">
+          The <code>corr</code>, <code>mus</code> and <code>psd</code>
+          families stay fixed here at an illustrative 47.9 points, so
+          the recording sums to a GQI of 78 at the defaults. Drag any
+          slider to watch the chain: STD settings move the noisy and
+          flat percentages, which feed <code>bad_pct</code>, which
+          moves <code>q_ch</code>, which moves the final GQI.
+        </p>
+      </div>
+
+      <p class="deep-dive-link">
+        &rarr; Reading the example: raising
+        <code>std_lvl</code>, <code>noisy_channel_multiplier</code> or
+        <code>allow_percent_noisy_flat_epochs</code> makes the
+        "noisy" test harder to pass, so the noisy percentage and the
+        GQI penalty both fall. Raising <code>bad_ch_start</code> lets
+        small bad percentages pass unpenalised. Lowering
+        <code>bad_ch_end</code> penalises any bad percentage much
+        harder. The full penalty math is on the
+        <a href="metrics.html#gqi">metrics + GQI page</a>.
+      </p>
+
       </div>
     </section>
 
