@@ -829,8 +829,8 @@ run_calculation_dispatch(
       </p>
 
       <div class="callout callout-mint">
-        <span class="callout-title">Legacy mode vs profile mode</span>
-        In legacy mode (the default) outputs sit directly under
+        <span class="callout-title">Non-profile mode vs profile mode</span>
+        In non-profile mode (the default) outputs sit directly under
         <code>derivatives/MEEGqc/</code>. In profile mode
         (<code>--analysis_mode new-profile|reuse-profile|latest-profile</code>) the exact same
         subtree is nested one level deeper under
@@ -842,11 +842,11 @@ run_calculation_dispatch(
       </div>
 
       <h3 id="outputs-tree">The derivatives tree</h3>
-      <p>Legacy-mode layout for a dataset that contains MEG recordings
+      <p>Non-profile-mode layout for a dataset that contains MEG recordings
          (an EEG dataset mirrors this with <code>eeg/</code> subfolders
          and <code>_eeg</code> suffixes):</p>
 <div class="dataset-tree" role="img"
-     aria-label="Complete MEEGqc derivatives layout, legacy mode">
+     aria-label="Complete MEEGqc derivatives layout, non-profile mode">
   <div class="dataset-tree-row is-folder">
     <span class="chev">&#9662;</span>
     <span class="name">&lt;dataset&gt;/derivatives/MEEGqc/</span>
@@ -995,7 +995,7 @@ run_calculation_dispatch(
   <div class="dataset-tree-row d1 is-folder">
     <span class="chev">&#9656;</span>
     <span class="name">calculation/ &middot; config/ &middot; reports/ &middot; summary_reports/</span>
-    <span class="note">identical contents to the legacy tree above</span>
+    <span class="note">identical contents to the non-profile tree above</span>
   </div>
 </div>
 
@@ -1122,7 +1122,7 @@ run_calculation_dispatch(
 
       <h3 id="outputs-classes">Output classes and paths</h3>
       <p>
-        Grouped by output class, with the legacy-mode path and its
+        Grouped by output class, with the non-profile-mode path and its
         profile-mode equivalent. <code>&lt;label&gt;</code> is a subject
         label, <code>&lt;N&gt;</code> a GQI attempt number,
         <code>&lt;id&gt;</code> an analysis profile id.
@@ -1136,7 +1136,7 @@ run_calculation_dispatch(
           <th>Output class</th>
           <th>Scope</th>
           <th>Format</th>
-          <th>Typical path (legacy mode)</th>
+          <th>Typical path (non-profile mode)</th>
           <th>Typical path (profile mode)</th>
         </tr></thead>
         <tbody>
