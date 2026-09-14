@@ -17,6 +17,7 @@ megqc_documentation/
   intro.html               # what MEEGqc is, the modules, metrics, scopes
   installation.html        # bootstrap installers, CLI/conda, HPC/Apptainer
   tutorial.html            # GUI walkthrough with CLI equivalents inline
+  examples/manual-review/  # manual-review tables used by the EEG tutorial
   reports.html             # the four HTML report scopes
   metrics.html             # the seven QA metrics
   eeg.html                 # new EEG implementation
